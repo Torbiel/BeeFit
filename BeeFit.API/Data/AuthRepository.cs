@@ -1,0 +1,92 @@
+﻿using BeeFit.API.Data.Interfaces;
+using BeeFit.API.Models;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Threading.Tasks;
+
+namespace BeeFit.API.Data
+{
+    public class AuthRepository : IAuthRepository
+    {
+        private readonly BeeFitDbContext _context;
+
+        public AuthRepository(BeeFitDbContext context)
+        {
+            _context = context;
+        }
+        
+        public async Task<User> Login(string username, string password)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Username == username);
+
+            if(user == null)
+            {
+                // The controller will return Unauthorized response when getting null from this method
+                return null;
+            }
+            
+            if(!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
+            {
+                return null;
+            }
+
+            return user;
+        }
+
+        private bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
+        {
+            var computedHash = KeyDerivation.Pbkdf2(password, passwordSalt, KeyDerivationPrf.HMACSHA256, 10000, 256 / 8);
+
+            if(computedHash.SequenceEqual(passwordHash))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public async Task<User> Register(User user, string password)
+        {
+            byte[] passwordHash, passwordSalt;
+
+            CreatePasswordHash(password, out passwordHash, out passwordSalt);
+
+            user.PasswordHash = passwordHash;
+            user.PasswordSalt = passwordSalt;
+
+            await _context.Users.AddAsync(user);
+            await _context.SaveChangesAsync();
+
+            return user;
+        }
+
+        private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
+        {
+            // dividing by 8, because the size of an array is given in elements, so we need 16 elements, 8 bytes each
+            passwordSalt = new byte[128 / 8];
+
+            using(var rng = RandomNumberGenerator.Create())
+            {
+                rng.GetBytes(passwordSalt);
+            }
+
+            // https://crypto.stackexchange.com/questions/53826/hmac-sha256-vs-hmac-sha512-for-jwt-api-authentication
+            // https://security.stackexchange.com/questions/3959/recommended-of-iterations-when-using-pkbdf2-sha256
+            passwordHash = KeyDerivation.Pbkdf2(password, passwordSalt, KeyDerivationPrf.HMACSHA256, 10000, 256 / 8);
+        }
+
+        public async Task<bool> UserExists(string username)
+        {
+            if(await _context.Users.AnyAsync(x => x.Username == username))
+            {
+                return true;
+            }
+
+            return false;
+        }
+    }
+}

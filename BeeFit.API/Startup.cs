@@ -29,6 +29,7 @@ namespace BeeFit.API
         {
             services.AddDbContext<BeeFitDbContext>(x => x.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllers();
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -38,6 +39,9 @@ namespace BeeFit.API
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            // CORS, allowing any origins etc. for development
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
             app.UseHttpsRedirection();
 
