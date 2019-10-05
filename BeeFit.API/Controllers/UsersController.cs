@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BeeFit.API.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace BeeFit.API.Controllers
 {
-    public class UsersController : Controller
+    [Route("api/[controller]")]
+    public class UsersController : ControllerBase
     {
         private readonly BeeFitDbContext _context;
 
@@ -18,10 +20,10 @@ namespace BeeFit.API.Controllers
             _context = context;
         }
 
-        // GET: /<controller>/
-        public IActionResult Index()
+        [HttpGet("/${id}", Name = "GetUser")]
+        public async Task<IActionResult> GetUser(int id)
         {
-            return View();
+            return Ok();
         }
     }
 }

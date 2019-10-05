@@ -12,5 +12,7 @@ namespace BeeFit.API.Models
         public DateTime Date { get; set; }
         public double Weight { get; set; }
         public double AbdominalCircumference { get; set; }
+
+        // TODO: expand circumferences
     }
 }

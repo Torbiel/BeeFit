@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BeeFit.API.Migrations
 {
     [DbContext(typeof(BeeFitDbContext))]
-    [Migration("20191002141208_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20191005164208_NewUser")]
+    partial class NewUser
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -65,10 +65,6 @@ namespace BeeFit.API.Migrations
                         .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Phone")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Username")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
