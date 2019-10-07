@@ -37,7 +37,7 @@ namespace BeeFit.API.Controllers
                 return BadRequest("Username already exists.");
             }
 
-            var userToCreate = new User() { Email = userForRegisterDto.Email };
+            var userToCreate = new User() { Email = userForRegisterDto.Email, Created = DateTime.Now };
 
             var createdUser = await _authRepository.Register(userToCreate, userForRegisterDto.Password);
 

@@ -15,5 +15,8 @@ namespace BeeFit.API.Dtos
         [Required]
         [StringLength(100, MinimumLength = 8, ErrorMessage = "Your password has to contain 8 or more characters.")]
         public string Password { get; set; }
+
+        [Required]
+        public DateTime Created { get; set; }
     }
 }
