@@ -5,6 +5,9 @@
       <li class="nav-item active">
         <a class="nav-link" href="#">bla</a>
       </li>
+      <li class="nav-item active" *ngIf="loggedIn()">
+        <a class="nav-link" (click)="logout()">Log out</a>
+      </li>
     </ul>
 
     <div *ngIf="loggedIn()" class="dropdown">
