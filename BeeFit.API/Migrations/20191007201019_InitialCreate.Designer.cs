@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BeeFit.API.Migrations
 {
     [DbContext(typeof(BeeFitDbContext))]
-    [Migration("20191005164208_NewUser")]
-    partial class NewUser
+    [Migration("20191007201019_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -31,12 +31,6 @@ namespace BeeFit.API.Migrations
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("CurrentDiet")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("DateOfBirth")
-                        .HasColumnType("datetime2");
-
                     b.Property<bool>("Deleted")
                         .HasColumnType("bit");
 
@@ -50,12 +44,6 @@ namespace BeeFit.API.Migrations
                     b.Property<DateTime>("LastActive")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Lastname")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<byte[]>("PasswordHash")
                         .IsRequired()
                         .HasColumnType("varbinary(max)");
@@ -64,7 +52,7 @@ namespace BeeFit.API.Migrations
                         .IsRequired()
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<string>("Phone")
+                    b.Property<string>("Username")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BeeFit.API.Migrations
 {
-    public partial class NewUser : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -19,12 +19,8 @@ namespace BeeFit.API.Migrations
                     Created = table.Column<DateTime>(nullable: false),
                     LastActive = table.Column<DateTime>(nullable: false),
                     Deleted = table.Column<bool>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    Lastname = table.Column<string>(nullable: true),
-                    DateOfBirth = table.Column<DateTime>(nullable: true),
-                    Height = table.Column<int>(nullable: true),
-                    Phone = table.Column<string>(nullable: true),
-                    CurrentDiet = table.Column<int>(nullable: true)
+                    Username = table.Column<string>(nullable: true),
+                    Height = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
