@@ -27,11 +27,7 @@ namespace BeeFit.API.Models
         public bool Deleted { get; set; }
 
         // Not required fields.
-        public string Name { get; set; }
-        public string Lastname { get; set; }
-        public DateTime? DateOfBirth { get; set; }
         public int? Height { get; set; }
-        public string Phone { get; set; }
         public int? CurrentDiet { get; set; }
     }
 }
