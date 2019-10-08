@@ -27,7 +27,7 @@ namespace BeeFit.API.Models
         public bool Deleted { get; set; }
 
         // Not required fields.
+        public string Username { get; set; }
         public int? Height { get; set; }
-        public int? CurrentDiet { get; set; }
     }
 }

@@ -9,5 +9,8 @@ namespace BeeFit.API.Models.Enums
     {
         Grams,
         Millilitres,
+        Pieces,
+        Slices,
+        Packet
     }
 }

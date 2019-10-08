@@ -5,14 +5,14 @@ using System.Threading.Tasks;
 
 namespace BeeFit.API.Models.Enums
 {
-    public enum Day
+    public enum MealType
     {
-        Monday,
-        Tuesday,
-        Wednesday,
-        Thursday,
-        Friday,
-        Saturday,
-        Sunday
+        Breakfast, 
+        SecondBreakfast, 
+        Lunch, 
+        Dinner,
+        Snack,
+        Supper,
+        Training
     }
 }
