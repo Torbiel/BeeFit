@@ -6,14 +6,22 @@ import { DiaryComponent } from './diary/diary.component';
 import { AboutComponent } from './about/about.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { ProfileComponent } from './profile/profile.component';
+import { AuthGuard } from './_guards/auth.guard';
 
 export const appRoutes: Routes = [
-    { path: 'home', component: HomeComponent },
-    { path: 'todays-plan', component: TodaysPlanComponent },
+    { path: '', component: HomeComponent },
+    {
+        path: '', // This path is added to the children path
+        runGuardsAndResolvers: 'always',
+        canActivate: [AuthGuard],
+        children: [
+            { path: 'diary', component: DiaryComponent },
+            { path: 'calendar', component: CalendarComponent },
+            { path: 'profile', component: ProfileComponent },
+            { path: 'todays-plan', component: TodaysPlanComponent },
+        ]
+    },
     { path: 'help', component: HelpComponent },
-    { path: 'diary', component: DiaryComponent  },
     { path: 'about', component: AboutComponent },
-    { path: 'calendar', component: CalendarComponent },
-    { path: 'profile', component: ProfileComponent},
-    { path: '**', redirectTo: 'home', pathMatch: 'full' },
+    { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
