@@ -1,13 +1,40 @@
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+
 <nav class="navbar navbar-expand-md navbar-dark  bg-dark">
   <div class="container">
-      <a class="navbar-brand text-light">BeeFit</a>
+      <a class="navbar-brand text-light" [routerLink]="['/home']">
+        BeeFit
+      </a>
   
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link">bla</a>
+        <li class="nav-item" routerLinkActive="router-link-active" *ngIf="!loggedIn()">
+          <a class="nav-link" [routerLink]="['/about']">
+            <i class="fas fa-info-circle"></i> About
+          </a>
         </li>
-        <li class="nav-item active" *ngIf="loggedIn()">
-          <a class="nav-link" (click)="logout()">Log out</a>
+
+        <li class="nav-item mr-auto" routerLinkActive="router-link-active" *ngIf="loggedIn()">
+          <a class="nav-link" [routerLink]="['/todays-plan']">
+            <i class="fa fa-clipboard-list"></i> Today's plan
+          </a>
+        </li>
+
+        <li class="nav-item mr-auto" routerLinkActive="router-link-active" *ngIf="loggedIn()">
+          <a class="nav-link" [routerLink]="['/calendar']">
+            <i class="far fa-calendar-alt"></i> Calendar
+          </a>
+        </li>
+
+        <li class="nav-item mr-auto" routerLinkActive="router-link-active" *ngIf="loggedIn()">
+          <a class="nav-link" [routerLink]="['/diary']">
+            <i class="far fa-calendar-check"></i> Diary
+          </a>
+        </li>
+
+        <li class="nav-item mr-auto" routerLinkActive="router-link-active">
+          <a class="nav-link" [routerLink]="['/help']">
+            <i class="far fa-question-circle"></i> Help
+          </a>
         </li>
       </ul>
   
@@ -17,9 +44,15 @@
         </a>
   
         <div class="dropdown-menu" *dropdownMenu>
-          <a class="dropdown-item"><i class="fa fa-user"></i> Edit profile</a>
+          <a class="dropdown-item" [routerLink]="['/profile']">
+            <i class="fa fa-user"></i> Edit profile
+          </a>
+
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" (click)="logout()"><i class="fa fa-sign-out"></i> Log out</a>
+
+          <a class="dropdown-item" (click)="logout()">
+            <i class="fas fa-sign-out"></i> Log out
+          </a>
         </div>
       </div>
   

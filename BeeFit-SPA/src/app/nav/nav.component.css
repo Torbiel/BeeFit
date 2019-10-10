@@ -7,3 +7,8 @@
 {
     display: none;
 }
+
+.far, .fas
+{
+    font-family: FontAwesome;
+}
