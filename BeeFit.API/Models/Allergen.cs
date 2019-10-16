@@ -1,5 +1,4 @@
-﻿using BeeFit.API.Models.Enums;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -8,20 +7,14 @@ using System.Threading.Tasks;
 
 namespace BeeFit.API.Models
 {
-    public class Meal
+    public class Allergen
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-
         [Required]
-        public MealType Type { get; set; }
-
-        [Required]
-        public DateTime Date { get; set; }
-
-        public virtual Dish Dish { get; set; }
-        public virtual Ingredient Ingredients { get; set; }
-        public double Quantity { get; set; }
+        public string Name { get; set; }
+        public virtual ICollection<IngredientsAllergen> Ingredients { get; set; }
+        public virtual ICollection<UsersAllergen> Users { get; set; }
     }
 }
