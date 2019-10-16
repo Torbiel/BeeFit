@@ -21,12 +21,67 @@ namespace BeeFit.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "SearchPreferences",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: false),
+                    Quantity = table.Column<double>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SearchPreferences", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Email = table.Column<string>(nullable: false),
+                    PasswordHash = table.Column<byte[]>(nullable: false),
+                    PasswordSalt = table.Column<byte[]>(nullable: false),
+                    Created = table.Column<DateTime>(nullable: false),
+                    LastActive = table.Column<DateTime>(nullable: false),
+                    Deleted = table.Column<bool>(nullable: false),
+                    Username = table.Column<string>(nullable: true),
+                    Height = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Dishes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: false),
+                    UserId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Dishes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Dishes_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Ingredients",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: false),
+                    UserId = table.Column<int>(nullable: true),
                     Unit = table.Column<int>(nullable: false),
                     Callories = table.Column<int>(nullable: false),
                     AnimalProteins = table.Column<double>(nullable: true),
@@ -67,91 +122,12 @@ namespace BeeFit.API.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Ingredients", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "SearchPreferences",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: false),
-                    Quantity = table.Column<double>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SearchPreferences", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Users",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Email = table.Column<string>(nullable: false),
-                    PasswordHash = table.Column<byte[]>(nullable: false),
-                    PasswordSalt = table.Column<byte[]>(nullable: false),
-                    Created = table.Column<DateTime>(nullable: false),
-                    LastActive = table.Column<DateTime>(nullable: false),
-                    Deleted = table.Column<bool>(nullable: false),
-                    Username = table.Column<string>(nullable: true),
-                    Height = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Users", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "IngredientsAllergens",
-                columns: table => new
-                {
-                    IngredientId = table.Column<int>(nullable: false),
-                    AllergenId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_IngredientsAllergens", x => new { x.IngredientId, x.AllergenId });
                     table.ForeignKey(
-                        name: "FK_IngredientsAllergens_Allergens_AllergenId",
-                        column: x => x.AllergenId,
-                        principalTable: "Allergens",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_IngredientsAllergens_Ingredients_IngredientId",
-                        column: x => x.IngredientId,
-                        principalTable: "Ingredients",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Dishes",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: false),
-                    UserId = table.Column<int>(nullable: false),
-                    IngredientId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Dishes", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Dishes_Ingredients_IngredientId",
-                        column: x => x.IngredientId,
-                        principalTable: "Ingredients",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Dishes_Users_UserId",
+                        name: "FK_Ingredients_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(
@@ -251,6 +227,30 @@ namespace BeeFit.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "IngredientsAllergens",
+                columns: table => new
+                {
+                    IngredientId = table.Column<int>(nullable: false),
+                    AllergenId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_IngredientsAllergens", x => new { x.IngredientId, x.AllergenId });
+                    table.ForeignKey(
+                        name: "FK_IngredientsAllergens_Allergens_AllergenId",
+                        column: x => x.AllergenId,
+                        principalTable: "Allergens",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_IngredientsAllergens_Ingredients_IngredientId",
+                        column: x => x.IngredientId,
+                        principalTable: "Ingredients",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Meals",
                 columns: table => new
                 {
@@ -260,7 +260,7 @@ namespace BeeFit.API.Migrations
                     Date = table.Column<DateTime>(nullable: false),
                     DishId = table.Column<int>(nullable: true),
                     IngredientsId = table.Column<int>(nullable: true),
-                    Quantity = table.Column<double>(nullable: false)
+                    Quantity = table.Column<double>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -270,19 +270,14 @@ namespace BeeFit.API.Migrations
                         column: x => x.DishId,
                         principalTable: "Dishes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
                         name: "FK_Meals_Ingredients_IngredientsId",
                         column: x => x.IngredientsId,
                         principalTable: "Ingredients",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.SetNull);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Dishes_IngredientId",
-                table: "Dishes",
-                column: "IngredientId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Dishes_UserId",
@@ -293,6 +288,11 @@ namespace BeeFit.API.Migrations
                 name: "IX_DishesIngredients_IngredientId",
                 table: "DishesIngredients",
                 column: "IngredientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Ingredients_UserId",
+                table: "Ingredients",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_IngredientsAllergens_AllergenId",
@@ -349,13 +349,13 @@ namespace BeeFit.API.Migrations
                 name: "Dishes");
 
             migrationBuilder.DropTable(
+                name: "Ingredients");
+
+            migrationBuilder.DropTable(
                 name: "Allergens");
 
             migrationBuilder.DropTable(
                 name: "SearchPreferences");
-
-            migrationBuilder.DropTable(
-                name: "Ingredients");
 
             migrationBuilder.DropTable(
                 name: "Users");

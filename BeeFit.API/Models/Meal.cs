@@ -22,6 +22,6 @@ namespace BeeFit.API.Models
 
         public virtual Dish Dish { get; set; }
         public virtual Ingredient Ingredients { get; set; }
-        public double Quantity { get; set; }
+        public double? Quantity { get; set; }
     }
 }
