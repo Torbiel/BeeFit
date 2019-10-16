@@ -1,25 +1,20 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using BeeFit.API.Data;
+using BeeFit.API.Data.Interfaces;
+using BeeFit.API.Helpers;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
-using BeeFit.API.Data.Interfaces;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using System.Net;
-using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.AspNetCore.Http;
-using BeeFit.API.Helpers;
+using System.Text;
+using Microsoft.EntityFrameworkCore.Proxies;
 
 namespace BeeFit.API
 {
@@ -38,7 +33,8 @@ namespace BeeFit.API
             // The order of adding services doesn't matter.
             services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0).AddMvcOptions(options => options.EnableEndpointRouting = false);
-            services.AddDbContext<BeeFitDbContext>(x => x.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<BeeFitDbContext>(x => x.UseLazyLoadingProxies()
+                                                         .UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllers();
             // Scoped service is created once per request
             // https://stackoverflow.com/questions/38138100/addtransient-addscoped-and-addsingleton-services-differences
