@@ -1,29 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BeeFit.API.Data;
+﻿using BeeFit.API.Data;
+using BeeFit.API.Data.Interfaces;
+using BeeFit.API.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace BeeFit.API.Controllers
 {
     [Route("api/[controller]")]
+    [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly BeeFitDbContext _context;
+        private readonly IBeeFitRepository _repo;
 
-        public UsersController(BeeFitDbContext context)
+        public UsersController(IBeeFitRepository repo)
         {
-            _context = context;
+            _repo = repo;
         }
 
-        [HttpGet("/${id}", Name = "GetUser")]
+        [HttpGet]
+        public async Task<IActionResult> GetUsers()
+        {
+            var users = await _repo.GetAll<User>();
+
+            return Ok(users);
+        }
+
+        [HttpGet("/${id}")]
         public async Task<IActionResult> GetUser(int id)
         {
-            return Ok();
+            var user = await _repo.Get<User>(id);
+
+            return Ok(user);
         }
     }
 }

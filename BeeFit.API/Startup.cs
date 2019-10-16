@@ -39,6 +39,7 @@ namespace BeeFit.API
             // Scoped service is created once per request
             // https://stackoverflow.com/questions/38138100/addtransient-addscoped-and-addsingleton-services-differences
             services.AddScoped<IAuthRepository, AuthRepository>();
+            services.AddScoped<IBeeFitRepository, BeeFitRepository>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     .AddJwtBearer(options =>
                     {

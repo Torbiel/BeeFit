@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BeeFit.API.Models.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -20,6 +21,10 @@ namespace BeeFit.API.Models
         [Required]
         public byte[] PasswordSalt { get; set; }
         [Required]
+        public Gender Gender { get; set; }
+        [Required]
+        public int Height { get; set; }
+        [Required]
         public DateTime Created { get; set; }
         [Required]
         public DateTime LastActive { get; set; }
@@ -28,7 +33,6 @@ namespace BeeFit.API.Models
 
         // Not required fields.
         public string Username { get; set; }
-        public int? Height { get; set; }
         public virtual ICollection<UsersSearchPreference> Preferences { get; set; }
         public virtual ICollection<UsersAllergen> Allergens { get; set; }
         public virtual ICollection<UsersParameter> Parameters { get; set; }
