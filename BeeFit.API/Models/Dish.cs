@@ -11,7 +11,6 @@ namespace BeeFit.API.Models
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
-        [Required]
         public virtual User User { get; set; }
         public virtual ICollection<DishesIngredient> Ingredients { get; set; }
     }
