@@ -25,6 +25,8 @@ namespace BeeFit.API.Models
         [Required]
         public int Height { get; set; }
         [Required]
+        public DateTime DateOfBirth { get; set; }
+        [Required]
         public DateTime Created { get; set; }
         [Required]
         public DateTime LastActive { get; set; }

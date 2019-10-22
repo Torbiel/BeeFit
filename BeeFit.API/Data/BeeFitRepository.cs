@@ -1,4 +1,5 @@
 ﻿using BeeFit.API.Data.Interfaces;
+using BeeFit.API.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

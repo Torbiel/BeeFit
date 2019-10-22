@@ -14,7 +14,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using System.Net;
 using System.Text;
-using Microsoft.EntityFrameworkCore.Proxies;
+using Newtonsoft.Json;
 
 namespace BeeFit.API
 {
