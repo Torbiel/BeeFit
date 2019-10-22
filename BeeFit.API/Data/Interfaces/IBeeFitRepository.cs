@@ -1,5 +1,4 @@
-﻿using BeeFit.API.Models;
-using System.Collections;
+using BeeFit.API.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -13,6 +12,5 @@ namespace BeeFit.API.Data.Interfaces
         void Update<T>(T entity) where T : class;
         Task<IEnumerable<T>> GetAll<T>() where T : class;
         Task<bool> SaveAll();
-        Task<IEnumerable<User>> GetUsers();
     }
 }

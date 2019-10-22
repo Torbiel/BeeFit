@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace BeeFit.API.Models
+﻿namespace BeeFit.API.Models
 {
     public class UsersAllergen
     {
