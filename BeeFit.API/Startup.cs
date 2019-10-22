@@ -15,6 +15,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Net;
 using System.Text;
 using Microsoft.EntityFrameworkCore.Proxies;
+using AutoMapper;
 
 namespace BeeFit.API
 {
@@ -31,6 +32,7 @@ namespace BeeFit.API
         public void ConfigureServices(IServiceCollection services)
         {
             // The order of adding services doesn't matter.
+            services.AddAutoMapper(typeof(BeeFitRepository).Assembly);
             services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0).AddMvcOptions(options => options.EnableEndpointRouting = false);
             services.AddDbContext<BeeFitDbContext>(x => x.UseLazyLoadingProxies()
