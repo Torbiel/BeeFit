@@ -18,6 +18,7 @@ import { HelpComponent } from './help/help.component';
 import { DiaryComponent } from './diary/diary.component';
 import { appRoutes } from './routes';
 import { ProfileComponent } from './profile/profile.component';
+import { WelcomeComponent } from './welcome/welcome.component';
 
 @NgModule({
    declarations: [
@@ -31,7 +32,8 @@ import { ProfileComponent } from './profile/profile.component';
       AboutComponent,
       HelpComponent,
       DiaryComponent,
-      ProfileComponent
+      ProfileComponent,
+      WelcomeComponent
    ],
    imports: [
       BrowserModule,

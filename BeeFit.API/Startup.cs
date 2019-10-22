@@ -32,15 +32,23 @@ namespace BeeFit.API
         {
             // The order of adding services doesn't matter.
             services.AddAutoMapper(typeof(BeeFitRepository).Assembly);
+
             services.AddCors();
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0).AddMvcOptions(options => options.EnableEndpointRouting = false);
+
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
+                             .AddMvcOptions(options => options.EnableEndpointRouting = false);
+
             services.AddDbContext<BeeFitDbContext>(x => x.UseLazyLoadingProxies()
                                                          .UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddControllers();
+
+            services.AddControllers().AddNewtonsoftJson();
+
             // Scoped service is created once per request
             // https://stackoverflow.com/questions/38138100/addtransient-addscoped-and-addsingleton-services-differences
             services.AddScoped<IAuthRepository, AuthRepository>();
+
             services.AddScoped<IBeeFitRepository, BeeFitRepository>();
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     .AddJwtBearer(options =>
                     {
@@ -53,6 +61,8 @@ namespace BeeFit.API
                             ValidateAudience = false // same
                         };
                     });
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>(); // To retrieve current user
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
