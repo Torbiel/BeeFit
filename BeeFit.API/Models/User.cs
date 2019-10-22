@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BeeFit.API.Models
 {
@@ -22,8 +24,6 @@ namespace BeeFit.API.Models
         public Gender Gender { get; set; }
         [Required]
         public int Height { get; set; }
-        [Required]
-        public DateTime DateOfBirth { get; set; }
         [Required]
         public DateTime Created { get; set; }
         [Required]

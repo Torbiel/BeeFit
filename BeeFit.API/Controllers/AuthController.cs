@@ -1,15 +1,16 @@
-﻿using BeeFit.API.Data.Interfaces;
-using BeeFit.API.Dtos;
-using BeeFit.API.Models;
-using BeeFit.API.Models.Enums;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using BeeFit.API.Data.Interfaces;
+using BeeFit.API.Dtos;
+using BeeFit.API.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 
 namespace BeeFit.API.Controllers
 {
@@ -41,7 +42,7 @@ namespace BeeFit.API.Controllers
                 Email = userForRegisterDto.Email, 
                 Created = DateTime.Now,
                 LastActive = DateTime.Now,
-                Deleted = false,
+                Deleted = false
             };
 
             var createdUser = await _authRepository.Register(userToCreate, userForRegisterDto.Password);
