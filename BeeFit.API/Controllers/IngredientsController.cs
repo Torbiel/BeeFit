@@ -2,6 +2,7 @@
 using BeeFit.API.Data.Interfaces;
 using BeeFit.API.Dtos;
 using BeeFit.API.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace BeeFit.API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class IngredientsController : ControllerBase
@@ -36,6 +38,7 @@ namespace BeeFit.API.Controllers
             ingredientForAddDto.User = user;
 
             var ingredientToAdd = _mapper.Map<Ingredient>(ingredientForAddDto);
+            ingredientToAdd.User = user;
 
             _repo.Add(ingredientToAdd);
 
@@ -72,9 +75,10 @@ namespace BeeFit.API.Controllers
                 return Unauthorized();
             }
 
+            ingredientDto.User = await _repo.Get<User>(userId); // We have to set the user again on update, otherwise it will become null in db
             _mapper.Map(ingredientDto, ingredientToUpdate); // This automatically updates the ingredient
 
-            return Ok();
+            return NoContent();
         }
 
         [HttpDelete("{id}")]
