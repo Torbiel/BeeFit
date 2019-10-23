@@ -15,6 +15,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Net;
 using System.Text;
 using AutoMapper;
+using Newtonsoft.Json;
 
 namespace BeeFit.API
 {
@@ -34,14 +35,19 @@ namespace BeeFit.API
             services.AddAutoMapper(typeof(BeeFitRepository).Assembly);
 
             services.AddCors();
+            
+            services.AddControllers()
+                    .AddNewtonsoftJson(options => 
+                                       {
+                                           options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                                       });
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
-                             .AddMvcOptions(options => options.EnableEndpointRouting = false);
+            services.AddMvc(options => options.Filters.Add(typeof(DbSaveChangesFilter)))
+                    .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
+                    .AddMvcOptions(options => options.EnableEndpointRouting = false);
 
             services.AddDbContext<BeeFitDbContext>(x => x.UseLazyLoadingProxies()
                                                          .UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
-            services.AddControllers().AddNewtonsoftJson();
 
             // Scoped service is created once per request
             // https://stackoverflow.com/questions/38138100/addtransient-addscoped-and-addsingleton-services-differences
@@ -63,6 +69,8 @@ namespace BeeFit.API
                     });
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>(); // To retrieve current user
+
+            services.AddScoped<LogUserActivity>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

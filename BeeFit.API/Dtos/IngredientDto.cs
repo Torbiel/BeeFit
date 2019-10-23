@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BeeFit.API.Dtos
 {
-    public class IngredientForAddDto
+    public class IngredientDto
     {
         public int Id { get; set; }
         public string Name { get; set; }
