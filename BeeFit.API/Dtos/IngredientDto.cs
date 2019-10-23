@@ -9,7 +9,6 @@ namespace BeeFit.API.Dtos
 {
     public class IngredientDto
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public User User { get; set; }
         public Unit Unit { get; set; }

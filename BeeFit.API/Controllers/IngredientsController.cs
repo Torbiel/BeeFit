@@ -26,7 +26,7 @@ namespace BeeFit.API.Controllers
             _mapper = mapper;
         }
 
-        [HttpPost("create")]
+        [HttpPost]
         public async Task<IActionResult> Create(IngredientDto ingredientForAddDto)
         {
             var userClaim = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
@@ -58,6 +58,36 @@ namespace BeeFit.API.Controllers
             var ingredientsToReturn = _mapper.Map<IEnumerable<IngredientDto>>(ingredients);
 
             return Ok(ingredientsToReturn);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, IngredientDto ingredientDto)
+        {
+            var ingredientToUpdate = await _repo.Get<Ingredient>(id);
+
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            if(userId != ingredientToUpdate.User.Id)
+            {
+                return Unauthorized();
+            }
+
+            _mapper.Map(ingredientDto, ingredientToUpdate); // This automatically updates the ingredient
+
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var ingredientToDelete = await _repo.Get<Ingredient>(id);
+
+            if(ingredientToDelete != null)
+            {
+                _repo.Delete<Ingredient>(id);
+            }
+
+            return Ok();
         }
     }
 }
