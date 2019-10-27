@@ -7,6 +7,7 @@ import { AboutComponent } from './about/about.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AuthGuard } from './_guards/auth.guard';
+import { WelcomeComponent } from './welcome/welcome.component';
 
 export const appRoutes: Routes = [
     { path: '', component: HomeComponent },
@@ -19,6 +20,7 @@ export const appRoutes: Routes = [
             { path: 'calendar', component: CalendarComponent },
             { path: 'profile', component: ProfileComponent },
             { path: 'todays-plan', component: TodaysPlanComponent },
+            { path: 'welcome', component: WelcomeComponent }
         ]
     },
     { path: 'help', component: HelpComponent },

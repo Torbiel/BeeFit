@@ -19,6 +19,9 @@ namespace BeeFit.API.Helpers
                 .ForMember(x => x.Quantity, opt => opt.MapFrom(src => src.SearchPreference.Quantity));
 
             CreateMap<UsersParameter, UsersParameterForListDto>();
+
+            CreateMap<IngredientDto, Ingredient>();
+            CreateMap<Ingredient, IngredientDto>();
         }
     }
 }

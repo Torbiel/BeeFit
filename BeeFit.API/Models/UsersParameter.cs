@@ -1,7 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
 
 namespace BeeFit.API.Models
 {
@@ -11,7 +10,6 @@ namespace BeeFit.API.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [Required]
-        [JsonIgnore]
         public virtual User User { get; set; }
         [Required]
         public DateTime Date { get; set; }
