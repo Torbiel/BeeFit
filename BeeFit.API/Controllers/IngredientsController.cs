@@ -18,21 +18,19 @@ namespace BeeFit.API.Controllers
     public class IngredientsController : ControllerBase
     {
         private readonly IBeeFitRepository _repo;
-        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IMapper _mapper;
 
         public IngredientsController(IBeeFitRepository repo, IHttpContextAccessor httpContextAccessor, IMapper mapper)
         {
             _repo = repo;
-            _httpContextAccessor = httpContextAccessor;
             _mapper = mapper;
         }
 
         [HttpPost]
         public async Task<IActionResult> Create(IngredientDto ingredientForAddDto)
         {
-            var userClaim = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
-            var userId = Convert.ToInt32(userClaim.Value);
+            var userClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            var userId = int.Parse(userClaim.Value);
             var user = await _repo.Get<User>(userId);
 
             ingredientForAddDto.User = user;
