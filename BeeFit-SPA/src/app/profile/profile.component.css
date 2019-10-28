@@ -1,0 +1,30 @@
+.nav
+{
+    font-weight: 650;
+    font-size: 2em;
+}
+
+.left-margin-100
+{
+    margin-left: 100px;
+}
+
+.top-margin-40
+{
+    margin-top: 40px;
+}
+
+hr 
+{
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 2px solid rgb(0, 0, 0);
+    margin: 1em 0;
+    padding: 0;
+}
+
+.dropdown
+{
+    border: 1px solid;
+}

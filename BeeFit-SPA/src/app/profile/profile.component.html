@@ -1,5 +1,67 @@
 <div class="container">
-  <div class="row">
-    
+  <div class="row justify-content-center top-margin-40">
+    <div class="col">
+      <div class="row nav">Profile</div>
+      <div class="row nav">Parameters</div>
+      <div class="row nav">Charts</div>
+    </div>
+    <div class="col-10">
+      <hr />
+      <div class="row left-margin-100">
+        <div class="col-2">Username: </div>
+        <div class="col-2">blablabla</div>
+      </div>
+      <div class="row left-margin-100">
+        <div class="col-2">E-mail: </div>
+        <div class="col-2">blabla@bla.com</div>
+      </div>
+      <div class="row left-margin-100">
+        <div class="col-2">Password: </div>
+        <div class="col-2">xxxxxxxx</div>
+      </div>
+      
+      <hr />
+
+      <div class="row">
+        View from: 
+        <div class="dropdown" dropdown>
+          <a class="dropdown-toggle" (click)="false" dropdownToggle>
+            last date from db
+          </a>
+
+          <div class="dropdown-menu" *dropdownMenu>
+            <a class="dropdown-item">
+              filled with dates
+            </a>
+          </div>
+        </div>
+        
+        to:
+        <div class="dropdown" dropdown>
+          <a class="dropdown-toggle" (click)="false" dropdownToggle>
+            second last
+          </a>
+
+          <div class="dropdown-menu" *dropdownMenu>
+            filled with dates
+          </div>
+        </div>
+      </div> 
+
+      <div class="row">
+        <table>
+          <thead>
+            <td>Date:</td>
+            <td>Weight:</td>
+            <td>Abdomen:</td>
+            <td>Bicep:</td>
+            <td>Thigh:</td>
+          </thead>
+          <tbody>
+            
+          </tbody>
+        </table>
+      </div>
+    </div> 
   </div>
 </div>
