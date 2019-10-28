@@ -1,5 +1,7 @@
-﻿using BeeFit.API.Models.Enums;
+﻿using BeeFit.API.Models;
+using BeeFit.API.Models.Enums;
 using System;
+using System.Collections.Generic;
 
 namespace BeeFit.API.Dtos
 {
@@ -11,5 +13,7 @@ namespace BeeFit.API.Dtos
         public int Height { get; set; }
         public DateTime DateOfBirth { get; set; }
         public string Username { get; set; }
+        public ICollection<UsersParameter> Parameters { get; set; }
+        public ICollection<UsersAllergenForListDto> Allergens { get; set; }
     }
 }
