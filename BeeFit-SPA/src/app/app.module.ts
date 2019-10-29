@@ -4,7 +4,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { BsDropdownModule } from 'ngx-bootstrap';
 import { RouterModule } from '@angular/router';
-import { JwtModule } from '@auth0/angular-jwt';
 
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
@@ -18,11 +17,9 @@ import { AboutComponent } from './about/about.component';
 import { HelpComponent } from './help/help.component';
 import { DiaryComponent } from './diary/diary.component';
 import { appRoutes } from './routes';
-import { ProfileComponent } from './profile/profile.component';
-
-export function tokenGetter() {
-   return localStorage.getItem('token');
-}
+import { ProfileMainComponent } from './profile/profile-main/profile-main.component';
+import { ProfileNavComponent } from './profile/profile-nav/profile-nav.component';
+import { ProfileParametersComponent } from './profile/profile-parameters/profile-parameters.component';
 
 @NgModule({
    declarations: [
@@ -36,21 +33,23 @@ export function tokenGetter() {
       AboutComponent,
       HelpComponent,
       DiaryComponent,
-      ProfileComponent
+      ProfileMainComponent,
+      ProfileNavComponent,
+      ProfileParametersComponent
    ],
    imports: [
       BrowserModule,
       HttpClientModule,
       FormsModule,
       BsDropdownModule.forRoot(),
+      RouterModule.forChild([
+         { path: 'profile', component: ProfileNavComponent, children: [
+            { path: 'main', component: ProfileMainComponent, outlet: 'profile' },
+            { path: 'parameters', component: ProfileParametersComponent, outlet: 'profile'},
+            { path: '', redirectTo: 'main', pathMatch: 'full' },
+         ]
+      }]),
       RouterModule.forRoot(appRoutes),
-      JwtModule.forRoot({
-         config: {
-            tokenGetter: tokenGetter,
-            whitelistedDomains: ['localhost:44322'],
-            blacklistedRoutes: ['localhost:44322/api/auth']
-         }
-      })
    ],
    providers: [
       AuthService,

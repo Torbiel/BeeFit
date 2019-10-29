@@ -50,18 +50,17 @@ namespace BeeFit.API.Controllers
         public async Task<IActionResult> UpdateUser(int id, UserForUpdateDto userForUpdateDto)
         {
             var userToUpdate = await _repo.Get<User>(id);
-
-            _mapper.Map(userForUpdateDto, userToUpdate);
             
-            if(userForUpdateDto.OldPassword != null && userForUpdateDto.NewPassword != null)
+            if(userForUpdateDto.OldPassword != string.Empty && userForUpdateDto.NewPassword != string.Empty)
             {
                 if (_authRepo.CreateNewPassword(userToUpdate, userForUpdateDto.OldPassword, userForUpdateDto.NewPassword) == null)
                 {
                     return Unauthorized();
                 }
-
-                _repo.Update(userToUpdate);
             }
+
+            _mapper.Map(userForUpdateDto, userToUpdate);
+            await _repo.SaveAll();
 
             return NoContent();
         }

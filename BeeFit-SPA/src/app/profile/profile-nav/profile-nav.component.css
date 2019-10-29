@@ -1,0 +1,32 @@
+button
+{
+    font-weight: 650;
+    font-size: 1.5em;
+    cursor: pointer;
+    border: none;
+    color: black;   
+    background-color: inherit;
+    border: 1px solid black;
+    width: 100%;
+}
+
+button:hover
+{
+    background-color: black;
+    color:gold;
+}
+
+.nav
+{
+    background-color: gold;
+}
+
+hr 
+{
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 2px solid rgb(0, 0, 0);
+    margin: 1em 0;
+    padding: 0;
+}

@@ -21,10 +21,8 @@ export class UserService {
     return this.http.get<User>(url);
   }
 
-  updateUser(user: User): Observable<User> {
+  updateUser(user: User) {
     const url = this.baseUrl + '/' + user.id;
-    const data = JSON.stringify(user);
-
-    return this.http.put<User>(url, data);
+    return this.http.put(url, user);
   }
 }
