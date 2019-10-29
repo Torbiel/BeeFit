@@ -85,5 +85,13 @@ namespace BeeFit.API.Controllers
 
             return Ok(new { token = tokenHandler.WriteToken(token) });
         }
+
+        [HttpPut]
+        public async Task<IActionResult> ChangePassword()
+        {
+
+
+            return NoContent();
+        }
     }
 }

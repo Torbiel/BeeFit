@@ -31,4 +31,8 @@ export class ProfileComponent implements OnInit {
   toggleEdit() {
     this.editMode = !this.editMode;
   }
+
+  saveChanges() {
+    this.userService.updateUser(this.user);
+  }
 }

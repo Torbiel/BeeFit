@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.JsonPatch;
+using System.Linq;
 
 namespace BeeFit.API.Controllers
 {
@@ -15,11 +17,13 @@ namespace BeeFit.API.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IBeeFitRepository _repo;
+        private readonly IAuthRepository _authRepo;
         private readonly IMapper _mapper;
 
-        public UsersController(IBeeFitRepository repo, IMapper mapper)
+        public UsersController(IBeeFitRepository repo, IAuthRepository authrepo, IMapper mapper)
         {
             _repo = repo;
+            _authRepo = authrepo;
             _mapper = mapper;
         }
 
@@ -40,6 +44,26 @@ namespace BeeFit.API.Controllers
             var userToReturn = _mapper.Map<UserForProfileDto>(user);
 
             return Ok(userToReturn);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateUser(int id, UserForUpdateDto userForUpdateDto)
+        {
+            var userToUpdate = await _repo.Get<User>(id);
+
+            _mapper.Map(userForUpdateDto, userToUpdate);
+            
+            if(userForUpdateDto.OldPassword != null && userForUpdateDto.NewPassword != null)
+            {
+                if (_authRepo.CreateNewPassword(userToUpdate, userForUpdateDto.OldPassword, userForUpdateDto.NewPassword) == null)
+                {
+                    return Unauthorized();
+                }
+
+                _repo.Update(userToUpdate);
+            }
+
+            return NoContent();
         }
     }
 }

@@ -7,12 +7,13 @@
     </div>
     <div class="col-10">
       <hr />
-      <div class="row">
+
+      <div class="row" *ngIf="!editMode">
         <div class="col-md-auto">
           <button class="edit-button" (click)="toggleEdit()"><i class="fas fa-edit"></i></button>
         </div>
 
-        <div class="col" *ngIf="!editMode">
+        <div class="col">
           <div class="row">
             <div class="col-2">Username: </div>
             <div class="col-2">{{user.username}}</div>
@@ -23,32 +24,45 @@
           </div>
           <div class="row">
             <div class="col-2">Password: </div>
-            <div class="col-2"></div>
+            <div class="col-2">xxxxxxxx</div>
           </div>
         </div>
+      </div>
 
-        <div class="col" *ngIf="editMode">
-          <div class="row">
-            <div class="col-2">Username: </div>
-            <div class="col-2">
-              <input type="text" value="{{user.username}}">
+      <div class="row" *ngIf="editMode">
+        <form (ngSubmit)="saveChanges()">
+          <div class="col-md-auto" >
+            <div class="row">
+              <button class="save-button" type="submit"><i class="far fa-check-square"></i></button>
+            </div>
+            <div class="row">
+              <button class="cancel-button" (click)="toggleEdit()" type="reset"><i class="far fa-window-close"></i></button>
             </div>
           </div>
-          <div class="row">
-            <div class="col-2">E-mail: </div>
-            <div class="col-2">
-              <input type="text" value="{{user.email}}">
+
+          <div class="col">
+            <div class="row">
+              <div class="col-2">Username: </div>
+              <div class="col-2">
+                <input type="text" value="{{user.username}}" [(ngModel)]="user.username">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-2">E-mail: </div>
+              <div class="col-2">
+                <input type="text" value="{{user.email}}" [(ngModel)]="user.email">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-2">Old password: </div>
+              <div class="col-2"><input type="password" [(ngModel)]="user.oldPassword"></div>
+            </div>
+            <div class="row">
+              <div class="col-2">New password: </div>
+              <div class="col-2"><input type="password" [(ngModel)]="user.newPassword"></div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-2">Old password: </div>
-            <div class="col-2"><input type="password"></div>
-          </div>
-          <div class="row">
-            <div class="col-2">New password: </div>
-            <div class="col-2"><input type="password"></div>
-          </div>
-        </div>
+        </form>
       </div>
       
       <hr />
