@@ -1,7 +1,6 @@
 ﻿using BeeFit.API.Data.Interfaces;
 using BeeFit.API.Dtos;
 using BeeFit.API.Models;
-using BeeFit.API.Models.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;

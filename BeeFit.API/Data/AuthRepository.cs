@@ -59,7 +59,6 @@ namespace BeeFit.API.Data
             user.PasswordSalt = passwordSalt;
 
             await _context.Users.AddAsync(user);
-            await _context.SaveChangesAsync();
 
             return user;
         }

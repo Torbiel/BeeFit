@@ -8,9 +8,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using System.Linq;
+using BeeFit.API.Helpers;
 
 namespace BeeFit.API.Controllers
 {
+    [ServiceFilter(typeof(LogUserActivity))]
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
@@ -29,7 +31,7 @@ namespace BeeFit.API.Controllers
 
         // [Authorize(Roles = Role.Admin)] TODO?: Role-based authentication
         [HttpGet]
-        public async Task<IActionResult> GetUsers()
+        public async Task<IActionResult> GetAll()
         {
             var users = await _repo.GetAll<User>();
             var usersToReturn = _mapper.Map<IEnumerable<UserForListDto>>(users);
@@ -38,7 +40,7 @@ namespace BeeFit.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetUser(int id)
+        public async Task<IActionResult> Get(int id)
         {
             var user = await _repo.Get<User>(id);
             var userToReturn = _mapper.Map<UserForProfileDto>(user);
