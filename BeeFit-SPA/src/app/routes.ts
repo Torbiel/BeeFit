@@ -7,6 +7,7 @@ import { AboutComponent } from './about/about.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { ProfileNavComponent } from './profile/profile-nav/profile-nav.component';
+import { WelcomeComponent } from './welcome/welcome.component';
 
 export const appRoutes: Routes = [
     { path: '', component: HomeComponent },
@@ -18,7 +19,8 @@ export const appRoutes: Routes = [
             { path: 'diary', component: DiaryComponent },
             { path: 'calendar', component: CalendarComponent },
             { path: 'todays-plan', component: TodaysPlanComponent },
-            { path: 'profile', component: ProfileNavComponent }
+            { path: 'profile', component: ProfileNavComponent },
+            { path: 'welcome', component: WelcomeComponent }
         ]
     },
     { path: 'help', component: HelpComponent },

@@ -1,21 +1,15 @@
-﻿using BeeFit.API.Models.Enums;
+﻿using BeeFit.API.Models;
+using BeeFit.API.Models.Enums;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace BeeFit.API.Models
+namespace BeeFit.API.Dtos
 {
-    public class Ingredient
+    public class IngredientDto
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-        [Required]
         public string Name { get; set; }
-        public virtual User User { get; set; }
+        public User User { get; set; }
         public Unit Unit { get; set; }
-        public virtual ICollection<DishesIngredient> Dishes { get; set; }
-        public virtual ICollection<IngredientsAllergen> Allergens { get; set; }
+        public List<IngredientsAllergen> Allergens { get; set; }
         public int Callories { get; set; }
         public double Fats { get; set; }
         public double Carbohydrates { get; set; }
@@ -25,7 +19,6 @@ namespace BeeFit.API.Models
         public double? PlantProteins { get; set; }
         public double? SaturatedFats { get; set; }
         public double? MonounsaturatedFats { get; set; }
-        // PolyunsaturatedFats = Omega3 + Omega6
         public double? Omega3 { get; set; }
         public double? Omega6 { get; set; }
         public double? Fiber { get; set; }

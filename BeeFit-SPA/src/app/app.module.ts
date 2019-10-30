@@ -20,6 +20,7 @@ import { appRoutes } from './routes';
 import { ProfileMainComponent } from './profile/profile-main/profile-main.component';
 import { ProfileNavComponent } from './profile/profile-nav/profile-nav.component';
 import { ProfileParametersComponent } from './profile/profile-parameters/profile-parameters.component';
+import { WelcomeComponent } from './welcome/welcome.component';
 
 @NgModule({
    declarations: [
@@ -35,7 +36,8 @@ import { ProfileParametersComponent } from './profile/profile-parameters/profile
       DiaryComponent,
       ProfileMainComponent,
       ProfileNavComponent,
-      ProfileParametersComponent
+      ProfileParametersComponent,
+      WelcomeComponent
    ],
    imports: [
       BrowserModule,
@@ -46,7 +48,7 @@ import { ProfileParametersComponent } from './profile/profile-parameters/profile
          { path: 'profile', component: ProfileNavComponent, children: [
             { path: 'main', component: ProfileMainComponent, outlet: 'profile' },
             { path: 'parameters', component: ProfileParametersComponent, outlet: 'profile'},
-            { path: '', redirectTo: 'main', pathMatch: 'full' },
+            { path: '', redirectTo: 'main', pathMatch: 'full' }
          ]
       }]),
       RouterModule.forRoot(appRoutes),
