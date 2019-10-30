@@ -4,6 +4,12 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from '../_models/User';
 
+const httpOptions = {
+  headers: new HttpHeaders({
+    Authorization: 'Bearer ' + localStorage.getItem('token')
+  })
+};
+
 @Injectable({
   providedIn: 'root'
 })
@@ -13,16 +19,16 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   getUsers(): Observable<User[]> {
-    return this.http.get<User[]>(this.baseUrl);
+    return this.http.get<User[]>(this.baseUrl, httpOptions);
   }
 
   getUser(id): Observable<User> {
     const url = this.baseUrl + '/' + id;
-    return this.http.get<User>(url);
+    return this.http.get<User>(url, httpOptions);
   }
 
   updateUser(user: User) {
     const url = this.baseUrl + '/' + user.id;
-    return this.http.put(url, user);
+    return this.http.put(url, user, httpOptions);
   }
 }

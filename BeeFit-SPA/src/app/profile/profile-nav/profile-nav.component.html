@@ -2,8 +2,8 @@
   <div class="row mt-4">
     <div class="col-md-2">
       <div class="nav">
-        <button [routerLink]="[{ outlets: { profile: ['main'] } }]">Profile</button> <br>
-        <button [routerLink]="[{ outlets: { profile: ['parameters'] } }]">Parameters</button> <br>
+        <button (click)="navigate('main')">Profile</button> <br>
+        <button (click)="navigate('parameters')">Parameters</button> <br>
         <button [routerLink]="[{ outlets: { profile: ['charts'] } }]">Charts</button> <br>
         <button [routerLink]="[{ outlets: { profile: ['target'] } }]">Target</button>
       </div>
