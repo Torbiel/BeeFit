@@ -8,11 +8,13 @@ export interface User {
     gender: number;
     height: number;
     dateOfBirth: Date;
-    username: string;
+    username?: string;
     created?: Date;
     lastActive?: Date;
     deleted?: boolean;
     preferences?: SearchPreference[];
     allergens?: Allergen[];
     parameters?: UsersParameter[];
+    oldPassword: string;
+    newPassword: string;
 }

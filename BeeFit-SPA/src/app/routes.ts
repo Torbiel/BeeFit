@@ -5,8 +5,8 @@ import { HelpComponent } from './help/help.component';
 import { DiaryComponent } from './diary/diary.component';
 import { AboutComponent } from './about/about.component';
 import { CalendarComponent } from './calendar/calendar.component';
-import { ProfileComponent } from './profile/profile.component';
 import { AuthGuard } from './_guards/auth.guard';
+import { ProfileNavComponent } from './profile/profile-nav/profile-nav.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 
 export const appRoutes: Routes = [
@@ -18,8 +18,8 @@ export const appRoutes: Routes = [
         children: [
             { path: 'diary', component: DiaryComponent },
             { path: 'calendar', component: CalendarComponent },
-            { path: 'profile', component: ProfileComponent },
             { path: 'todays-plan', component: TodaysPlanComponent },
+            { path: 'profile', component: ProfileNavComponent },
             { path: 'welcome', component: WelcomeComponent }
         ]
     },

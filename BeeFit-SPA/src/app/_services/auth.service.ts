@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { environment } from 'src/environments/environment';
+import * as jwtDecode from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,10 @@ export class AuthService {
 
           if (user) {
             localStorage.setItem('token', user.token);
+
+            const decodedToken = jwtDecode(user.token);
+
+            localStorage.setItem('userId', decodedToken.nameid);
           }
         })
       );

@@ -20,6 +20,7 @@ namespace BeeFit.API.Helpers
 
             CreateMap<UsersParameter, UsersParameterForListDto>();
 
+            CreateMap<UserForUpdateDto, User>();
             CreateMap<IngredientDto, Ingredient>();
             CreateMap<Ingredient, IngredientDto>();
         }

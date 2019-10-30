@@ -14,15 +14,21 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class UserService {
-  baseUrl = environment.apiUrl;
+  baseUrl = environment.apiUrl + 'users';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getUsers(): Observable<User[]> {
-    return this.http.get<User[]>(this.baseUrl + 'users', httpOptions);
+    return this.http.get<User[]>(this.baseUrl, httpOptions);
   }
 
   getUser(id): Observable<User> {
-    return this.http.get<User>(this.baseUrl + 'users/' + id, httpOptions);
+    const url = this.baseUrl + '/' + id;
+    return this.http.get<User>(url, httpOptions);
+  }
+
+  updateUser(user: User) {
+    const url = this.baseUrl + '/' + user.id;
+    return this.http.put(url, user, httpOptions);
   }
 }

@@ -87,5 +87,22 @@ namespace BeeFit.API.Data
 
             return false;
         }
+
+        public User CreateNewPassword(User user, string oldPassword, string newPassword)
+        {
+            if(!VerifyPasswordHash(oldPassword, user.PasswordHash, user.PasswordSalt))
+            {
+                return null;
+            }
+
+            byte[] newPasswordHash, newPasswordSalt;
+
+            CreatePasswordHash(newPassword, out newPasswordHash, out newPasswordSalt);
+
+            user.PasswordHash = newPasswordHash;
+            user.PasswordSalt = newPasswordSalt;
+
+            return user;
+        }
     }
 }

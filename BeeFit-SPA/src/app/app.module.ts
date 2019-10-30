@@ -17,7 +17,9 @@ import { AboutComponent } from './about/about.component';
 import { HelpComponent } from './help/help.component';
 import { DiaryComponent } from './diary/diary.component';
 import { appRoutes } from './routes';
-import { ProfileComponent } from './profile/profile.component';
+import { ProfileMainComponent } from './profile/profile-main/profile-main.component';
+import { ProfileNavComponent } from './profile/profile-nav/profile-nav.component';
+import { ProfileParametersComponent } from './profile/profile-parameters/profile-parameters.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 
 @NgModule({
@@ -32,7 +34,9 @@ import { WelcomeComponent } from './welcome/welcome.component';
       AboutComponent,
       HelpComponent,
       DiaryComponent,
-      ProfileComponent,
+      ProfileMainComponent,
+      ProfileNavComponent,
+      ProfileParametersComponent,
       WelcomeComponent
    ],
    imports: [
@@ -40,7 +44,14 @@ import { WelcomeComponent } from './welcome/welcome.component';
       HttpClientModule,
       FormsModule,
       BsDropdownModule.forRoot(),
-      RouterModule.forRoot(appRoutes)
+      RouterModule.forChild([
+         { path: 'profile', component: ProfileNavComponent, children: [
+            { path: 'main', component: ProfileMainComponent, outlet: 'profile' },
+            { path: 'parameters', component: ProfileParametersComponent, outlet: 'profile'},
+            { path: '', redirectTo: 'main', pathMatch: 'full' }
+         ]
+      }]),
+      RouterModule.forRoot(appRoutes),
    ],
    providers: [
       AuthService,

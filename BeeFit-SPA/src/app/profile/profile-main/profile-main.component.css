@@ -1,0 +1,45 @@
+.edit-button, .save-button, .cancel-button
+{
+    width: 90px;
+    border: none;
+    background-color: gold;
+    color: black;
+}
+
+.edit-button
+{
+    height: 90px;
+    font-size: 3em;
+}
+
+.save-button, .cancel-button
+{
+    height: 45px;
+    font-size: 2em;
+}
+
+.edit-button:hover, .save-button:hover, .cancel-button:hover
+{
+    background-color: black;
+    color: gold;
+}
+
+.left-margin-100
+{
+    margin-left: 100px;
+}
+
+.top-margin-40
+{
+    margin-top: 40px;
+}
+
+.dropdown
+{
+    border: 1px solid;
+}
+
+.margin-left-15
+{
+    margin-left: 15px;
+}

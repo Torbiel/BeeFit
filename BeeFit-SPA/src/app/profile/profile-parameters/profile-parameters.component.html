@@ -1,0 +1,58 @@
+<div class="col-10 tabcontent" id="parameters">
+  <div class="row">
+    <div class="col-md-auto">
+      <button class="edit-button"><i class="fas fa-plus"></i></button>
+    </div>
+
+    <div class="col">
+      <div class="row">
+        View from:
+        <div class="dropdown" dropdown>
+          <a class="dropdown-toggle" (click)="false" dropdownToggle>
+            {{user.parameters[user.parameters.length - 1].date | date}}
+          </a>
+
+          <div class="dropdown-menu" *dropdownMenu>
+            <li class="dropdown-item" *ngFor="let parameter of user.parameters">
+              {{parameter.date | date}}
+            </li>
+          </div>
+        </div>
+
+        to:
+        <div class="dropdown" dropdown>
+          <a class="dropdown-toggle" (click)="false" dropdownToggle>
+            {{user.parameters[user.parameters.length - 2].date | date}}
+          </a>
+
+          <div class="dropdown-menu" *dropdownMenu>
+            <li class="dropdown-item" *ngFor="let parameter of user.parameters">
+              {{parameter.date | date}}
+            </li>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <table>
+          <thead>
+            <td>Date:</td>
+            <td>Weight:</td>
+            <td>Abdomen:</td>
+            <td>Bicep:</td>
+            <td>Thigh:</td>
+          </thead>
+          <tbody>
+            <tr *ngFor="let parameter of user.parameters">
+              <td>{{parameter.date | date}}</td>
+              <td>{{parameter.weight}}</td>
+              <td>{{parameter.abdominalCircumference}}</td>
+              <td>{{parameter.bicepsCircumference}}</td>
+              <td>{{parameter.thighCircumference}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

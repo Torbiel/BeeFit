@@ -1,0 +1,18 @@
+<div class="container">
+  <div class="row mt-4">
+    <div class="col-md-2">
+      <div class="nav">
+        <button (click)="navigate('main')">Profile</button> <br>
+        <button (click)="navigate('parameters')">Parameters</button> <br>
+        <button [routerLink]="[{ outlets: { profile: ['charts'] } }]">Charts</button> <br>
+        <button [routerLink]="[{ outlets: { profile: ['target'] } }]">Target</button>
+      </div>
+    </div>
+
+    <div class="col-md-10">
+      <hr />
+      <router-outlet name="profile"></router-outlet>
+      <hr />
+    </div>
+  </div>
+</div>

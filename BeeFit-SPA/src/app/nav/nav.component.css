@@ -1,8 +1,3 @@
-.dropdown-toggle, .dropdown-item, .navbar-brand, .nav-item
-{
-    cursor: pointer;
-}
-
 .dropdown-toggle::after
 {
     display: none;
