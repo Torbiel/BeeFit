@@ -1,9 +1,9 @@
 ﻿using BeeFit.API.Data.Interfaces;
-using BeeFit.API.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace BeeFit.API.Data
@@ -32,7 +32,7 @@ namespace BeeFit.API.Data
             }
         }
 
-        public async Task<T> Get<T>(int id) where T : class
+        public async Task<T> GetById<T>(int id) where T : class
         {
             return await _context.Set<T>().FindAsync(id);
         }
@@ -45,6 +45,11 @@ namespace BeeFit.API.Data
         public async Task<IEnumerable<T>> GetAll<T>() where T : class
         {
             return await _context.Set<T>().ToListAsync();
+        }
+
+        public async Task<IEnumerable<T>> Find<T>(Expression<Func<T, bool>> predicate) where T : class
+        {
+            return await _context.Set<T>().Where(predicate).ToListAsync();
         }
 
         public async Task<bool> SaveAll()
