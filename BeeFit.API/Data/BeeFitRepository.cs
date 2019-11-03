@@ -22,14 +22,17 @@ namespace BeeFit.API.Data
             await _context.AddAsync(entity);
         }
 
-        public async void Delete<T>(int id) where T : class
+        public async Task<bool> Delete<T>(int id) where T : class
         {
             var entity = await _context.Set<T>().FindAsync(id);
 
             if (entity != null)
             {
                 _context.Remove(entity);
+                return true;
             }
+
+            return false;
         }
 
         public async Task<T> GetById<T>(int id) where T : class

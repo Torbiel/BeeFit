@@ -55,7 +55,7 @@ namespace BeeFit.API.Controllers
         [HttpGet("{name}")]
         public async Task<IActionResult> GetManyByName(string name)
         {
-
+            return Ok();
         }
 
         [HttpGet]
@@ -88,14 +88,12 @@ namespace BeeFit.API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var ingredientToDelete = await _repo.GetById<Ingredient>(id);
-
-            if(ingredientToDelete != null)
+            if(await _repo.Delete<Ingredient>(id))
             {
-                _repo.Delete<Ingredient>(id);
+                return Ok();
             }
 
-            return Ok();
+            return BadRequest("This ingredient doesn't exist.");
         }
     }
 }
