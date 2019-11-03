@@ -25,7 +25,7 @@ namespace BeeFit.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(DishDto dishDto) 
+        public async Task<IActionResult> Add(Dish dishDto) 
         {
             var userClaim = User.FindFirst(ClaimTypes.NameIdentifier);
             var userId = int.Parse(userClaim.Value);
@@ -50,9 +50,11 @@ namespace BeeFit.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetByName(string name)
+        public async Task<IActionResult> GetManyByName(string name)
         {
 
+
+            return Ok();
         }
     }
 }
