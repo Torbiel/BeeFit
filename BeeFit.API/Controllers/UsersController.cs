@@ -38,7 +38,7 @@ namespace BeeFit.API.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            var user = await _repo.Get<User>(id);
+            var user = await _repo.GetById<User>(id);
             var userToReturn = _mapper.Map<UserForProfileDto>(user);
 
             return Ok(userToReturn);
