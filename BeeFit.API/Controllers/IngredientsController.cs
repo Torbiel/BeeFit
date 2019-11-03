@@ -20,14 +20,14 @@ namespace BeeFit.API.Controllers
         private readonly IBeeFitRepository _repo;
         private readonly IMapper _mapper;
 
-        public IngredientsController(IBeeFitRepository repo, IHttpContextAccessor httpContextAccessor, IMapper mapper)
+        public IngredientsController(IBeeFitRepository repo, IMapper mapper)
         {
             _repo = repo;
             _mapper = mapper;
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(IngredientDto ingredientForAddDto)
+        public async Task<IActionResult> Add(IngredientDto ingredientForAddDto)
         {
             var userClaim = User.FindFirst(ClaimTypes.NameIdentifier);
             var userId = int.Parse(userClaim.Value);
@@ -36,7 +36,6 @@ namespace BeeFit.API.Controllers
             ingredientForAddDto.User = user;
 
             var ingredientToAdd = _mapper.Map<Ingredient>(ingredientForAddDto);
-            ingredientToAdd.User = user;
 
             _repo.Add(ingredientToAdd);
 
@@ -44,7 +43,7 @@ namespace BeeFit.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> GetById(int id)
         {
             var ingredient = await _repo.Get<Ingredient>(id);
             var ingredientToReturn = _mapper.Map<IngredientDto>(ingredient);

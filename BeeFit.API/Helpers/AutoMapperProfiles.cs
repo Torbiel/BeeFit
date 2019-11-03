@@ -23,6 +23,8 @@ namespace BeeFit.API.Helpers
             CreateMap<UserForUpdateDto, User>();
             CreateMap<IngredientDto, Ingredient>();
             CreateMap<Ingredient, IngredientDto>();
+            CreateMap<DishDto, Dish>();
+            CreateMap<Dish, DishDto>();
         }
     }
 }
