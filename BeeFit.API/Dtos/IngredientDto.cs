@@ -9,7 +9,7 @@ namespace BeeFit.API.Dtos
         public string Name { get; set; }
         public User User { get; set; }
         public Unit Unit { get; set; }
-        public List<IngredientsAllergen> Allergens { get; set; }
+        public ICollection<IngredientsAllergen> Allergens { get; set; }
         public int Callories { get; set; }
         public double Fats { get; set; }
         public double Carbohydrates { get; set; }
