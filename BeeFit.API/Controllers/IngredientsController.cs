@@ -31,7 +31,7 @@ namespace BeeFit.API.Controllers
         {
             var userClaim = User.FindFirst(ClaimTypes.NameIdentifier);
             var userId = int.Parse(userClaim.Value);
-            var user = await _repo.Get<User>(userId);
+            var user = await _repo.GetById<User>(userId);
 
             ingredientForAddDto.User = user;
 
@@ -42,13 +42,19 @@ namespace BeeFit.API.Controllers
             return Ok(ingredientToAdd);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var ingredient = await _repo.Get<Ingredient>(id);
+            var ingredient = await _repo.GetById<Ingredient>(id);
             var ingredientToReturn = _mapper.Map<IngredientDto>(ingredient);
 
             return Ok(ingredientToReturn);
+        }
+
+        [HttpGet("{name}")]
+        public async Task<IActionResult> GetManyByName(string name)
+        {
+            return Ok();
         }
 
         [HttpGet]
@@ -63,7 +69,7 @@ namespace BeeFit.API.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, IngredientDto ingredientDto)
         {
-            var ingredientToUpdate = await _repo.Get<Ingredient>(id);
+            var ingredientToUpdate = await _repo.GetById<Ingredient>(id);
 
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
@@ -72,7 +78,7 @@ namespace BeeFit.API.Controllers
                 return Unauthorized();
             }
 
-            ingredientDto.User = await _repo.Get<User>(userId); // We have to set the user again on update, otherwise it will become null in db
+            ingredientDto.User = await _repo.GetById<User>(userId); // We have to set the user again on update, otherwise it will become null in db
             _mapper.Map(ingredientDto, ingredientToUpdate); // This automatically updates the ingredient
 
             return NoContent();
@@ -81,14 +87,12 @@ namespace BeeFit.API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var ingredientToDelete = await _repo.Get<Ingredient>(id);
-
-            if(ingredientToDelete != null)
+            if(await _repo.Delete<Ingredient>(id))
             {
-                _repo.Delete<Ingredient>(id);
+                return Ok();
             }
 
-            return Ok();
+            return BadRequest("This ingredient doesn't exist.");
         }
     }
 }
