@@ -1,0 +1,19 @@
+.add-button
+{
+    width: 90px;
+    border: none;
+    background-color: gold;
+    color: black;
+}
+
+.add-button
+{
+    height: 90px;
+    font-size: 3em;
+}
+
+.add-button:hover
+{
+    background-color: black;
+    color: gold;
+}
