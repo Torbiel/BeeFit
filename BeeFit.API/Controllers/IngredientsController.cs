@@ -53,12 +53,9 @@ namespace BeeFit.API.Controllers
         }
 
         [HttpGet("{name}")]
-        public async Task<IActionResult> GetByName(string name)
+        public async Task<IActionResult> GetManyByName(string name)
         {
-            var ingredient = await _repo.Find<Ingredient>(i => i.Name == name);
-            var ingredientToReturn = _mapper.Map<IngredientDto>(ingredient);
 
-            return Ok(ingredientToReturn);
         }
 
         [HttpGet]
