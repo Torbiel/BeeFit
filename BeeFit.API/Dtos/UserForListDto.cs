@@ -16,7 +16,6 @@ namespace BeeFit.API.Dtos
         public DateTime LastActive { get; set; }
         public bool Deleted { get; set; }
         public ICollection<UsersSearchPreferenceForListDto> Preferences { get; set; }
-        public ICollection<UsersAllergenForListDto> Allergens { get; set; }
         public ICollection<UsersParameterForListDto> Parameters { get; set; }
     }
 }

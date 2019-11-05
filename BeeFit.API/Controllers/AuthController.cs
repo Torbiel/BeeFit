@@ -56,7 +56,7 @@ namespace BeeFit.API.Controllers
 
             if(userFromRepo == null)
             {
-                return Unauthorized();
+                return Unauthorized("User not found.");
             }
 
             // Json Web Token authentication and granting authorization token:
@@ -83,14 +83,6 @@ namespace BeeFit.API.Controllers
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
             return Ok(new { token = tokenHandler.WriteToken(token) });
-        }
-
-        [HttpPut]
-        public async Task<IActionResult> ChangePassword()
-        {
-
-
-            return NoContent();
         }
     }
 }

@@ -5,6 +5,7 @@ using BeeFit.API.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -25,12 +26,11 @@ namespace BeeFit.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(Dish dishDto) 
+        public async Task<IActionResult> Add(Dish dishDto)
         {
             var userClaim = User.FindFirst(ClaimTypes.NameIdentifier);
             var userId = int.Parse(userClaim.Value);
-            var user = await _repo.Get<User>(userId);
-
+            var user = await _repo.GetById<User>(userId);
             dishDto.User = user;
 
             var dishToAdd = _mapper.Map<Dish>(dishDto);
@@ -43,18 +43,57 @@ namespace BeeFit.API.Controllers
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var dish = await _repo.Get<Dish>(id);
+            var dish = await _repo.GetById<Dish>(id);
             var dishToReturn = _mapper.Map<DishDto>(dish);
 
             return Ok(dishToReturn);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetManyByName(string name)
+        [HttpGet("{name}")]
+        public async Task<IActionResult> GetManyBySearchPreferences(string name, List<SearchPreference> searchPreferences)
         {
+            var dishes = await _repo.Find<Dish>(d => d.Name.Contains(name));
 
+            foreach(var pref in searchPreferences)
+            {
+                dishes.Where(d => d.Ingredients.All(i => i.Ingredient.SearchPreferences.FirstOrDefault(s => s.SearchPreference == pref) != null));
+            }
 
-            return Ok();
+            var dishesToReturn = _mapper.Map<ICollection<DishDto>>(dishes);
+
+            return Ok(dishesToReturn);
+        }
+
+        // TODO?: searching based on callories, fats, proteins, etc. (>= and <=)
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, DishDto dishDto)
+        {
+            var dishToUpdate = await _repo.GetById<Dish>(id);
+
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            if (userId != dishToUpdate.User.Id)
+            {
+                return Unauthorized("You can't update someone else's dish.");
+            }
+
+            dishDto.User = await _repo.GetById<User>(userId); // We have to set the user again on update, otherwise it will become null in db
+
+            _mapper.Map(dishDto, dishToUpdate); // Auto-update
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            if (await _repo.Delete<Dish>(id))
+            {
+                return Ok();
+            }
+
+            return BadRequest("This dish doesn't exist.");
         }
     }
 }

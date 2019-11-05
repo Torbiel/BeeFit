@@ -34,7 +34,6 @@ namespace BeeFit.API.Models
         // Not required fields.
         public string Username { get; set; }
         public virtual ICollection<UsersSearchPreference> Preferences { get; set; }
-        public virtual ICollection<UsersAllergen> Allergens { get; set; }
         public virtual ICollection<UsersParameter> Parameters { get; set; }
     }
 }
