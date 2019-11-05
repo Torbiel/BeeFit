@@ -1,14 +1,12 @@
-﻿using BeeFit.API.Data.Interfaces;
 ﻿using AutoMapper;
+using BeeFit.API.Data.Interfaces;
 using BeeFit.API.Dtos;
+using BeeFit.API.Helpers;
 using BeeFit.API.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.JsonPatch;
-using System.Linq;
-using BeeFit.API.Helpers;
 
 namespace BeeFit.API.Controllers
 {
@@ -51,13 +49,13 @@ namespace BeeFit.API.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser(int id, UserForUpdateDto userForUpdateDto)
         {
-            var userToUpdate = await _repo.Get<User>(id);
+            var userToUpdate = await _repo.GetById<User>(id);
             
             if(userForUpdateDto.OldPassword != string.Empty && userForUpdateDto.NewPassword != string.Empty)
             {
                 if (_authRepo.CreateNewPassword(userToUpdate, userForUpdateDto.OldPassword, userForUpdateDto.NewPassword) == null)
                 {
-                    return Unauthorized();
+                    return BadRequest("Old password not correct.");
                 }
             }
 

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BeeFit.API.Dtos;
 using BeeFit.API.Models;
+using System.Collections.Generic;
 
 namespace BeeFit.API.Helpers
 {
@@ -11,12 +12,8 @@ namespace BeeFit.API.Helpers
             CreateMap<User, UserForListDto>();
             CreateMap<User, UserForProfileDto>();
 
-            CreateMap<UsersAllergen, UsersAllergenForListDto>()
-                .ForMember(x => x.Name, opt => opt.MapFrom(src => src.Allergen.Name));
-
             CreateMap<UsersSearchPreference, UsersSearchPreferenceForListDto>()
-                .ForMember(x => x.Name, opt => opt.MapFrom(src => src.SearchPreference.Name))
-                .ForMember(x => x.Quantity, opt => opt.MapFrom(src => src.SearchPreference.Quantity));
+                .ForMember(x => x.Name, opt => opt.MapFrom(src => src.SearchPreference.Name));
 
             CreateMap<UsersParameter, UsersParameterForListDto>();
 

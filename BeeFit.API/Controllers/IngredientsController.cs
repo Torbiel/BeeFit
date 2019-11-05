@@ -3,9 +3,7 @@ using BeeFit.API.Data.Interfaces;
 using BeeFit.API.Dtos;
 using BeeFit.API.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -20,11 +18,12 @@ namespace BeeFit.API.Controllers
         private readonly IBeeFitRepository _repo;
         private readonly IMapper _mapper;
 
-        public IngredientsController(IBeeFitRepository repo, IMapper mapper)
+        public IngredientsController(IMapper mapper, IBeeFitRepository repo) 
         {
-            _repo = repo;
             _mapper = mapper;
+            _repo = repo;
         }
+
 
         [HttpPost]
         public async Task<IActionResult> Add(IngredientDto ingredientForAddDto)
@@ -54,7 +53,10 @@ namespace BeeFit.API.Controllers
         [HttpGet("{name}")]
         public async Task<IActionResult> GetManyByName(string name)
         {
-            return Ok();
+            var ingredients = await _repo.Find<Ingredient>(i => i.Name.Contains(name));
+            var ingredientsToReturn = _mapper.Map<IngredientDto>(ingredients);
+
+            return Ok(ingredientsToReturn);
         }
 
         [HttpGet]
@@ -75,7 +77,7 @@ namespace BeeFit.API.Controllers
 
             if(userId != ingredientToUpdate.User.Id)
             {
-                return Unauthorized();
+                return Unauthorized("You can't update someone else's ingredient.");
             }
 
             ingredientDto.User = await _repo.GetById<User>(userId); // We have to set the user again on update, otherwise it will become null in db

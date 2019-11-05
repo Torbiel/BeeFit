@@ -17,8 +17,9 @@ namespace BeeFit.API.Models
         [Required]
         public DateTime Date { get; set; }
 
+        public virtual User User { get; set; }
         public virtual Dish Dish { get; set; }
-        public virtual Ingredient Ingredients { get; set; }
+        public virtual Ingredient Ingredient { get; set; }
         public double? Quantity { get; set; }
     }
 }

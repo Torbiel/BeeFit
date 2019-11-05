@@ -15,7 +15,7 @@ namespace BeeFit.API.Models
         public virtual User User { get; set; }
         public Unit Unit { get; set; }
         public virtual ICollection<DishesIngredient> Dishes { get; set; }
-        public virtual ICollection<IngredientsAllergen> Allergens { get; set; }
+        public virtual ICollection<IngredientsSearchPreference> SearchPreferences { get; set; }
         public int Callories { get; set; }
         public double Fats { get; set; }
         public double Carbohydrates { get; set; }
