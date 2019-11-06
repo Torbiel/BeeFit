@@ -28,14 +28,6 @@ namespace BeeFit.API.Controllers
         }
 
         // [Authorize(Roles = Role.Admin)] TODO?: Role-based authentication
-        [HttpGet]
-        public async Task<IActionResult> GetAll()
-        {
-            var users = await _repo.GetAll<User>();
-            var usersToReturn = _mapper.Map<IEnumerable<UserForListDto>>(users);
-
-            return Ok(usersToReturn);
-        }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
