@@ -10,7 +10,7 @@ namespace BeeFit.API.Data
 {
     public class BeeFitRepository : IBeeFitRepository
     {
-        private readonly BeeFitDbContext _context;
+        protected readonly BeeFitDbContext _context;
 
         public BeeFitRepository(BeeFitDbContext context)
         {
@@ -48,11 +48,6 @@ namespace BeeFit.API.Data
         public async Task<IEnumerable<T>> GetAll<T>() where T : class
         {
             return await _context.Set<T>().ToListAsync();
-        }
-
-        public async Task<IEnumerable<T>> Find<T>(Expression<Func<T, bool>> predicate) where T : class
-        {
-            return await _context.Set<T>().Where(predicate).ToListAsync();
         }
 
         public async Task<bool> SaveAll()

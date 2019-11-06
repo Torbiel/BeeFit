@@ -62,7 +62,6 @@ namespace BeeFit.API.Controllers
             }
 
             _mapper.Map(userForUpdateDto, userToUpdate);
-            await _repo.SaveAll();
 
             return NoContent();
         }
