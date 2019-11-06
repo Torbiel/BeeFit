@@ -56,7 +56,7 @@ namespace BeeFit.API.Controllers
 
             if(userFromRepo == null)
             {
-                return Unauthorized("User not found.");
+                return Unauthorized("Email or password incorrect.");
             }
 
             // Json Web Token authentication and granting authorization token:

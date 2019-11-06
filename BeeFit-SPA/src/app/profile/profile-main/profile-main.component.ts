@@ -15,7 +15,16 @@ export class ProfileMainComponent implements OnInit {
   constructor(private userService: UserService, private alertify: AlertifyService) { }
 
   ngOnInit() {
-    this.user = history.state.data.user;
+    this.getUser();
+  }
+
+  getUser() {
+    const id = localStorage.getItem('userId');
+    this.userService.getUser(id).subscribe((user: User) => {
+      this.user = user;
+    }, error => {
+      this.alertify.error(error);
+    });
   }
 
   toggleEdit() {
@@ -28,6 +37,7 @@ export class ProfileMainComponent implements OnInit {
     }, error => {
       this.alertify.error(error);
     });
+
     this.toggleEdit();
   }
 }

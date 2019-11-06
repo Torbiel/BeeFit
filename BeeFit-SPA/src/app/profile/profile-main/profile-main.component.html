@@ -5,23 +5,23 @@
 
   <div class="col">
     <div class="row">
-      <div class="col-2">Username: </div>
-      <div class="col-2">{{user.username}}</div>
+      <div class="col-md-2">Username: </div>
+      <div class="col-md-2">{{user.username}}</div>
     </div>
     <div class="row">
-      <div class="col-2">E-mail: </div>
-      <div class="col-2">{{user.email}}</div>
+      <div class="col-md-2">E-mail: </div>
+      <div class="col-md-2">{{user.email}}</div>
     </div>
     <div class="row">
-      <div class="col-2">Password: </div>
-      <div class="col-2">xxxxxxxx</div>
+      <div class="col-md-2">Password: </div>
+      <div class="col-md-2">xxxxxxxx</div>
     </div>
   </div>
 </div>
 
-<div class="row" *ngIf="editMode">
-  <form (ngSubmit)="saveChanges()">
-    <div class="col-md-auto margin-left-15">
+<form (ngSubmit)="saveChanges()" class="ml-3">
+  <div class="row" *ngIf="editMode">
+    <div class="col-md-auto">
       <div class="row">
         <button class="save-button" type="submit"><i class="far fa-check-square"></i></button>
       </div>
@@ -30,7 +30,7 @@
       </div>
     </div>
 
-    <div class="col">
+    <div class="col ml-3">
       <div class="row">
         <div class="col-2">Username: </div>
         <div class="col-2">
@@ -52,5 +52,5 @@
         <div class="col-2"><input type="password" [(ngModel)]="user.newPassword" name="newPassword"></div>
       </div>
     </div>
-  </form>
-</div>
+  </div>
+</form>

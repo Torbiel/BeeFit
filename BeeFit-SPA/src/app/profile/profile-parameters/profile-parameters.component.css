@@ -1,4 +1,4 @@
-.add-button
+.add-button, .save-button, .cancel-button
 {
     width: 90px;
     border: none;
@@ -12,8 +12,31 @@
     font-size: 3em;
 }
 
-.add-button:hover
+.save-button, .cancel-button
+{
+    height: 45px;
+    font-size: 2em;
+}
+
+.add-button:hover, .save-button:hover, .cancel-button:hover
 {
     background-color: black;
     color: gold;
+}
+
+table
+{
+    border-style: hidden;
+}
+
+table td
+{
+    border: 2px solid lightgray;
+    width: 100px;
+    text-align: center;
+}
+
+tr:nth-child(even)
+{
+    background-color: rgb(236, 236, 236);
 }

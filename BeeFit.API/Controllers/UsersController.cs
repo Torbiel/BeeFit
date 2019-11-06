@@ -50,12 +50,14 @@ namespace BeeFit.API.Controllers
         public async Task<IActionResult> UpdateUser(int id, UserForUpdateDto userForUpdateDto)
         {
             var userToUpdate = await _repo.GetById<User>(id);
+            var oldPass = userForUpdateDto.OldPassword;
+            var newPass = userForUpdateDto.NewPassword;
             
-            if(userForUpdateDto.OldPassword != string.Empty && userForUpdateDto.NewPassword != string.Empty)
+            if(!string.IsNullOrWhiteSpace(oldPass) && !string.IsNullOrWhiteSpace(newPass))
             {
                 if (_authRepo.CreateNewPassword(userToUpdate, userForUpdateDto.OldPassword, userForUpdateDto.NewPassword) == null)
                 {
-                    return BadRequest("Old password not correct.");
+                    return BadRequest("Old password is invalid.");
                 }
             }
 

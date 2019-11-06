@@ -15,7 +15,8 @@ namespace BeeFit.API.Helpers
             CreateMap<UsersSearchPreference, UsersSearchPreferenceForListDto>()
                 .ForMember(x => x.Name, opt => opt.MapFrom(src => src.SearchPreference.Name));
 
-            CreateMap<UsersParameter, UsersParameterForListDto>();
+            CreateMap<UsersParameter, UsersParameterDto>();
+            CreateMap<UsersParameterDto, UsersParameter>();
 
             CreateMap<UserForUpdateDto, User>();
             CreateMap<IngredientDto, Ingredient>();

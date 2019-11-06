@@ -2,9 +2,8 @@
 
 namespace BeeFit.API.Dtos
 {
-    public class UsersParameterForListDto
+    public class UsersParameterDto
     {
-        public int Id { get; set; }
         public DateTime Date { get; set; }
         public double? Weight { get; set; }
         public double? AbdominalCircumference { get; set; }

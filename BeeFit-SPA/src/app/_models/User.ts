@@ -1,5 +1,4 @@
 import { SearchPreference } from './SearchPreference';
-import { Allergen } from './Allergen';
 import { UsersParameter } from './UsersParameter';
 
 export interface User {
@@ -13,7 +12,6 @@ export interface User {
     lastActive?: Date;
     deleted?: boolean;
     preferences?: SearchPreference[];
-    allergens?: Allergen[];
     parameters?: UsersParameter[];
     oldPassword: string;
     newPassword: string;

@@ -18,25 +18,13 @@ export class ProfileNavComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute) { }
 
-  ngOnInit() {
-    this.getUser();
-  }
-
-  getUser() {
-    const id = localStorage.getItem('userId');
-    this.userService.getUser(id).subscribe((user: User) => {
-      console.log(user);
-      this.user = user;
-    }, error => {
-      this.alertify.error(error);
-    });
-  }
+  ngOnInit() { }
 
   navigate(url: string) {
     history.pushState({ data: { user: this.user } }, '', '');
 
     this.router.navigate([
       { outlets: { profile: [url] } }],
-      { relativeTo: this.route, skipLocationChange: true, state: { data: {user: this.user } } });
+      { relativeTo: this.route, skipLocationChange: true, state: { data: { user: this.user } } });
   }
 }
