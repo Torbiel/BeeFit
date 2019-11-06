@@ -35,5 +35,6 @@ namespace BeeFit.API.Models
         public string Username { get; set; }
         public virtual ICollection<UsersSearchPreference> Preferences { get; set; }
         public virtual ICollection<UsersParameter> Parameters { get; set; }
+        public virtual Target Target { get; set; }
     }
 }

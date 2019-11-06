@@ -1,6 +1,6 @@
 ﻿namespace BeeFit.API.Helpers
 {
-    public class IngredientsPagingParams
+    public class PagingParams
     {
         private const int maxPageSize = 50;
         public int PageNumber { get; set; }

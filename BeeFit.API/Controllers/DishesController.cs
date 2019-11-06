@@ -69,6 +69,8 @@ namespace BeeFit.API.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, DishDto dishDto)
         {
+            // TODO: if user tries to update someone else's dish, it's copied and added to his own
+
             var dishToUpdate = await _repo.GetById<Dish>(id);
 
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);

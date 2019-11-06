@@ -1,3 +1,21 @@
-<p>
-  profile-target works!
-</p>
+<div class="row" *ngIf="!editMode">
+  <div class="col-md-auto">
+    <button class="edit-button" (click)="toggleEdit()"><i class="fas fa-edit"></i></button>
+  </div>
+
+  <div class="col">
+    <div class="row">
+
+    </div>
+
+    <div class="row">
+      <div class="col-md-2">Weight:</div>
+      <div class="row">
+        <div class="col-md-2 mr-1">{{ user.target.weightFrom }}</div>
+        <div class="col-md-2 mr-1"> to </div>
+        <div class="col-md-2 mr-1">{{ user.target.weightTo }}</div>
+      </div>
+      
+    </div>
+  </div>
+</div>

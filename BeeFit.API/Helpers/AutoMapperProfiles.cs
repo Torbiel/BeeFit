@@ -9,10 +9,9 @@ namespace BeeFit.API.Helpers
     {
         public AutoMapperProfiles()
         {
-            CreateMap<User, UserForListDto>();
             CreateMap<User, UserForProfileDto>();
 
-            CreateMap<UsersSearchPreference, UsersSearchPreferenceForListDto>()
+            CreateMap<UsersSearchPreference, UsersSearchPreferenceDto>()
                 .ForMember(x => x.Name, opt => opt.MapFrom(src => src.SearchPreference.Name));
 
             CreateMap<UsersParameter, UsersParameterDto>();

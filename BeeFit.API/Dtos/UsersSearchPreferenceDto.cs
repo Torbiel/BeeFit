@@ -2,9 +2,8 @@
 
 namespace BeeFit.API.Dtos
 {
-    public class UsersSearchPreferenceForListDto
+    public class UsersSearchPreferenceDto
     {
-        public int SearchPreferenceId { get; set; }
         public string Name { get; set; }
         public PreferenceType PreferenceType { get; set; }
     }

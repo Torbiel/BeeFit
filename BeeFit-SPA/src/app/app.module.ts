@@ -21,6 +21,8 @@ import { ProfileMainComponent } from './profile/profile-main/profile-main.compon
 import { ProfileNavComponent } from './profile/profile-nav/profile-nav.component';
 import { ProfileParametersComponent } from './profile/profile-parameters/profile-parameters.component';
 import { WelcomeComponent } from './welcome/welcome.component';
+import { ProfileTargetComponent } from './profile/profile-target/profile-target.component';
+import { ProfileChartsComponent } from './profile/profile-charts/profile-charts.component';
 
 @NgModule({
    declarations: [
@@ -37,6 +39,8 @@ import { WelcomeComponent } from './welcome/welcome.component';
       ProfileMainComponent,
       ProfileNavComponent,
       ProfileParametersComponent,
+      ProfileTargetComponent,
+      ProfileChartsComponent,
       WelcomeComponent
    ],
    imports: [

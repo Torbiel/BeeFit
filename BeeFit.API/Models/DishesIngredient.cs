@@ -6,5 +6,6 @@
         public int DishId { get; set; }
         public virtual Ingredient Ingredient { get; set; }
         public int IngredientId { get; set; }
+        public double Quantity { get; set; }
     }
 }
