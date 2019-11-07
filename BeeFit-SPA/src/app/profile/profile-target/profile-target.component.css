@@ -1,0 +1,30 @@
+.edit-button, .save-button, .cancel-button
+{
+    width: 90px;
+    border: none;
+    background-color: gold;
+    color: black;
+}
+
+.edit-button
+{
+    height: 90px;
+    font-size: 3em;
+}
+
+.save-button, .cancel-button
+{
+    height: 45px;
+    font-size: 2em;
+}
+
+.edit-button:hover, .save-button:hover, .cancel-button:hover
+{
+    background-color: black;
+    color: gold;
+}
+
+.bold
+{
+    font-weight: bold;
+}

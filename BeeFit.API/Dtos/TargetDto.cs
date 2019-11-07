@@ -1,16 +1,11 @@
 ﻿using BeeFit.API.Models.Enums;
 using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace BeeFit.API.Models
+namespace BeeFit.API.Dtos
 {
-    public class Target
+    public class TargetDto
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        [Required]
         public DateTime EstimatedEnd { get; set; }
         public float WeightFrom { get; set; }
         public float WeightTo { get; set; }

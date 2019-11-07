@@ -31,4 +31,8 @@ export class ProfileTargetComponent implements OnInit {
     this.editMode = !this.editMode;
   }
 
+  saveChanges() {
+
+  }
+
 }

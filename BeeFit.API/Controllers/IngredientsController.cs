@@ -37,7 +37,7 @@ namespace BeeFit.API.Controllers
 
             _repo.Add(ingredientToAdd);
 
-            return Ok(ingredientToAdd);
+            return Ok();
         }
 
         [HttpGet("{id:int}")]

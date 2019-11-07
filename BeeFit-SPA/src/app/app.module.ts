@@ -52,6 +52,8 @@ import { ProfileChartsComponent } from './profile/profile-charts/profile-charts.
          { path: 'profile', component: ProfileNavComponent, children: [
             { path: 'main', component: ProfileMainComponent, outlet: 'profile' },
             { path: 'parameters', component: ProfileParametersComponent, outlet: 'profile'},
+            { path: 'target', component: ProfileTargetComponent, outlet: 'profile' },
+            { path: 'charts', component: ProfileChartsComponent, outlet: 'profile' },
             { path: '', redirectTo: 'main', pathMatch: 'full' }
          ]
       }]),
