@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace BeeFit.API.Dtos
 {
-    public class UserForListDto
+    public class UserForProfileDto
     {
         public int Id { get; set; }
         public string Email { get; set; }
@@ -12,10 +12,8 @@ namespace BeeFit.API.Dtos
         public int Height { get; set; }
         public DateTime DateOfBirth { get; set; }
         public string Username { get; set; }
-        public DateTime Created { get; set; }
-        public DateTime LastActive { get; set; }
-        public bool Deleted { get; set; }
-        public ICollection<UsersSearchPreferenceForListDto> Preferences { get; set; }
         public ICollection<UsersParameterDto> Parameters { get; set; }
+        public ICollection<UsersSearchPreferenceDto> SearchPreferences { get; set; }
+        public TargetDto Target { get; set; }
     }
 }

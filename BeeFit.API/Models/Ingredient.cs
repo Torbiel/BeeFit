@@ -12,8 +12,10 @@ namespace BeeFit.API.Models
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
+        public string Brand { get; set; }
         public virtual User User { get; set; }
         public Unit Unit { get; set; }
+        public int GramsPerUnit { get; set; }
         public virtual ICollection<DishesIngredient> Dishes { get; set; }
         public virtual ICollection<IngredientsSearchPreference> SearchPreferences { get; set; }
         public int Callories { get; set; }

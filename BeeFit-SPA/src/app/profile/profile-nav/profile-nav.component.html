@@ -4,8 +4,8 @@
       <div class="nav">
         <button (click)="navigate('main')">Main</button> <br>
         <button (click)="navigate('parameters')">Parameters</button> <br>
-        <button [routerLink]="[{ outlets: { profile: ['charts'] } }]">Charts</button> <br>
-        <button [routerLink]="[{ outlets: { profile: ['target'] } }]">Target</button>
+        <button (click)="navigate('charts')">Charts</button> <br>
+        <button (click)="navigate('target')">Target</button>
       </div>
     </div>
 

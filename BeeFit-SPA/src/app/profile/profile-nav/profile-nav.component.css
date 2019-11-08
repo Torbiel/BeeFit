@@ -4,15 +4,15 @@ button
     font-size: 1.5em;
     cursor: pointer;
     border: none;
-    color: black;   
-    background-color: inherit;
+    background-color: black;
+    color:gold;
     width: 100%;
 }
 
 button:hover
 {
-    background-color: black;
-    color:gold;
+    color: black;   
+    background-color: gold;
 }
 
 .nav

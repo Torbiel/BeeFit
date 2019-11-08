@@ -2,10 +2,7 @@
 {
     public enum Unit
     {
-        Grams,
-        Millilitres,
-        Pieces,
-        Slices,
+        Portion,
         Packet
     }
 }

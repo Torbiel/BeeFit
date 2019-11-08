@@ -4,14 +4,16 @@ using BeeFit.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BeeFit.API.Migrations
 {
     [DbContext(typeof(BeeFitDbContext))]
-    partial class BeeFitDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191106231746_DishesIngredientsUpdate")]
+    partial class DishesIngredientsUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -269,48 +271,6 @@ namespace BeeFit.API.Migrations
                     b.ToTable("SearchPreferences");
                 });
 
-            modelBuilder.Entity("BeeFit.API.Models.Target", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<float>("Callories")
-                        .HasColumnType("real");
-
-                    b.Property<float>("Carbohydrates")
-                        .HasColumnType("real");
-
-                    b.Property<float>("ChangePerWeek")
-                        .HasColumnType("real");
-
-                    b.Property<int>("DayActivity")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("EstimatedEnd")
-                        .HasColumnType("datetime2");
-
-                    b.Property<float>("Fats")
-                        .HasColumnType("real");
-
-                    b.Property<float>("Proteins")
-                        .HasColumnType("real");
-
-                    b.Property<int>("TrainingActivity")
-                        .HasColumnType("int");
-
-                    b.Property<float>("WeightFrom")
-                        .HasColumnType("real");
-
-                    b.Property<float>("WeightTo")
-                        .HasColumnType("real");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Targets");
-                });
-
             modelBuilder.Entity("BeeFit.API.Models.User", b =>
                 {
                     b.Property<int>("Id")
@@ -348,15 +308,10 @@ namespace BeeFit.API.Migrations
                         .IsRequired()
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<int?>("TargetId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Username")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("TargetId");
 
                     b.ToTable("Users");
                 });
@@ -465,13 +420,6 @@ namespace BeeFit.API.Migrations
                     b.HasOne("BeeFit.API.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("BeeFit.API.Models.User", b =>
-                {
-                    b.HasOne("BeeFit.API.Models.Target", "Target")
-                        .WithMany()
-                        .HasForeignKey("TargetId");
                 });
 
             modelBuilder.Entity("BeeFit.API.Models.UsersParameter", b =>

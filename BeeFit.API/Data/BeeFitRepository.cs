@@ -45,11 +45,6 @@ namespace BeeFit.API.Data
             _context.Set<T>().Update(entity);
         }
 
-        public async Task<IEnumerable<T>> GetAll<T>() where T : class
-        {
-            return await _context.Set<T>().ToListAsync();
-        }
-
         public async Task<bool> SaveAll()
         {
             return await _context.SaveChangesAsync() > 0;
