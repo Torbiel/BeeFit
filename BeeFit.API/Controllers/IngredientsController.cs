@@ -14,10 +14,10 @@ namespace BeeFit.API.Controllers
     [ApiController]
     public class IngredientsController : ControllerBase
     {
-        private readonly IBeeFitRepository _repo;
+        private readonly IIngredientsRepository _repo;
         private readonly IMapper _mapper;
 
-        public IngredientsController(IMapper mapper, IBeeFitRepository repo) 
+        public IngredientsController(IMapper mapper, IIngredientsRepository repo) 
         {
             _mapper = mapper;
             _repo = repo;

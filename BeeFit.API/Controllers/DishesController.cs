@@ -16,10 +16,10 @@ namespace BeeFit.API.Controllers
     [Route("api/[controller]")]
     public class DishesController : ControllerBase
     {
-        private readonly IBeeFitRepository _repo;
+        private readonly IDishesRepository _repo;
         private readonly IMapper _mapper;
 
-        public DishesController(IBeeFitRepository repo, IMapper mapper)
+        public DishesController(IDishesRepository repo, IMapper mapper)
         {
             _repo = repo;
             _mapper = mapper;
@@ -28,13 +28,11 @@ namespace BeeFit.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(Dish dishDto)
         {
-            var userClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-            var userId = int.Parse(userClaim.Value);
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
             var user = await _repo.GetById<User>(userId);
             dishDto.User = user;
 
             var dishToAdd = _mapper.Map<Dish>(dishDto);
-
             _repo.Add(dishToAdd);
 
             return Ok();
@@ -52,13 +50,7 @@ namespace BeeFit.API.Controllers
         [HttpGet("{name}")]
         public async Task<IActionResult> GetManyBySearchPreferences(string name, List<SearchPreference> searchPreferences)
         {
-            var dishes = await _repo.Find<Dish>(d => d.Name.Contains(name));
-
-            foreach(var pref in searchPreferences)
-            {
-                dishes.Where(d => d.Ingredients.All(i => i.Ingredient.SearchPreferences.FirstOrDefault(s => s.SearchPreference == pref) != null));
-            }
-
+            var dishes = await _repo.GetManyBySearchPreference(name, searchPreferences);
             var dishesToReturn = _mapper.Map<ICollection<DishDto>>(dishes);
 
             return Ok(dishesToReturn);
