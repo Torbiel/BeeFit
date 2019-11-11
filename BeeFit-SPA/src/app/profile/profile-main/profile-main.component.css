@@ -24,7 +24,38 @@
     color: gold;
 }
 
+.left-margin-100
+{
+    margin-left: 100px;
+}
+
+.top-margin-40
+{
+    margin-top: 40px;
+}
+
 .dropdown
 {
     border: 1px solid;
+}
+
+.margin-left-15
+{
+    margin-left: 15px;
+}
+
+.edit-profile
+{
+    display:flex;
+    flex-basis: 100%;
+}
+
+.edit-profile-fields .row
+{
+    padding: 4px;
+}
+
+label:hover
+{
+    cursor: pointer;
 }

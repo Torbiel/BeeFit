@@ -5,23 +5,23 @@
 
   <div class="col">
     <div class="row">
-      <div class="col-md-2">Username: </div>
-      <div class="col-md-2">{{user.username}}</div>
+      <div class="col-2">Username: </div>
+      <div class="col-2">{{user.username}}</div>
     </div>
     <div class="row">
-      <div class="col-md-2">E-mail: </div>
-      <div class="col-md-2">{{user.email}}</div>
+      <div class="col-2">E-mail: </div>
+      <div class="col-2">{{user.email}}</div>
     </div>
     <div class="row">
-      <div class="col-md-2">Password: </div>
-      <div class="col-md-2">xxxxxxxx</div>
+      <div class="col-2">Password: </div>
+      <div class="col-2">xxxxxxxx</div>
     </div>
   </div>
 </div>
 
-<form (ngSubmit)="saveChanges()" class="ml-3">
-  <div class="row" *ngIf="editMode">
-    <div class="col-md-auto">
+<div class="row" *ngIf="editMode">
+  <form (ngSubmit)="saveChanges()" class="edit-profile">
+    <div class="col-md-auto margin-left-15">
       <div class="row">
         <button class="save-button" type="submit"><i class="far fa-check-square"></i></button>
       </div>
@@ -30,27 +30,23 @@
       </div>
     </div>
 
-    <div class="col ml-3">
+    <div class="col edit-profile-fields">
       <div class="row">
-        <div class="col-2">Username: </div>
-        <div class="col-2">
-          <input type="text" value="{{user.username}}" [(ngModel)]="user.username" name="username">
-        </div>
+        <label for="username" class="col-3">Username: </label>
+        <input type="text" value="{{user.username}}" [(ngModel)]="user.username" name="username" id="username" class="col-4">
       </div>
       <div class="row">
-        <div class="col-2">E-mail: </div>
-        <div class="col-2">
-          <input type="text" value="{{user.email}}" [(ngModel)]="user.email" name="email">
-        </div>
+        <label for="email" class="col-3">E-mail:</label>
+          <input type="text" value="{{user.email}}" [(ngModel)]="user.email" name="email" id="email" class="col-4">
       </div>
       <div class="row">
-        <div class="col-2">Old password: </div>
-        <div class="col-2"><input type="password" [(ngModel)]="user.oldPassword" name="oldPassword"></div>
+        <label for="oldPassword" class="col-3">Old password: </label>
+        <input type="password" [(ngModel)]="user.oldPassword" name="oldPassword" id="oldPassword" class="col-4">
       </div>
       <div class="row">
-        <div class="col-2">New password: </div>
-        <div class="col-2"><input type="password" [(ngModel)]="user.newPassword" name="newPassword"></div>
+        <label for="newPassword" class="col-3">New password: </label>
+        <input type="password" [(ngModel)]="user.newPassword" name="newPassword" id="newPassword" class="col-4">
       </div>
     </div>
-  </div>
-</form>
+  </form>
+</div>

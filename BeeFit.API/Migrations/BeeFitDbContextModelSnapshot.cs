@@ -19,6 +19,22 @@ namespace BeeFit.API.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("BeeFit.API.Models.Allergen", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Allergens");
+                });
+
             modelBuilder.Entity("BeeFit.API.Models.Dish", b =>
                 {
                     b.Property<int>("Id")
@@ -48,9 +64,6 @@ namespace BeeFit.API.Migrations
                     b.Property<int>("IngredientId")
                         .HasColumnType("int");
 
-                    b.Property<double>("Quantity")
-                        .HasColumnType("float");
-
                     b.HasKey("DishId", "IngredientId");
 
                     b.HasIndex("IngredientId");
@@ -67,9 +80,6 @@ namespace BeeFit.API.Migrations
 
                     b.Property<double?>("AnimalProteins")
                         .HasColumnType("float");
-
-                    b.Property<string>("Brand")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<double?>("Calcium")
                         .HasColumnType("float");
@@ -91,9 +101,6 @@ namespace BeeFit.API.Migrations
 
                     b.Property<double?>("Fiber")
                         .HasColumnType("float");
-
-                    b.Property<int>("GramsPerUnit")
-                        .HasColumnType("int");
 
                     b.Property<double?>("Iodine")
                         .HasColumnType("float");
@@ -199,19 +206,19 @@ namespace BeeFit.API.Migrations
                     b.ToTable("Ingredients");
                 });
 
-            modelBuilder.Entity("BeeFit.API.Models.IngredientsSearchPreference", b =>
+            modelBuilder.Entity("BeeFit.API.Models.IngredientsAllergen", b =>
                 {
                     b.Property<int>("IngredientId")
                         .HasColumnType("int");
 
-                    b.Property<int>("SearchPreferenceId")
+                    b.Property<int>("AllergenId")
                         .HasColumnType("int");
 
-                    b.HasKey("IngredientId", "SearchPreferenceId");
+                    b.HasKey("IngredientId", "AllergenId");
 
-                    b.HasIndex("SearchPreferenceId");
+                    b.HasIndex("AllergenId");
 
-                    b.ToTable("IngredientsSearchPreferences");
+                    b.ToTable("IngredientsAllergens");
                 });
 
             modelBuilder.Entity("BeeFit.API.Models.Meal", b =>
@@ -227,7 +234,7 @@ namespace BeeFit.API.Migrations
                     b.Property<int?>("DishId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("IngredientId")
+                    b.Property<int?>("IngredientsId")
                         .HasColumnType("int");
 
                     b.Property<double?>("Quantity")
@@ -236,16 +243,11 @@ namespace BeeFit.API.Migrations
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("DishId");
 
-                    b.HasIndex("IngredientId");
-
-                    b.HasIndex("UserId");
+                    b.HasIndex("IngredientsId");
 
                     b.ToTable("Meals");
                 });
@@ -261,54 +263,12 @@ namespace BeeFit.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PreferenceType")
-                        .HasColumnType("int");
+                    b.Property<double?>("Quantity")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
                     b.ToTable("SearchPreferences");
-                });
-
-            modelBuilder.Entity("BeeFit.API.Models.Target", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<float>("Callories")
-                        .HasColumnType("real");
-
-                    b.Property<float>("Carbohydrates")
-                        .HasColumnType("real");
-
-                    b.Property<float>("ChangePerWeek")
-                        .HasColumnType("real");
-
-                    b.Property<int>("DayActivity")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("EstimatedEnd")
-                        .HasColumnType("datetime2");
-
-                    b.Property<float>("Fats")
-                        .HasColumnType("real");
-
-                    b.Property<float>("Proteins")
-                        .HasColumnType("real");
-
-                    b.Property<int>("TrainingActivity")
-                        .HasColumnType("int");
-
-                    b.Property<float>("WeightFrom")
-                        .HasColumnType("real");
-
-                    b.Property<float>("WeightTo")
-                        .HasColumnType("real");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Targets");
                 });
 
             modelBuilder.Entity("BeeFit.API.Models.User", b =>
@@ -348,17 +308,30 @@ namespace BeeFit.API.Migrations
                         .IsRequired()
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<int?>("TargetId")
-                        .HasColumnType("int");
+                    b.Property<string>("UserRole")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Username")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TargetId");
-
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("BeeFit.API.Models.UsersAllergen", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AllergenId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId", "AllergenId");
+
+                    b.HasIndex("AllergenId");
+
+                    b.ToTable("UsersAllergens");
                 });
 
             modelBuilder.Entity("BeeFit.API.Models.UsersParameter", b =>
@@ -437,17 +410,17 @@ namespace BeeFit.API.Migrations
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("BeeFit.API.Models.IngredientsSearchPreference", b =>
+            modelBuilder.Entity("BeeFit.API.Models.IngredientsAllergen", b =>
                 {
-                    b.HasOne("BeeFit.API.Models.Ingredient", "Ingredient")
-                        .WithMany("SearchPreferences")
-                        .HasForeignKey("IngredientId")
+                    b.HasOne("BeeFit.API.Models.Allergen", "Allergen")
+                        .WithMany("Ingredients")
+                        .HasForeignKey("AllergenId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BeeFit.API.Models.SearchPreference", "SearchPreference")
-                        .WithMany("Ingredients")
-                        .HasForeignKey("SearchPreferenceId")
+                    b.HasOne("BeeFit.API.Models.Ingredient", "Ingredient")
+                        .WithMany("Allergens")
+                        .HasForeignKey("IngredientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -458,20 +431,24 @@ namespace BeeFit.API.Migrations
                         .WithMany()
                         .HasForeignKey("DishId");
 
-                    b.HasOne("BeeFit.API.Models.Ingredient", "Ingredient")
+                    b.HasOne("BeeFit.API.Models.Ingredient", "Ingredients")
                         .WithMany()
-                        .HasForeignKey("IngredientId");
-
-                    b.HasOne("BeeFit.API.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("IngredientsId");
                 });
 
-            modelBuilder.Entity("BeeFit.API.Models.User", b =>
+            modelBuilder.Entity("BeeFit.API.Models.UsersAllergen", b =>
                 {
-                    b.HasOne("BeeFit.API.Models.Target", "Target")
-                        .WithMany()
-                        .HasForeignKey("TargetId");
+                    b.HasOne("BeeFit.API.Models.Allergen", "Allergen")
+                        .WithMany("Users")
+                        .HasForeignKey("AllergenId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BeeFit.API.Models.User", "User")
+                        .WithMany("Allergens")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("BeeFit.API.Models.UsersParameter", b =>
@@ -486,7 +463,7 @@ namespace BeeFit.API.Migrations
             modelBuilder.Entity("BeeFit.API.Models.UsersSearchPreference", b =>
                 {
                     b.HasOne("BeeFit.API.Models.SearchPreference", "SearchPreference")
-                        .WithMany("Users")
+                        .WithMany()
                         .HasForeignKey("SearchPreferenceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

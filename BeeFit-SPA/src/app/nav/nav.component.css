@@ -7,3 +7,7 @@
 {
     font-family: FontAwesome;
 }
+a.router-link-active {
+    background-color:gold;
+    color:#000 !important;
+}

@@ -4,28 +4,29 @@ button
     font-size: 1.5em;
     cursor: pointer;
     border: none;
-    background-color: black;
-    color:gold;
+    color: black;
+    background-color: gold;
+    border: 2px solid white;
     width: 100%;
 }
 
 button:hover
 {
-    color: black;   
-    background-color: gold;
+    background-color: black;
+    color:gold;
 }
-
-.nav
+button.active
 {
-    background-color: gold;
+    background-color: black;
+    color:gold;
 }
 
-hr 
+hr
 {
     display: block;
     height: 1px;
     border: 0;
-    border-top: 2px solid rgb(0, 0, 0);
+    border-top: 1px solid rgb(0, 0, 0);
     margin: 1em 0;
     padding: 0;
 }

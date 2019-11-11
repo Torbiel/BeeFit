@@ -11,7 +11,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class ProfileNavComponent implements OnInit {
   user: User;
-
+  activeOutlet: String = '';
   constructor(
     private alertify: AlertifyService,
     private userService: UserService,
@@ -21,6 +21,7 @@ export class ProfileNavComponent implements OnInit {
   ngOnInit() { }
 
   navigate(url: string) {
+    this.activeOutlet = url;
     history.pushState({ data: { user: this.user } }, '', '');
 
     this.router.navigate([

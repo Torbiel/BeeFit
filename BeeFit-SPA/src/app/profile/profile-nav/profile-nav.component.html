@@ -2,10 +2,10 @@
   <div class="row mt-4">
     <div class="col-md-2">
       <div class="nav">
-        <button (click)="navigate('main')">Main</button> <br>
-        <button (click)="navigate('parameters')">Parameters</button> <br>
-        <button (click)="navigate('charts')">Charts</button> <br>
-        <button (click)="navigate('target')">Target</button>
+        <button [ngClass]="activeOutlet=='main' ? 'active' : ''" (click)="navigate('main')">Profile</button> <br>
+        <button [ngClass]="activeOutlet=='parameters' ? 'active' : ''" (click)="navigate('parameters')">Parameters</button> <br>
+        <button [ngClass]="activeOutlet=='charts' ? 'active' : ''" (click)="navigate('charts')">Charts</button> <br>
+        <button [ngClass]="activeOutlet=='target' ? 'active' : ''" (click)="navigate('target')">Target</button>
       </div>
     </div>
 
