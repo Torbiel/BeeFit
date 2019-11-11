@@ -1,24 +1,30 @@
 button
 {
-    font-weight: 650;
-    font-size: 1.5em;
+    font-weight: 500;
+    font-size: 2vw;
     cursor: pointer;
     border: none;
-    color: black;
-    background-color: gold;
+    color: #F3C622;
+    background-color: #343a40;
     border: 2px solid white;
-    width: 100%;
+    width:100%;    
+    padding: 3px;
 }
 
 button:hover
 {
-    background-color: black;
-    color:gold;
+    background-color: #23212C;
+    color:#F3C622;
 }
-button.active
+button.active, button:active, button:focus
 {
-    background-color: black;
-    color:gold;
+    background-color: #23212C;
+    color:#E1A511;
+}
+
+.nav
+{
+    min-width:120px;
 }
 
 hr

@@ -1,14 +1,12 @@
-﻿using BeeFit.API.Data.Interfaces;
 ﻿using AutoMapper;
+using BeeFit.API.Data.Interfaces;
 using BeeFit.API.Dtos;
+using BeeFit.API.Helpers;
 using BeeFit.API.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.JsonPatch;
-using System.Linq;
-using BeeFit.API.Helpers;
 
 namespace BeeFit.API.Controllers
 {
@@ -30,14 +28,6 @@ namespace BeeFit.API.Controllers
         }
 
         // [Authorize(Roles = Role.Admin)] TODO?: Role-based authentication
-        [HttpGet]
-        public async Task<IActionResult> GetAll()
-        {
-            var users = await _repo.GetAll<User>();
-            var usersToReturn = _mapper.Map<IEnumerable<UserForListDto>>(users);
-
-            return Ok(usersToReturn);
-        }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
@@ -52,17 +42,18 @@ namespace BeeFit.API.Controllers
         public async Task<IActionResult> UpdateUser(int id, UserForUpdateDto userForUpdateDto)
         {
             var userToUpdate = await _repo.GetById<User>(id);
+            var oldPass = userForUpdateDto.OldPassword;
+            var newPass = userForUpdateDto.NewPassword;
             
-            if(userForUpdateDto.OldPassword != string.Empty && userForUpdateDto.NewPassword != string.Empty)
+            if(!string.IsNullOrWhiteSpace(oldPass) && !string.IsNullOrWhiteSpace(newPass))
             {
                 if (_authRepo.CreateNewPassword(userToUpdate, userForUpdateDto.OldPassword, userForUpdateDto.NewPassword) == null)
                 {
-                    return Unauthorized();
+                    return BadRequest("Old password is invalid.");
                 }
             }
 
             _mapper.Map(userForUpdateDto, userToUpdate);
-            await _repo.SaveAll();
 
             return NoContent();
         }

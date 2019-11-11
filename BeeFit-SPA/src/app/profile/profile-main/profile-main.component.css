@@ -2,8 +2,8 @@
 {
     width: 90px;
     border: none;
-    background-color: gold;
-    color: black;
+    background-color: #F3C622;
+    color: #343a40;
 }
 
 .edit-button
@@ -20,8 +20,14 @@
 
 .edit-button:hover, .save-button:hover, .cancel-button:hover
 {
-    background-color: black;
-    color: gold;
+    background-color: #343a40;
+    color: #F3C622;
+}
+.edit-button:active, .save-button:active, .cancel-button:active,
+.edit-button:focus, .save-button:focus, .cancel-button:focus
+{
+    background-color: #23212C;
+    color: #E1A511;
 }
 
 .left-margin-100

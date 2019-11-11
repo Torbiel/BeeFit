@@ -2,7 +2,7 @@
 {
     width: 90px;
     border: none;
-    background-color: gold;
+    background-color: #F3C622;
     color: black;
 }
 
@@ -21,7 +21,7 @@
 .add-button:hover, .save-button:hover, .cancel-button:hover
 {
     background-color: black;
-    color: gold;
+    color: #F3C622;
 }
 
 table

@@ -7,9 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TodaysPlanComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+
+  }
+
 
   ngOnInit() {
+  }
+  prepareDatePicker() {
+    var today = new Date();
   }
 
 }

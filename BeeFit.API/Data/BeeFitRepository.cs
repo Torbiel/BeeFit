@@ -49,5 +49,10 @@ namespace BeeFit.API.Data
         {
             return await _context.SaveChangesAsync() > 0;
         }
+
+        public Task<IEnumerable<T>> Find<T>(Expression<Func<T, bool>> predicate) where T : class
+        {
+            throw new NotImplementedException();
+        }
     }
 }
