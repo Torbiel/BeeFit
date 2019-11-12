@@ -8,6 +8,10 @@ import { CalendarComponent } from './calendar/calendar.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { ProfileNavComponent } from './profile/profile-nav/profile-nav.component';
 import { WelcomeComponent } from './welcome/welcome.component';
+import { ProfileMainComponent } from './profile/profile-main/profile-main.component';
+import { ProfileParametersComponent } from './profile/profile-parameters/profile-parameters.component';
+import { ProfileTargetComponent } from './profile/profile-target/profile-target.component';
+import { ProfileChartsComponent } from './profile/profile-charts/profile-charts.component';
 
 export const appRoutes: Routes = [
     { path: '', component: HomeComponent },
@@ -26,4 +30,31 @@ export const appRoutes: Routes = [
     { path: 'help', component: HelpComponent },
     { path: 'about', component: AboutComponent },
     { path: '**', redirectTo: '', pathMatch: 'full' },
+];
+
+export const profileRoutes: Routes = [
+    {
+        path: 'profile/main', component: ProfileNavComponent, children: [
+            { path: '', component: ProfileMainComponent, outlet: 'profile' },
+        ]
+    },
+        {
+        path: 'profile/target', component: ProfileNavComponent, children: [
+            { path: '', component: ProfileTargetComponent, outlet: 'profile' },
+        ]
+    },
+    {
+        path: 'profile/parameters', component: ProfileNavComponent, children: [
+            { path: '', component: ProfileParametersComponent, outlet: 'profile' },
+        ]
+    },
+    {
+        path: 'profile/charts', component: ProfileNavComponent, children: [
+            { path: '', component: ProfileChartsComponent, outlet: 'profile' },
+        ]
+    },
+    { path: 'profile', component: ProfileNavComponent, children: [
+        { path: '', pathMatch: 'full', redirectTo: '/profile/main' }
+    ]
+    },
 ];

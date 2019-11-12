@@ -16,7 +16,7 @@ import { TodaysPlanComponent } from './todays-plan/todays-plan.component';
 import { AboutComponent } from './about/about.component';
 import { HelpComponent } from './help/help.component';
 import { DiaryComponent } from './diary/diary.component';
-import { appRoutes } from './routes';
+import { appRoutes, profileRoutes } from './routes';
 import { ProfileMainComponent } from './profile/profile-main/profile-main.component';
 import { ProfileParametersComponent } from './profile/profile-parameters/profile-parameters.component';
 import { ProfileNavComponent } from './profile/profile-nav/profile-nav.component';
@@ -50,33 +50,7 @@ import { ProfileChartsComponent } from './profile/profile-charts/profile-charts.
       HttpClientModule,
       FormsModule,
       BsDropdownModule.forRoot(),
-      RouterModule.forChild([
-         {
-            path: 'profile/main', component: ProfileNavComponent, children: [
-               { path: '', component: ProfileMainComponent, outlet: 'profile' },
-            ]
-         },
-         {
-            path: 'profile/target', component: ProfileNavComponent, children: [
-               { path: '', component: ProfileTargetComponent, outlet: 'profile' },
-            ]
-         },
-         {
-            path: 'profile/parameters', component: ProfileNavComponent, children: [
-               { path: '', component: ProfileParametersComponent, outlet: 'profile' },
-            ]
-         },
-         {
-            path: 'profile/charts', component: ProfileNavComponent, children: [
-               { path: '', component: ProfileChartsComponent, outlet: 'profile' },
-            ]
-         },
-         { path: 'profile', component: ProfileNavComponent, children: [
-            { path: '', pathMatch: 'full', redirectTo: '/profile/main' }
-         ]
-      },
-
-   ]),
+      RouterModule.forChild(profileRoutes),
 
       RouterModule.forRoot(appRoutes),
    ],
