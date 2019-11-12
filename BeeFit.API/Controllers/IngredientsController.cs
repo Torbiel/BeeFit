@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BeeFit.API.Controllers
 {
-    [Authorize]
+    // [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class IngredientsController : ControllerBase
@@ -17,7 +17,7 @@ namespace BeeFit.API.Controllers
         private readonly IIngredientsRepository _repo;
         private readonly IMapper _mapper;
 
-        public IngredientsController(IMapper mapper, IIngredientsRepository repo) 
+        public IngredientsController(IMapper mapper, IIngredientsRepository repo)
         {
             _mapper = mapper;
             _repo = repo;
@@ -25,15 +25,13 @@ namespace BeeFit.API.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Add(IngredientDto ingredientForAddDto)
+        public async Task<IActionResult> Add(IngredientDto ingredientDto)
         {
-            var userClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-            var userId = int.Parse(userClaim.Value);
-            var user = await _repo.GetById<User>(userId);
+            var ingredientToAdd = _mapper.Map<Ingredient>(ingredientDto);
 
-            ingredientForAddDto.User = user;
-
-            var ingredientToAdd = _mapper.Map<Ingredient>(ingredientForAddDto);
+            var currentUserId = int.Parse(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var currentUser = await _repo.GetById<User>(currentUserId);
+            ingredientToAdd.User = currentUser;
 
             _repo.Add(ingredientToAdd);
 
@@ -52,7 +50,7 @@ namespace BeeFit.API.Controllers
         [HttpGet("{name}")]
         public async Task<IActionResult> GetManyByName(string name)
         {
-            var ingredients = await _repo.Find<Ingredient>(i => i.Name.Contains(name));
+            var ingredients = await _repo.GetManyByName(name);
             var ingredientsToReturn = _mapper.Map<IngredientDto>(ingredients);
 
             return Ok(ingredientsToReturn);
@@ -63,15 +61,19 @@ namespace BeeFit.API.Controllers
         {
             var ingredientToUpdate = await _repo.GetById<Ingredient>(id);
 
-            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
-            if(userId != ingredientToUpdate.User.Id)
+            if (currentUserId != ingredientToUpdate.User.Id)
             {
                 return Unauthorized("You can't update someone else's ingredient.");
             }
 
-            ingredientDto.User = await _repo.GetById<User>(userId); // We have to set the user again on update, otherwise it will become null in db
-            _mapper.Map(ingredientDto, ingredientToUpdate); // This automatically updates the ingredient
+            var currentUser = await _repo.GetById<User>(currentUserId);
+
+            _mapper.Map(ingredientDto, ingredientToUpdate);
+            ingredientToUpdate.User = currentUser; // We have to set the user again on update, otherwise it will become null in db
+
+            _repo.Update(ingredientToUpdate);
 
             return NoContent();
         }
@@ -79,7 +81,7 @@ namespace BeeFit.API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            if(await _repo.Delete<Ingredient>(id))
+            if (await _repo.Delete<Ingredient>(id))
             {
                 return Ok();
             }

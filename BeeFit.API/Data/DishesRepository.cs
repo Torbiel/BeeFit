@@ -17,7 +17,7 @@ namespace BeeFit.API.Data
 
             foreach (var pref in searchPreferences)
             {
-                dishes.Where(d => d.Ingredients.All(i => i.Ingredient.SearchPreferences.FirstOrDefault(s => s.SearchPreference == pref) != null));
+                dishes.Where(d => d.Ingredients.All(i => i.Ingredient.SearchPreferences.FirstOrDefault(s => s.SearchPreferenceId == pref.Id) != null));
             }
 
             return dishes;

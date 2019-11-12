@@ -16,6 +16,7 @@ namespace BeeFit.API.Data
         public DbSet<User> Users { get; set; }
         public DbSet<UsersParameter> UsersParameters { get; set; }
         public DbSet<UsersSearchPreference> UsersSearchPreferences { get; set; }
+        public DbSet<Target> Targets { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

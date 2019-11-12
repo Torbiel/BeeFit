@@ -2,14 +2,15 @@
 using BeeFit.API.Data.Interfaces;
 using BeeFit.API.Dtos;
 using BeeFit.API.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace BeeFit.API.Controllers
 {
-    [Authorize]
+    // TODO: uncomment Authorize
+    //[Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class MealsController : ControllerBase
@@ -24,12 +25,17 @@ namespace BeeFit.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add(MealDto mealDto)
+        public async Task<IActionResult> Add(MealDto mealDto, int childId)
         {
-            var dishToAdd = _mapper.Map<Meal>(mealDto);
-            _repo.Add(dishToAdd);
+            var mealToAdd = _mapper.Map<Meal>(mealDto);
 
-            return Ok(dishToAdd);
+            var currentUserId = int.Parse(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var currentUser = await _repo.GetById<User>(currentUserId);
+            mealToAdd.User = currentUser;
+
+            _repo.Add(mealToAdd);
+
+            return Ok(mealToAdd);
         }
 
         [HttpGet("{id:int}")]
@@ -50,16 +56,18 @@ namespace BeeFit.API.Controllers
             return Ok(mealsToReturn);
         }
 
-        [HttpPut]
+        [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, MealDto mealDto)
         {
             var mealToUpdate = await _repo.GetById<Meal>(id);
             _mapper.Map(mealDto, mealToUpdate);
 
+            _repo.Update(mealToUpdate);
+
             return NoContent();
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             if(await _repo.Delete<Meal>(id))

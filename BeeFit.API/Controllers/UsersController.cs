@@ -5,7 +5,6 @@ using BeeFit.API.Helpers;
 using BeeFit.API.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace BeeFit.API.Controllers

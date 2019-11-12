@@ -14,8 +14,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using System.Net;
 using System.Text;
-using AutoMapper;
 using Newtonsoft.Json;
+using System;
+using AutoMapper;
 
 namespace BeeFit.API
 {
@@ -32,7 +33,16 @@ namespace BeeFit.API
         public void ConfigureServices(IServiceCollection services)
         {
             // The order of adding services doesn't matter.
-            services.AddAutoMapper(typeof(BeeFitRepository).Assembly);
+            services.AddSingleton<IMapper>(container =>
+            {
+                var contextAccessor = container.GetRequiredService<IHttpContextAccessor>();
+                var autoMapperConfig = new MapperConfiguration(configuration =>
+                {
+                    configuration.AddProfile(new AutoMapperProfiles(contextAccessor));
+                });
+
+                return new Mapper(autoMapperConfig);
+            });
 
             services.AddCors();
             
@@ -53,7 +63,11 @@ namespace BeeFit.API
             // https://stackoverflow.com/questions/38138100/addtransient-addscoped-and-addsingleton-services-differences
             services.AddScoped<IAuthRepository, AuthRepository>();
 
+            // Adding repositories
             services.AddScoped<IBeeFitRepository, BeeFitRepository>();
+            services.AddScoped<IDishesRepository, DishesRepository>();
+            services.AddScoped<IIngredientsRepository, IngredientsRepository>();
+            services.AddScoped<IMealsRepository, MealsRepository>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     .AddJwtBearer(options =>

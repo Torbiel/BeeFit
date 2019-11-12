@@ -4,9 +4,6 @@ using BeeFit.API.Dtos;
 using BeeFit.API.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace BeeFit.API.Controllers
@@ -26,7 +23,7 @@ namespace BeeFit.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(TargetDto targetDto)
+        public IActionResult Add(TargetForAddDto targetDto)
         {
             var targetToAdd = _mapper.Map<Target>(targetDto);
             _repo.Add(targetToAdd);
@@ -38,13 +35,13 @@ namespace BeeFit.API.Controllers
         public async Task<IActionResult> GetById(int id)
         {
             var target = await _repo.GetById<Target>(id);
-            var targetToReturn = _mapper.Map<TargetDto>(target);
+            var targetToReturn = _mapper.Map<TargetForGetDto>(target);
 
             return Ok(targetToReturn);
         }
 
-        [HttpPut]
-        public IActionResult Update(TargetDto targetDto)
+        [HttpPut("{id}")]
+        public IActionResult Update(int id, TargetForUpdateDto targetDto)
         {
             var targetToUpdate = _mapper.Map<Target>(targetDto);
             _repo.Update(targetToUpdate);

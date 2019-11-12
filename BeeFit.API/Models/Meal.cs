@@ -17,9 +17,16 @@ namespace BeeFit.API.Models
         [Required]
         public DateTime Date { get; set; }
 
+        [ForeignKey("UserId")]
         public virtual User User { get; set; }
+        public int UserId { get; set; }
+
         public virtual Dish Dish { get; set; }
+        public int DishId { get; set; }
+
         public virtual Ingredient Ingredient { get; set; }
+        public int IngredientId { get; set; }
+
         public double? Quantity { get; set; }
     }
 }

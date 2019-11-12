@@ -5,13 +5,12 @@ using BeeFit.API.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace BeeFit.API.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class DishesController : ControllerBase
@@ -26,13 +25,14 @@ namespace BeeFit.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(Dish dishDto)
+        public async Task<IActionResult> Add(DishDto dishDto)
         {
-            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-            var user = await _repo.GetById<User>(userId);
-            dishDto.User = user;
-
             var dishToAdd = _mapper.Map<Dish>(dishDto);
+
+            var currentUserId = int.Parse(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var currentUser = await _repo.GetById<User>(currentUserId);
+            dishToAdd.User = currentUser;
+
             _repo.Add(dishToAdd);
 
             return Ok();
@@ -61,20 +61,21 @@ namespace BeeFit.API.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, DishDto dishDto)
         {
-            // TODO: if user tries to update someone else's dish, it's copied and added to his own
-
             var dishToUpdate = await _repo.GetById<Dish>(id);
 
-            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
-            if (userId != dishToUpdate.User.Id)
+            if (currentUserId != dishToUpdate.User.Id)
             {
-                return Unauthorized("You can't update someone else's dish.");
+                await Add(dishDto);
             }
+            else
+            {
+                _mapper.Map(dishDto, dishToUpdate);
+                dishToUpdate.User = await _repo.GetById<User>(currentUserId); // We have to set the user again on update, otherwise it will become null in db
 
-            dishDto.User = await _repo.GetById<User>(userId); // We have to set the user again on update, otherwise it will become null in db
-
-            _mapper.Map(dishDto, dishToUpdate); // Auto-update
+                _repo.Update(dishToUpdate);
+            }
 
             return NoContent();
         }

@@ -1,16 +1,15 @@
-﻿using BeeFit.API.Models;
-using BeeFit.API.Models.Enums;
+﻿using BeeFit.API.Models.Enums;
 using System.Collections.Generic;
 
 namespace BeeFit.API.Dtos
 {
-    public class IngredientDto
+    public class IngredientForDishDto
     {
         public string Name { get; set; }
         public string Brand { get; set; }
         public Unit Unit { get; set; }
         public int GramsPerUnit { get; set; }
-        public ICollection<IngredientsSearchPreference> SearchPreferences { get; set; }
+        public ICollection<IngredientsSearchPreferenceForDishDto> SearchPreferences { get; set; }
         public int Callories { get; set; }
         public double Fats { get; set; }
         public double Carbohydrates { get; set; }

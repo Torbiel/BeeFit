@@ -1,4 +1,5 @@
-﻿using BeeFit.API.Models.Enums;
+﻿using BeeFit.API.Dtos;
+using BeeFit.API.Models.Enums;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -13,7 +14,9 @@ namespace BeeFit.API.Models
         [Required]
         public string Name { get; set; }
         public string Brand { get; set; }
+        [ForeignKey("UserId")]
         public virtual User User { get; set; }
+        public int UserId { get; set; }
         public Unit Unit { get; set; }
         public int GramsPerUnit { get; set; }
         public virtual ICollection<DishesIngredient> Dishes { get; set; }

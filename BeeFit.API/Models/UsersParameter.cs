@@ -10,7 +10,10 @@ namespace BeeFit.API.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [Required]
+        [ForeignKey("UserId")]
         public virtual User User { get; set; }
+        [Required]
+        public int UserId { get; set; }
         [Required]
         public DateTime Date { get; set; }
         public double? Weight { get; set; }

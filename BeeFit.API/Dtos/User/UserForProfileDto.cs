@@ -14,6 +14,6 @@ namespace BeeFit.API.Dtos
         public string Username { get; set; }
         public ICollection<UsersParameterDto> Parameters { get; set; }
         public ICollection<UsersSearchPreferenceDto> SearchPreferences { get; set; }
-        public TargetDto Target { get; set; }
+        public TargetForAddDto Target { get; set; }
     }
 }
