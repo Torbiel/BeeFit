@@ -11,20 +11,33 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class ProfileNavComponent implements OnInit {
   user: User;
-
+  activeOutlet: String = '';
   constructor(
     private alertify: AlertifyService,
     private userService: UserService,
     private router: Router,
     private route: ActivatedRoute) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.getUser();
+  }
+
+  getUser() {
+    const id = localStorage.getItem('userId');
+    this.userService.getUser(id).subscribe((user: User) => {
+      console.log(user);
+      this.user = user;
+    }, error => {
+      this.alertify.error(error);
+    });
+  }
 
   navigate(url: string) {
+    this.activeOutlet = url;
     history.pushState({ data: { user: this.user } }, '', '');
 
     this.router.navigate([
       { outlets: { profile: [url] } }],
-      { relativeTo: this.route, skipLocationChange: true, state: { data: { user: this.user } } });
+      { relativeTo: this.route, skipLocationChange: true, state: { data: {user: this.user } } });
   }
 }

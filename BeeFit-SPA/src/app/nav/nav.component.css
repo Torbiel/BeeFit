@@ -7,3 +7,15 @@
 {
     font-family: FontAwesome;
 }
+
+a.router-link-active, a.router-link-active:hover
+ {
+    background-color:#23212C;
+    color:#F3C622 !important;
+}
+
+a:active, a:hover
+{
+    background-color:#F3C622;
+    color:#23212C !important;
+}

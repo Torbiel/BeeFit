@@ -1,31 +1,38 @@
 button
 {
-    font-weight: 650;
-    font-size: 1.5em;
+    font-weight: 500;
+    font-size: 2vw;
     cursor: pointer;
     border: none;
-    background-color: black;
-    color:gold;
-    width: 100%;
+    color: #F3C622;
+    background-color: #343a40;
+    border: 2px solid white;
+    width:100%;    
+    padding: 3px;
 }
 
 button:hover
 {
-    color: black;   
-    background-color: gold;
+    background-color: #23212C;
+    color:#F3C622;
+}
+button.active, button:active, button:focus
+{
+    background-color: #23212C;
+    color:#E1A511;
 }
 
 .nav
 {
-    background-color: gold;
+    min-width:120px;
 }
 
-hr 
+hr
 {
     display: block;
     height: 1px;
     border: 0;
-    border-top: 2px solid rgb(0, 0, 0);
+    border-top: 1px solid rgb(0, 0, 0);
     margin: 1em 0;
     padding: 0;
 }
