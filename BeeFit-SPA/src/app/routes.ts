@@ -12,6 +12,10 @@ import { ProfileMainComponent } from './profile/profile-main/profile-main.compon
 import { ProfileParametersComponent } from './profile/profile-parameters/profile-parameters.component';
 import { ProfileTargetComponent } from './profile/profile-target/profile-target.component';
 import { ProfileChartsComponent } from './profile/profile-charts/profile-charts.component';
+import { AddMealNavComponent } from './add-meal/add-meal-nav/add-meal-nav.component';
+import { AddMealSearchComponent } from './add-meal/add-meal-search/add-meal-search.component';
+import { AddMealMyFoodComponent } from './add-meal/add-meal-my-food/add-meal-my-food.component';
+import { AddMealAddNewComponent } from './add-meal/add-meal-add-new/add-meal-add-new.component';
 
 export const appRoutes: Routes = [
     { path: '', component: HomeComponent },
@@ -24,7 +28,8 @@ export const appRoutes: Routes = [
             { path: 'calendar', component: CalendarComponent },
             { path: 'todays-plan', component: TodaysPlanComponent },
             { path: 'profile', component: ProfileNavComponent },
-            { path: 'welcome', component: WelcomeComponent }
+            { path: 'welcome', component: WelcomeComponent },
+            { path: 'add-meal', component: AddMealNavComponent }
         ]
     },
     { path: 'help', component: HelpComponent },
@@ -58,3 +63,21 @@ export const profileRoutes: Routes = [
     ]
     },
 ];
+
+export const addMealRoutes: Routes = [
+    {
+        path: 'add-meal/search', component: AddMealNavComponent, children: [
+            { path: '', component: AddMealSearchComponent, outlet: 'add-meal' }
+        ]
+    },
+    {
+        path: 'add-meal/my-food', component: AddMealNavComponent, children: [
+            { path: '', component: AddMealMyFoodComponent, outlet: 'add-meal' }
+        ]
+    },
+    {
+        path: 'add-meal/add-new', component:AddMealNavComponent, children: [
+            { path: '', component:AddMealAddNewComponent, outlet: 'add-meal' }
+        ]
+    }
+]

@@ -1,6 +1,7 @@
 import { SearchPreference } from './SearchPreference';
 import { UsersParameter } from './UsersParameter';
 import { Target } from './Target';
+import { Meal } from './Meal';
 
 export interface User {
     id: number;
@@ -14,6 +15,7 @@ export interface User {
     deleted?: boolean;
     preferences?: SearchPreference[];
     parameters?: UsersParameter[];
+    meals?: Meal[];
     target: Target;
     oldPassword: string;
     newPassword: string;

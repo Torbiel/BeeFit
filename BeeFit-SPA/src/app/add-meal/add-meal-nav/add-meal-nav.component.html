@@ -1,0 +1,15 @@
+<div class="container">
+  <div class="row justify-content-center mt-3">
+    <div class="col-auto">
+      <button [routerLink]="['/add-meal/search']" routerLinkActive="active"><i class="fas fa-search"></i></button>
+    </div>
+    <div class="col-auto">
+      <button [routerLink]="['/add-meal/my-food']" routerLinkActive="active"><i class="fas fa-book"></i></button>
+    </div>
+    <div class="col-auto">
+      <button [routerLink]="['/add-meal/add-new']" routerLinkActive="active"><i class="fas fa-plus"></i></button>
+    </div>
+  </div>
+
+  <router-outlet name="add-meal"></router-outlet>
+</div>
