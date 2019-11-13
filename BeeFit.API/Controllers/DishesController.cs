@@ -48,9 +48,9 @@ namespace BeeFit.API.Controllers
         }
 
         [HttpGet("{name}")]
-        public async Task<IActionResult> GetManyBySearchPreferences(string name, List<SearchPreference> searchPreferences)
+        public async Task<IActionResult> GetManyByName(string name)
         {
-            var dishes = await _repo.GetManyBySearchPreference(name, searchPreferences);
+            var dishes = await _repo.GetManyByName(name);
             var dishesToReturn = _mapper.Map<ICollection<DishDto>>(dishes);
 
             return Ok(dishesToReturn);

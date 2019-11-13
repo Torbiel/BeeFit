@@ -4,6 +4,7 @@ using BeeFit.API.Dtos;
 using BeeFit.API.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -51,7 +52,7 @@ namespace BeeFit.API.Controllers
         public async Task<IActionResult> GetManyByName(string name)
         {
             var ingredients = await _repo.GetManyByName(name);
-            var ingredientsToReturn = _mapper.Map<IngredientDto>(ingredients);
+            var ingredientsToReturn = _mapper.Map<IEnumerable<IngredientDto>>(ingredients);
 
             return Ok(ingredientsToReturn);
         }

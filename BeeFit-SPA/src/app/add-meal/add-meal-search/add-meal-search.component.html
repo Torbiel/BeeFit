@@ -9,4 +9,24 @@
       </div>
     </div>
   </form>
+
+  <div class="row justify-content-center">
+    <div class="col dishes">
+      <div class="row" *ngFor="let dish of this.dishes">
+        <div class="col">
+          <p class="lead">{{ dish.name }}</p>
+          <!-- <p>{{ dish.callories }}</p> -->
+        </div>
+        <div class="col">
+          <button class="add-button" (click)="addToMeal(dish, null)"><i class="fas fa-plus"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="row" *ngFor="let ingredient of this.ingredients">
+        {{ ingredient.name }}
+      </div>
+    </div>
+  </div>
 </div>

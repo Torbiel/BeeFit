@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { Observable } from 'rxjs';
-import { Ingredient } from '../_models/Ingredient';
+import { Meal } from '../_models/Meal';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -13,13 +12,13 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-export class IngredientsService {
-  baseUrl = environment.apiUrl + 'ingredients'; 
+export class MealService {
+  baseUrl = environment.apiUrl + 'meals';
 
   constructor(private http: HttpClient) { }
 
-  getIngredientsByName(name: string): Observable<Ingredient[]> {
-    return this.http.get<Ingredient[]>(this.baseUrl + '/' + name, httpOptions);
+  addMeal(meal: Meal) {
+    this.http.post<Meal>(this.baseUrl, httpOptions);
   }
 
 }
