@@ -58,3 +58,21 @@ export const profileRoutes: Routes = [
     ]
     },
 ];
+
+export const addMealRoutes: Routes = [
+    {
+        path: 'add-meal/search', component: AddMealNavComponent, children: [
+            { path: '', component: AddMealSearchComponent, outlet: 'add-meal' }
+        ]
+    },
+    {
+        path: 'add-meal/my-food', component: AddMealNavComponent, children: [
+            { path: '', component: AddMealMyFoodComponent, outlet: 'add-meal' }
+        ]
+    },
+    {
+        path: 'add-meal/add-new', component: AddMealNavComponent, children: [
+            { path: '', component: AddMealAddNewComponent, outlet: 'add-meal' }
+        ]
+    }
+];
