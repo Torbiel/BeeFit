@@ -25,7 +25,7 @@ namespace BeeFit.API.Controllers
         {
             _repo = repo;
             _mapper = mapper;
-        }
+        }   
 
         [HttpPost]
         public async Task<IActionResult> Add(MealForAddDto mealDto)

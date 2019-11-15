@@ -34,7 +34,8 @@ namespace BeeFit.API.Helpers
 
             // Dish
             CreateMap<DishForAddDto, Dish>();
-            CreateMap<Dish, DishForGetDto>();
+            CreateMap<Dish, DishForGetDto>()
+                .ForMember(d => d.Id, opt => opt.MapFrom(d => d.Id));
             CreateMap<DishForUpdateDto, Dish>();
             CreateMap<DishForUpdateDto, DishForAddDto>();
 

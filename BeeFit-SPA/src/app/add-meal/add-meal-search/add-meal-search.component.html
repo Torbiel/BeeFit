@@ -1,4 +1,4 @@
-<div class="container mt-3">
+<div class="container mt-3" *ngIf="this.router.url == '/todays-plan/add-meal' || this.router.url == '/todays-plan/add-meal/search'">
   <form (ngSubmit)="findDishes(); findIngredients();">
     <div class="row justify-content-center">
       <div class="col-3 search-bar">
@@ -18,7 +18,7 @@
           <!-- <p>{{ dish.callories }}</p> -->
         </div>
         <div class="col">
-          <button class="add-button" (click)="addToMeal(dish, null)"><i class="fas fa-plus"></i></button>
+          <button class="add-button" (click)="addToMeal(dish.id, 0)"><i class="fas fa-plus"></i></button>
         </div>
       </div>
     </div>

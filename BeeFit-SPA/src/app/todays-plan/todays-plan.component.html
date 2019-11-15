@@ -1,17 +1,27 @@
 <!-- <app-date-picker></app-date-picker> -->
 
-<div class="container">
+<div class="container" *ngIf="this.router.url === '/todays-plan'">
   <div class="row justify-content-center mealtype mt-3">
     <div class="col-6">
       Breakfast
     </div>
-    <div class="col-auto">
-      <button class="add-button"><i class="fas fa-plus"></i></button>
+    <div class="col-2">
+      <button class="add-button pull-right" (click)="setMealType(0)" [routerLink]="['add-meal']"
+        routerLinkActive="router-link-active">
+        <i class="fas fa-plus"></i>
+      </button>
     </div>
   </div>
 
-  <div class="row justify-content-center meal mt-3" *ngFor="let breakfast of this.meals">
-    {{ breakfast.dish.name }}
+  <div class="row justify-content-center meal mt-3" *ngFor="let breakfast of this.filterMealsByType(this.meals, 0)">
+    <div class="col-6">
+      <p class="lead">{{ breakfast.dish.name }}</p>
+      <p>{{ breakfast.dish.calculateCallories() }}</p>
+    </div>
+    <div class="col-2">
+      <button class="delete-button pull-right" (click)="deleteMeal(breakfast.id)"><i class="fas fa-times"></i></button>
+      <button class="edit-button pull-right"><i class="fas fa-edit"></i></button>
+    </div>
   </div>
 
   <div class="row justify-content-center mealtype mt-2">
@@ -21,6 +31,11 @@
     <div class="col-auto">
       <button class="add-button"><i class="fas fa-plus"></i></button>
     </div>
+  </div>
+
+  <div class="row justify-content-center meal mt-3"
+    *ngFor="let secondBreakfast of this.filterMealsByType(this.meals, 1)">
+    {{ secondBreakfast.dish.name }}
   </div>
 
   <div class="row justify-content-center mealtype mt-2">
@@ -59,3 +74,5 @@
     </div>
   </div>
 </div>
+
+<router-outlet></router-outlet>
