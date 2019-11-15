@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace BeeFit.API.Dtos
+namespace BeeFit.API.Dtos.User
 {
     public class UserForUpdateDto
     {

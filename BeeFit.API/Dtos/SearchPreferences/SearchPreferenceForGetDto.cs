@@ -1,8 +1,8 @@
 ﻿using BeeFit.API.Models.Enums;
 
-namespace BeeFit.API.Dtos
+namespace BeeFit.API.Dtos.SearchPreferences
 {
-    public class SearchPreferenceDto
+    public class SearchPreferenceForGetDto
     {
         public string Name { get; set; }
         public PreferenceType PreferenceType { get; set; }

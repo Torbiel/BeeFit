@@ -1,11 +1,9 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 
-namespace BeeFit.API.Dtos
+namespace BeeFit.API.Dtos.UsersParameters
 {
-    public class UsersParameterDto
+    public class UsersParameterForGetDto
     {
-        [Required(ErrorMessage = "You didn't pick a date")]
         public DateTime Date { get; set; }
         public double? Weight { get; set; }
         public double? AbdominalCircumference { get; set; }

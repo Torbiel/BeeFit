@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BeeFit.API.Data.Interfaces;
 using BeeFit.API.Dtos;
+using BeeFit.API.Dtos.Ingredients;
 using BeeFit.API.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -26,7 +27,7 @@ namespace BeeFit.API.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Add(IngredientDto ingredientDto)
+        public async Task<IActionResult> Add(IngredientForAddDto ingredientDto)
         {
             var ingredientToAdd = _mapper.Map<Ingredient>(ingredientDto);
 
@@ -43,7 +44,7 @@ namespace BeeFit.API.Controllers
         public async Task<IActionResult> GetById(int id)
         {
             var ingredient = await _repo.GetById<Ingredient>(id);
-            var ingredientToReturn = _mapper.Map<IngredientDto>(ingredient);
+            var ingredientToReturn = _mapper.Map<IngredientForGetDto>(ingredient);
 
             return Ok(ingredientToReturn);
         }
@@ -52,13 +53,13 @@ namespace BeeFit.API.Controllers
         public async Task<IActionResult> GetManyByName(string name)
         {
             var ingredients = await _repo.GetManyByName(name);
-            var ingredientsToReturn = _mapper.Map<IEnumerable<IngredientDto>>(ingredients);
+            var ingredientsToReturn = _mapper.Map<IEnumerable<IngredientForGetDto>>(ingredients);
 
             return Ok(ingredientsToReturn);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, IngredientDto ingredientDto)
+        public async Task<IActionResult> Update(int id, IngredientForUpdateDto ingredientDto)
         {
             var ingredientToUpdate = await _repo.GetById<Ingredient>(id);
 

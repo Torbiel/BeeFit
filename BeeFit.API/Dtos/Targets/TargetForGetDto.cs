@@ -1,9 +1,11 @@
 ﻿using BeeFit.API.Models.Enums;
+using System;
 
-namespace BeeFit.API.Dtos
+namespace BeeFit.API.Dtos.Targets
 {
-    public class TargetForUpdateDto
+    public class TargetForGetDto
     {
+        public DateTime EstimatedEnd { get; set; }
         public float WeightFrom { get; set; }
         public float WeightTo { get; set; }
         public float ChangePerWeek { get; set; }

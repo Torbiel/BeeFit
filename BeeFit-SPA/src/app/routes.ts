@@ -76,8 +76,8 @@ export const addMealRoutes: Routes = [
         ]
     },
     {
-        path: 'add-meal/add-new', component:AddMealNavComponent, children: [
-            { path: '', component:AddMealAddNewComponent, outlet: 'add-meal' }
+        path: 'add-meal/add-new', component: AddMealNavComponent, children: [
+            { path: '', component: AddMealAddNewComponent, outlet: 'add-meal' }
         ]
     }
-]
+];
