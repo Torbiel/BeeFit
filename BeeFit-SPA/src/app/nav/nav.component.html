@@ -1,8 +1,8 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 
-<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+<nav class="navbar navbar-expand-md">
   <div class="container">
-      <a class="navbar-brand text-light" [routerLink]="['/home']" routerLinkActive="router-link-active">
+      <a class="navbar-brand" [routerLink]="['/home']" routerLinkActive="router-link-active">
         BeeFit
       </a>
 
@@ -62,7 +62,7 @@
 
           <div class="dropdown-divider"></div>
 
-          <a class="dropdown-item" (click)="logout()">
+          <a class="dropdown-item logout" (click)="logout()">
             <i class="fas fa-sign-out"></i> Log out
           </a>
         </div>

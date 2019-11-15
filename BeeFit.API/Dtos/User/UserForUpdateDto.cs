@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using BeeFit.API.Dtos.Targets;
+using BeeFit.API.Dtos.UsersParameters;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace BeeFit.API.Dtos.User
@@ -11,7 +13,7 @@ namespace BeeFit.API.Dtos.User
         public string OldPassword { get; set; }
         [StringLength(100, MinimumLength = 8, ErrorMessage = "Your password has to contain 8 or more characters.")]
         public string NewPassword { get; set; }
-        public ICollection<UsersParameterDto> Parameters { get; set; }
-        public TargetForAddDto Target { get; set; }
+        public ICollection<UsersParameterForUpdateDto> Parameters { get; set; }
+        public TargetForUpdateDto Target { get; set; }
     }
 }

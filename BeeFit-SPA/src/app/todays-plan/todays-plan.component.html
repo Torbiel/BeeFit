@@ -1,80 +1,61 @@
 <!-- <app-date-picker></app-date-picker> -->
 
-<section class="container">
-  <article>
-    <div class="header">Breakfast</div>
-    <div class="meal-details">
-      <div>kanapka</div>
-      <div>kanapka2</div>
-      <div>pepsi 300g</div>
-      <div>pepsi 300g</div>
-    </div>
-  </article>
-  <article>
-    <div class="header">Second breakfast</div>
-    <div class="meal-details">
-      <div>kanapka</div>
-      <div>kanapka2</div>
-      <div>pepsi 300g</div>
-      <div>pepsi 300g</div>
-    </div>
-  </article>
-</section>
-
 <div class="container">
-  <div class="row justify-content-center">
-    <div class="col-8">
+  <div class="row justify-content-center mealtype mt-3">
+    <div class="col-6">
       Breakfast
     </div>
-    <div class="col">
-      Dodaj
-    </div>
-  </div>
-  <div class="row justify-content-center">
-    <div class="col"></div>
-    <div class="col-8">
-      tu będzie nazwa dania lub składnika ustawionego na śniadanie
-    </div>
-    <div class="col">
-      Edytuj
-    </div>
-    <div class="col">
-      Usuń
+    <div class="col-auto">
+      <button class="add-button"><i class="fas fa-plus"></i></button>
     </div>
   </div>
 
-  <div class="row justify-content-center">
-    <div class="col-8">
-      Second Breakfast
-    </div>
-    <div class="col">
-      Dodaj
-    </div>
-  </div>
-  <div class="row justify-content-center">
-      <div class="col"></div>
-      <div class="col-8">
-        tu będzie nazwa dania lub składnika ustawionego na drugie śniadanie
-      </div>
-      <div class="col">
-        Edytuj
-      </div>
-      <div class="col">
-        Usuń
-      </div>
-  </div>
-  <div class="row justify-content-center">
-      <div class="col"></div>
-      <div class="col-8">
-        będzie ich tyle ile dodanych dań/składników do danego posiłku
-      </div>
-      <div class="col">
-        Edytuj
-      </div>
-      <div class="col">
-        Usuń
-      </div>
+  <div class="row justify-content-center meal mt-3" *ngFor="let breakfast of this.meals">
+    {{ breakfast.dish.name }}
   </div>
 
-  itd...
+  <div class="row justify-content-center mealtype mt-2">
+    <div class="col-6">
+      Second breakfast
+    </div>
+    <div class="col-auto">
+      <button class="add-button"><i class="fas fa-plus"></i></button>
+    </div>
+  </div>
+
+  <div class="row justify-content-center mealtype mt-2">
+    <div class="col-6">
+      Lunch
+    </div>
+    <div class="col-auto">
+      <button class="add-button"><i class="fas fa-plus"></i></button>
+    </div>
+  </div>
+
+  <div class="row justify-content-center mealtype mt-2">
+    <div class="col-6">
+      Dinner
+    </div>
+    <div class="col-auto">
+      <button class="add-button"><i class="fas fa-plus"></i></button>
+    </div>
+  </div>
+
+  <div class="row justify-content-center mealtype mt-2">
+    <div class="col-6">
+      Snack
+    </div>
+    <div class="col-auto">
+      <button class="add-button"><i class="fas fa-plus"></i></button>
+    </div>
+  </div>
+
+  <div class="row justify-content-center mealtype mt-2">
+    <div class="col-6">
+      Training
+    </div>
+    <div class="col-auto">
+      <button class="add-button"><i class="fas fa-plus"></i></button>
+    </div>
+  </div>
 </div>

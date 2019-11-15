@@ -12,9 +12,19 @@ namespace BeeFit.API.Data
     {
         public MealsRepository(BeeFitDbContext context) : base(context) { }
 
-        public async Task<IEnumerable<Meal>> GetManyByDate(DateTime date)
+        public async Task<IEnumerable<Meal>> GetManyByDate(string date, int userId)
         {
-            return await _context.Set<Meal>().Where(m => m.Date == date).ToListAsync();
+            var meals = new List<Meal>();
+
+            foreach(var meal in _context.Set<Meal>())
+            {
+                if(meal.Date.GetDateTimeFormats('d').FirstOrDefault() == date && meal.UserId == userId)
+                {
+                    meals.Add(meal);
+                }
+            }
+
+            return meals;
         }
     }
 }
