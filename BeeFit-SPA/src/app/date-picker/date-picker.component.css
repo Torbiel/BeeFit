@@ -3,7 +3,7 @@
     background-color: #343a40;
     color: #fff;
     box-sizing: border-box;
-    width: 60%;
+    width: 100%;
     display: flex;
     margin: 0 auto;
 }
@@ -18,52 +18,26 @@
 
 .carousel-list
 {
-    display: flex;
+    left: calc(-100%/7);
     box-sizing: border-box;
     width: 100%;
     position: relative;
     white-space: nowrap;
+    transition: .5s ease-in-out;
     height: 100%;
-    left: -100%;
-    transform: translateX(100%);
-    padding: 0;
-    overflow: hidden;
-    transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-
-}
-.carousel.is-reversing
- {
-    transform: translateX(-100%);
- }
-
-
-.carousel.is-set
-{
-    transform: none;
-    transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-
-}
-
-
-
-.carousel-seat
-{
-    order: 2;
 }
 
 .date-item
 {
+
     color: #fff;
-    position: relative;
+    width: calc(100%/7);
     display: inline-block;
     border: 1px solid #fff;
     text-align: center;
     background: rgb(52,58,64);
     transition: .1s ease-in-out;
     line-height: 40px;
-    flex: 0 0 calc(100%/7);
-    right: calc(100%/7);
-    justify-content: center;
 }
 
 .router-link-active,
