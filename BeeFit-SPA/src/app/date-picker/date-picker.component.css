@@ -1,0 +1,105 @@
+.carousel
+{
+    background-color: #343a40;
+    color: #fff;
+    box-sizing: border-box;
+    width: 60%;
+    display: flex;
+    margin: 0 auto;
+}
+.carousel-container
+{
+    height:40px;
+    padding: 2px;
+    width: 380px;
+    overflow: hidden;
+    flex: 1 1 400px;
+}
+
+.carousel-list
+{
+    display: flex;
+    box-sizing: border-box;
+    width: 100%;
+    position: relative;
+    white-space: nowrap;
+    height: 100%;
+    left: -100%;
+    transform: translateX(100%);
+    padding: 0;
+    overflow: hidden;
+    transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+
+}
+.carousel.is-reversing
+ {
+    transform: translateX(-100%);
+ }
+
+
+.carousel.is-set
+{
+    transform: none;
+    transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+
+}
+
+
+
+.carousel-seat
+{
+    order: 2;
+}
+
+.date-item
+{
+    color: #fff;
+    position: relative;
+    display: inline-block;
+    border: 1px solid #fff;
+    text-align: center;
+    background: rgb(52,58,64);
+    transition: .1s ease-in-out;
+    line-height: 40px;
+    flex: 0 0 calc(100%/7);
+    right: calc(100%/7);
+    justify-content: center;
+}
+
+.router-link-active,
+.date-item:hover,
+.date-item:active
+{
+    color: #F3C622;
+    background: #23212C;
+}
+
+.carousel-nav
+{
+    height:40px;
+    padding: 2px;
+
+}
+
+.carousel-button-prev,
+.carousel-button-next
+{
+    background: inherit;
+    color: #fff;
+    line-height: 100%;
+    font-size: 200%;
+    height: 100%;
+    border: none;
+    margin:1px;
+    transition: .1 ease-in-out;
+}
+
+.carousel-button-prev:hover,
+.carousel-button-next:hover,
+.carousel-button-prev:active,
+.carousel-button-next:active
+{
+    background: inherit;
+    color: #F3C622;
+
+}

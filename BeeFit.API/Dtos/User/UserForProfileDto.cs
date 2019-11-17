@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace BeeFit.API.Dtos
+namespace BeeFit.API.Dtos.User
 {
     public class UserForProfileDto
     {

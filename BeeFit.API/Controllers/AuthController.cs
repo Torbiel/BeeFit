@@ -1,5 +1,5 @@
 ﻿using BeeFit.API.Data.Interfaces;
-using BeeFit.API.Dtos;
+using BeeFit.API.Dtos.User;
 using BeeFit.API.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;

@@ -26,7 +26,9 @@ export const appRoutes: Routes = [
         children: [
             { path: 'diary', component: DiaryComponent },
             { path: 'calendar', component: CalendarComponent },
-            { path: 'todays-plan', component: TodaysPlanComponent },
+            { path: 'todays-plan', component: TodaysPlanComponent, children: [
+                 { path: ':date', component: TodaysPlanComponent },
+            ]},
             { path: 'profile', component: ProfileNavComponent },
             { path: 'welcome', component: WelcomeComponent },
             { path: 'add-meal', component: AddMealNavComponent }

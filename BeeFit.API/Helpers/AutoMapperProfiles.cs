@@ -1,7 +1,16 @@
 ﻿using AutoMapper;
 using BeeFit.API.Dtos;
+using BeeFit.API.Dtos.Dishes;
+using BeeFit.API.Dtos.DishesIngredients;
+using BeeFit.API.Dtos.Ingredients;
+using BeeFit.API.Dtos.IngredientsSearchPreference;
+using BeeFit.API.Dtos.Meals;
+using BeeFit.API.Dtos.SearchPreferences;
+using BeeFit.API.Dtos.Targets;
+using BeeFit.API.Dtos.User;
+using BeeFit.API.Dtos.UsersParameters;
+using BeeFit.API.Dtos.UsersSearchPreferences;
 using BeeFit.API.Models;
-using Microsoft.AspNetCore.Http;
 
 namespace BeeFit.API.Helpers
 {
@@ -9,49 +18,53 @@ namespace BeeFit.API.Helpers
     {
         public AutoMapperProfiles()
         {
+            // User
             CreateMap<User, UserForProfileDto>();
-
-            CreateMap<UsersSearchPreference, UsersSearchPreferenceDto>()
-                .ForMember(x => x.Name, opt => opt.MapFrom(src => src.SearchPreference.Name));
-
-            CreateMap<UsersParameter, UsersParameterDto>();
-            CreateMap<UsersParameterDto, UsersParameter>();
-
             CreateMap<UserForUpdateDto, User>();
 
-            CreateMap<IngredientDto, Ingredient>();
-            CreateMap<Ingredient, IngredientDto>();
+            // Ingredient
+            CreateMap<IngredientForAddDto, Ingredient>();
+            CreateMap<Ingredient, IngredientForGetDto>();
+            CreateMap<IngredientForUpdateDto, Ingredient>();
 
-            CreateMap<DishDto, Dish>();
-            CreateMap<Dish, DishDto>();
+            // IngredientsSearchPreference
+            CreateMap<IngredientsSearchPreferenceForAddDto, IngredientsSearchPreference>();
+            CreateMap<IngredientsSearchPreference, IngredientsSearchPreferenceForGetDto>();
+            CreateMap<IngredientsSearchPreferenceForUpdateDto, IngredientsSearchPreference>();
 
+            // Dish
+            CreateMap<DishForAddDto, Dish>();
+            CreateMap<Dish, DishForGetDto>();
+            CreateMap<DishForUpdateDto, Dish>();
+            CreateMap<DishForUpdateDto, DishForAddDto>();
+
+            // DishesIngredient
+            CreateMap<DishesIngredientForAddDto, DishesIngredient>();
+            CreateMap<DishesIngredient, DishesIngredientForGetDto>();
+            CreateMap<DishesIngredientForUpdateDto, DishesIngredient>();
+
+            // SearchPreference
+            CreateMap<SearchPreference, SearchPreferenceForGetDto>();
+
+            // Target
             CreateMap<TargetForAddDto, Target>();
             CreateMap<Target, TargetForGetDto>();
             CreateMap<TargetForUpdateDto, Target>();
 
-            CreateMap<Meal, MealDto>();
-            CreateMap<MealDto, Meal>();
+            // Meal
+            CreateMap<MealForAddDto, Meal>();
+            CreateMap<Meal, MealForGetDto>();
+            CreateMap<MealForUpdateDto, Meal>();
 
-            CreateMap<UserForProfileDto, User>();
+            // UsersSearchPreference
+            CreateMap<UsersSearchPreferenceForAddDto, UsersSearchPreference>();
+            CreateMap<UsersSearchPreference, UsersSearchPreferenceForGetDto>();
+            CreateMap<UsersSearchPreferenceForUpdateDto, UsersSearchPreference>();
 
-            CreateMap<DishesIngredient, DishesIngredientForDishDto>()
-                .ForMember(di => di.Dish, opt => opt.Ignore())
-                .ForMember(di => di.DishId, opt => opt.Ignore());
-            CreateMap<DishesIngredientForDishDto, DishesIngredient>();
-
-            CreateMap<Ingredient, IngredientForDishDto>();
-            CreateMap<IngredientForDishDto, Ingredient>();
-
-            CreateMap<IngredientsSearchPreference, IngredientsSearchPreferenceForDishDto>()
-                .ForMember(i => i.Ingredient, opt => opt.Ignore())
-                .ForMember(i => i.IngredientId, opt => opt.Ignore());
-            CreateMap<IngredientsSearchPreferenceForDishDto, IngredientsSearchPreference>();
-
-            CreateMap<SearchPreferenceDto, SearchPreference>();
-            CreateMap<SearchPreference, SearchPreferenceDto>();
-
-            CreateMap<DishForMealAddDto, Dish>();
-
+            // UsersParameter
+            CreateMap<UsersParameterForAddDto, UsersParameter>();
+            CreateMap<UsersParameter, UsersParameterForGetDto>();
+            CreateMap<UsersParameterForUpdateDto, UsersParameter>();
         }
     }
 }

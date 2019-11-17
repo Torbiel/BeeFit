@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace BeeFit.API.Models
+﻿namespace BeeFit.API.Models
 {
     public class IngredientsSearchPreference
     {

@@ -1,16 +1,17 @@
-﻿using BeeFit.API.Models;
+﻿using BeeFit.API.Dtos.IngredientsSearchPreference;
 using BeeFit.API.Models.Enums;
 using System.Collections.Generic;
 
-namespace BeeFit.API.Dtos
+namespace BeeFit.API.Dtos.Ingredients
 {
-    public class IngredientDto
+    public class IngredientForAddDto
     {
         public string Name { get; set; }
         public string Brand { get; set; }
+        public int UserId { get; set; }
         public Unit Unit { get; set; }
         public int GramsPerUnit { get; set; }
-        public ICollection<IngredientsSearchPreference> SearchPreferences { get; set; }
+        public virtual ICollection<IngredientsSearchPreferenceForAddDto> SearchPreferences { get; set; }
         public int Callories { get; set; }
         public double Fats { get; set; }
         public double Carbohydrates { get; set; }
@@ -20,6 +21,7 @@ namespace BeeFit.API.Dtos
         public double? PlantProteins { get; set; }
         public double? SaturatedFats { get; set; }
         public double? MonounsaturatedFats { get; set; }
+        // PolyunsaturatedFats = Omega3 + Omega6
         public double? Omega3 { get; set; }
         public double? Omega6 { get; set; }
         public double? Fiber { get; set; }

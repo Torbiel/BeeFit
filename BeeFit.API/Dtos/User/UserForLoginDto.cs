@@ -1,4 +1,4 @@
-﻿namespace BeeFit.API.Dtos
+﻿namespace BeeFit.API.Dtos.User
 {
     public class UserForLoginDto
     {
