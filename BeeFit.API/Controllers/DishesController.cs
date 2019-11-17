@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BeeFit.API.Data.Interfaces;
 using BeeFit.API.Dtos;
+using BeeFit.API.Dtos.Dishes;
 using BeeFit.API.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -25,7 +26,7 @@ namespace BeeFit.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(DishDto dishDto)
+        public async Task<IActionResult> Add(DishForAddDto dishDto)
         {
             var dishToAdd = _mapper.Map<Dish>(dishDto);
 
@@ -42,7 +43,7 @@ namespace BeeFit.API.Controllers
         public async Task<IActionResult> GetById(int id)
         {
             var dish = await _repo.GetById<Dish>(id);
-            var dishToReturn = _mapper.Map<DishDto>(dish);
+            var dishToReturn = _mapper.Map<DishForGetDto>(dish);
 
             return Ok(dishToReturn);
         }
@@ -51,7 +52,7 @@ namespace BeeFit.API.Controllers
         public async Task<IActionResult> GetManyByName(string name)
         {
             var dishes = await _repo.GetManyByName(name);
-            var dishesToReturn = _mapper.Map<ICollection<DishDto>>(dishes);
+            var dishesToReturn = _mapper.Map<ICollection<DishForGetDto>>(dishes);
 
             return Ok(dishesToReturn);
         }
@@ -59,7 +60,7 @@ namespace BeeFit.API.Controllers
         // TODO?: searching based on callories, fats, proteins, etc. (>= and <=)
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, DishDto dishDto)
+        public async Task<IActionResult> Update(int id, DishForUpdateDto dishDto)
         {
             var dishToUpdate = await _repo.GetById<Dish>(id);
 
@@ -67,7 +68,8 @@ namespace BeeFit.API.Controllers
 
             if (currentUserId != dishToUpdate.User.Id)
             {
-                await Add(dishDto);
+                var dishToAdd = _mapper.Map<DishForAddDto>(dishDto);
+                await Add(dishToAdd);
             }
             else
             {

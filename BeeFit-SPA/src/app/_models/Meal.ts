@@ -8,6 +8,8 @@ export class Meal {
     date: Date;
     user: User;
     dish: Dish;
+    dishId: number;
     ingredient: Ingredient;
+    ingredientId: number;
     quantity?: number;
 }

@@ -1,0 +1,20 @@
+.mealtype
+{
+    background-color: rgb(231, 231, 231);
+}
+
+.add-button, .edit-button, .delete-button
+{
+    border: none;
+    background-color: black;
+    color: #F3C622;
+    font-size: 1.6em;
+    width: 3vw;
+    height: 3vw;
+}
+
+.add-button:hover, .edit-button:hover, .delete-button:hover
+{
+    background-color: #F3C622;
+    color: black;
+}

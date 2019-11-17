@@ -8,14 +8,38 @@
     font-family: FontAwesome;
 }
 
-a.router-link-active, a.router-link-active:hover
- {
-    background-color:#23212C;
-    color:#F3C622 !important;
+.nav-link, .navbar-brand
+{
+    color: white;
 }
 
-a:active, a:hover
+.nav-link:hover, .navbar-brand:hover
 {
-    background-color:#F3C622;
-    color:#23212C !important;
+    color: #F3C622;
+}
+
+.navbar
+{
+    background-color: black; 
+}
+
+.dropdown-menu
+{
+    background-color: black;
+}
+
+.dropdown-item
+{
+    color: white;
+}
+
+.dropdown-item:hover
+{
+    color: #F3C622;
+    background-color: black;
+}
+
+.logout:hover
+{
+    color: red !important;
 }

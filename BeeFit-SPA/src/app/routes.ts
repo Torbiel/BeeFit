@@ -27,8 +27,13 @@ export const appRoutes: Routes = [
             { path: 'diary', component: DiaryComponent },
             { path: 'calendar', component: CalendarComponent },
             { path: 'todays-plan', component: TodaysPlanComponent, children: [
-                 { path: ':date', component: TodaysPlanComponent },
-            ]},
+                { path: 'add-meal', component: AddMealNavComponent, children: [
+                    { path: '', component: AddMealSearchComponent },
+                    { path: 'search', component: AddMealSearchComponent },
+                    { path: 'my-food', component: AddMealMyFoodComponent },
+                    { path: 'add-new', component: AddMealAddNewComponent }
+                ] }
+            ] },
             { path: 'profile', component: ProfileNavComponent },
             { path: 'welcome', component: WelcomeComponent },
             { path: 'add-meal', component: AddMealNavComponent }
@@ -66,20 +71,20 @@ export const profileRoutes: Routes = [
     },
 ];
 
-export const addMealRoutes: Routes = [
-    {
-        path: 'add-meal/search', component: AddMealNavComponent, children: [
-            { path: '', component: AddMealSearchComponent, outlet: 'add-meal' }
-        ]
-    },
-    {
-        path: 'add-meal/my-food', component: AddMealNavComponent, children: [
-            { path: '', component: AddMealMyFoodComponent, outlet: 'add-meal' }
-        ]
-    },
-    {
-        path: 'add-meal/add-new', component:AddMealNavComponent, children: [
-            { path: '', component:AddMealAddNewComponent, outlet: 'add-meal' }
-        ]
-    }
-]
+// export const addMealRoutes: Routes = [
+//     {
+//         path: 'add-meal/search/:mealType', component: AddMealNavComponent, children: [
+//             { path: '', component: AddMealSearchComponent, outlet: 'add-meal' }
+//         ]
+//     },
+//     {
+//         path: 'add-meal/my-food/:mealType', component: AddMealNavComponent, children: [
+//             { path: '', component: AddMealMyFoodComponent, outlet: 'add-meal' }
+//         ]
+//     },
+//     {
+//         path: 'add-meal/add-new/:mealType', component: AddMealNavComponent, children: [
+//             { path: '', component: AddMealAddNewComponent, outlet: 'add-meal' }
+//         ]
+//     }
+// ];

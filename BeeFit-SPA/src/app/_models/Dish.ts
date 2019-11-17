@@ -9,7 +9,7 @@ export class Dish {
     callories: number;
 
     public calculateCallories(): number {
-        let callories = 0;
+        const callories = 0;
 
         this.ingredients.forEach(element => {
             element.ingredient.callories += callories;

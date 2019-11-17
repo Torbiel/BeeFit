@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { User } from 'src/app/_models/User';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-meal-add-new',
@@ -6,8 +8,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./add-meal-add-new.component.css']
 })
 export class AddMealAddNewComponent implements OnInit {
+  @Input() user: User;
 
-  constructor() { }
+  constructor(public router: Router) { }
 
   ngOnInit() {
   }

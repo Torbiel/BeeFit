@@ -16,7 +16,7 @@ import { TodaysPlanComponent } from './todays-plan/todays-plan.component';
 import { AboutComponent } from './about/about.component';
 import { HelpComponent } from './help/help.component';
 import { DiaryComponent } from './diary/diary.component';
-import { appRoutes, profileRoutes, addMealRoutes } from './routes';
+import { appRoutes, profileRoutes } from './routes';
 import { ProfileMainComponent } from './profile/profile-main/profile-main.component';
 import { ProfileParametersComponent } from './profile/profile-parameters/profile-parameters.component';
 import { ProfileNavComponent } from './profile/profile-nav/profile-nav.component';
@@ -59,7 +59,7 @@ import { AddMealMyFoodComponent } from './add-meal/add-meal-my-food/add-meal-my-
       FormsModule,
       BsDropdownModule.forRoot(),
       RouterModule.forChild(profileRoutes),
-      RouterModule.forChild(addMealRoutes),
+      // RouterModule.forChild(addMealRoutes),
       RouterModule.forRoot(appRoutes)
    ],
    providers: [
