@@ -1,0 +1,17 @@
+<div class="container">
+  <div class="row justify-content-center mt-3">
+    <div class="col-auto">
+      <button [routerLink]="['search']" routerLinkActive="active"><i class="fas fa-search"></i></button>
+    </div>
+    <div class="col-auto">
+      <button [routerLink]="['my-food']" routerLinkActive="active"><i class="fas fa-book"></i></button>
+    </div>
+    <div class="col-auto">
+      <button [routerLink]="['add-new']" routerLinkActive="active"><i class="fas fa-plus"></i></button>
+    </div>
+  </div>
+
+  <app-add-meal-search [user]="this.user"></app-add-meal-search>
+  <app-add-meal-my-food [user]="this.user"></app-add-meal-my-food>
+  <app-add-meal-add-new [user]="this.user"></app-add-meal-add-new>
+</div>

@@ -7,6 +7,7 @@ namespace BeeFit.API.Dtos.Meals
 {
     public class MealForGetDto
     {
+        public int Id { get; set; }
         public MealType Type { get; set; }
         public DateTime Date { get; set; }
         public int UserId { get; set; }

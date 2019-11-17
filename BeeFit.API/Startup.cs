@@ -38,7 +38,7 @@ namespace BeeFit.API
                 var contextAccessor = container.GetRequiredService<IHttpContextAccessor>();
                 var autoMapperConfig = new MapperConfiguration(configuration =>
                 {
-                    configuration.AddProfile(new AutoMapperProfiles(contextAccessor));
+                    configuration.AddProfile(new AutoMapperProfiles());
                 });
 
                 return new Mapper(autoMapperConfig);

@@ -1,0 +1,18 @@
+button
+{
+    color: #F3C622;
+    background-color: #343a40;
+    border: none;
+    width: 100px;
+}
+
+button:hover
+{
+    background-color: #23212C;
+    color:#F3C622;
+}
+
+.col-auto
+{
+    background-color: #F3C622;
+}

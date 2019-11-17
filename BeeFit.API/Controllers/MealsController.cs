@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
 using BeeFit.API.Data.Interfaces;
 using BeeFit.API.Dtos;
+using BeeFit.API.Dtos.Meals;
 using BeeFit.API.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -22,10 +25,10 @@ namespace BeeFit.API.Controllers
         {
             _repo = repo;
             _mapper = mapper;
-        }
+        }   
 
         [HttpPost]
-        public async Task<IActionResult> Add(MealDto mealDto, int childId)
+        public async Task<IActionResult> Add(MealForAddDto mealDto)
         {
             var mealToAdd = _mapper.Map<Meal>(mealDto);
 
@@ -35,14 +38,20 @@ namespace BeeFit.API.Controllers
 
             _repo.Add(mealToAdd);
 
-            return Ok(mealToAdd);
+            return Ok();
         }
 
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById(int id)
         {
             var meal = await _repo.GetById<Meal>(id);
-            var mealToReturn = _mapper.Map<MealDto>(meal);
+
+            if (meal == null)
+            {
+                return BadRequest(); // TODO: checks for null in gets
+            }
+
+            var mealToReturn = _mapper.Map<MealForGetDto>(meal);
 
             return Ok(mealToReturn);
         }
@@ -50,14 +59,16 @@ namespace BeeFit.API.Controllers
         [HttpGet("{date}")]
         public async Task<IActionResult> GetManyByDate(DateTime date)
         {
-            var meals = await _repo.GetManyByDate(date);
-            var mealsToReturn = _mapper.Map<MealDto>(meals);
+            var currentUserId = int.Parse(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var convertedDate = date.GetDateTimeFormats('d').FirstOrDefault();
+            var meals = await _repo.GetManyByDate(convertedDate, currentUserId);
+            var mealsToReturn = _mapper.Map<IEnumerable<MealForGetDto>>(meals);
 
             return Ok(mealsToReturn);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, MealDto mealDto)
+        public async Task<IActionResult> Update(int id, MealForUpdateDto mealDto)
         {
             var mealToUpdate = await _repo.GetById<Meal>(id);
             _mapper.Map(mealDto, mealToUpdate);

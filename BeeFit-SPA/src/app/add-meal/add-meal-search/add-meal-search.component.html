@@ -1,0 +1,32 @@
+<div class="container mt-3" *ngIf="this.router.url == '/todays-plan/add-meal' || this.router.url == '/todays-plan/add-meal/search'">
+  <form (ngSubmit)="findDishes(); findIngredients();">
+    <div class="row justify-content-center">
+      <div class="col-3 search-bar">
+        <input type="text" placeholder="Search" [(ngModel)]="name" name="name" id="name">
+      </div>
+      <div class="col-3">
+        <button type="submit">Search</button>
+      </div>
+    </div>
+  </form>
+
+  <div class="row justify-content-center">
+    <div class="col dishes">
+      <div class="row" *ngFor="let dish of this.dishes">
+        <div class="col">
+          <p class="lead">{{ dish.name }}</p>
+          <!-- <p>{{ dish.callories }}</p> -->
+        </div>
+        <div class="col">
+          <button class="add-button" (click)="addToMeal(dish.id, 0)"><i class="fas fa-plus"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="row" *ngFor="let ingredient of this.ingredients">
+        {{ ingredient.name }}
+      </div>
+    </div>
+  </div>
+</div>

@@ -2,12 +2,14 @@ import { User } from './User';
 import { Dish } from './Dish';
 import { Ingredient } from './Ingredient';
 
-export interface Meal {
-    id: number;
+export class Meal {
+    id?: number;
     type: number;
     date: Date;
     user: User;
     dish: Dish;
+    dishId: number;
     ingredient: Ingredient;
-    quantity: number;
+    ingredientId: number;
+    quantity?: number;
 }
