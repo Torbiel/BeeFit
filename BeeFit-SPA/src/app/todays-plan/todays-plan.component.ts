@@ -16,58 +16,81 @@ export class TodaysPlanComponent implements OnInit {
   user: User;
   meals: Meal[];
   mealType: number;
+  mealTypes = [
+    'Breakfast',
+    'Second breakfast',
+    'Lunch',
+    'Dinner',
+    'Snack',
+    'Supper',
+    'Training'
+  ];
+  filteredMeals: Meal[][];
 
-  constructor(private userService: UserService,
-              private alertify: AlertifyService,
-              private mealService: MealService,
-              public router: Router,
-              private mealTypeService: MealtypeService) {
-
-  }
-
+  constructor(
+    private userService: UserService,
+    private alertify: AlertifyService,
+    private mealService: MealService,
+    public router: Router,
+    private mealTypeService: MealtypeService
+  ) {}
 
   ngOnInit() {
     this.getUser();
-    this.getMeals();
-    this.mealTypeService.currentMealType.subscribe(mealtype => this.mealType = mealtype);
+    const date = new Date();
+    this.getMeals(date);
+    this.mealTypeService.currentMealType.subscribe(
+      mealtype => (this.mealType = mealtype)
+    );
   }
 
   getUser() {
     const id = localStorage.getItem('userId');
-    this.userService.getUser(id).subscribe((user: User) => {
-      this.user = user;
-    }, error => {
-      this.alertify.error(error);
-    });
+    this.userService.getUser(id).subscribe(
+      (user: User) => {
+        this.user = user;
+      },
+      error => {
+        this.alertify.error(error);
+      }
+    );
   }
 
-  getMeals() {
-    const date = new Date();
-    this.mealService.getManyByDate(date).subscribe((meals: Meal[]) => {
-      this.meals = meals;
-    }, error => {
-      this.alertify.error(error);
-    });
+  getMeals(date: Date) {
+    this.mealService.getManyByDate(date).subscribe(
+      (meals: Meal[]) => {
+        this.meals = meals;
+        this.filterMealsByType();
+      },
+      error => {
+        this.alertify.error(error);
+      }
+    );
   }
 
-  filterMealsByType(meals: Meal[], type: number): Meal[] {
-    return meals.filter(meal => meal.type === type);
+  filterMealsByType() {
+    this.filteredMeals = [];
+    for (let i = 0; i < this.mealTypes.length; i++) {
+      this.filteredMeals[i] = [];
+      const oneTypeMeals = this.meals.filter(meal => meal.type === i);
+      this.filteredMeals[i] = oneTypeMeals;
+    }
   }
 
   setMealType(mealtype: number) {
     this.mealTypeService.changeMealType(mealtype);
   }
 
-  deleteMeal(id: number) {
-    this.mealService.delete(id).subscribe(() => {
-      this.alertify.success('Meal deleted.');
-      const mealToDeleteIndex = this.meals.indexOf(this.meals.find(meal => meal.id === id));
-      if (mealToDeleteIndex !== -1) {
-        this.meals.splice(mealToDeleteIndex, 1);
+  deleteMeal(meal: Meal) {
+    this.mealService.delete(meal.id).subscribe(
+      () => {
+        this.alertify.success('Meal deleted.');
+        this.meals.splice(this.meals.indexOf(meal), 1);
+      },
+      error => {
+        this.alertify.error(error);
       }
-    }, error => {
-      this.alertify.error(error);
-    });
+    );
   }
 
   prepareDatePicker() {

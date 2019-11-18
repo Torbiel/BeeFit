@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./add-meal-add-new.component.css']
 })
 export class AddMealAddNewComponent implements OnInit {
-  @Input() user: User;
+  @Input() userId: User;
 
   constructor(public router: Router) { }
 

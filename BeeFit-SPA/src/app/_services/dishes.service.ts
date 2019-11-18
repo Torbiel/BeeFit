@@ -22,4 +22,7 @@ export class DishesService {
     return this.http.get<Dish[]>(this.baseUrl + '/' + name, httpOptions);
   }
 
+  getDishesByUserId(id: number): Observable<Dish[]> {
+    return this.http.get<Dish[]>(this.baseUrl, httpOptions);
+  }
 }

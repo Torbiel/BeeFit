@@ -11,7 +11,7 @@ namespace BeeFit.API.Data
     {
         public DishesRepository(BeeFitDbContext context) : base(context) { }
 
-        public async Task<List<Dish>> GetManyByName(string name)
+        public async Task<IEnumerable<Dish>> GetManyByName(string name)
         {
             var dishes = await _context.Set<Dish>().Where(d => d.Name.Contains(name)).ToListAsync();
 
@@ -21,6 +21,11 @@ namespace BeeFit.API.Data
             //}
 
             return dishes;
+        }
+
+        public IEnumerable<Dish> GetManyByUserId(int id)
+        {
+            return _context.Set<Dish>().Where(d => d.UserId == id);
         }
     }
 }

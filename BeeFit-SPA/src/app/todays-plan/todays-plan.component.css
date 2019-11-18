@@ -1,9 +1,35 @@
 .mealtype
 {
     background-color: rgb(231, 231, 231);
+    border: 3px solid black;
 }
 
-.add-button, .edit-button, .delete-button
+.mealtype-header
+{
+    font-size: 1.8em;
+    border-right: none;
+}
+
+.mealtype-add
+{
+    border-left: none;
+    padding-right: 0;
+}
+
+.add-button
+{
+    border-left: 3px solid black;
+    border-right: none;
+    border-top: none;
+    border-bottom: none;
+    background-color: black;
+    color: #F3C622;
+    font-size: 1.6em;
+    width: 3vw;
+    height: 3vw;
+}
+
+.edit-button, .delete-button
 {
     border: none;
     background-color: black;

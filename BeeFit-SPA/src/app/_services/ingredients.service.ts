@@ -14,7 +14,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class IngredientsService {
-  baseUrl = environment.apiUrl + 'ingredients'; 
+  baseUrl = environment.apiUrl + 'ingredients';
 
   constructor(private http: HttpClient) { }
 
@@ -22,4 +22,7 @@ export class IngredientsService {
     return this.http.get<Ingredient[]>(this.baseUrl + '/' + name, httpOptions);
   }
 
+  getIngredientsByUserId(id: number): Observable<Ingredient[]> {
+    return this.http.get<Ingredient[]>(this.baseUrl, httpOptions);
+  }
 }

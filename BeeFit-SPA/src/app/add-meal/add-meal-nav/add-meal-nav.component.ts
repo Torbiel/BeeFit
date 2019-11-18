@@ -21,7 +21,6 @@ export class AddMealNavComponent implements OnInit {
   getUser() {
     const id = localStorage.getItem('userId');
     this.userService.getUser(id).subscribe((user: User) => {
-      console.log(user);
       this.user = user;
     }, error => {
       this.alertify.error(error);

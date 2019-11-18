@@ -1,3 +1,27 @@
 <div class="container" *ngIf="this.router.url == '/todays-plan/add-meal/my-food'">
-  my food
+  <div class="row">
+    <div class="col-6">
+      <div class="row" *ngFor="let dish of this.dishes">
+        <div class="col">
+          {{ dish.name }}
+        </div>
+
+        <div class="col">
+          <button class="add-button" (click)="addToMeal(dish.id, 0)"><i class="fas fa-plus"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6">
+      <div class="row" *ngFor="let ingredient of this.ingredients">
+        <div class="col">
+          {{ ingredient.name }}
+        </div>
+        
+        <div class="col">
+          <button class="add-button" (click)="addToMeal(0, ingredient.id)"><i class="fas fa-plus"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

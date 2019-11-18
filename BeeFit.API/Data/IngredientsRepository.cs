@@ -11,9 +11,14 @@ namespace BeeFit.API.Data
     {
         public IngredientsRepository(BeeFitDbContext context) : base(context) { }
 
-        public async Task<List<Ingredient>> GetManyByName(string name)
+        public async Task<IEnumerable<Ingredient>> GetManyByName(string name)
         {
             return await _context.Set<Ingredient>().Where(i => i.Name.Contains(name)).ToListAsync();
         }
+        public IEnumerable<Ingredient> GetManyByUserId(int id)
+        {
+            return _context.Set<Ingredient>().Where(i => i.UserId == id);
+        }
+
     }
 }

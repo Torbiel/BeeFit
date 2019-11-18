@@ -28,6 +28,14 @@ import { AddMealNavComponent } from './add-meal/add-meal-nav/add-meal-nav.compon
 import { AddMealSearchComponent } from './add-meal/add-meal-search/add-meal-search.component';
 import { AddMealAddNewComponent } from './add-meal/add-meal-add-new/add-meal-add-new.component';
 import { AddMealMyFoodComponent } from './add-meal/add-meal-my-food/add-meal-my-food.component';
+import { UserService } from './_services/user.service';
+import { DishesService } from './_services/dishes.service';
+import { IngredientsService } from './_services/ingredients.service';
+import { MealService } from './_services/meal.service';
+import { MealtypeService } from './_services/mealtype.service';
+import { AlertifyService } from './_services/alertify.service';
+import { AddDishComponent } from './add-dish/add-dish.component';
+import { AddIngredientComponent } from './add-ingredient/add-ingredient.component';
 
 @NgModule({
    declarations: [
@@ -47,11 +55,13 @@ import { AddMealMyFoodComponent } from './add-meal/add-meal-my-food/add-meal-my-
       ProfileTargetComponent,
       ProfileChartsComponent,
       WelcomeComponent,
-      // DatePickerComponent,
+      //DatePickerComponent,
       AddMealNavComponent,
       AddMealSearchComponent,
       AddMealAddNewComponent,
-      AddMealMyFoodComponent
+      AddMealMyFoodComponent,
+      AddDishComponent,
+      AddIngredientComponent
    ],
    imports: [
       BrowserModule,
@@ -59,12 +69,18 @@ import { AddMealMyFoodComponent } from './add-meal/add-meal-my-food/add-meal-my-
       FormsModule,
       BsDropdownModule.forRoot(),
       RouterModule.forChild(profileRoutes),
-      // RouterModule.forChild(addMealRoutes),
+      //RouterModule.forChild(addMealRoutes),
       RouterModule.forRoot(appRoutes)
    ],
    providers: [
       AuthService,
-      ErrorInterceptorProvider
+      ErrorInterceptorProvider,
+      UserService,
+      DishesService,
+      IngredientsService,
+      MealService,
+      MealtypeService,
+      AlertifyService
    ],
    bootstrap: [
       AppComponent

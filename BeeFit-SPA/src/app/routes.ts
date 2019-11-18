@@ -16,6 +16,8 @@ import { AddMealNavComponent } from './add-meal/add-meal-nav/add-meal-nav.compon
 import { AddMealSearchComponent } from './add-meal/add-meal-search/add-meal-search.component';
 import { AddMealMyFoodComponent } from './add-meal/add-meal-my-food/add-meal-my-food.component';
 import { AddMealAddNewComponent } from './add-meal/add-meal-add-new/add-meal-add-new.component';
+import { AddDishComponent } from './add-dish/add-dish.component';
+import { AddIngredientComponent } from './add-ingredient/add-ingredient.component';
 
 export const appRoutes: Routes = [
     { path: '', component: HomeComponent },

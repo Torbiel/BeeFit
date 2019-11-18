@@ -30,6 +30,7 @@
     "jwt-decode": "^2.2.0",
     "moment": "^2.24.0",
     "ngx-bootstrap": "^5.1.2",
+    "nvm": "0.0.4",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
     "zone.js": "~0.9.1"

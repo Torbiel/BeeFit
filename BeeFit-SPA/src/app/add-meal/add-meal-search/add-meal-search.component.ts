@@ -20,7 +20,7 @@ export class AddMealSearchComponent implements OnInit {
   dishes: Dish[];
   ingredients: Ingredient[];
   meal: Meal;
-  @Input() user: User;
+  @Input() userId: number;
   mealType: number;
   route: ActivatedRoute;
 
@@ -55,12 +55,13 @@ export class AddMealSearchComponent implements OnInit {
     this.meal = new Meal();
     this.meal.type = this.mealType;
     this.meal.date = new Date();
-    this.meal.user = this.user;
+    this.meal.userId = this.userId;
     this.meal.dishId = dishId;
     this.meal.ingredientId = ingredientId;
 
     this.mealService.add(this.meal).subscribe(() => {
       this.alertify.success('Meal added.');
+      this.router.navigate(['/todays-plan']);
     }, error => {
       this.alertify.error(error);
     });

@@ -52,7 +52,17 @@ namespace BeeFit.API.Controllers
         public async Task<IActionResult> GetManyByName(string name)
         {
             var dishes = await _repo.GetManyByName(name);
-            var dishesToReturn = _mapper.Map<ICollection<DishForGetDto>>(dishes);
+            var dishesToReturn = _mapper.Map<IEnumerable<DishForGetDto>>(dishes);
+
+            return Ok(dishesToReturn);
+        }
+
+        [HttpGet]
+        public IActionResult GetManyByUserId()
+        {
+            var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var dishes = _repo.GetManyByUserId(currentUserId);
+            var dishesToReturn = _mapper.Map<IEnumerable<DishForGetDto>>(dishes);
 
             return Ok(dishesToReturn);
         }
