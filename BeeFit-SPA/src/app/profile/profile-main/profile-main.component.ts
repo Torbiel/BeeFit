@@ -22,7 +22,7 @@ export class ProfileMainComponent implements OnInit {
   getUser() {
     const id = localStorage.getItem('userId');
     this.userService.getUser(id).subscribe((user: User) => {
-      this.user = user;
+      this.user = user;console.log(this.user);
     }, error => {
       this.alertify.error(error);
     });
