@@ -28,13 +28,16 @@ export const appRoutes: Routes = [
         children: [
             { path: 'diary', component: DiaryComponent },
             { path: 'calendar', component: CalendarComponent },
+
             { path: 'todays-plan', component: TodaysPlanComponent, children: [
+                { path: 'todays-plan:date', component: TodaysPlanComponent },
                 { path: 'add-meal', component: AddMealNavComponent, children: [
                     { path: '', component: AddMealSearchComponent },
                     { path: 'search', component: AddMealSearchComponent },
                     { path: 'my-food', component: AddMealMyFoodComponent },
                     { path: 'add-new', component: AddMealAddNewComponent }
-                ] }
+                ] },
+
             ] },
             { path: 'profile', component: ProfileNavComponent },
             { path: 'welcome', component: WelcomeComponent },

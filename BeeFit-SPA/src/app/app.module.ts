@@ -21,7 +21,7 @@ import { ProfileMainComponent } from './profile/profile-main/profile-main.compon
 import { ProfileParametersComponent } from './profile/profile-parameters/profile-parameters.component';
 import { ProfileNavComponent } from './profile/profile-nav/profile-nav.component';
 import { WelcomeComponent } from './welcome/welcome.component';
-// import { DatePickerComponent } from './date-picker/date-picker.component';
+import { DatePickerComponent } from './date-picker/date-picker.component';
 import { ProfileTargetComponent } from './profile/profile-target/profile-target.component';
 import { ProfileChartsComponent } from './profile/profile-charts/profile-charts.component';
 import { AddMealNavComponent } from './add-meal/add-meal-nav/add-meal-nav.component';
@@ -55,7 +55,7 @@ import { AddIngredientComponent } from './add-ingredient/add-ingredient.componen
       ProfileTargetComponent,
       ProfileChartsComponent,
       WelcomeComponent,
-      //DatePickerComponent,
+      DatePickerComponent,
       AddMealNavComponent,
       AddMealSearchComponent,
       AddMealAddNewComponent,

@@ -4,22 +4,29 @@ button
     font-size: 2vw;
     cursor: pointer;
     border: none;
-    color: #F3C622;
-    background-color: #343a40;
+    color: #23212C;
+    background-color: inherit;
     border: 2px solid white;
-    width:100%;    
+    border-bottom: 1px solid black;
+    width:100%;
     padding: 3px;
+    transition: .2s ease-in-out
 }
 
 button:hover
 {
-    background-color: #23212C;
+    background-color: inherit;
     color:#F3C622;
+    border-bottom: 1px solid #F3C622;
 }
-button.active, button:active, button:focus
+
+button.active,
+button:active,
+button:focus
 {
-    background-color: #23212C;
+    background-color: inherit;
     color:#E1A511;
+    border-bottom: 1px solid #E1A511;
 }
 
 .nav
