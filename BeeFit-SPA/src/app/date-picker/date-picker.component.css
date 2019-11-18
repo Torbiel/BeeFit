@@ -7,6 +7,7 @@
     display: flex;
     margin: 0 auto;
 }
+
 .carousel-container
 {
     height:40px;
@@ -29,7 +30,6 @@
 
 .date-item
 {
-
     color: #fff;
     width: calc(100%/7);
     display: inline-block;
@@ -40,7 +40,6 @@
     line-height: 40px;
 }
 
-.router-link-active,
 .date-item:hover,
 .date-item:active
 {
@@ -48,11 +47,15 @@
     background: #23212C;
 }
 
+.date-item:active
+{
+    border: 3px solid #F3C622;
+}
+
 .carousel-nav
 {
     height:40px;
     padding: 2px;
-
 }
 
 .carousel-button-prev,
@@ -75,5 +78,4 @@
 {
     background: inherit;
     color: #F3C622;
-
 }

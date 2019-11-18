@@ -1,4 +1,4 @@
- <app-date-picker></app-date-picker>
+ <app-date-picker (selectedDateEmitter)="onDateSelected($event)"></app-date-picker>
 
 <div class="container" *ngIf="this.router.url === '/todays-plan'">
   <div class="wrapper" *ngFor="let i of [0, 1, 2, 3, 4, 5, 6]">
@@ -7,7 +7,7 @@
         {{ this.mealTypes[i] }}
       </div>
       <div class="col-2 mealtype mealtype-add">
-        <button class="add-button pull-right" (click)="setMealType(i)" [routerLink]="['add-meal']" routerLinkActive="router-link-active">
+        <button class="add-button pull-right" (click)="setMealType(i); setDate();" [routerLink]="['add-meal']" routerLinkActive="router-link-active">
           <i class="fas fa-plus"></i>
         </button>
       </div>

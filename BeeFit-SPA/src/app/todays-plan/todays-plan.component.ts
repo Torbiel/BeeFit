@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { UserService } from '../_services/user.service';
 import { AlertifyService } from '../_services/alertify.service';
 import { User } from '../_models/User';
@@ -6,6 +6,8 @@ import { MealService } from '../_services/meal.service';
 import { Meal } from '../_models/Meal';
 import { Router } from '@angular/router';
 import { MealtypeService } from '../_services/mealtype.service';
+import { DatePickerComponent } from '../date-picker/date-picker.component';
+import { DateService } from '../_services/date.service';
 
 @Component({
   selector: 'app-todays-plan',
@@ -26,21 +28,26 @@ export class TodaysPlanComponent implements OnInit {
     'Training'
   ];
   filteredMeals: Meal[][];
+  currentDate: Date;
 
   constructor(
     private userService: UserService,
     private alertify: AlertifyService,
     private mealService: MealService,
     public router: Router,
-    private mealTypeService: MealtypeService
+    private mealTypeService: MealtypeService,
+    private dateService: DateService
   ) {}
 
   ngOnInit() {
     this.getUser();
-    const date = new Date();
-    this.getMeals(date);
+    this.currentDate = new Date();
+    this.getMeals(this.currentDate);
     this.mealTypeService.currentMealType.subscribe(
       mealtype => (this.mealType = mealtype)
+    );
+    this.dateService.currentDate.subscribe(
+      date => (this.currentDate = date)
     );
   }
 
@@ -81,6 +88,10 @@ export class TodaysPlanComponent implements OnInit {
     this.mealTypeService.changeMealType(mealtype);
   }
 
+  setDate() {
+    this.dateService.changeDate(this.currentDate);
+  }
+
   deleteMeal(meal: Meal) {
     this.mealService.delete(meal.id).subscribe(
       () => {
@@ -91,6 +102,11 @@ export class TodaysPlanComponent implements OnInit {
         this.alertify.error(error);
       }
     );
+  }
+
+  onDateSelected(date: Date) {
+    this.currentDate = date;
+    this.getMeals(date);
   }
 
   prepareDatePicker() {

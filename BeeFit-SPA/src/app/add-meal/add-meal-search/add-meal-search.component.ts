@@ -9,6 +9,7 @@ import { Meal } from 'src/app/_models/Meal';
 import { User } from 'src/app/_models/User';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MealtypeService } from 'src/app/_services/mealtype.service';
+import { DateService } from 'src/app/_services/date.service';
 
 @Component({
   selector: 'app-add-meal-search',
@@ -23,16 +24,19 @@ export class AddMealSearchComponent implements OnInit {
   @Input() userId: number;
   mealType: number;
   route: ActivatedRoute;
+  currentDate: Date;
 
   constructor(private dishesService: DishesService,
               private alertify: AlertifyService,
               private ingredientsService: IngredientsService,
               private mealService: MealService,
               public router: Router,
-              private mealTypeService: MealtypeService) { }
+              private mealTypeService: MealtypeService,
+              private dateService: DateService) { }
 
   ngOnInit() {
     this.mealTypeService.currentMealType.subscribe(mealtype => this.mealType = mealtype);
+    this.dateService.currentDate.subscribe(date => this.currentDate = date);
   }
 
   findDishes() {
@@ -54,7 +58,7 @@ export class AddMealSearchComponent implements OnInit {
   addToMeal(dishId: number, ingredientId: number) {
     this.meal = new Meal();
     this.meal.type = this.mealType;
-    this.meal.date = new Date();
+    this.meal.date = this.currentDate;
     this.meal.userId = this.userId;
     this.meal.dishId = dishId;
     this.meal.ingredientId = ingredientId;
