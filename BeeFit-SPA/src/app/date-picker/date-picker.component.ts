@@ -12,7 +12,6 @@ export class DatePickerComponent implements OnInit {
   now: Date;
   selectedDate: Date;
   @Output() selectedDateEmitter = new EventEmitter<Date>();
-  localeString = 'en';
   visibleDates: Array<{ date: Date, index: number }> = [];
   subscribedParam = 'initial value';
 
@@ -29,10 +28,12 @@ export class DatePickerComponent implements OnInit {
 
   prepareWeek() {
     const weekDaySelected = this.selectedDate.getDay();
-    for (let i = 1; i <= 9; i++) {
+    for (let i = 1,j=-4; i <= 9; i++,j++) {
+
       const weekDay = weekDaySelected - i;
       this.visibleDates[i - 1] = { date: new Date(), index: i - 1 };
-      this.visibleDates[i - 1].date.setDate(this.selectedDate.getDate() - weekDay - 1);
+     // this.visibleDates[i - 1].date.setDate(this.selectedDate.getDate() - weekDay - 1);
+      this.visibleDates[i - 1].date.setDate(this.selectedDate.getDate() + j);
     }
   }
 
@@ -67,6 +68,7 @@ export class DatePickerComponent implements OnInit {
   }
 
   emitDate(date: Date) {
+    this.selectedDate = date;
     this.selectedDateEmitter.emit(date);
   }
 }

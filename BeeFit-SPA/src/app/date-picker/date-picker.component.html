@@ -2,12 +2,12 @@
 	<div class="carousel-nav">
 		<button class="carousel-button-prev js-carousel-button" (click)="slideDate('backward')" data-dir="prev">
 			&lt;
-		</button> 
+		</button>
 	</div>
 	<div class="carousel-container js-carousel-container">
-		<div class="carousel-list js-carousel-list">	
+		<div class="carousel-list js-carousel-list">
 			<button class="plan-date date-item js-carousel-item" *ngFor="let item of visibleDates"
-				[ngClass]="{'selectedDate': item.date}"
+				[ngClass]="{'selectedDate': (item.date | date) == (selectedDate | date)}"
 				(click)="this.emitDate(item.date)">
 				{{ item.date | date: 'dd.MM' }}
 		</button>
