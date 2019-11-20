@@ -11,7 +11,7 @@ import { AlertifyService } from 'src/app/_services/alertify.service';
 })
 export class ProfileParametersComponent implements OnInit {
   @Input() public user: User;
-  parametersDates: UsersParameter[];
+  parametersDates: Date[];
   addingMode = false;
   editMode = false;
   today = new Date();
@@ -43,13 +43,16 @@ export class ProfileParametersComponent implements OnInit {
   return 0;
 }
 
-
+  prepareDatesToFilter() {
+    this.parametersDates = [...new Set(this.user.parameters.map(parameter => parameter.date))];
+    
+  }
 
   getUser() {
     const id = localStorage.getItem('userId');
     this.userService.getUser(id).subscribe((user: User) => {
       this.user = user; 
-      this.parametersDates = this.user.parameters; 
+      this.prepareDatesToFilter();
     }, error => {
       this.alertify.error(error);
     });

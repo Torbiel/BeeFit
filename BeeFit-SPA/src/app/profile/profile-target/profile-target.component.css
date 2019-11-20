@@ -1,3 +1,7 @@
+form
+{
+    display: flex;
+}
 .edit-button, .save-button, .cancel-button
 {
     width: 90px;
@@ -27,4 +31,104 @@
 .bold
 {
     font-weight: bold;
+}
+
+.calculationType
+{
+    display: flex;
+    width: 100%;
+}
+
+.calculationType input
+{
+    display: none;
+}
+
+.calculationType label
+{
+    background-color: rgba(0, 0, 0, 0);
+    position: relative;
+    flex: 1 1 100%;
+    justify-content: center;
+    text-align: center;
+    border: 1px solid  #343a40;
+    cursor: pointer;
+}
+
+.calculationType label:hover
+{
+     background-color: rgba(0, 0, 0, .1);
+}
+
+.calculationType label:first-of-type
+{
+    border-right: none;
+}
+.calculationType label:last-of-type
+{
+    border-left: none;
+}
+
+.autoCalculation:after
+{
+    content: '';
+    display:block;
+    width: 100%;
+    position: relative;    
+    bottom: 100%;
+    z-index: -1;
+    height: 100%;
+    background: #fdcf4c;transition: .5s ease-in-out;
+}
+
+.autoCalculation.selected:after
+{    
+    transition: .35s ease-in-out;
+    left: 0;
+}
+.autoCalculation.unselected:after
+{
+    
+    transition: .35s ease-in-out;
+    left: 100%;
+}
+
+ul
+{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    
+}
+
+li{
+    display: flex;
+    justify-content: space-between;
+    margin: 5px;
+}
+
+li label
+{
+    width: 50%;
+}
+li input
+{
+    width: 40%;
+    min-width: 40%;
+    max-width: 50%;
+}
+
+li output
+{
+    width: 10%;
+}
+
+.result
+{
+    display: flex;
+    width: 50%;
+}
+.result ul {
+    display: flex;
+    width:100%;
 }
