@@ -6,6 +6,7 @@ namespace BeeFit.API.Data.Interfaces
 {
     public interface IDishesRepository : IBeeFitRepository
     {
-        public Task<List<Dish>> GetManyByName(string name); 
+        public Task<IEnumerable<Dish>> GetManyByName(string name);
+        public IEnumerable<Dish> GetManyByUserId(int id);
     }
 }

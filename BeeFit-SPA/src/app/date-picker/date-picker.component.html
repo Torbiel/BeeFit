@@ -1,19 +1,19 @@
 <div class="carousel js-carousel">
 	<div class="carousel-nav">
 		<button class="carousel-button-prev js-carousel-button" (click)="slideDate('backward')" data-dir="prev">
-			&lt;</button> </div> <div class="carousel-container js-carousel-container">
-				<div class="carousel-list js-carousel-list">
-
-					<a class="plan-date date-item js-carousel-item" *ngFor="let item of visibleDates"
-						[ngClass]="{'selectedDate': item.date|date:'MM-dd'=='11-11'}"
-						[routerLink]="['/todays-plan',item.date|date:'dd-MM-yyyy']"
-						routerLinkActive="router-link-active">
-						{{item.date|date:'MM-dd'}}
-					</a>
-				</div>
+			&lt;
+		</button>
+	</div>
+	<div class="carousel-container js-carousel-container">
+		<div class="carousel-list js-carousel-list">
+			<button class="plan-date date-item js-carousel-item" *ngFor="let item of visibleDates"
+				[ngClass]="{'selectedDate': (item.date | date) == (selectedDate | date)}"
+				(click)="this.emitDate(item.date)">
+				{{ item.date | date: 'dd.MM' }}
+		</button>
+		</div>
 	</div>
 	<div class="carousel-nav">
-		<button class="carousel-button-next js-carousel-button" (click)="slideDate('forward')"
-			data-dir="next">&gt;</button>
+		<button class="carousel-button-next js-carousel-button" (click)="slideDate('forward')" data-dir="next">&gt;</button>
 	</div>
 </div>

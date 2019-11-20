@@ -31,4 +31,8 @@ export class AlertifyService {
   message(message: string) {
     alertify.message(message);
   }
+
+  prompt(message: string, defValue: any, okCallback: (evt: any, value: any) => any) {
+    alertify.prompt(message, defValue, okCallback);
+  }
 }

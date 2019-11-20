@@ -1,0 +1,45 @@
+.far
+{
+    font-family: fontawesome;
+}
+
+.list-item
+{
+    border: 2px solid rgb(187, 152, 24);
+    margin-bottom: 2px;
+}
+
+.list-element:hover
+{
+    background-color: rgb(58, 58, 58);
+}
+
+td:not(:last-child)
+{
+    border-right: 1px solid gray;
+}
+
+td
+{
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+table
+{
+    width: 100%;
+    font-size: 0.8em;
+}
+
+.add-button, .delete-button
+{
+    font-size: 1.5em;
+    width: 2.6vw;
+    height: 2.6vw;
+}
+
+.dialog
+{
+    color: rgb(39, 39, 39) !important;
+    background-color: #F3C622 !important;
+}

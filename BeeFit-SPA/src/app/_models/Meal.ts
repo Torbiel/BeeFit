@@ -6,10 +6,10 @@ export class Meal {
     id?: number;
     type: number;
     date: Date;
-    user: User;
-    dish: Dish;
-    dishId: number;
-    ingredient: Ingredient;
-    ingredientId: number;
+    userId: number;
+    dish?: Dish;
+    dishId?: number;
+    ingredient?: Ingredient;
+    ingredientId?: number;
     quantity?: number;
 }

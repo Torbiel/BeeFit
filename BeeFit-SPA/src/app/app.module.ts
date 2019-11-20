@@ -15,7 +15,6 @@ import { CalendarComponent } from './calendar/calendar.component';
 import { TodaysPlanComponent } from './todays-plan/todays-plan.component';
 import { AboutComponent } from './about/about.component';
 import { HelpComponent } from './help/help.component';
-import { DiaryComponent } from './diary/diary.component';
 import { appRoutes, profileRoutes } from './routes';
 import { ProfileMainComponent } from './profile/profile-main/profile-main.component';
 import { ProfileParametersComponent } from './profile/profile-parameters/profile-parameters.component';
@@ -26,8 +25,17 @@ import { ProfileTargetComponent } from './profile/profile-target/profile-target.
 import { ProfileChartsComponent } from './profile/profile-charts/profile-charts.component';
 import { AddMealNavComponent } from './add-meal/add-meal-nav/add-meal-nav.component';
 import { AddMealSearchComponent } from './add-meal/add-meal-search/add-meal-search.component';
-import { AddMealAddNewComponent } from './add-meal/add-meal-add-new/add-meal-add-new.component';
 import { AddMealMyFoodComponent } from './add-meal/add-meal-my-food/add-meal-my-food.component';
+import { UserService } from './_services/user.service';
+import { DishesService } from './_services/dishes.service';
+import { IngredientsService } from './_services/ingredients.service';
+import { MealService } from './_services/meal.service';
+import { MealtypeService } from './_services/mealtype.service';
+import { AlertifyService } from './_services/alertify.service';
+import { AddDishComponent } from './add-dish/add-dish.component';
+import { AddIngredientComponent } from './add-ingredient/add-ingredient.component';
+import { MyFoodComponent } from './my-food/my-food.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
    declarations: [
@@ -40,7 +48,6 @@ import { AddMealMyFoodComponent } from './add-meal/add-meal-my-food/add-meal-my-
       TodaysPlanComponent,
       AboutComponent,
       HelpComponent,
-      DiaryComponent,
       ProfileMainComponent,
       ProfileNavComponent,
       ProfileParametersComponent,
@@ -50,8 +57,10 @@ import { AddMealMyFoodComponent } from './add-meal/add-meal-my-food/add-meal-my-
       DatePickerComponent,
       AddMealNavComponent,
       AddMealSearchComponent,
-      AddMealAddNewComponent,
-      AddMealMyFoodComponent
+      AddMealMyFoodComponent,
+      AddDishComponent,
+      AddIngredientComponent,
+      MyFoodComponent
    ],
    imports: [
       BrowserModule,
@@ -60,11 +69,18 @@ import { AddMealMyFoodComponent } from './add-meal/add-meal-my-food/add-meal-my-
       BsDropdownModule.forRoot(),
       RouterModule.forChild(profileRoutes),
       // RouterModule.forChild(addMealRoutes),
-      RouterModule.forRoot(appRoutes)
+      RouterModule.forRoot(appRoutes),
+      BrowserAnimationsModule
    ],
    providers: [
       AuthService,
-      ErrorInterceptorProvider
+      ErrorInterceptorProvider,
+      UserService,
+      DishesService,
+      IngredientsService,
+      MealService,
+      MealtypeService,
+      AlertifyService
    ],
    bootstrap: [
       AppComponent

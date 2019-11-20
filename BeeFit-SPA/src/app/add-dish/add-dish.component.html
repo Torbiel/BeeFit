@@ -1,0 +1,67 @@
+<div class="container mt-3">
+  <div class="row justify-content-center">
+    <div class="col-lg-5 mr-3">
+      <form>
+        <!-- Input area -->
+        <div class="row">
+          <div class="col-10 pl-0">
+            <input class="form-control" type="text" placeholder="Name your dish" #dishName
+              (input)="setDishName(dishName.value)">
+          </div>
+          <div class="col-2">
+            <button class="add-button" (click)="addDish()"><i class="far fa-check square"></i></button>
+          </div>
+        </div>
+        <div class="row mt-2 form-group search-bar">
+          <input class="form-control" type="text" placeholder="Search for ingredients" #searchBox
+            (input)="findIngredients(searchBox.value)">
+        </div>
+
+        <!-- Results of search -->
+        <div class="row list-item" *ngFor="let ing of ingredients$ | async">
+          <div class="col-10">
+            <p class="lead">{{ ing.name }}</p>
+            <table>
+              <tr>
+                <td>Energy: {{ ing.callories }}kcal</td>
+                <td>Proteins: {{ ing.proteins }}g</td>
+                <td>Fats: {{ ing.fats }}g</td>
+                <td>Carbohydrates: {{ ing.carbohydrates }}g</td>
+              </tr>
+            </table>
+          </div>
+          <div class="col-2 pr-0">
+            <button class="add-button pull-right" (click)="addToDish(ing)">
+              <i class="fas fa-plus"></i>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- Added ingredients list -->
+    <div class="col-lg-5 ml-3">
+      <div class="row">
+        <h4>Added ingredients:</h4>
+      </div>
+      <div class="row list-item" *ngFor="let ing of addedIngredients">
+        <div class="col-10">
+          <p class="lead">{{ ing.ingredient.name }}</p>
+          <table>
+            <tr>
+              <td>Energy: {{ ing.ingredient.callories }}kcal</td>
+              <td>Proteins: {{ ing.ingredient.proteins }}g</td>
+              <td>Fats: {{ ing.ingredient.fats }}g</td>
+              <td>Carbohydrates: {{ ing.ingredient.carbohydrates }}g</td>
+            </tr>
+          </table>
+        </div>
+        <div class="col-2 pr-0">
+          <button class="delete-button pull-right" (click)="deleteFromDish(ing)">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

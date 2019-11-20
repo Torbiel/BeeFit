@@ -1,77 +1,63 @@
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
+  integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 
 <nav class="navbar navbar-expand-md">
   <div class="container">
-      <a class="navbar-brand" [routerLink]="['/home']" routerLinkActive="router-link-active">
-        BeeFit
-      </a>
+    <a class="navbar-brand" [routerLink]="['/home']" routerLinkActive="router-link-active">
+      BeeFit
+    </a>
 
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item" *ngIf="!loggedIn()">
-          <a class="nav-link" [routerLink]="['/about']" routerLinkActive="router-link-active" [routerLinkActiveOptions]="{exact: true}">
-            <i class="fas fa-info-circle"></i> About
-          </a>
-        </li>
-
-        <li class="nav-item mr-auto" *ngIf="loggedIn()">
-          <a class="nav-link" [routerLink]="['/todays-plan']" routerLinkActive="router-link-active">
-            <i class="fa fa-clipboard-list"></i> Today's plan
-          </a>
-        </li>
-
-        <li class="nav-item mr-auto" *ngIf="loggedIn()">
-          <a class="nav-link" [routerLink]="['/calendar']" routerLinkActive="router-link-active">
-            <i class="far fa-calendar-alt"></i> Calendar
-          </a>
-        </li>
-
-        <li class="nav-item mr-auto" *ngIf="loggedIn()">
-          <a class="nav-link" [routerLink]="['/diary']" routerLinkActive="router-link-active">
-            <i class="far fa-calendar-check"></i> Diary
-          </a>
-        </li>
-
-        <li class="nav-item mr-auto" *ngIf="loggedIn()">
-          <a class="nav-link" [routerLink]="['/my-food']" routerLinkActive="router-link-active">
-              <i class="far fa-cutlery"></i> My food
-          </a>
-        </li>
-
-        <li class="nav-item mr-auto" >
-          <a class="nav-link" [routerLink]="['/help']" routerLinkActive="router-link-active">
-            <i class="far fa-question-circle"></i> Help
-          </a>
-        </li>
-      </ul>
-
-      <div *ngIf="loggedIn()" class="dropdown" dropdown>
-        <a class="dropdown-toggle text-light" (click)="false" dropdownToggle>
-          <i class="fa fa-bars"></i> User panel
+    <ul class="navbar-nav mr-auto list-inline">
+      <li class="nav-item" *ngIf="!loggedIn()">
+        <a class="nav-link" [routerLink]="['/about']" routerLinkActive="router-link-active"
+          [routerLinkActiveOptions]="{exact: true}">
+          <i class="fas fa-info-circle"></i> About
         </a>
+      </li>
 
-        <div class="dropdown-menu" *dropdownMenu>
-          <a class="dropdown-item" [routerLink]="['/profile']">
-            <i class="fa fa-user"></i> Profile
-          </a>
+      <li class="nav-item" *ngIf="loggedIn()">
+        <a class="nav-link" [routerLink]="['/profile']" routerLinkActive="router-link-active">
+          <i class="fa fa-user"></i> Profile
+        </a>
+      </li>
 
-          <div class="dropdown-divider"></div>
+      <li class="nav-item mr-auto" *ngIf="loggedIn()">
+        <a class="nav-link" [routerLink]="['/todays-plan']" routerLinkActive="router-link-active">
+          <i class="fa fa-clipboard-list"></i> Day plan
+        </a>
+      </li>
 
-          <a class="dropdown-item" [routerLink]="['/my-target']">
-            <i class="fas fa-bullseye"></i> My target
-          </a>
+      <li class="nav-item mr-auto" *ngIf="loggedIn()">
+        <a class="nav-link" [routerLink]="['/calendar']" routerLinkActive="router-link-active">
+          <i class="far fa-calendar-alt"></i> Calendar
+        </a>
+      </li>
 
-          <div class="dropdown-divider"></div>
+      <li class="nav-item mr-auto" *ngIf="loggedIn()">
+        <a class="nav-link" [routerLink]="['/my-food']" routerLinkActive="router-link-active">
+          <i class="far fa-cutlery"></i> My food
+        </a>
+      </li>
 
-          <a class="dropdown-item logout" (click)="logout()">
-            <i class="fas fa-sign-out"></i> Log out
-          </a>
-        </div>
-      </div>
+      <li class="nav-item mr-auto">
+        <a class="nav-link" [routerLink]="['/help']" routerLinkActive="router-link-active">
+          <i class="far fa-question-circle"></i> Help
+        </a>
+      </li>
 
-      <form *ngIf="!loggedIn()" #loginForm="ngForm" class="form-inline my-2 my-lg-0" (ngSubmit)="login()">
-        <input class="form-control mr-sm-2" type="email" name="email" placeholder="Email" required [(ngModel)]="model.email">
-        <input class="form-control mr-sm-2" type="password" name="password" placeholder="Password" required [(ngModel)]="model.password">
-        <button [disabled]="!loginForm.valid" class="btn btn-outline-success my-2 my-sm-0" type="submit">Log in</button>
-      </form>
+      <li class="nav-item mr-auto logout-item" *ngIf="loggedIn()">
+        <a class="nav-link logout" [routerLink]="['']" routerLinkActive="router-link-active" (click)="logout()">
+          <i class="fas fa-sign-out"></i> Log out
+        </a>
+      </li>
+    </ul>
+
+    <form *ngIf="!loggedIn()" #loginForm="ngForm" class="form-inline my-2 my-lg-0" (ngSubmit)="login()">
+      <input class="form-control mr-sm-2" type="email" name="email" placeholder="Email" required
+        [(ngModel)]="model.email">
+      <input class="form-control mr-sm-2" type="password" name="password" placeholder="Password" required
+        [(ngModel)]="model.password">
+      <button [disabled]="!loginForm.valid" class="btn btn-outline-success my-2 my-sm-0" type="submit">Log in</button>
+    </form>
   </div>
 </nav>

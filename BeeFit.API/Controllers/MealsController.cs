@@ -2,6 +2,7 @@
 using BeeFit.API.Data.Interfaces;
 using BeeFit.API.Dtos;
 using BeeFit.API.Dtos.Meals;
+using BeeFit.API.Helpers;
 using BeeFit.API.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -63,6 +64,11 @@ namespace BeeFit.API.Controllers
             var convertedDate = date.GetDateTimeFormats('d').FirstOrDefault();
             var meals = await _repo.GetManyByDate(convertedDate, currentUserId);
             var mealsToReturn = _mapper.Map<IEnumerable<MealForGetDto>>(meals);
+
+            foreach(var meal in mealsToReturn.Where(m => m.Dish != null))
+            {
+                meal.Dish.CalculateNutrients();
+            }
 
             return Ok(mealsToReturn);
         }

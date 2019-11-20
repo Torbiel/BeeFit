@@ -1,0 +1,49 @@
+<div class="container mt-3">
+  <div class="row justify-content-center">
+    <div class="col-sm-4">
+      <div class="row">
+        <input class="form-control" type="text" placeholder="Name" #name (input)="setName(name.value)">
+      </div>
+      <div class="row mt-1">
+        <input class="form-control" type="text" placeholder="Brand" #brand (input)="setBrand(brand.value)">
+      </div>
+      <div class="row mt-1">
+        <div class="col-12">
+          <div class="row mt-1">
+            Unit:
+          </div>
+          <div class="row mt-1">
+            <input type="radio" #unit (input)="setUnit(unit.value)">Packet
+          </div>
+          <div class="row mt-1">
+            <input type="radio" #unit (input)="setUnit(unit.value)"> Portion
+          </div>
+        </div>
+      </div>
+      <div class="row mt-1">
+        <input type="number" class="form-control" placeholder="Grams per unit" #gramsPerUnit
+          (input)="setGramsPerUnit(gramsPerUnit.value)">
+      </div>
+      <div class="row mt-1">
+        <input type="number" class="form-control" placeholder="Callories (kcal)" #callories
+          (input)="setCallories(callories.value)">
+      </div>
+      <div class="row mt-1">
+        <input type="number" class="form-control" placeholder="Fats (g)" #fats (input)="setFats(fats.value)">
+      </div>
+      <div class="row mt-1">
+        <input type="number" class="form-control" placeholder="Carbohydrates (g)" #carbohydrates
+          (input)="setCarbohydrates(carbohydrates.value)">
+      </div>
+      <div class="row mt-1">
+        <input type="number" class="form-control" placeholder="Sugars (g)" #sugars (input)="setSugars(sugars.value)">
+      </div>
+      <div class="row mt-1">
+        <input type="number" class="form-control" placeholder="Proteins (g)" #proteins
+          (input)="setProteins(proteins.value)">
+      </div>
+      <div class="row mt-1">
+      </div>
+    </div>
+  </div>
+</div>

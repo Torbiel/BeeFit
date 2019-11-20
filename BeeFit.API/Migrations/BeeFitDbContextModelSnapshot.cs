@@ -48,8 +48,8 @@ namespace BeeFit.API.Migrations
                     b.Property<int>("IngredientId")
                         .HasColumnType("int");
 
-                    b.Property<double>("Quantity")
-                        .HasColumnType("float");
+                    b.Property<float>("Quantity")
+                        .HasColumnType("real");
 
                     b.HasKey("DishId", "IngredientId");
 
@@ -65,84 +65,84 @@ namespace BeeFit.API.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<double?>("AnimalProteins")
-                        .HasColumnType("float");
+                    b.Property<float?>("AnimalProteins")
+                        .HasColumnType("real");
 
                     b.Property<string>("Brand")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double?>("Calcium")
-                        .HasColumnType("float");
+                    b.Property<float?>("Calcium")
+                        .HasColumnType("real");
 
-                    b.Property<int>("Callories")
-                        .HasColumnType("int");
+                    b.Property<float>("Callories")
+                        .HasColumnType("real");
 
-                    b.Property<double>("Carbohydrates")
-                        .HasColumnType("float");
+                    b.Property<float>("Carbohydrates")
+                        .HasColumnType("real");
 
-                    b.Property<double?>("Cholesterol")
-                        .HasColumnType("float");
+                    b.Property<float?>("Cholesterol")
+                        .HasColumnType("real");
 
-                    b.Property<double?>("Copper")
-                        .HasColumnType("float");
+                    b.Property<float?>("Copper")
+                        .HasColumnType("real");
 
-                    b.Property<double>("Fats")
-                        .HasColumnType("float");
+                    b.Property<float>("Fats")
+                        .HasColumnType("real");
 
-                    b.Property<double?>("Fiber")
-                        .HasColumnType("float");
+                    b.Property<float?>("Fiber")
+                        .HasColumnType("real");
 
-                    b.Property<int>("GramsPerUnit")
-                        .HasColumnType("int");
+                    b.Property<float>("GramsPerUnit")
+                        .HasColumnType("real");
 
-                    b.Property<double?>("Iodine")
-                        .HasColumnType("float");
+                    b.Property<float?>("Iodine")
+                        .HasColumnType("real");
 
-                    b.Property<double?>("Iron")
-                        .HasColumnType("float");
+                    b.Property<float?>("Iron")
+                        .HasColumnType("real");
 
-                    b.Property<double?>("Magnesium")
-                        .HasColumnType("float");
+                    b.Property<float?>("Magnesium")
+                        .HasColumnType("real");
 
-                    b.Property<double?>("MonounsaturatedFats")
-                        .HasColumnType("float");
+                    b.Property<float?>("MonounsaturatedFats")
+                        .HasColumnType("real");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double?>("Omega3")
-                        .HasColumnType("float");
+                    b.Property<float?>("Omega3")
+                        .HasColumnType("real");
 
-                    b.Property<double?>("Omega6")
-                        .HasColumnType("float");
+                    b.Property<float?>("Omega6")
+                        .HasColumnType("real");
 
-                    b.Property<double?>("Phosphorus")
-                        .HasColumnType("float");
+                    b.Property<float?>("Phosphorus")
+                        .HasColumnType("real");
 
-                    b.Property<double?>("PlantProteins")
-                        .HasColumnType("float");
+                    b.Property<float?>("PlantProteins")
+                        .HasColumnType("real");
 
-                    b.Property<double?>("Potassium")
-                        .HasColumnType("float");
+                    b.Property<float?>("Potassium")
+                        .HasColumnType("real");
 
-                    b.Property<double>("Proteins")
-                        .HasColumnType("float");
+                    b.Property<float>("Proteins")
+                        .HasColumnType("real");
 
-                    b.Property<double?>("Salt")
-                        .HasColumnType("float");
+                    b.Property<float?>("Salt")
+                        .HasColumnType("real");
 
-                    b.Property<double?>("SaturatedFats")
-                        .HasColumnType("float");
+                    b.Property<float?>("SaturatedFats")
+                        .HasColumnType("real");
 
-                    b.Property<double?>("Selenium")
-                        .HasColumnType("float");
+                    b.Property<float?>("Selenium")
+                        .HasColumnType("real");
 
-                    b.Property<double?>("Sodium")
-                        .HasColumnType("float");
+                    b.Property<float?>("Sodium")
+                        .HasColumnType("real");
 
-                    b.Property<double>("Sugars")
-                        .HasColumnType("float");
+                    b.Property<float>("Sugars")
+                        .HasColumnType("real");
 
                     b.Property<int>("Unit")
                         .HasColumnType("int");
@@ -150,47 +150,47 @@ namespace BeeFit.API.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<double?>("VitaminA")
-                        .HasColumnType("float");
+                    b.Property<float?>("VitaminA")
+                        .HasColumnType("real");
 
-                    b.Property<double?>("VitaminB1")
-                        .HasColumnType("float");
+                    b.Property<float?>("VitaminB1")
+                        .HasColumnType("real");
 
-                    b.Property<double?>("VitaminB12")
-                        .HasColumnType("float");
+                    b.Property<float?>("VitaminB12")
+                        .HasColumnType("real");
 
-                    b.Property<double?>("VitaminB2")
-                        .HasColumnType("float");
+                    b.Property<float?>("VitaminB2")
+                        .HasColumnType("real");
 
-                    b.Property<double?>("VitaminB5")
-                        .HasColumnType("float");
+                    b.Property<float?>("VitaminB5")
+                        .HasColumnType("real");
 
-                    b.Property<double?>("VitaminB6")
-                        .HasColumnType("float");
+                    b.Property<float?>("VitaminB6")
+                        .HasColumnType("real");
 
-                    b.Property<double?>("VitaminB7")
-                        .HasColumnType("float");
+                    b.Property<float?>("VitaminB7")
+                        .HasColumnType("real");
 
-                    b.Property<double?>("VitaminB9")
-                        .HasColumnType("float");
+                    b.Property<float?>("VitaminB9")
+                        .HasColumnType("real");
 
-                    b.Property<double?>("VitaminC")
-                        .HasColumnType("float");
+                    b.Property<float?>("VitaminC")
+                        .HasColumnType("real");
 
-                    b.Property<double?>("VitaminD")
-                        .HasColumnType("float");
+                    b.Property<float?>("VitaminD")
+                        .HasColumnType("real");
 
-                    b.Property<double?>("VitaminE")
-                        .HasColumnType("float");
+                    b.Property<float?>("VitaminE")
+                        .HasColumnType("real");
 
-                    b.Property<double?>("VitaminK")
-                        .HasColumnType("float");
+                    b.Property<float?>("VitaminK")
+                        .HasColumnType("real");
 
-                    b.Property<double?>("VitaminPP")
-                        .HasColumnType("float");
+                    b.Property<float?>("VitaminPP")
+                        .HasColumnType("real");
 
-                    b.Property<double?>("Zinc")
-                        .HasColumnType("float");
+                    b.Property<float?>("Zinc")
+                        .HasColumnType("real");
 
                     b.HasKey("Id");
 
@@ -230,8 +230,8 @@ namespace BeeFit.API.Migrations
                     b.Property<int>("IngredientId")
                         .HasColumnType("int");
 
-                    b.Property<double?>("Quantity")
-                        .HasColumnType("float");
+                    b.Property<float?>("Quantity")
+                        .HasColumnType("real");
 
                     b.Property<int>("Type")
                         .HasColumnType("int");

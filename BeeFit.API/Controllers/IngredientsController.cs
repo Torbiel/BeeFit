@@ -58,6 +58,16 @@ namespace BeeFit.API.Controllers
             return Ok(ingredientsToReturn);
         }
 
+        [HttpGet]
+        public IActionResult GetManyByUserId()
+        {
+            var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var ingredients = _repo.GetManyByUserId(currentUserId);
+            var ingredientsToReturn = _mapper.Map<IEnumerable<Ingredient>>(ingredients);
+
+            return Ok(ingredientsToReturn);
+        }
+
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, IngredientForUpdateDto ingredientDto)
         {

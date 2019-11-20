@@ -9,3 +9,24 @@
 {
     cursor: pointer;
 }
+
+.add-button, .edit-button, .delete-button
+{
+    background-color: rgb(39, 39, 39);
+    color: #F3C622;
+    border: none;
+}
+
+.add-button:hover, .edit-button:hover, .delete-button:hover
+{
+    background-color: #F3C622;
+    color: rgb(39, 39, 39);
+}
+
+body
+{
+    background-color: rgb(39, 39, 39);
+    color: rgb(230, 230, 230);
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
