@@ -7,9 +7,9 @@ export class Meal {
     type: number;
     date: Date;
     userId: number;
-    dish: Dish;
-    dishId: number;
-    ingredient: Ingredient;
-    ingredientId: number;
+    dish?: Dish;
+    dishId?: number;
+    ingredient?: Ingredient;
+    ingredientId?: number;
     quantity?: number;
 }

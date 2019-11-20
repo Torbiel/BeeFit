@@ -1,30 +1,53 @@
- <app-date-picker (selectedDateEmitter)="onDateSelected($event)"></app-date-picker>
+<app-date-picker (selectedDateEmitter)="onDateSelected($event)" *ngIf="this.router.url === '/todays-plan'">
+</app-date-picker>
 
-<div class="container" *ngIf="this.router.url === '/todays-plan'">
-  <div class="wrapper" *ngFor="let i of [0, 1, 2, 3, 4, 5, 6]">
-    <div class="row justify-content-center mt-3">
-      <div class="col-6 mealtype mealtype-header">
-        {{ this.mealTypes[i] }}
-      </div>
-      <div class="col-2 mealtype mealtype-add">
-        <button class="add-button pull-right" (click)="setMealType(i); setDate();" [routerLink]="['add-meal']" routerLinkActive="router-link-active">
-          <i class="fas fa-plus"></i>
-        </button>
+<div class="container-fluid" *ngIf="this.router.url === '/todays-plan'">
+  <div class="row pl-2 pr-2">
+    <div class="col-lg-6 divider-right">
+      <div class="wrapper" *ngFor="let i of [0, 1, 2, 3, 4, 5, 6]">
+        <div class="row justify-content-right mt-3">
+          <div class="col-9 mealtype mealtype-header">
+            {{ this.mealTypes[i] }}
+          </div>
+          <div class="col-2 mealtype mealtype-buttons">
+            <button class="add-button pull-right" (click)="setMealType(i); setDate(); toggleAddModeFromButton();">
+              <i class="fas fa-plus"></i>
+            </button>
+            <button class="copy-button pull-right"><i class="far fa-copy"></i></button>
+          </div>
+        </div>
+
+        <div class="row justify-content-right mt-3" *ngFor="let meal of this.filteredMeals[i]">
+          <div class="col-9 meal">
+            <p class="lead" *ngIf="meal.dish !== null">{{ meal.dish.name }}</p>
+            <p class="lead" *ngIf="meal.ingredient !== null">{{ meal.ingredient.name }}</p>
+            <table *ngIf="meal.dish !== null">
+                <tr>
+                  <td>Energy: {{ meal.dish.callories }}kcal</td>
+                  <td>Proteins: {{ meal.dish.proteins }}g</td>
+                  <td>Fats: {{ meal.dish.fats }}g</td>
+                  <td>Carbohydrates: {{ meal.dish.carbohydrates }}g</td>
+                </tr>
+              </table>
+            <table *ngIf="meal.ingredient !== null">
+              <tr>
+                <td>Energy: {{ meal.ingredient.callories }}kcal</td>
+                <td>Proteins: {{ meal.ingredient.proteins }}g</td>
+                <td>Fats: {{ meal.ingredient.fats }}g</td>
+                <td>Carbohydrates: {{ meal.ingredient.carbohydrates }}g</td>
+              </tr>
+            </table>
+          </div>
+          <div class="col-2 meal-buttons meal">
+            <button class="delete-button pull-right" (click)="deleteMeal(meal)"><i class="fas fa-times"></i></button>
+            <button class="edit-button pull-right"><i class="fas fa-edit"></i></button>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="row justify-content-center meal mt-3" *ngFor="let meal of this.filteredMeals[i]">
-      <div class="col-6">
-        <p class="lead" *ngIf="meal.dish !== null">{{ meal.dish.name }}</p>
-        <p class="lead" *ngIf="meal.ingredient !== null">{{ meal.ingredient.name }}</p>
-        <!-- <p>{{ meal.dish.calculateCallories() }}</p> -->
-      </div>
-      <div class="col-2">
-        <button class="delete-button pull-right" (click)="deleteMeal(meal)"><i class="fas fa-times"></i></button>
-        <button class="edit-button pull-right"><i class="fas fa-edit"></i></button>
-      </div>
+    <div class="col-lg-6 divider-left" *ngIf="addMode">
+      <app-add-meal-nav (addMode)="toggleAddMode()"></app-add-meal-nav>
     </div>
   </div>
 </div>
-
-<router-outlet></router-outlet>

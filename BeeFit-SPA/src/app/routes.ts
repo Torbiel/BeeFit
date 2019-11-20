@@ -2,7 +2,6 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { TodaysPlanComponent } from './todays-plan/todays-plan.component';
 import { HelpComponent } from './help/help.component';
-import { DiaryComponent } from './diary/diary.component';
 import { AboutComponent } from './about/about.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { AuthGuard } from './_guards/auth.guard';
@@ -12,12 +11,9 @@ import { ProfileMainComponent } from './profile/profile-main/profile-main.compon
 import { ProfileParametersComponent } from './profile/profile-parameters/profile-parameters.component';
 import { ProfileTargetComponent } from './profile/profile-target/profile-target.component';
 import { ProfileChartsComponent } from './profile/profile-charts/profile-charts.component';
-import { AddMealNavComponent } from './add-meal/add-meal-nav/add-meal-nav.component';
-import { AddMealSearchComponent } from './add-meal/add-meal-search/add-meal-search.component';
-import { AddMealMyFoodComponent } from './add-meal/add-meal-my-food/add-meal-my-food.component';
-import { AddMealAddNewComponent } from './add-meal/add-meal-add-new/add-meal-add-new.component';
 import { AddDishComponent } from './add-dish/add-dish.component';
 import { AddIngredientComponent } from './add-ingredient/add-ingredient.component';
+import { MyFoodComponent } from './my-food/my-food.component';
 
 export const appRoutes: Routes = [
     { path: '', component: HomeComponent },
@@ -26,22 +22,14 @@ export const appRoutes: Routes = [
         runGuardsAndResolvers: 'always',
         canActivate: [AuthGuard],
         children: [
-            { path: 'diary', component: DiaryComponent },
             { path: 'calendar', component: CalendarComponent },
-
-            { path: 'todays-plan', component: TodaysPlanComponent, children: [
-                { path: 'todays-plan:date', component: TodaysPlanComponent },
-                { path: 'add-meal', component: AddMealNavComponent, children: [
-                    { path: '', component: AddMealSearchComponent },
-                    { path: 'search', component: AddMealSearchComponent },
-                    { path: 'my-food', component: AddMealMyFoodComponent },
-                    { path: 'add-new', component: AddMealAddNewComponent }
-                ] },
-
-            ] },
+            { path: 'todays-plan', component: TodaysPlanComponent},
             { path: 'profile', component: ProfileNavComponent },
             { path: 'welcome', component: WelcomeComponent },
-            { path: 'add-meal', component: AddMealNavComponent }
+            { path: 'my-food', component: MyFoodComponent },
+            { path: '', component: MyFoodComponent },
+            { path: 'add-dish', component: AddDishComponent },
+            { path: 'add-ingredient', component: AddIngredientComponent }
         ]
     },
     { path: 'help', component: HelpComponent },

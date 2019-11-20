@@ -1,6 +1,8 @@
-.far
+.delete-button, .edit-button, .add-button
 {
-    font-family: fontawesome;
+    font-size: 1.4em;
+    width: 2.8vw;
+    height: 2.8vw;
 }
 
 .list-item
@@ -29,17 +31,4 @@ table
 {
     width: 100%;
     font-size: 0.8em;
-}
-
-.add-button, .delete-button
-{
-    font-size: 1.5em;
-    width: 2.6vw;
-    height: 2.6vw;
-}
-
-.dialog
-{
-    color: rgb(39, 39, 39) !important;
-    background-color: #F3C622 !important;
 }

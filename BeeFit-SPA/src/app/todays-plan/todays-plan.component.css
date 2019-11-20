@@ -1,46 +1,78 @@
 .mealtype
 {
-    background-color: rgb(231, 231, 231);
-    border: 3px solid black;
+    border-bottom: 3px solid rgb(187, 152, 24);
+    border-top: 3px solid rgb(187, 152, 24);
+
 }
 
 .mealtype-header
 {
     font-size: 1.8em;
-    border-right: none;
 }
 
-.mealtype-add
+.mealtype-buttons
 {
     border-left: none;
     padding-right: 0;
 }
 
-.add-button
+.meal-buttons
 {
-    border-left: 3px solid black;
-    border-right: none;
-    border-top: none;
-    border-bottom: none;
-    background-color: black;
-    color: #F3C622;
-    font-size: 1.6em;
-    width: 3vw;
-    height: 3vw;
+    padding-right: 0;
 }
 
-.edit-button, .delete-button
+.copy-button
 {
     border: none;
-    background-color: black;
-    color: #F3C622;
+    background-color: rgb(39, 39, 39);
+    color: rgb(187, 152, 24);
     font-size: 1.6em;
     width: 3vw;
     height: 3vw;
 }
 
-.add-button:hover, .edit-button:hover, .delete-button:hover
+.copy-button:hover
 {
-    background-color: #F3C622;
-    color: black;
+    background-color: rgb(187, 152, 24);
+    color: rgb(39, 39, 39);
+}
+
+.add-button, .edit-button, .delete-button
+{
+    border: none;
+    font-size: 1.6em;
+    width: 3vw;
+    height: 3vw;
+}
+
+/* .divider-right
+{
+    border-right: 1px gray solid;
+}
+
+.divider-left
+{
+    border-left: 1px gray solid;
+} */
+
+td:not(:last-child)
+{
+    border-right: 1px solid gray;
+}
+
+td
+{
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+table
+{
+    width: 100%;
+    font-size: 0.8em;
+}
+
+.meal
+{
+    border-bottom: 1px solid gray;
 }

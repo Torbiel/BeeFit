@@ -1,0 +1,9 @@
+input:focus
+{
+    border: 2px solid #F3C622;
+}
+
+input
+{
+    background-color: black;;
+}

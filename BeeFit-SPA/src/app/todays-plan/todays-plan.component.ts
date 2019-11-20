@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { MealtypeService } from '../_services/mealtype.service';
 import { DatePickerComponent } from '../date-picker/date-picker.component';
 import { DateService } from '../_services/date.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-todays-plan',
@@ -29,6 +30,7 @@ export class TodaysPlanComponent implements OnInit {
   ];
   filteredMeals: Meal[][];
   currentDate: Date;
+  addMode = false;
 
   constructor(
     private userService: UserService,
@@ -92,11 +94,21 @@ export class TodaysPlanComponent implements OnInit {
     this.dateService.changeDate(this.currentDate);
   }
 
+  toggleAddModeFromButton() {
+    this.addMode = true;
+    window.scrollTo(0, 0);
+  }
+
+  toggleAddMode() {
+    this.addMode = !this.addMode;
+    this.getMeals(this.currentDate);
+  }
+
   deleteMeal(meal: Meal) {
     this.mealService.delete(meal.id).subscribe(
       () => {
         this.alertify.success('Meal deleted.');
-        this.meals.splice(this.meals.indexOf(meal), 1);
+        this.getMeals(this.currentDate);
       },
       error => {
         this.alertify.error(error);
@@ -107,9 +119,5 @@ export class TodaysPlanComponent implements OnInit {
   onDateSelected(date: Date) {
     this.currentDate = date;
     this.getMeals(date);
-  }
-
-  prepareDatePicker() {
-    const today = new Date();
   }
 }

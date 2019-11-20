@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { DishesService } from 'src/app/_services/dishes.service';
 import { Dish } from 'src/app/_models/Dish';
 import { Ingredient } from 'src/app/_models/Ingredient';
@@ -10,6 +10,8 @@ import { User } from 'src/app/_models/User';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MealtypeService } from 'src/app/_services/mealtype.service';
 import { DateService } from 'src/app/_services/date.service';
+import { Subject, Observable } from 'rxjs';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-add-meal-search',
@@ -17,14 +19,16 @@ import { DateService } from 'src/app/_services/date.service';
   styleUrls: ['./add-meal-search.component.css']
 })
 export class AddMealSearchComponent implements OnInit {
-  name: string;
-  dishes: Dish[];
-  ingredients: Ingredient[];
   meal: Meal;
   @Input() userId: number;
+  @Output() addMode = new EventEmitter<boolean>();
   mealType: number;
   route: ActivatedRoute;
   currentDate: Date;
+  private dishesSearchName = new Subject<string>();
+  private ingredientsSearchName = new Subject<string>();
+  ingredients$: Observable<Ingredient[]>;
+  dishes$: Observable<Dish[]>;
 
   constructor(private dishesService: DishesService,
               private alertify: AlertifyService,
@@ -37,22 +41,30 @@ export class AddMealSearchComponent implements OnInit {
   ngOnInit() {
     this.mealTypeService.currentMealType.subscribe(mealtype => this.mealType = mealtype);
     this.dateService.currentDate.subscribe(date => this.currentDate = date);
+
+    this.ingredients$ = this.ingredientsSearchName.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap((name: string) => this.ingredientsService.getIngredientsByName(name)),
+    );
+
+    this.dishes$ = this.dishesSearchName.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap((name: string) => this.dishesService.getDishesByName(name)),
+    );
   }
 
-  findDishes() {
-    this.dishesService.getDishesByName(this.name).subscribe((dishes: Dish[]) => {
-      this.dishes = dishes.map(d => Object.assign(new Dish(), d));
-    }, error => {
-      this.alertify.error(error);
-    });
+  findDishes(name: string) {
+    if (name !== '') {
+      this.dishesSearchName.next(name);
+    }
   }
 
-  findIngredients() {
-    this.ingredientsService.getIngredientsByName(this.name).subscribe((ingredients: Ingredient[]) => {
-      this.ingredients = ingredients;
-    }, error => {
-      this.alertify.error(error);
-    });
+  findIngredients(name: string) {
+    if (name !== '') {
+      this.ingredientsSearchName.next(name);
+    }
   }
 
   addToMeal(dishId: number, ingredientId: number) {
@@ -65,7 +77,7 @@ export class AddMealSearchComponent implements OnInit {
 
     this.mealService.add(this.meal).subscribe(() => {
       this.alertify.success('Meal added.');
-      this.router.navigate(['/todays-plan']);
+      this.addMode.emit(false);
     }, error => {
       this.alertify.error(error);
     });

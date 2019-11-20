@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { User } from 'src/app/_models/User';
 import { Router } from '@angular/router';
 import { DishesService } from 'src/app/_services/dishes.service';
@@ -17,6 +17,7 @@ import { MealService } from 'src/app/_services/meal.service';
 })
 export class AddMealMyFoodComponent implements OnInit {
   @Input() userId: number;
+  @Output() addMode = new EventEmitter<boolean>();
   dishes: Dish[];
   ingredients: Ingredient[];
   meal: Meal;
@@ -61,7 +62,7 @@ export class AddMealMyFoodComponent implements OnInit {
 
     this.mealService.add(this.meal).subscribe(() => {
       this.alertify.success('Meal added.');
-      this.router.navigate(['/todays-plan']);
+      this.addMode.emit(false);
     }, error => {
       this.alertify.error(error);
     });

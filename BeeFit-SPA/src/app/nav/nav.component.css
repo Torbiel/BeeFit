@@ -43,3 +43,8 @@
 {
     color: red !important;
 }
+
+.navbar
+{
+    border-bottom: 2px solid #F3C622;
+}

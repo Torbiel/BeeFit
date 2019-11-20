@@ -25,4 +25,12 @@ export class DishesService {
   getDishesByUserId(id: number): Observable<Dish[]> {
     return this.http.get<Dish[]>(this.baseUrl, httpOptions);
   }
+
+  add(dish: Dish): Observable<Dish> {
+    return this.http.post<Dish>(this.baseUrl, dish, httpOptions);
+  }
+
+  delete(id: number) {
+    return this.http.delete(this.baseUrl + '/' + id, httpOptions);
+  }
 }

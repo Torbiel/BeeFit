@@ -25,9 +25,6 @@ export class DatePickerComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.paramMap.subscribe(params => {
-      this.subscribedParam = params.get('date'); console.log(this.subscribedParam);
-    });
   }
 
   prepareWeek() {

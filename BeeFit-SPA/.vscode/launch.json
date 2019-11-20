@@ -10,7 +10,7 @@
         "sourceMaps": true,
         "userDataDir": "${workspaceFolder}/.vscode/chrome",
         "runtimeArgs": [
-          "--disable-session-crashed-bubble"
+          "--disable-session-crashed-bubble",
         ]
       },
       {

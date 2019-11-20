@@ -27,6 +27,6 @@ namespace BeeFit.API.Models
         public virtual Ingredient Ingredient { get; set; }
         public int IngredientId { get; set; }
 
-        public double? Quantity { get; set; }
+        public float? Quantity { get; set; }
     }
 }

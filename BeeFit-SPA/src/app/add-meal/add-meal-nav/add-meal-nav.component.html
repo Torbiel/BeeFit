@@ -1,17 +1,13 @@
-<div class="container">
-  <div class="row justify-content-center mt-3">
-    <div class="col-auto">
-      <button [routerLink]="['search']" routerLinkActive="active"><i class="fas fa-search"></i></button>
-    </div>
-    <div class="col-auto">
-      <button [routerLink]="['my-food']" routerLinkActive="active"><i class="fas fa-book"></i></button>
-    </div>
-    <div class="col-auto">
-      <button [routerLink]="['add-new']" routerLinkActive="active"><i class="fas fa-plus"></i></button>
-    </div>
+<div class="row justify-content-center mt-3">
+  <div class="col-auto">
+    <button (click)="setAddingMode('search')"><i class="fas fa-search"></i></button>
   </div>
-
-  <app-add-meal-search [userId]="this.user.id"></app-add-meal-search>
-  <app-add-meal-my-food [userId]="this.user.id"></app-add-meal-my-food>
-  <app-add-meal-add-new [userId]="this.user.id"></app-add-meal-add-new>
+  <div class="col-auto">
+    <button (click)="setAddingMode('my food')"><i class="fas fa-book"></i></button>
+  </div>
 </div>
+
+<app-add-meal-search [userId]="this.user.id" *ngIf="this.addingMode === 'search'" (addMode)="receiveAddMode($event)">
+</app-add-meal-search>
+<app-add-meal-my-food [userId]="this.user.id" *ngIf="this.addingMode === 'my food'" (addMode)="receiveAddMode($event)">
+</app-add-meal-my-food>

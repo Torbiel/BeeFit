@@ -6,16 +6,8 @@ export class Dish {
     name: string;
     user: User;
     ingredients: DishesIngredient[];
-    callories: number;
-
-    public calculateCallories(): number {
-        const callories = 0;
-
-        this.ingredients.forEach(element => {
-            element.ingredient.callories += callories;
-        });
-
-        this.callories = callories;
-        return callories;
-    }
+    callories?: number;
+    fats?: number;
+    carbohydrates?: number;
+    proteins: number;
 }

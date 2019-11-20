@@ -1,10 +1,10 @@
 import { Dish } from './Dish';
 import { Ingredient } from './Ingredient';
 
-export interface DishesIngredient {
-    dish: Dish;
+export class DishesIngredient {
+    dish?: Dish;
     dishId: number;
-    ingredient: Ingredient;
+    ingredient?: Ingredient;
     ingredientId: number;
     quantity: number;
 }

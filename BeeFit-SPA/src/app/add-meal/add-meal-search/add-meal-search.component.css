@@ -1,0 +1,35 @@
+.add-button
+{
+    border: none;
+    width: 3vw;
+    height: 3vw;
+    font-size: 1.8vw;
+}
+
+.list-element
+{
+    border: 2px solid #F3C622;
+
+}
+
+.list-element:hover
+{
+    background-color: rgb(58, 58, 58);
+}
+
+td:not(:last-child)
+{
+    border-right: 1px solid gray;
+}
+
+td
+{
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+table
+{
+    width: 100%;
+    font-size: 0.8em;
+}
