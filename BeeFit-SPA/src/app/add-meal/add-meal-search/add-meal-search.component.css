@@ -1,6 +1,5 @@
 .add-button
 {
-    border: none;
     width: 3vw;
     height: 3vw;
     font-size: 1.8vw;
@@ -8,7 +7,7 @@
 
 .list-element
 {
-    border: 2px solid #F3C622;
+    border: 2px solid rgb(187, 152, 24);
 
 }
 
@@ -24,12 +23,16 @@ td:not(:last-child)
 
 td
 {
-    padding-right: 10px;
-    padding-left: 10px;
+    padding-right: 5px;
+    padding-left: 5px;
 }
 
 table
 {
     width: 100%;
-    font-size: 0.8em;
+}
+
+.dishes-header, .ingredients-header
+{
+    font-size: 1.4em;
 }

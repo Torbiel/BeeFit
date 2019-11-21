@@ -5,11 +5,11 @@
         <!-- Input area -->
         <div class="row">
           <div class="col-10 pl-0">
-            <input class="form-control" type="text" placeholder="Name your dish" #dishName
+            <input class="form-control" type="text" placeholder="Name your dish" #dishName required="required"
               (input)="setDishName(dishName.value)">
           </div>
           <div class="col-2">
-            <button class="add-button" (click)="addDish()"><i class="far fa-check square"></i></button>
+            <button type="submit" class="add-button" (click)="addDish()"><i class="far fa-check square"></i></button>
           </div>
         </div>
         <div class="row mt-2 form-group search-bar">
@@ -19,14 +19,14 @@
 
         <!-- Results of search -->
         <div class="row list-item" *ngFor="let ing of ingredients$ | async">
-          <div class="col-10">
-            <p class="lead">{{ ing.name }}</p>
+          <div class="col-10 pl-2 pt-2">
+            <p>{{ ing.name }}</p>
             <table>
               <tr>
-                <td>Energy: {{ ing.callories }}kcal</td>
-                <td>Proteins: {{ ing.proteins }}g</td>
-                <td>Fats: {{ ing.fats }}g</td>
-                <td>Carbohydrates: {{ ing.carbohydrates }}g</td>
+                <td>Energy: {{ ing.callories }} kcal</td>
+                <td>Proteins: {{ ing.proteins }} g</td>
+                <td>Fats: {{ ing.fats }} g</td>
+                <td>Carbohydrates: {{ ing.carbohydrates }} g</td>
               </tr>
             </table>
           </div>
@@ -41,18 +41,18 @@
 
     <!-- Added ingredients list -->
     <div class="col-lg-5 ml-3">
-      <div class="row">
-        <h4>Added ingredients:</h4>
+      <div class="row added-ingredients-header">
+        Added ingredients:
       </div>
       <div class="row list-item" *ngFor="let ing of addedIngredients">
         <div class="col-10">
           <p class="lead">{{ ing.ingredient.name }}</p>
           <table>
             <tr>
-              <td>Energy: {{ ing.ingredient.callories }}kcal</td>
-              <td>Proteins: {{ ing.ingredient.proteins }}g</td>
-              <td>Fats: {{ ing.ingredient.fats }}g</td>
-              <td>Carbohydrates: {{ ing.ingredient.carbohydrates }}g</td>
+              <td>Energy: {{ ing.ingredient.callories }} kcal</td>
+              <td>Proteins: {{ ing.ingredient.proteins }} g</td>
+              <td>Fats: {{ ing.ingredient.fats }} g</td>
+              <td>Carbohydrates: {{ ing.ingredient.carbohydrates }} g</td>
             </tr>
           </table>
         </div>
@@ -61,6 +61,9 @@
             <i class="fas fa-times"></i>
           </button>
         </div>
+      </div>
+      <div class="row no-ingredients" *ngIf="addedIngredients.length === 0">
+        Empty
       </div>
     </div>
   </div>

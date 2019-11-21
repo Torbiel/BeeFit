@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using BeeFit.API.Data.Interfaces;
-using BeeFit.API.Dtos;
 using BeeFit.API.Dtos.Dishes;
 using BeeFit.API.Helpers;
 using BeeFit.API.Models;
@@ -12,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace BeeFit.API.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class DishesController : ControllerBase

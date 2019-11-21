@@ -3,7 +3,57 @@
 
 <div class="container-fluid" *ngIf="this.router.url === '/todays-plan'">
   <div class="row pl-2 pr-2">
-    <div class="col-lg-6 divider-right">
+    <div class="col-lg-6">
+
+      <!-- Target -->
+      <div class="row mt-3 target-nutrients" *ngIf="this.user.target !== null">
+        <div class="col-3 pl-4">
+          <div class="row">
+            Callories:
+          </div>
+          <div class="row">
+            {{ this.callories.toFixed(2) }}/{{ this.user.target.callories.toFixed(2) }}
+          </div>
+          <div class="row">
+            <mat-progress-bar class="mb-1" [value]="this.callories/this.user.target.callories * 100"></mat-progress-bar>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="row">
+            Proteins:
+          </div>
+          <div class="row">
+            {{ this.proteins.toFixed(2) }}/{{ this.user.target.proteins.toFixed(2) }}
+          </div>
+          <div class="row">
+            <mat-progress-bar class="mb-1" [value]="this.proteins/this.user.target.proteins * 100"></mat-progress-bar>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="row">
+            Fats:
+          </div>
+          <div class="row">
+            {{ this.fats.toFixed(2) }}/{{ this.user.target.fats.toFixed(2) }}
+          </div>
+          <div class="row">
+            <mat-progress-bar class="mb-1" [value]="this.fats/this.user.target.fats * 100"></mat-progress-bar>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="row">
+            Carbohydrates:
+          </div>
+          <div class="row bar">
+            {{ this.carbohydrates.toFixed(2) }}/{{ this.user.target.carbohydrates.toFixed(2) }}
+          </div>
+          <div class="row">
+            <mat-progress-bar class="mb-1" [value]="this.carbohydrates/this.user.target.carbohydrates * 100"></mat-progress-bar>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mealtype header -->
       <div class="wrapper" *ngFor="let i of [0, 1, 2, 3, 4, 5, 6]">
         <div class="row justify-content-right mt-3">
           <div class="col-9 mealtype mealtype-header">
@@ -17,18 +67,19 @@
           </div>
         </div>
 
+        <!-- Meals -->
         <div class="row justify-content-right mt-3" *ngFor="let meal of this.filteredMeals[i]">
           <div class="col-9 meal">
-            <p class="lead" *ngIf="meal.dish !== null">{{ meal.dish.name }}</p>
-            <p class="lead" *ngIf="meal.ingredient !== null">{{ meal.ingredient.name }}</p>
+            <p *ngIf="meal.dish !== null">{{ meal.dish.name }}</p>
+            <p *ngIf="meal.ingredient !== null">{{ meal.ingredient.name }}</p>
             <table *ngIf="meal.dish !== null">
-                <tr>
-                  <td>Energy: {{ meal.dish.callories }}kcal</td>
-                  <td>Proteins: {{ meal.dish.proteins }}g</td>
-                  <td>Fats: {{ meal.dish.fats }}g</td>
-                  <td>Carbohydrates: {{ meal.dish.carbohydrates }}g</td>
-                </tr>
-              </table>
+              <tr>
+                <td>Energy: {{ meal.dish.callories }} kcal</td>
+                <td>Proteins: {{ meal.dish.proteins }} g</td>
+                <td>Fats: {{ meal.dish.fats }} g</td>
+                <td>Carbohydrates: {{ meal.dish.carbohydrates }} g</td>
+              </tr>
+            </table>
             <table *ngIf="meal.ingredient !== null">
               <tr>
                 <td>Energy: {{ meal.ingredient.callories }}kcal</td>
@@ -46,7 +97,7 @@
       </div>
     </div>
 
-    <div class="col-lg-6 divider-left" *ngIf="addMode">
+    <div class="col-lg-6" *ngIf="addMode">
       <app-add-meal-nav (addMode)="toggleAddMode()"></app-add-meal-nav>
     </div>
   </div>

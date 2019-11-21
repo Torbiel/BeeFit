@@ -5,18 +5,18 @@
 
 <div class="row mt-2">
   <div class="col-lg-6 dishes">
-    <div class="row justify-content-center">
-      <h4>Dishes:</h4>
+    <div class="row justify-content-center dishes-header">
+      Dishes:
     </div>
     <div class="row list-element mb-2" *ngFor="let dish of dishes$ | async">
-      <div class="col-10">
-        <p class="lead">{{ dish.name }}</p>
+      <div class="col-10 pl-2 pt-2">
+        <p>{{ dish.name }}</p>
         <table>
           <tr>
-            <td>Energy: {{ dish.callories }}kcal</td>
-            <td>Proteins: {{ dish.proteins }}g</td>
-            <td>Fats: {{ dish.fats }}g</td>
-            <td>Carbohydrates: {{ dish.carbohydrates }}g</td>
+            <td>Energy: {{ dish.callories }} kcal</td>
+            <td>Proteins: {{ dish.proteins }} g</td>
+            <td>Fats: {{ dish.fats }} g</td>
+            <td>Carbohydrates: {{ dish.carbohydrates }} g</td>
           </tr>
         </table>
       </div>
@@ -27,18 +27,18 @@
   </div>
 
   <div class="col-lg-6 ingredients">
-    <div class="row justify-content-center">
-      <h4>Ingredients:</h4>
+    <div class="row justify-content-center ingredients-header">
+      Ingredients:
     </div>
     <div class="row list-element" *ngFor="let ingredient of ingredients$ | async">
       <div class="col-10">
-        <p class="lead">{{ ingredient.name }}</p>
+        <p>{{ ingredient.name }}</p>
         <table>
           <tr>
-            <td>Energy: {{ ingredient.callories }}kcal</td>
-            <td>Proteins: {{ ingredient.proteins }}g</td>
-            <td>Fats: {{ ingredient.fats }}g</td>
-            <td>Carbohydrates: {{ ingredient.carbohydrates }}g</td>
+            <td>Energy: {{ ingredient.callories }} kcal</td>
+            <td>Proteins: {{ ingredient.proteins }} g</td>
+            <td>Fats: {{ ingredient.fats }} g</td>
+            <td>Carbohydrates: {{ ingredient.carbohydrates }} g</td>
           </tr>
         </table>
       </div>

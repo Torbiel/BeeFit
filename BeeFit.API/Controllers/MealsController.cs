@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using BeeFit.API.Data.Interfaces;
-using BeeFit.API.Dtos;
 using BeeFit.API.Dtos.Meals;
 using BeeFit.API.Helpers;
 using BeeFit.API.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -13,8 +13,7 @@ using System.Threading.Tasks;
 
 namespace BeeFit.API.Controllers
 {
-    // TODO: uncomment Authorize
-    //[Authorize]
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class MealsController : ControllerBase

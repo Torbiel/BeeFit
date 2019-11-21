@@ -8,5 +8,5 @@ export interface Target {
     callories: number;
     proteins: number;
     fats: number;
-    carbohydates: number;
+    carbohydrates: number;
 }

@@ -4,9 +4,8 @@ button
     font-size: 2vw;
     cursor: pointer;
     border: none;
-    color: #23212C;
+    color: white;
     background-color: inherit;
-    border: 2px solid white;
     border-bottom: 1px solid black;
     width:100%;
     padding: 3px;
@@ -17,7 +16,7 @@ button:hover
 {
     background-color: inherit;
     color:#F3C622;
-    border-bottom: 1px solid #F3C622;
+    border-bottom: 2px solid #F3C622;
 }
 
 button.active,
@@ -26,7 +25,7 @@ button:focus
 {
     background-color: inherit;
     color:#E1A511;
-    border-bottom: 1px solid #E1A511;
+    border-bottom: 2px solid #E1A511;
 }
 
 .nav

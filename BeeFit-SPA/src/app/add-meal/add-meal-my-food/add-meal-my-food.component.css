@@ -1,19 +1,18 @@
 .add-button
 {
-    background-color: black;
-    color:#F3C622;
-    border: none;
+    width: 3vw;
+    height: 3vw;
+    font-size: 1.8vw;
 }
 
-.add-button:hover
+.list-element
 {
-    background-color: #F3C622;
-    color: black;
+    border: 2px solid rgb(187, 152, 24);
 }
 
 .list-element:hover
 {
-    background-color: rgb(240, 240, 240);
+    background-color: rgb(58, 58, 58);
 }
 
 td:not(:last-child)

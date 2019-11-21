@@ -1,19 +1,21 @@
 .mealtype
 {
-    border-bottom: 3px solid rgb(187, 152, 24);
-    border-top: 3px solid rgb(187, 152, 24);
-
+    border-bottom: 2px solid rgb(187, 152, 24);
+    border-top: 2px solid rgb(187, 152, 24);
+    line-height: inherit;
 }
 
 .mealtype-header
 {
-    font-size: 1.8em;
+    font-size: 1.3em;
 }
 
 .mealtype-buttons
 {
+    display: table-cell;
     border-left: none;
     padding-right: 0;
+    vertical-align: middle;
 }
 
 .meal-buttons
@@ -25,35 +27,22 @@
 {
     border: none;
     background-color: rgb(39, 39, 39);
-    color: rgb(187, 152, 24);
-    font-size: 1.6em;
-    width: 3vw;
-    height: 3vw;
+    color: #F3C622;
 }
 
 .copy-button:hover
 {
-    background-color: rgb(187, 152, 24);
+    background-color: #F3C622;
     color: rgb(39, 39, 39);
 }
 
-.add-button, .edit-button, .delete-button
+.add-button, .edit-button, .delete-button, .copy-button
 {
+    font-size: 1.3em;
     border: none;
-    font-size: 1.6em;
-    width: 3vw;
-    height: 3vw;
+    width: 2.3vw;
+    height: 2.3vw;
 }
-
-/* .divider-right
-{
-    border-right: 1px gray solid;
-}
-
-.divider-left
-{
-    border-left: 1px gray solid;
-} */
 
 td:not(:last-child)
 {
@@ -62,17 +51,39 @@ td:not(:last-child)
 
 td
 {
-    padding-right: 10px;
-    padding-left: 10px;
+    padding-right: 5px;
+    padding-left: 5px;
 }
 
 table
 {
     width: 100%;
-    font-size: 0.8em;
 }
 
 .meal
 {
     border-bottom: 1px solid gray;
+}
+
+.target-nutrients
+{
+    background-color: rgb(63, 63, 63);
+    width: 95.7%;
+}
+
+mat-progress-bar
+{
+    width: 80%;
+} 
+
+::ng-deep .mat-progress-bar-fill::after {
+    background-color: rgb(66, 170, 53);
+}
+
+::ng-deep .mat-progress-bar-buffer {
+    background: #E4E8EB;
+}
+
+::ng-deep .mat-progress-bar {
+    border-radius: 2px;
 }

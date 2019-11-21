@@ -28,7 +28,6 @@ td
 table
 {
     width: 100%;
-    font-size: 0.8em;
 }
 
 .add-button, .delete-button
@@ -42,4 +41,15 @@ table
 {
     color: rgb(39, 39, 39) !important;
     background-color: #F3C622 !important;
+}
+
+.no-ingredients
+{
+    font-size: 2em;
+    color: rgb(75, 75, 75);
+}
+
+.added-ingredients-header
+{
+    font-size: 1.3em;
 }

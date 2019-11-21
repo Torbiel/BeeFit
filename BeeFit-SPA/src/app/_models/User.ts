@@ -16,7 +16,7 @@ export interface User {
     preferences?: SearchPreference[];
     parameters?: UsersParameter[];
     meals?: Meal[];
-    target: Target;
+    target?: Target;
     oldPassword: string;
     newPassword: string;
 }
