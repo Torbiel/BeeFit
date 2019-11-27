@@ -11,6 +11,7 @@ using BeeFit.API.Dtos.User;
 using BeeFit.API.Dtos.UsersParameters;
 using BeeFit.API.Dtos.UsersSearchPreferences;
 using BeeFit.API.Models;
+using System;
 
 namespace BeeFit.API.Helpers
 {
@@ -26,6 +27,9 @@ namespace BeeFit.API.Helpers
             CreateMap<IngredientForAddDto, Ingredient>();
             CreateMap<Ingredient, IngredientForGetDto>();
             CreateMap<IngredientForUpdateDto, Ingredient>();
+
+            // Helper mapping for rounding floats
+            CreateMap<float, float>().ConvertUsing(x => (float)Math.Round(x, 2));
 
             // IngredientsSearchPreference
             CreateMap<IngredientsSearchPreferenceForAddDto, IngredientsSearchPreference>();

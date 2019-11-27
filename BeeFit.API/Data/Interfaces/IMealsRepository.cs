@@ -6,6 +6,7 @@ namespace BeeFit.API.Data.Interfaces
 {
     public interface IMealsRepository : IBeeFitRepository
     {
-        public Task<IEnumerable<Meal>> GetManyByDate(string date, int userId);
+        public IEnumerable<Meal> GetManyByDate(string date, int userId);
+        public IEnumerable<Meal> GetManyByMonth(string date, int userId);
     }
 }

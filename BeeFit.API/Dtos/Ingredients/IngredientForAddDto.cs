@@ -21,7 +21,7 @@ namespace BeeFit.API.Dtos.Ingredients
         public float? PlantProteins { get; set; }
         public float? SaturatedFats { get; set; }
         public float? MonounsaturatedFats { get; set; }
-        // PolyunsaturatedFats = Omega3 + Omega6
+        public float? PolyunsaturatedFats { get; set; }
         public float? Omega3 { get; set; }
         public float? Omega6 { get; set; }
         public float? Fiber { get; set; }

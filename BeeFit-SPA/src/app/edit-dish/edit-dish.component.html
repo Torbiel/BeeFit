@@ -5,7 +5,7 @@
         <!-- Input area -->
         <div class="row">
           <input class="form-control" type="text" placeholder="Name your dish" #dishName required="required"
-            (input)="setDishName(dishName.value)">
+            (input)="setDishName(dishName.value)" value="{{ this.dish.name }}">
         </div>
         <div class="row mt-2 form-group search-bar">
           <input class="form-control" type="text" placeholder="Search for ingredients" #searchBox
@@ -65,7 +65,7 @@
           <button type="reset" class="cancel-button"><i class="far fa-times"></i></button>
         </div>
         <div class="col-5">
-          <button type="submit" class="confirm-button" (click)="addDish()"><i class="far fa-check"></i></button>
+          <button type="submit" class="confirm-button" (click)="updateDish()"><i class="far fa-check"></i></button>
         </div>
       </div>
     </div>

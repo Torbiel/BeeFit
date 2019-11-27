@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Ingredient } from '../_models/Ingredient';
+import { MatExpansionModule, } from '@angular/material';
+import { IngredientsService } from '../_services/ingredients.service';
+import { AlertifyService } from '../_services/alertify.service';
+import { Router } from '@angular/router';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-add-ingredient',
@@ -7,46 +12,78 @@ import { Ingredient } from '../_models/Ingredient';
   styleUrls: ['./add-ingredient.component.css']
 })
 export class AddIngredientComponent implements OnInit {
-  ingredient = new Ingredient();
+  ingredient: Ingredient;
+  ingredientForm: FormGroup;
+  requiredFieldMessage = 'This field is required.';
 
-  constructor() { }
+  constructor(private ingredientsService: IngredientsService,
+              private alertify: AlertifyService,
+              private router: Router,
+              private formBuilder: FormBuilder) { }
 
   ngOnInit() {
+    this.ingredientForm = this.formBuilder.group({
+      name: ['', Validators.required],
+      brand: [''],
+      unit: ['', Validators.required],
+      gramsPerUnit: ['', Validators.required],
+      callories: ['', Validators.required],
+      fats: ['', Validators.required],
+      proteins: ['', Validators.required],
+      animalProteins: [''],
+      plantProteins: [''],
+      carbohydrates: ['', Validators.required],
+      sugars: [''],
+      saturatedFats: [''],
+      monounsaturatedFats: [''],
+      polyunsaturatedFats: [''],
+      omega3: [''],
+      omega6: [''],
+      fiber: [''],
+      salt: [''],
+      cholesterol: [''],
+      vitaminA: [''],
+      vitaminB1: [''],
+      vitaminB2: [''],
+      vitaminB5: [''],
+      vitaminB6: [''],
+      vitaminB7: [''],
+      vitaminB9: [''],
+      vitaminB12: [''],
+      vitaminC: [''],
+      vitaminD: [''],
+      vitaminE: [''],
+      vitaminPP: [''],
+      vitaminK: [''],
+      zinc: [''],
+      phosphorus: [''],
+      iodine: [''],
+      magnesium: [''],
+      copper: [''],
+      potassium: [''],
+      selenium: [''],
+      sodium: [''],
+      calcium: [''],
+      iron: ['']
+    });
   }
 
-  setName(name: string) {
-    this.ingredient.name = name;
-  }
+  // fatsQuantityValidator(control: AbstractControl) {
+  //   const fatsSum = control.get monounsaturatedFats + this.ingredient.polyunsaturatedFats + this.ingredient.saturatedFats;
 
-  setBrand(brand: string) {
-    this.ingredient.brand = brand;
-  }
+  //   return fatsSum > this.ingredient.fats ? { notEqual: true } : null;
+  // }
 
-  setUnit(unit: string) {
+  addIngredient() {
+    this.ingredient = new Ingredient(this.ingredientForm.value);
 
-  }
-
-  setGramsPerUnit(gramsPerUnit: number) {
-    this.ingredient.gramsPerUnit = gramsPerUnit;
-  }
-
-  setCallories(callories: number) {
-    this.ingredient.callories = callories;
-  }
-
-  setFats(fats: number) {
-    this.ingredient.fats = fats;
-  }
-
-  setCarbohydrates(carbohydrates: number) {
-    this.ingredient.carbohydrates = carbohydrates;
-  }
-
-  setSugars(sugars: number) {
-    this.ingredient.sugars = sugars;
-  }
-
-  setProteins(proteins: number) {
-    this.ingredient.proteins = proteins;
+    this.ingredientsService.add(this.ingredient).subscribe(
+      () => {
+        this.alertify.success('Ingredient added.');
+        this.router.navigate(['/my-food']);
+      }, error => {
+        this.alertify.error(error);
+      }
+    );
   }
 }

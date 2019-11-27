@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using BeeFit.API.Data.Interfaces;
-using BeeFit.API.Dtos;
 using BeeFit.API.Dtos.Meals;
 using BeeFit.API.Helpers;
 using BeeFit.API.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -13,8 +13,7 @@ using System.Threading.Tasks;
 
 namespace BeeFit.API.Controllers
 {
-    // TODO: uncomment Authorize
-    //[Authorize]
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class MealsController : ControllerBase
@@ -57,12 +56,12 @@ namespace BeeFit.API.Controllers
             return Ok(mealToReturn);
         }
 
-        [HttpGet("{date}")]
-        public async Task<IActionResult> GetManyByDate(DateTime date)
+        [HttpGet("{date:DateTime}")]
+        public IActionResult GetManyByDate(DateTime date)
         {
             var currentUserId = int.Parse(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
             var convertedDate = date.GetDateTimeFormats('d').FirstOrDefault();
-            var meals = await _repo.GetManyByDate(convertedDate, currentUserId);
+            var meals = _repo.GetManyByDate(convertedDate, currentUserId);
             var mealsToReturn = _mapper.Map<IEnumerable<MealForGetDto>>(meals);
 
             foreach(var meal in mealsToReturn.Where(m => m.Dish != null))

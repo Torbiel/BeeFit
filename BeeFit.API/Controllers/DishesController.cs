@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using BeeFit.API.Data.Interfaces;
-using BeeFit.API.Dtos;
 using BeeFit.API.Dtos.Dishes;
 using BeeFit.API.Helpers;
 using BeeFit.API.Models;
@@ -12,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace BeeFit.API.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class DishesController : ControllerBase
@@ -50,15 +49,17 @@ namespace BeeFit.API.Controllers
         }
 
         [HttpGet("{name}")]
-        public async Task<IActionResult> GetManyByName(string name)
+        public async Task<IActionResult> GetManyByName(string name, [FromQuery] PagingParams pagingParams)
         {
-            var dishes = await _repo.GetManyByName(name);
+            var dishes = await _repo.GetManyByName(name, pagingParams);
             var dishesToReturn = _mapper.Map<IEnumerable<DishForGetDto>>(dishes);
 
             foreach(var dish in dishesToReturn)
             {
                 dish.CalculateNutrients();
             }
+
+            Response.AddPagination(dishes.CurrentPage, dishes.PageSize, dishes.TotalCount, dishes.TotalPages);
 
             return Ok(dishesToReturn);
         }

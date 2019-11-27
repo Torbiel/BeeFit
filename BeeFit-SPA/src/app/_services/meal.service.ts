@@ -23,11 +23,11 @@ export class MealService {
   }
 
   getManyByDate(date: Date): Observable<Meal[]> {
+    console.log(date.toISOString());
     return this.http.get<Meal[]>(this.baseUrl + '/' + date.toISOString(), httpOptions);
   }
 
   delete(id: number) {
     return this.http.delete(this.baseUrl + '/' + id, httpOptions);
   }
-
 }

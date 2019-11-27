@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using BeeFit.API.Data.Interfaces;
-using BeeFit.API.Dtos;
 using BeeFit.API.Dtos.Targets;
 using BeeFit.API.Models;
 using Microsoft.AspNetCore.Authorization;

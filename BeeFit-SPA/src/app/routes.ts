@@ -14,6 +14,8 @@ import { ProfileChartsComponent } from './profile/profile-charts/profile-charts.
 import { AddDishComponent } from './add-dish/add-dish.component';
 import { AddIngredientComponent } from './add-ingredient/add-ingredient.component';
 import { MyFoodComponent } from './my-food/my-food.component';
+import { EditIngredientComponent } from './edit-ingredient/edit-ingredient.component';
+import { EditDishComponent } from './edit-dish/edit-dish.component';
 
 export const appRoutes: Routes = [
     { path: '', component: HomeComponent },
@@ -26,15 +28,18 @@ export const appRoutes: Routes = [
             { path: 'todays-plan', component: TodaysPlanComponent},
             { path: 'profile', component: ProfileNavComponent },
             { path: 'welcome', component: WelcomeComponent },
-            { path: 'my-food', component: MyFoodComponent },
+            { path: 'my-food', component: MyFoodComponent, children: [
+                { path: 'edit-ingredient/:id', component: EditIngredientComponent },
+                { path: 'edit-dish/:id', component: EditDishComponent }
+            ] },
             { path: '', component: MyFoodComponent },
             { path: 'add-dish', component: AddDishComponent },
-            { path: 'add-ingredient', component: AddIngredientComponent }
+            { path: 'add-ingredient', component: AddIngredientComponent },
         ]
     },
     { path: 'help', component: HelpComponent },
     { path: 'about', component: AboutComponent },
-    { path: '**', redirectTo: '', pathMatch: 'full' },
+    { path: '**', redirectTo: '', pathMatch: 'full' }, // TODO: 404 page
 ];
 
 export const profileRoutes: Routes = [

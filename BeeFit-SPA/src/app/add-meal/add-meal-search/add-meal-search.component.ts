@@ -27,8 +27,10 @@ export class AddMealSearchComponent implements OnInit {
   currentDate: Date;
   private dishesSearchName = new Subject<string>();
   private ingredientsSearchName = new Subject<string>();
+  private searchName = new Subject<string>();
   ingredients$: Observable<Ingredient[]>;
   dishes$: Observable<Dish[]>;
+  searchResults$: Observable<(Dish[] | Ingredient[])>;
 
   constructor(private dishesService: DishesService,
               private alertify: AlertifyService,
@@ -65,6 +67,9 @@ export class AddMealSearchComponent implements OnInit {
     if (name !== '') {
       this.ingredientsSearchName.next(name);
     }
+  }
+
+  joinArrays() {
   }
 
   addToMeal(dishId: number, ingredientId: number) {

@@ -11,3 +11,63 @@ button:hover
     background-color: #23212C;
     color:#F3C622;
 }
+
+.addingMode
+{
+    display: flex;
+    width: 80%;
+}
+
+.addingMode input
+{
+    display: none;
+}
+
+.addingMode label
+{
+    background-color: rgba(0, 0, 0, 0);
+    position: relative;
+    flex: 1 1 100%;
+    justify-content: center;
+    text-align: center;
+    border: 1px solid  #343a40;
+    cursor: pointer;
+}
+
+.addingMode label:hover
+{
+     background-color: rgba(0, 0, 0, .1);
+}
+
+.addingMode label:first-of-type
+{
+    border-right: none;
+}
+.addingMode label:last-of-type
+{
+    border-left: none;
+}
+
+.searchMode:after
+{
+    content: '';
+    display: block;
+    width: 100%;
+    position: relative;    
+    bottom: 100%;
+    z-index: -1;
+    height: 100%;
+    background: #fdcf4c;transition: .5s ease-in-out;
+}
+
+.searchMode.selected:after
+{    
+    transition: .35s ease-in-out;
+    left: 0;
+}
+.searchMode.unselected:after
+{
+    
+    transition: .35s ease-in-out;
+    left: 100%;
+}

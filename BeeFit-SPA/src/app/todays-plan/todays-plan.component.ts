@@ -6,9 +6,8 @@ import { MealService } from '../_services/meal.service';
 import { Meal } from '../_models/Meal';
 import { Router } from '@angular/router';
 import { MealtypeService } from '../_services/mealtype.service';
-import { DatePickerComponent } from '../date-picker/date-picker.component';
 import { DateService } from '../_services/date.service';
-import { Observable } from 'rxjs';
+import { MatProgressBarModule } from '@angular/material';
 
 @Component({
   selector: 'app-todays-plan',
@@ -31,6 +30,10 @@ export class TodaysPlanComponent implements OnInit {
   filteredMeals: Meal[][];
   currentDate: Date;
   addMode = false;
+  callories = 0;
+  fats = 0;
+  carbohydrates = 0;
+  proteins = 0;
 
   constructor(
     private userService: UserService,
@@ -44,7 +47,6 @@ export class TodaysPlanComponent implements OnInit {
   ngOnInit() {
     this.getUser();
     this.currentDate = new Date();
-    this.getMeals(this.currentDate);
     this.mealTypeService.currentMealType.subscribe(
       mealtype => (this.mealType = mealtype)
     );
@@ -58,6 +60,7 @@ export class TodaysPlanComponent implements OnInit {
     this.userService.getUser(id).subscribe(
       (user: User) => {
         this.user = user;
+        this.getMeals(this.currentDate);
       },
       error => {
         this.alertify.error(error);
@@ -70,11 +73,33 @@ export class TodaysPlanComponent implements OnInit {
       (meals: Meal[]) => {
         this.meals = meals;
         this.filterMealsByType();
+        this.calculateNutrients();
       },
       error => {
         this.alertify.error(error);
       }
     );
+  }
+
+  calculateNutrients() {
+    this.callories = 0;
+    this.fats = 0;
+    this.proteins = 0;
+    this.carbohydrates = 0;
+
+    this.meals.forEach(item => {
+      if (item.dish !== null) {
+        this.callories += item.dish.callories;
+        this.fats += item.dish.fats;
+        this.carbohydrates += item.dish.carbohydrates;
+        this.proteins += item.dish.proteins;
+      } else if (item.ingredient !== null) {
+        this.callories += item.ingredient.callories;
+        this.fats += item.ingredient.fats;
+        this.carbohydrates += item.ingredient.carbohydrates;
+        this.proteins += item.ingredient.proteins;
+      }
+    });
   }
 
   filterMealsByType() {

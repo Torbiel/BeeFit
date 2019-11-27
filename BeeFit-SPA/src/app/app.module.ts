@@ -1,9 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BsDropdownModule } from 'ngx-bootstrap';
 import { RouterModule } from '@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatExpansionModule } from '@angular/material';
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
@@ -11,7 +15,6 @@ import { AuthService } from './_services/auth.service';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { ErrorInterceptorProvider } from './_services/error.interceptor';
-import { CalendarComponent } from './calendar/calendar.component';
 import { TodaysPlanComponent } from './todays-plan/todays-plan.component';
 import { AboutComponent } from './about/about.component';
 import { HelpComponent } from './help/help.component';
@@ -35,7 +38,9 @@ import { AlertifyService } from './_services/alertify.service';
 import { AddDishComponent } from './add-dish/add-dish.component';
 import { AddIngredientComponent } from './add-ingredient/add-ingredient.component';
 import { MyFoodComponent } from './my-food/my-food.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { EditIngredientComponent } from './edit-ingredient/edit-ingredient.component';
+import { EditDishComponent } from './edit-dish/edit-dish.component';
+import { CalendarComponent } from './calendar/calendar.component';
 
 @NgModule({
    declarations: [
@@ -43,7 +48,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       NavComponent,
       HomeComponent,
       RegisterComponent,
-      CalendarComponent,
       TodaysPlanComponent,
       TodaysPlanComponent,
       AboutComponent,
@@ -60,7 +64,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       AddMealMyFoodComponent,
       AddDishComponent,
       AddIngredientComponent,
-      MyFoodComponent
+      MyFoodComponent,
+      EditIngredientComponent,
+      EditDishComponent,
+      CalendarComponent
    ],
    imports: [
       BrowserModule,
@@ -70,7 +77,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       RouterModule.forChild(profileRoutes),
       // RouterModule.forChild(addMealRoutes),
       RouterModule.forRoot(appRoutes),
-      BrowserAnimationsModule
+      BrowserAnimationsModule,
+      MatProgressBarModule,
+      MatExpansionModule,
+      FormsModule,
+      ReactiveFormsModule,
+      FullCalendarModule
    ],
    providers: [
       AuthService,
