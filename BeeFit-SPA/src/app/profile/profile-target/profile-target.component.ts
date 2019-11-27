@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/_services/user.service';
+import { TargetService } from 'src/app/_services/target.service';
 import { AlertifyService } from 'src/app/_services/alertify.service';
 import { User } from 'src/app/_models/User';
+import { Target } from 'src/app/_models/Target';
 import { empty } from 'rxjs';
 
 
@@ -12,6 +14,7 @@ import { empty } from 'rxjs';
 })
 export class ProfileTargetComponent implements OnInit {
   user: User;
+  target: Target;
   editMode = false;
   autoMode = true;
   actualWeight: number;
@@ -19,19 +22,18 @@ export class ProfileTargetComponent implements OnInit {
   dayActivity = 0
   trainingActivity = 0
   changePerWeek = 0
-  estimatedCalories = 0;
-  proteinsResult = 0;
-  fatsResult = 0;
-  carbohydratesResult = 0;
+  estimatedCalories: number;
+  proteinsResult: number;
+  fatsResult: number;
+  carbohydratesResult: number;
   weeksFromNow = 0;
   estimatedWeight = this.actualWeight;
   today = new Date();
   dateNextWeek = new Date(this.today.setDate(this.today.getDate() + 7));
-  constructor(private userService: UserService, private alertify: AlertifyService) { }
+  constructor(private userService: UserService, private targetService: TargetService, private alertify: AlertifyService) { }
 
   ngOnInit() {
     this.getUser();
-    console.log(this.dateNextWeek);
   }
 
   getUser() {
@@ -39,7 +41,13 @@ export class ProfileTargetComponent implements OnInit {
     this.userService.getUser(id).subscribe((user: User) => {
       this.user = user;
       this.user.parameters = this.user.parameters.sort((a, b) => (a.date < b.date) ? 1 : -1)
-      this.actualWeight = this.user.parameters[0].weight;
+
+      if (this.user.parameters[0] == undefined) {
+
+        this.actualWeight = this.user.target.weightFrom;
+      } else {
+        this.actualWeight = this.user.parameters[0].weight;
+      }
       this.estimatedWeight = this.user.parameters[0].weight
     }, error => {
       this.alertify.error(error);
@@ -51,7 +59,25 @@ export class ProfileTargetComponent implements OnInit {
   }
 
   saveChanges() {
+    this.calculate();
+    this.target = new Target();
+    this.target.weightFrom = parseInt((<HTMLInputElement>document.getElementById('actualWeight')).value);
+    this.target.weightTo = parseInt((<HTMLInputElement>document.getElementById('estimatedWeight')).value);
+    this.target.estimatedEnd = new Date((<HTMLInputElement>document.getElementById('estimatedTime')).value);
+    this.target.changePerWeek = this.changePerWeek;
+    this.target.dayActivity = parseInt((<HTMLInputElement>document.getElementById('dayActivity')).value);
+    this.target.trainingActivity = parseInt((<HTMLInputElement>document.getElementById('trainingActivity')).value);
+    this.target.callories = Math.round(this.estimatedCalories);
+    this.target.proteins = Math.round(this.proteinsResult);
+    this.target.fats = 222;
+    this.target.carbohydates = Math.round(this.carbohydratesResult);
+    this.targetService.add(this.target).subscribe(next => {
+      this.alertify.success('Target saved');
+    }, error => {
+      this.alertify.error(error);
+    });
 
+    this.toggleEdit();
   }
 
   calculate() {
@@ -65,15 +91,17 @@ export class ProfileTargetComponent implements OnInit {
 
     if (this.autoMode == true) {
       var changePerWeek = (this.estimatedWeight - actualWeight) / this.weeksBetween(new Date(), new Date((<HTMLInputElement>document.getElementById('estimatedTime')).value));
-      console.log(changePerWeek);
+      this.changePerWeek = Math.round(changePerWeek * 7);
     } else {
       var changePerWeek = parseFloat((<HTMLInputElement>document.getElementById('changePerWeek')).value);
+      this.changePerWeek = changePerWeek;
     }
 
     this.dayActivity = parseFloat((<HTMLInputElement>document.getElementById('dayActivity')).value);
     this.dayActivity = parseFloat((<HTMLInputElement>document.getElementById('dayActivity')).value);
     this.trainingActivity = parseFloat((<HTMLInputElement>document.getElementById('trainingActivity')).value);
 
+    console.log(changePerWeek);
     var caloricDeficit = 7000 * changePerWeek;
     this.dailyCalories = (this.dayActivity * 0.2 + 1.1 + this.trainingActivity * 0.1)*actualWeight * 22;
 
@@ -94,10 +122,10 @@ export class ProfileTargetComponent implements OnInit {
     if (this.estimatedCalories < 0) {
       this.estimatedCalories = 0;
     }
-    this.proteinsResult = actualWeight * (this.dayActivity * 0.25 + 1.1 + this.trainingActivity * 0.2 );
+    this.proteinsResult = actualWeight * (this.dayActivity * 0.25 + 1.1 + (this.trainingActivity * this.trainingActivity * 0.005) + (this.trainingActivity + this.dayActivity)/10);
     this.fatsResult = actualWeight;
     this.carbohydratesResult = (this.estimatedCalories - (this.proteinsResult*4 + this.fatsResult*9))/4;
-
+    console.log(this.proteinsResult);
   }
 
   weeksBetween(d1, d2) {

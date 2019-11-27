@@ -10,7 +10,7 @@
           Estimated time:
         </div>
         <div class="row">
-          <p class="lead">21.12.2019</p>
+          <p class="lead">{{this.user.target.estimatedEnd | date}}</p>
         </div>
       </div>
     </div>
@@ -21,7 +21,7 @@
           Weight:
         </div>
         <div class="row">
-          <p class="lead">80 <i class="fas fa-long-arrow-alt-right"></i> 85</p>
+          <p class="lead">{{this.user.target.weightFrom}} <i class="fas fa-long-arrow-alt-right"></i> {{this.user.target.weightTo}}</p>
         </div>
       </div>
     </div>
@@ -32,7 +32,7 @@
           Change per week:
         </div>
         <div class="row">
-          <p class="lead">0.2 kg</p>
+          <p class="lead">{{this.user.target.changePerWeek}} kg</p>
         </div>
       </div>
     </div>
@@ -43,7 +43,7 @@
           Activity during the day:
         </div>
         <div class="row">
-          <p class="lead">Medium</p>
+          <p class="lead">{{this.user.target.dayActivity}}</p>
         </div>
       </div>
     </div>
@@ -54,7 +54,7 @@
           Training activity:
         </div>
         <div class="row">
-          <p class="lead">Low</p>
+          <p class="lead">{{this.user.target.trainingActivity}}</p>
         </div>
       </div>
     </div>
@@ -65,7 +65,7 @@
           Daily needs:
         </div>
         <div class="row">
-          <p class="lead">Callories: 2500 | Proteins: 34 g | Fats: 54 g | Carbohydrates: 300 g</p>
+          <p class="lead">Callories: {{this.user.target.callories}} | Proteins: {{this.user.target.proteins}} g | Fats: {{this.user.target.fats}} g | Carbohydrates: {{this.user.target.carbohydrates}} g</p>
         </div>
       </div>
     </div>
