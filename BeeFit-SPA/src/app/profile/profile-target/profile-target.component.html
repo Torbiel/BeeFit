@@ -1,4 +1,4 @@
-<div class="row" *ngIf="!editMode">
+<div class="row" *ngIf="!editMode && this.user.target != null">
   <div class="col-md-auto">
     <button class="edit-button" (click)="toggleEdit()"><i class="fas fa-edit"></i></button>
   </div>
@@ -21,7 +21,8 @@
           Weight:
         </div>
         <div class="row">
-          <p class="lead">{{this.user.target.weightFrom}} <i class="fas fa-long-arrow-alt-right"></i> {{this.user.target.weightTo}}</p>
+          <p class="lead">{{this.user.target.weightFrom}} <i class="fas fa-long-arrow-alt-right"></i>
+            {{this.user.target.weightTo}}</p>
         </div>
       </div>
     </div>
@@ -65,10 +66,17 @@
           Daily needs:
         </div>
         <div class="row">
-          <p class="lead">Callories: {{this.user.target.callories}} | Proteins: {{this.user.target.proteins}} g | Fats: {{this.user.target.fats}} g | Carbohydrates: {{this.user.target.carbohydrates}} g</p>
+          <p class="lead">Callories: {{this.user.target.callories}} | Proteins: {{this.user.target.proteins}} g | Fats:
+            {{this.user.target.fats}} g | Carbohydrates: {{this.user.target.carbohydrates}} g</p>
         </div>
       </div>
     </div>
+  </div>
+</div>
+
+<div class="row" *ngIf="this.user.target == null && !editMode">
+  <div class="col-md-auto">
+    <button class="add-button" (click)="toggleEdit()"><i class="fas fa-plus"></i></button>
   </div>
 </div>
 
@@ -87,7 +95,8 @@
 
       <form name="myform" (click)="calculate()" oninput="
       trainingActivityValue.value = trainingActivity.valueAsNumber;
-      dayActivityValue.value = dayActivity.valueAsNumber;">
+      dayActivityValue.value = dayActivity.valueAsNumber;
+      changePerWeekValue.value = changePerWeek.valueAsNumber;">
         <ul>
           <label>Type of calculation:</label>
           <div class="calculationType">
@@ -99,35 +108,40 @@
             </label>
           </div>
           <div>
+            <li *ngIf="autoMode">
+              <label for="estimatedTime">Estimated time:</label>
+              <input name="estimatedTime" id="estimatedTime" value="{{estimatedEnd | date: 'dd.MM.yyyy'}}" type="text"
+                value="" disabled>
+            </li>
             <li>
               <label for="actualWeight">Actual weight:</label>
               <input name="actualWeight" id="actualWeight" value="{{actualWeight}}" step="0.05" min="0.05" type="number"
                 (input)="calculate()">
             </li>
-            <li *ngIf="autoMode">
-              <label for="estimatedTime">Estimated time:</label>
-              <input name="estimatedTime" id="estimatedTime" value="{{dateNextWeek}}" type="date" (input)="calculate()" value="{{now}}">
+            <li>
+              <label for="targetWeight">Target weight:</label>
+              <input name="targetWeight" id="targetWeight" value="{{targetWeight}}" step="0.05" min="0.05" type="number"
+                (input)="calculate()">
             </li>
             <li>
-              <label for="estimatedWeight">Estimated weight:</label>
-              <input name="estimatedWeight" id="estimatedWeight" value="{{estimatedWeight}}" step="0.05" min="0.05" type="number" (input)="calculate()">
-            </li>
-            <li *ngIf="!autoMode">
               <label for="changePerWeek">Change per week:</label>
-              <output name="changePerWeekValue" for="range1">0.5</output>
-              <input name="changePerWeek" id="changePerWeek" type="range" (input)="calculate()" step="0.05" min="0" max="2" value="0.5">
+              <output name="changePerWeekValue" for="changePerWeek">0.5</output>
+              <input name="changePerWeek" id="changePerWeek" type="range" (input)="calculate()" step="0.1" min="0"
+                max="2" value="0.5">
             </li>
             <li>
               <label for="dayActivity">Activity during the day <span>(1: low - 4: high):</span></label>
-              <output name="dayActivityValue" for="range1">2</output>
-              <input name="dayActivity" id="dayActivity" type="range" (input)="calculate()" step="1" min="1" max="4" value="2">
+              <output name="dayActivityValue">2</output>
+              <input name="dayActivity" id="dayActivity" type="range" (input)="calculate()" step="1" min="1" max="4"
+                value="2">
 
             </li>
 
             <li>
               <label for="trainingActivity">Training activity <span>(per week):</span></label>
               <output name="trainingActivityValue">1</output>
-              <input name="trainingActivity" id="trainingActivity" type="range" (input)="calculate()" step="1" min="0" max="10" value="1">
+              <input name="trainingActivity" id="trainingActivity" type="range" (input)="calculate()" step="1" min="1"
+                max="4" value="1">
             </li>
             <!-- <li>
               <label for="trainingActivity">Training activity:</label>
@@ -136,34 +150,38 @@
           </div>
           <div *ngIf="!autoMode">
             <li>
-              <label for="dailyCalories">Daily calories</label>
-              <input name="dailyCalories" id="dailyCalories" type="text" min ="0" max="100">
+              <label for="dailyCallories">Daily callories</label>
+              <input name="dailyCallories" id="dailyCallories" type="text" min="0" max="100">
             </li>
             <li>
               <label for="proteins">Proteins (%)</label>
-              <input name="proteins" id="proteins" type="number" min ="0" max="100">
+              <input name="proteins" id="proteins" type="number" min="0" max="100">
             </li>
             <li>
               <label for="fats">Fats (%)</label>
-              <input name="fats" id="fats" type="number" min ="0" max="100">
+              <input name="fats" id="fats" type="number" min="0" max="100">
             </li>
             <li>
               <label for="carbohydrates">Carbohydrates (%)</label>
-              <input name="carbohydrates" id="carbohydrates" type="number" min ="0" max="100">
+              <input name="carbohydrates" id="carbohydrates" type="number" min="0" max="100">
             </li>
           </div>
         </ul>
 
         <div class="result">
           <ul>
+            <!-- <li>
+              <div>Estimated end</div>
+              <div>{{ estimatedEnd | date: 'dd.MM.yyyy' }}</div>
+            </li> -->
             <li>
               <div>Daily demand (kcal)</div>
-              <div>{{dailyCalories| number:'1.0-0'}}</div>
+              <div>{{dailyCallories| number:'1.0-0'}}</div>
             </li>
-            <li>
+            <!-- <li>
               <div>Estimated calories (kcal)</div>
               <div>{{estimatedCalories| number:'1.0-0'}}</div>
-            </li>
+            </li> -->
             <li>
               <div>Proteins (g)</div>
               <div>{{proteinsResult| number:'1.0-0'}}</div>

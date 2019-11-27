@@ -2,7 +2,7 @@ form
 {
     display: flex;
 }
-.edit-button, .save-button, .cancel-button
+.edit-button, .save-button, .cancel-button, .add-button
 {
     width: 90px;
     border: none;
@@ -24,7 +24,7 @@ form
     color: #E1A511;
 }
 
-.edit-button
+.edit-button, .add-button
 {
     height: 90px;
     font-size: 3em;
@@ -149,3 +149,22 @@ span
 {
     white-space: nowrap;
 }
+/* 
+input[type=range]::-webkit-slider-thumb
+{
+    -webkit-appearance: none;
+    color: red;
+    background-color: red;
+}
+
+input[type=range]::-moz-range-thumb
+{
+    color: red;
+    background: red;
+}
+
+input[type=range]::-ms-thumb 
+{
+    color: red;
+    background: red;
+} */

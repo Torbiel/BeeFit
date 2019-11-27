@@ -12,6 +12,7 @@ import { MealtypeService } from 'src/app/_services/mealtype.service';
 import { DateService } from 'src/app/_services/date.service';
 import { Subject, Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { PaginatedResult } from 'src/app/_models/Pagination';
 
 @Component({
   selector: 'app-add-meal-search',

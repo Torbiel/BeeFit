@@ -1,4 +1,5 @@
 export class Target {
+    id: number;
     estimatedEnd: Date;
     weightFrom: number;
     weightTo: number;

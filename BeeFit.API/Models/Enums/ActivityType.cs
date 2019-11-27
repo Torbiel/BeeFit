@@ -7,7 +7,7 @@ namespace BeeFit.API.Models.Enums
 {
     public enum ActivityType
     {
-        VeryLow,
+        VeryLow = 1,
         Low,
         Medium,
         High

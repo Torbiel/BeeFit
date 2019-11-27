@@ -72,6 +72,21 @@ namespace BeeFit.API.Controllers
             return Ok(mealsToReturn);
         }
 
+        [HttpGet]
+        public IActionResult GetManyByMonthAndYear(int month, int year)
+        {
+            var currentUserId = int.Parse(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var meals = _repo.GetManyByMonthAndYear(month, year, currentUserId);
+            var mealsToReturn = _mapper.Map<IEnumerable<MealForGetDto>>(meals);
+
+            foreach(var meal in mealsToReturn.Where(m => m.Dish != null))
+            {
+                meal.Dish.CalculateNutrients();
+            }
+
+            return Ok(mealsToReturn);
+        }
+
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, MealForUpdateDto mealDto)
         {

@@ -5,6 +5,7 @@ namespace BeeFit.API.Dtos.Targets
 {
     public class TargetForGetDto
     {
+        public int Id { get; set; }
         public DateTime EstimatedEnd { get; set; }
         public float WeightFrom { get; set; }
         public float WeightTo { get; set; }

@@ -16,32 +16,17 @@ export class ProfileParametersComponent implements OnInit {
   editMode = false;
   today = new Date();
   newParameter = {
-    date: new Date(),
-    weight: 0,
-    abdominalCircumference: 0,
-    bicepsCircumference: 0,
-    thighCircumference: 0
+    weight: null,
+    abdominalCircumference: null,
+    bicepsCircumference: null,
+    thighCircumference: null
   } as UsersParameter;
 
-  constructor(private userService: UserService, private alertify: AlertifyService) {
-
-   }
+  constructor(private userService: UserService, private alertify: AlertifyService) {}
 
   ngOnInit() {
     this.getUser();
-
-
   }
-
- compare(a, b) {
-  if (a.last_nom < b.last_nom) {
-    return -1;
-  }
-  if (a.last_nom > b.last_nom) {
-    return 1;
-  }
-  return 0;
-}
 
   prepareDatesToFilter() {
     this.parametersDates = [...new Set(this.user.parameters.map(parameter => parameter.date))];
@@ -64,17 +49,17 @@ export class ProfileParametersComponent implements OnInit {
   toggleEdit(index: number) {
     this.editMode = !this.editMode;
 
-    var row = document.getElementById('parameter[' + index + ']');
-    var fields = row.querySelectorAll('td input');
+    const row = document.getElementById('parameter[' + index + ']');
+    const fields = row.querySelectorAll('td-input');
     for (let i = 0; i < fields.length; i++) {
-      fields[i].classList.toggle('read-only'); console.log(fields[i]);
+      fields[i].classList.toggle('read-only');
     }
   }
 
   addParameter() {
-    if (!this.newParameter.weight || !this.newParameter.abdominalCircumference || !this.newParameter.bicepsCircumference ||
+    if (!this.newParameter.weight && !this.newParameter.abdominalCircumference && !this.newParameter.bicepsCircumference &&
         !this.newParameter.thighCircumference) {
-      this.alertify.error('You didn\'t fill all the parameters.');
+      this.alertify.error('You didn\'t fill any of the parameters.');
     } else {
       console.log(this.newParameter);
       this.user.parameters.push(this.newParameter);

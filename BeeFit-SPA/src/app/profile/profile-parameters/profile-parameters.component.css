@@ -117,3 +117,8 @@ td button:nth-child(3)
 input {
      text-align: center;
 }
+
+.dropdown
+{
+    border: 1px solid #E1A511;
+}

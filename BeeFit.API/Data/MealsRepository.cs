@@ -25,13 +25,13 @@ namespace BeeFit.API.Data
             return meals;
         }
 
-        public IEnumerable<Meal> GetManyByMonth(string date, int userId)
+        public IEnumerable<Meal> GetManyByMonthAndYear(int month, int year, int userId)
         {
             var meals = new List<Meal>();
 
             foreach(var meal in _context.Set<Meal>())
             {
-                if(meal.Date.GetDateTimeFormats('y').FirstOrDefault() == date && meal.UserId == userId)
+                if(meal.Date.Month == month && meal.Date.Year == year && meal.UserId == userId)
                 {
                     meals.Add(meal);
                 }

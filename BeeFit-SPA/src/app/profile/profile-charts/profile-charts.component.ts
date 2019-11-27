@@ -13,7 +13,7 @@ import { UsersParameter } from 'src/app/_models/UsersParameter';
 export class ProfileChartsComponent implements OnInit {
   @Input() public user: User;
   @Input() public UsersParameter: UsersParameter;
-  chartsType: String = 'line';
+  chartsType = 'line';
 
   parameters = [];
   chart = [];
@@ -26,42 +26,42 @@ export class ProfileChartsComponent implements OnInit {
   }
 
   chartsTypeToggle() {
-    var autoModeLabel = document.querySelector('.autoCalculation');
-    var manualModeLabel = document.querySelector('.manualCalculation');
+    const autoModeLabel = document.querySelector('.autoCalculation');
+    const manualModeLabel = document.querySelector('.manualCalculation');
 
     if (autoModeLabel.querySelector('input').checked) {
       autoModeLabel.classList.remove('unselected');
       autoModeLabel.classList.add('selected');
-      (<HTMLElement>autoModeLabel).style.color = '#000';
-      (<HTMLElement>manualModeLabel).style.color = '#fff';
+      (autoModeLabel as HTMLElement).style.color = '#000';
+      (manualModeLabel as HTMLElement).style.color = '#fff';
       this.chartsType = 'line';
-      this.generateCharts(this.chartsType,2);
+      this.generateCharts(this.chartsType);
 
     } else if (manualModeLabel.querySelector('input').checked) {
       autoModeLabel.classList.remove('selected');
       autoModeLabel.classList.add('unselected');
-      (<HTMLElement>autoModeLabel).style.color = '#fff';
-      (<HTMLElement>manualModeLabel).style.color = '#000';
+      (autoModeLabel as HTMLElement).style.color = '#fff';
+      (manualModeLabel as HTMLElement).style.color = '#000';
       this.chartsType = 'bar';
       this.generateCharts(this.chartsType);
     }
   }
 
-  generateCharts(chartsType: String) {
+  generateCharts(chartsType: string) {
     this.chartsType = chartsType;
     const id = localStorage.getItem('userId');
     this.userService.getUser(id).subscribe((user: User) => {
-      let weight = user['parameters'].map(res => res.weight);
-      let bicepsCircumference = user['parameters'].map(res => res.bicepsCircumference);
-      let thighCircumference = user['parameters'].map(res => res.thighCircumference);
-      let abdominalCircumference = user['parameters'].map(res => res.abdominalCircumference);
-      let alldates = user['parameters'].map(res => res.date)
+      const weight = user.parameters.map(res => res.weight);
+      const bicepsCircumference = user.parameters.map(res => res.bicepsCircumference);
+      const thighCircumference = user.parameters.map(res => res.thighCircumference);
+      const abdominalCircumference = user.parameters.map(res => res.abdominalCircumference);
+      const alldates = user.parameters.map(res => res.date);
       alldates.sort();
-      let weatherDates = []
+      const weatherDates = [];
       alldates.forEach((date) => {
-        let jsdate = new Date(date)
-        weatherDates.push(jsdate.toLocaleTimeString('en', { year: 'numeric', month: 'short', day: 'numeric' }))
-      })
+        const jsdate = new Date(date);
+        weatherDates.push(jsdate.toLocaleTimeString('en', { year: 'numeric', month: 'short', day: 'numeric' }));
+      });
 
       Chart.defaults.global.defaultFontColor = 'white';
 
@@ -73,29 +73,29 @@ export class ProfileChartsComponent implements OnInit {
             {
               label: 'Weight',
               data: weight,
-              borderColor: "#F3C622",
+              borderColor: '#F3C622',
               backgroundColor: '#F3C622',
               fill: false
             },
             {
               label: 'Thigh circumference',
               data: thighCircumference,
-              borderColor: "#3cba9f",
-              backgroundColor: "#3cba9f",
+              borderColor: '#3cba9f',
+              backgroundColor: '#3cba9f',
               fill: false
             },
             {
               label: 'Biceps circumference',
               data: bicepsCircumference,
-              borderColor: "#992409",
-              backgroundColor: "#992409",
+              borderColor: '#992409',
+              backgroundColor: '#992409',
               fill: false
             },
             {
               label: 'Abdominal circumference',
               data: abdominalCircumference,
-              borderColor: "#8791A3",
-              backgroundColor: "#8791A3",
+              borderColor: '#8791A3',
+              backgroundColor: '#8791A3',
               fill: false
             },
           ]
@@ -109,14 +109,13 @@ export class ProfileChartsComponent implements OnInit {
               type: 'time',
               distribution: 'linear',
               time: {
-                unit: 'week',
-                unitStepSize: 1,
+                unit: 'day',
                 displayFormats: {
-                  'day': 'DD/MMM/YYYY',
-                  'week': 'DD/MM',
-                  'month': 'MM',
-                  'quarter': 'MMM DD',
-                  'year': 'MMM DD',
+                  day: 'DD/MMM/YYYY',
+                  week: 'DD/MM',
+                  month: 'MM',
+                  quarter: 'MMM DD',
+                  year: 'MMM DD',
                 }
               },
               scaleLabel: {
@@ -126,18 +125,18 @@ export class ProfileChartsComponent implements OnInit {
               display: true,
               gridLines: {
                 display: true,
-                color: "#333"
+                color: '#333'
               },
             }],
             yAxes: [{
               scaleLabel: {
                 display: true,
-                labelString: 'Kilograms or meters'
+                labelString: 'Kilograms or centimeters'
               },
               display: true,
               gridLines: {
                 display: true,
-                color: "#333"
+                color: '#333'
               },
             }],
           }
@@ -148,7 +147,4 @@ export class ProfileChartsComponent implements OnInit {
       this.alertify.error(error);
     });
   }
-
-
-
 }

@@ -41,3 +41,8 @@ table
 {
     font-size: 1.4em;
 }
+
+.nutrient-number
+{
+    white-space: nowrap;
+}

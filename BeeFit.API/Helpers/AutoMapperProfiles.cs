@@ -12,6 +12,7 @@ using BeeFit.API.Dtos.UsersParameters;
 using BeeFit.API.Dtos.UsersSearchPreferences;
 using BeeFit.API.Models;
 using System;
+using System.Linq;
 
 namespace BeeFit.API.Helpers
 {
@@ -30,6 +31,9 @@ namespace BeeFit.API.Helpers
 
             // Helper mapping for rounding floats
             CreateMap<float, float>().ConvertUsing(x => (float)Math.Round(x, 2));
+
+            // Helper mapping for converting dates to simple format (dd/MM/yyyy)
+            CreateMap<DateTime, DateTime>().ConvertUsing(x => DateTime.Parse(x.GetDateTimeFormats('d').FirstOrDefault()));
 
             // IngredientsSearchPreference
             CreateMap<IngredientsSearchPreferenceForAddDto, IngredientsSearchPreference>();

@@ -27,6 +27,10 @@ export class TargetService {
     return this.http.get<Target[]>(this.baseUrl, httpOptions);
   }
 
+  update(id: number, target: Target): Observable<Target> {
+    return this.http.put<Target>(this.baseUrl + '/' + id, target, httpOptions);
+  }
+
   delete(id: number) {
     return this.http.delete(this.baseUrl + '/' + id, httpOptions);
   }
