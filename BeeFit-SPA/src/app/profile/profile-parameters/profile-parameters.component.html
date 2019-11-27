@@ -1,4 +1,4 @@
-<div class="col-10 tabcontent" id="parameters">
+<div id="parameters">
   <div class="row">
     <div class="col-md-auto">
       <button class="add-button" (click)="toggleAdd()"><i class="fas fa-plus"></i></button>
@@ -38,12 +38,12 @@
 
         <table >
           <thead>
-            <td>Date:</td>
-            <td>Weight:</td>
-            <td>Abdomen:</td>
-            <td>Bicep:</td>
-            <td>Thigh:</td>
-            <td>Action</td>
+            <td>Date</td>
+            <td>Weight (kg)</td>
+            <td>Abdomen (cm)</td>
+            <td>Biceps (cm)</td>
+            <td>Thighs (cm)</td>
+            <td></td>
           </thead>
           <tbody>
 
@@ -86,16 +86,16 @@
               </td>
               <td>
                 <button *ngIf="!editMode" (click)="deleteParameter(i)">
-                  remove
+                  Remove
                 </button>
                 <button *ngIf="!editMode" (click)="toggleEdit(i)">
-                  edit
+                  Edit
                 </button>
                 <button *ngIf="editMode" (click)="toggleEdit(i)">
-                  cancel
+                  Cancel
                 </button>
                 <button *ngIf="editMode" (click)="editParameter(i)">
-                  save
+                  Save
                 </button>
 
             </td>

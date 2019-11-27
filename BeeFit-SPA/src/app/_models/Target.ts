@@ -1,4 +1,4 @@
-export interface Target {
+export class Target {
     estimatedEnd: Date;
     weightFrom: number;
     weightTo: number;

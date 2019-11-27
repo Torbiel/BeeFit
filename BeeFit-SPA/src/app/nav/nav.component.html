@@ -46,7 +46,8 @@
       </li>
 
       <li class="nav-item mr-auto logout-item" *ngIf="loggedIn()">
-        <a class="nav-link logout" [routerLink]="['']" routerLinkActive="router-link-active" (click)="logout()">
+        <a class="nav-link logout" [routerLink]="['']" routerLinkActive="router-link-active"
+         [routerLinkActiveOptions]="{exact:true}" (click)="logout()">
           <i class="fas fa-sign-out"></i> Log out
         </a>
       </li>

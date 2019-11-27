@@ -13,14 +13,14 @@
     color: white;
 }
 
-.nav-link:hover, .navbar-brand:hover
+.nav-link:hover, .navbar-brand:hover, .router-link-active
 {
     color: #F3C622;
 }
 
 .navbar
 {
-    background-color: black; 
+    background-color: black;
 }
 
 .dropdown-menu
@@ -47,4 +47,10 @@
 .navbar
 {
     border-bottom: 2px solid #F3C622;
+}
+.logout-item
+{
+    float: right;
+    margin-right: 0;
+    right: 0;
 }

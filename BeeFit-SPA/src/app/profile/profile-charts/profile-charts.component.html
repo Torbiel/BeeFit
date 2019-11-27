@@ -1,3 +1,11 @@
-<p>
-  profile-charts works!
-</p>
+<div class="calculationType">
+  <label class="autoCalculation selected" (click)="chartsTypeToggle()" for="auto">Line
+    <input name="calculationType" type="radio" id="auto" checked>
+  </label>
+  <label for="manual" (click)="chartsTypeToggle()" class="manualCalculation">Bar
+    <input name="calculationType" type="radio" id="manual">
+  </label>
+</div>
+<div *ngIf="chart">
+  <canvas id="canvas">{{ chart }}</canvas>
+</div>

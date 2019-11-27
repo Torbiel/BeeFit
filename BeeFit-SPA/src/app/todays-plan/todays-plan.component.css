@@ -37,6 +37,7 @@
 {
     background-color: #F3C622;
     color: rgb(39, 39, 39);
+    margin-top: 2px;
 }
 
 .add-button, .edit-button, .delete-button, .copy-button

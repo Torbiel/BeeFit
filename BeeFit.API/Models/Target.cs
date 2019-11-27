@@ -14,7 +14,7 @@ namespace BeeFit.API.Models
         public DateTime EstimatedEnd { get; set; }
         public float WeightFrom { get; set; }
         public float WeightTo { get; set; }
-        public float ChangePerWeek { get; set; }
+        public float ChangePerWeek { get; set; }        
         public ActivityType DayActivity { get; set; }
         public ActivityType TrainingActivity { get; set; }
         public float Callories { get; set; }
