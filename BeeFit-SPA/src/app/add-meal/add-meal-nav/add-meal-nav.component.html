@@ -1,9 +1,17 @@
 <div class="row justify-content-center mt-3">
-  <div class="col-auto">
+  <!-- <div class="col-auto">
     <button (click)="setAddingMode('search')"><i class="fas fa-search"></i></button>
   </div>
   <div class="col-auto">
     <button (click)="setAddingMode('my food')"><i class="fas fa-book"></i></button>
+  </div> -->
+  <div class="addingMode">
+    <label class="searchMode selected" (click)="setAddingMode('search')" for="search">Search
+      <input name="addingMode" type="radio" id="search" checked>
+    </label>
+    <label class="myFoodMode" (click)="setAddingMode('my food')" for="my-food">My food
+      <input name="addingMode" type="radio" id="my-food">
+    </label>
   </div>
 </div>
 

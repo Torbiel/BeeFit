@@ -48,7 +48,8 @@
             {{ this.carbohydrates.toFixed(2) }}/{{ this.user.target.carbohydrates.toFixed(2) }}
           </div>
           <div class="row">
-            <mat-progress-bar class="mb-1" [value]="this.carbohydrates/this.user.target.carbohydrates * 100"></mat-progress-bar>
+            <mat-progress-bar class="mb-1" [value]="this.carbohydrates/this.user.target.carbohydrates * 100">
+            </mat-progress-bar>
           </div>
         </div>
       </div>
@@ -68,30 +69,38 @@
         </div>
 
         <!-- Meals -->
-        <div class="row justify-content-right mt-3" *ngFor="let meal of this.filteredMeals[i]">
-          <div class="col-9 meal">
-            <p *ngIf="meal.dish !== null">{{ meal.dish.name }}</p>
-            <p *ngIf="meal.ingredient !== null">{{ meal.ingredient.name }}</p>
-            <table *ngIf="meal.dish !== null">
-              <tr>
-                <td>Energy: {{ meal.dish.callories }} kcal</td>
-                <td>Proteins: {{ meal.dish.proteins }} g</td>
-                <td>Fats: {{ meal.dish.fats }} g</td>
-                <td>Carbohydrates: {{ meal.dish.carbohydrates }} g</td>
-              </tr>
-            </table>
-            <table *ngIf="meal.ingredient !== null">
-              <tr>
-                <td>Energy: {{ meal.ingredient.callories }}kcal</td>
-                <td>Proteins: {{ meal.ingredient.proteins }}g</td>
-                <td>Fats: {{ meal.ingredient.fats }}g</td>
-                <td>Carbohydrates: {{ meal.ingredient.carbohydrates }}g</td>
-              </tr>
-            </table>
-          </div>
-          <div class="col-2 meal-buttons meal">
-            <button class="delete-button pull-right" (click)="deleteMeal(meal)"><i class="fas fa-times"></i></button>
-            <button class="edit-button pull-right"><i class="fas fa-edit"></i></button>
+        <div class="row justify-content-right mt-2" *ngFor="let meal of this.filteredMeals[i]">
+          <div class="col-11">
+            <div class="row">
+              <div class="col-10">
+                <p *ngIf="meal.dish !== null">{{ meal.dish.name }}</p>
+                <p *ngIf="meal.ingredient !== null">{{ meal.ingredient.name }}</p>
+              </div>
+              <div class="col-2 meal-buttons">
+                <button class="delete-button pull-right" (click)="deleteMeal(meal)"><i
+                    class="fas fa-times"></i></button>
+                <button class="edit-button pull-right"><i class="fas fa-edit"></i></button>
+              </div>
+            </div>
+
+            <div class="row meal">
+              <table *ngIf="meal.dish !== null">
+                <tr>
+                  <td>Energy: {{ meal.dish.callories }} kcal</td>
+                  <td>Proteins: {{ meal.dish.proteins }} g</td>
+                  <td>Fats: {{ meal.dish.fats }} g</td>
+                  <td>Carbohydrates: {{ meal.dish.carbohydrates }} g</td>
+                </tr>
+              </table>
+              <table *ngIf="meal.ingredient !== null">
+                <tr>
+                  <td>Energy: {{ meal.ingredient.callories }}kcal</td>
+                  <td>Proteins: {{ meal.ingredient.proteins }}g</td>
+                  <td>Fats: {{ meal.ingredient.fats }}g</td>
+                  <td>Carbohydrates: {{ meal.ingredient.carbohydrates }}g</td>
+                </tr>
+              </table>
+            </div>
           </div>
         </div>
       </div>

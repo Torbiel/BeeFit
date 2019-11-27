@@ -5,19 +5,22 @@
 @import '../node_modules/alertifyjs/build/css/alertify.min.css';
 @import '../node_modules/alertifyjs/build/css/themes/bootstrap.min.css';
 
+@import '~@fullcalendar/core/main.css';
+@import '~@fullcalendar/daygrid/main.css';
+
 .dropdown-toggle, .dropdown-item, .navbar-brand, .nav-item
 {
     cursor: pointer;
 }
 
-.add-button, .edit-button, .delete-button
+.add-button, .edit-button, .delete-button, .confirm-button, .cancel-button
 {
     background-color: rgb(39, 39, 39);
     color: #F3C622;
     border: none;
 }
 
-.add-button:hover, .edit-button:hover, .delete-button:hover
+.add-button:hover, .edit-button:hover, .delete-button:hover, .confirm-button:hover, .cancel-button:hover
 {
     background-color: #F3C622;
     color: rgb(39, 39, 39);

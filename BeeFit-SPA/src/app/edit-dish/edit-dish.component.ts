@@ -1,42 +1,56 @@
-import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
-import { Router } from '@angular/router';
-import { IngredientsService } from '../_services/ingredients.service';
-import { Subject, Observable } from 'rxjs';
-import {
-  debounceTime,
-  distinctUntilChanged,
-  switchMap,
-  tap
-} from 'rxjs/operators';
+import { Component, OnInit } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 import { Ingredient } from '../_models/Ingredient';
-import { Dish } from '../_models/Dish';
-import { DishesService } from '../_services/dishes.service';
 import { DishesIngredient } from '../_models/DishesIngredient';
+import { Dish } from '../_models/Dish';
+import { Router, ActivatedRoute } from '@angular/router';
+import { IngredientsService } from '../_services/ingredients.service';
+import { DishesService } from '../_services/dishes.service';
 import { AlertifyService } from '../_services/alertify.service';
-import { MealtypeService } from '../_services/mealtype.service';
-import { DateService } from '../_services/date.service';
-import { Meal } from '../_models/Meal';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-add-dish',
-  templateUrl: './add-dish.component.html',
-  styleUrls: ['./add-dish.component.css']
+  selector: 'app-edit-dish',
+  templateUrl: './edit-dish.component.html',
+  styleUrls: ['./edit-dish.component.css']
 })
-export class AddDishComponent implements OnInit {
+export class EditDishComponent implements OnInit {
   ingredients$: Observable<Ingredient[]>;
   private ingredientSearchName = new Subject<string>();
   addedIngredients = new Array<DishesIngredient>();
+  dish$: Observable<Dish>;
   dish = new Dish();
   userId: number;
+  dishId: number;
 
   constructor(
     public router: Router,
     private ingredientsService: IngredientsService,
     private dishesService: DishesService,
-    private alertify: AlertifyService) {}
+    private alertify: AlertifyService,
+    private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.userId = +localStorage.getItem('userId');
+
+    this.dish$ = this.route.paramMap.pipe(
+      switchMap(params => {
+        this.dishId = +params.get('id');
+        return this.dishesService.getById(this.dishId);
+      }
+    ));
+
+    this.dish$.subscribe(
+      (dish) => {
+        this.dish  = dish;
+        this.addedIngredients = this.dish.ingredients;
+        this.addedIngredients.forEach(item => {
+          item.ingredientId = item.ingredient.id;
+        });
+      }, error => {
+        this.alertify.error(error);
+      }
+    );
 
     this.ingredients$ = this.ingredientSearchName.pipe(
       debounceTime(300),
@@ -73,15 +87,15 @@ export class AddDishComponent implements OnInit {
     this.addedIngredients.splice(index, 1);
   }
 
-  addDish() {
+  updateDish() {
     this.dish.ingredients = new Array<DishesIngredient>();
     this.addedIngredients.forEach(item => {
       this.dish.ingredients.push(item);
     });
 
-    this.dishesService.add(this.dish).subscribe(
+    this.dishesService.update(this.dishId, this.dish).subscribe(
       () => {
-        this.alertify.success('Dish added.');
+        this.alertify.success('Dish updated.');
         this.router.navigate(['/my-food']);
       },
       error => {

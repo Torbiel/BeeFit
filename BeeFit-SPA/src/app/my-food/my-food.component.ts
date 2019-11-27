@@ -5,6 +5,7 @@ import { UserService } from '../_services/user.service';
 import { Dish } from '../_models/Dish';
 import { Ingredient } from '../_models/Ingredient';
 import { AlertifyService } from '../_services/alertify.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-my-food',
@@ -15,16 +16,18 @@ export class MyFoodComponent implements OnInit {
   userId: string;
   dishes: Dish[];
   ingredients: Ingredient[];
+  ingredient: Ingredient;
 
   constructor(private dishesService: DishesService,
               private ingredientsService: IngredientsService,
-              private userService: UserService,
-              private alertify: AlertifyService) { }
+              private alertify: AlertifyService,
+              public router: Router) { }
 
   ngOnInit() {
     this.userId = localStorage.getItem('userId');
     this.getDishes();
     this.getIngredients();
+    this.ingredientsService.currentIngredient.subscribe(ingredient => this.ingredient = ingredient);
   }
 
   getDishes() {
@@ -67,5 +70,10 @@ export class MyFoodComponent implements OnInit {
 
   editDish(dish: Dish) {
 
+  }
+
+  editIngredient(ingredient: Ingredient) {
+    this.ingredientsService.changeIngredient(ingredient);
+    this.router.navigate(['/update-ingredient']);
   }
 }

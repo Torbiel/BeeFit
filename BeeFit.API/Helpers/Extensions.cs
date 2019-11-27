@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
 using BeeFit.API.Dtos.Dishes;
+using BeeFit.API.Dtos.Ingredients;
+using BeeFit.API.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace BeeFit.API.Helpers
 {
@@ -19,7 +22,10 @@ namespace BeeFit.API.Helpers
         public static void AddPagination(this HttpResponse response, int currentPage, int itemsPerPage, int totalItems, int totalPages)
         {
             var paginationHeader = new PaginationHeader(currentPage, itemsPerPage, totalItems, totalPages);
-            response.Headers.Add("Pagination", JsonConvert.SerializeObject(paginationHeader));
+            // Convert to camel case for handling in the SPA
+            var camelCaseFormatter = new JsonSerializerSettings();
+            camelCaseFormatter.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            response.Headers.Add("Pagination", JsonConvert.SerializeObject(paginationHeader, camelCaseFormatter));
             response.Headers.Add("Access-Control-Expose-Headers", "Pagination");
         }
 
@@ -42,6 +48,6 @@ namespace BeeFit.API.Helpers
             dish.Fats = fats;
             dish.Carbohydrates = carbohydrates;
             dish.Proteins = proteins;
-        }   
+        }
     }
 }

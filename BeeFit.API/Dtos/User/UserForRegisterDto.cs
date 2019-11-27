@@ -5,6 +5,7 @@ namespace BeeFit.API.Dtos.User
 {
     public class UserForRegisterDto
     {
+        // TODO: validation only in SPA
         [Required]
         [EmailAddress(ErrorMessage = "Incorrect email address.")]
         public string Email { get; set; }

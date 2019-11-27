@@ -1,59 +1,72 @@
-<div class="container-fluid">
+<div class="container-fluid" *ngIf="this.router.url === '/my-food'">
   <div class="row justify-content-center mt-2 mx-2">
     <div class="col-md-5 mr-2">
       <div class="row">
-        <div class="col-10">
-          <h4>Dishes:</h4>
+        <div class="col-10 dishes-header">
+          Dishes:
         </div>
         <div class="col-2 pr-0">
-          <button class="add-button pull-right" [routerLink]="['/add-dish']" routerLinkActive="router-link-active"><i
-              class="fas fa-plus"></i></button>
+          <button class="add-button pull-right add-dish-button" [routerLink]="['/add-dish']"
+            routerLinkActive="router-link-active"><i class="fas fa-plus"></i></button>
         </div>
       </div>
       <div class="row list-item" *ngFor="let dish of this.dishes">
-        <div class="col-10">
-          <p class="lead">{{ dish.name }}</p>
-          <table *ngIf="dish !== null">
-            <tr>
-              <td>Energy: {{ dish.callories }}kcal</td>
-              <td>Proteins: {{ dish.proteins }}g</td>
-              <td>Fats: {{ dish.fats }}g</td>
-              <td>Carbohydrates: {{ dish.carbohydrates }}g</td>
-            </tr>
-          </table>
-        </div>
-        <div class="col-2 pr-0">
-          <button class="delete-button pull-right" (click)="deleteDish(dish.id)"><i class="fas fa-times"></i></button>
-          <button class="edit-button pull-right" (click)="editDish(dish)"><i class="fas fa-edit"></i></button>
+        <div class="col-12">
+          <div class="row">
+            <div class="col-10 mt-2">
+              {{ dish.name }}
+            </div>
+            <div class="col-2 buttons">
+              <button class="delete-button pull-right" (click)="deleteDish(dish.id)"><i
+                  class="fas fa-times"></i></button>
+              <button class="edit-button pull-right" [routerLink]="['edit-dish', dish.id]" routerLinkActive="router-link-active" ><i class="fas fa-edit"></i></button>
+            </div>
+          </div>
+          <div class="row">
+            <table *ngIf="dish !== null">
+              <tr>
+                <td>Energy: {{ dish.callories }}kcal</td>
+                <td>Proteins: {{ dish.proteins }}g</td>
+                <td>Fats: {{ dish.fats }}g</td>
+                <td>Carbohydrates: {{ dish.carbohydrates }}g</td>
+              </tr>
+            </table>
+          </div>
         </div>
       </div>
     </div>
     <div class="col-md-5 ml-2 divider-left">
       <div class="row">
-        <div class="col-10">
-          <h4>Ingredients:</h4>
+        <div class="col-10 ingredients-header">
+          Ingredients:
         </div>
         <div class="col-2 pr-0">
-          <button class="add-button pull-right" [routerLink]="['/add-ingredient']"
+          <button class="add-button pull-right add-ingredient-button" [routerLink]="['/add-ingredient']"
             routerLinkActive="router-link-active"><i class="fas fa-plus"></i></button>
         </div>
       </div>
       <div class="row list-item" *ngFor="let ingredient of this.ingredients">
-        <div class="col-10">
-          <p class="lead">{{ ingredient.name }}</p>
-          <table>
-            <tr>
-              <td>Energy: {{ ingredient.callories }}kcal</td>
-              <td>Proteins: {{ ingredient.proteins }}g</td>
-              <td>Fats: {{ ingredient.fats }}g</td>
-              <td>Carbohydrates: {{ ingredient.carbohydrates }}g</td>
-            </tr>
-          </table>
-        </div>
-        <div class="col-2 pr-0">
-          <button class="delete-button pull-right" (click)="deleteIngredient(ingredient.id)"><i
-              class="fas fa-times"></i></button>
-          <button class="edit-button pull-right"><i class="fas fa-edit"></i></button>
+        <div class="col-12">
+          <div class="row">
+            <div class="col-10 mt-2">
+              {{ ingredient.name }}
+            </div>
+            <div class="col-2 buttons">
+              <button class="delete-button pull-right" (click)="deleteIngredient(ingredient.id)"><i
+                  class="fas fa-times"></i></button>
+              <button class="edit-button pull-right" [routerLink]="['edit-ingredient', ingredient.id]" routerLinkActive="router-link-active" ><i class="fas fa-edit"></i></button>
+            </div>
+          </div>
+          <div class="row">
+            <table>
+              <tr>
+                <td>Energy: {{ ingredient.callories }}kcal</td>
+                <td>Proteins: {{ ingredient.proteins }}g</td>
+                <td>Fats: {{ ingredient.fats }}g</td>
+                <td>Carbohydrates: {{ ingredient.carbohydrates }}g</td>
+              </tr>
+            </table>
+          </div>
         </div>
       </div>
     </div>

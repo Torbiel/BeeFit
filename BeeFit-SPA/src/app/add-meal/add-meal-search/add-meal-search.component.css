@@ -1,8 +1,13 @@
 .add-button
 {
-    width: 3vw;
-    height: 3vw;
-    font-size: 1.8vw;
+    width: 2.3vw;
+    height: 2.3vw;
+    font-size: 1.3em;
+}
+
+.button-div
+{
+    padding-top: 1px;
 }
 
 .list-element

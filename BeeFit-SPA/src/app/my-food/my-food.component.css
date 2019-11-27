@@ -1,8 +1,9 @@
 .delete-button, .edit-button, .add-button
 {
     font-size: 1.4em;
-    width: 2.8vw;
-    height: 2.8vw;
+    width: 2.7vw;
+    height: 2.7vw;
+    text-align: center;
 }
 
 .list-item
@@ -30,5 +31,20 @@ td
 table
 {
     width: 100%;
-    font-size: 0.8em;
+}
+
+.buttons
+{
+    padding-right: 1px;
+    padding-top: 1px;   
+}
+
+.add-dish-button, .add-ingredient-button
+{
+    margin-right: 3px;
+}
+
+.ingredients-header, .dishes-header
+{
+    font-size: 1.3em;
 }
