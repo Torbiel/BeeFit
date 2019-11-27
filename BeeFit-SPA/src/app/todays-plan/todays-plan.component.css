@@ -35,6 +35,7 @@
 {
     background-color: rgb(187, 152, 24);
     color: rgb(39, 39, 39);
+    margin-top: 2px;
 }
 
 .add-button, .edit-button, .delete-button
@@ -43,6 +44,7 @@
     font-size: 1.6em;
     width: 3vw;
     height: 3vw;
+    margin-top: 2px;
 }
 
 /* .divider-right

@@ -3,7 +3,8 @@
     width: 90px;
     border: none;
     background-color: #F3C622;
-    color: black;
+    color: #343a40;
+    transition: .2s ease-in-out;
 }
 
 .add-button
@@ -20,8 +21,15 @@
 
 .add-button:hover, .save-button:hover, .cancel-button:hover
 {
-    background-color: black;
+    background-color: #343a40;
     color: #F3C622;
+}
+
+.add-button:active, .save-button:active, .cancel-button:active
+{
+    transition: .1s ease-in-out;
+    background-color: #23212C;
+    color: #E1A511;
 }
 
 table
@@ -31,14 +39,36 @@ table
 
 table td
 {
-    border: 2px solid lightgray;
+    border: 1px solid rgb(219, 219, 219);
     width: 100px;
     text-align: center;
 }
 
+thead td
+{
+    white-space: nowrap;
+}
+
 tr:nth-child(even)
 {
+    background-color: rgb(255, 255, 255);
+}
+
+tr:nth-child(odd)
+{
     background-color: rgb(236, 236, 236);
+}
+
+tr:hover,
+tr:active
+{
+    background-color:rgb(201, 201, 201);
+}
+
+td:hover,
+td:active
+{
+    background-color:rgb(189, 189, 189);
 }
 
 .td-input
@@ -47,14 +77,43 @@ tr:nth-child(even)
     height: 100%;
 }
 
-.add-parameters
-{
-    background-color: #F3C622;
-}
-
 .read-only
 {
     pointer-events: none;
     border: transparent solid 1px;
     background: transparent;
+    color: black;
+}
+
+td button
+{
+    background-color: #F3C622;
+    border: 0;
+    color: black;
+    width: 100%;
+}
+
+td button:hover
+{
+    background-color: #000;
+    color: #F3C622;
+}
+
+td button:nth-child(1),
+td button:nth-child(3)
+{
+    border-bottom: 1px solid #272727;
+}
+
+.add-parameters
+{
+    background-color: #F3C622 !important;
+}
+.add-parameters td:hover
+{
+    background-color: #E1A511 !important;
+}
+
+input {
+     text-align: center;
 }

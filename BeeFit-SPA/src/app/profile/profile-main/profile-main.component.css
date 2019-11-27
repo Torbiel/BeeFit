@@ -4,6 +4,7 @@
     border: none;
     background-color: #F3C622;
     color: #343a40;
+    transition: .1s ease-in-out;
 }
 
 .edit-button
@@ -20,12 +21,14 @@
 
 .edit-button:hover, .save-button:hover, .cancel-button:hover
 {
+
     background-color: #343a40;
     color: #F3C622;
 }
 .edit-button:active, .save-button:active, .cancel-button:active,
 .edit-button:focus, .save-button:focus, .cancel-button:focus
 {
+    transition: .2s ease-in-out;
     background-color: #23212C;
     color: #E1A511;
 }

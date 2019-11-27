@@ -29,7 +29,7 @@ export class ProfileParametersComponent implements OnInit {
 
   ngOnInit() {
     this.getUser();
-    
+
 
   }
 
@@ -45,13 +45,12 @@ export class ProfileParametersComponent implements OnInit {
 
   prepareDatesToFilter() {
     this.parametersDates = [...new Set(this.user.parameters.map(parameter => parameter.date))];
-    
   }
 
   getUser() {
     const id = localStorage.getItem('userId');
     this.userService.getUser(id).subscribe((user: User) => {
-      this.user = user; 
+      this.user = user;
       this.prepareDatesToFilter();
     }, error => {
       this.alertify.error(error);
@@ -73,10 +72,11 @@ export class ProfileParametersComponent implements OnInit {
   }
 
   addParameter() {
-    if (!this.newParameter.weight && !this.newParameter.abdominalCircumference && !this.newParameter.bicepsCircumference &&
+    if (!this.newParameter.weight || !this.newParameter.abdominalCircumference || !this.newParameter.bicepsCircumference ||
         !this.newParameter.thighCircumference) {
-      this.alertify.error('You didn\'t fill any of the parameters.');
+      this.alertify.error('You didn\'t fill all the parameters.');
     } else {
+      console.log(this.newParameter);
       this.user.parameters.push(this.newParameter);
       this.userService.updateUser(this.user).subscribe(next => {
         this.alertify.success('Parameters added.');
@@ -93,9 +93,9 @@ export class ProfileParametersComponent implements OnInit {
     if (this.toggleEdit) {
       if (0) {
         this.alertify.error('You didn\'t fill any of the parameters.');
-      } else {       
+      } else {
         this.userService.updateUser(this.user).subscribe(next => {
-          this.alertify.success('Parameters added.');
+          this.alertify.success('Parameters saved.');
           this.toggleEdit(index);
         }, error => {
           this.alertify.error(error);

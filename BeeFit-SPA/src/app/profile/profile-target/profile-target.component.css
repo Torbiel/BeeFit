@@ -6,8 +6,22 @@ form
 {
     width: 90px;
     border: none;
-    background-color: gold;
-    color: black;
+    background-color: #F3C622;
+    color: #343a40;
+    transition: .2s ease-in-out;
+}
+
+.add-button:hover, .save-button:hover, .cancel-button:hover, .edit-button:hover
+{
+    background-color: #343a40;
+    color: #F3C622;
+}
+
+.add-button:active, .save-button:active, .cancel-button:active, .edit-button:active
+{
+    transition: .1s ease-in-out;
+    background-color: #23212C;
+    color: #E1A511;
 }
 
 .edit-button
@@ -20,12 +34,6 @@ form
 {
     height: 45px;
     font-size: 2em;
-}
-
-.edit-button:hover, .save-button:hover, .cancel-button:hover
-{
-    background-color: black;
-    color: gold;
 }
 
 .bold
@@ -63,6 +71,7 @@ form
 .calculationType label:first-of-type
 {
     border-right: none;
+    color: #000;
 }
 .calculationType label:last-of-type
 {
@@ -74,21 +83,22 @@ form
     content: '';
     display:block;
     width: 100%;
-    position: relative;    
+    position: relative;
     bottom: 100%;
     z-index: -1;
     height: 100%;
-    background: #fdcf4c;transition: .5s ease-in-out;
+    background: #F3C622;
+    transition: .5s ease-in-out;
 }
 
 .autoCalculation.selected:after
-{    
+{
     transition: .35s ease-in-out;
     left: 0;
 }
 .autoCalculation.unselected:after
 {
-    
+
     transition: .35s ease-in-out;
     left: 100%;
 }
@@ -98,7 +108,7 @@ ul
     width: 50%;
     display: flex;
     flex-direction: column;
-    
+
 }
 
 li{
@@ -110,6 +120,7 @@ li{
 li label
 {
     width: 50%;
+    padding: 5px;
 }
 li input
 {
@@ -121,6 +132,7 @@ li input
 li output
 {
     width: 10%;
+    min-width: 40px;
 }
 
 .result
@@ -131,4 +143,9 @@ li output
 .result ul {
     display: flex;
     width:100%;
+}
+
+span
+{
+    white-space: nowrap;
 }

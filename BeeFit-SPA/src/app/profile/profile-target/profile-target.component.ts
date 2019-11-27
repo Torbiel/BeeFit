@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/_services/user.service';
 import { AlertifyService } from 'src/app/_services/alertify.service';
 import { User } from 'src/app/_models/User';
+import { empty } from 'rxjs';
 
 
 @Component({
@@ -24,11 +25,13 @@ export class ProfileTargetComponent implements OnInit {
   carbohydratesResult = 0;
   weeksFromNow = 0;
   estimatedWeight = this.actualWeight;
+  today = new Date();
+  dateNextWeek = new Date(this.today.setDate(this.today.getDate() + 7));
   constructor(private userService: UserService, private alertify: AlertifyService) { }
 
   ngOnInit() {
     this.getUser();
-
+    console.log(this.dateNextWeek);
   }
 
   getUser() {
@@ -37,7 +40,7 @@ export class ProfileTargetComponent implements OnInit {
       this.user = user;
       this.user.parameters = this.user.parameters.sort((a, b) => (a.date < b.date) ? 1 : -1)
       this.actualWeight = this.user.parameters[0].weight;
-
+      this.estimatedWeight = this.user.parameters[0].weight
     }, error => {
       this.alertify.error(error);
     });
@@ -52,33 +55,55 @@ export class ProfileTargetComponent implements OnInit {
   }
 
   calculate() {
+    if (this.actualWeight == null) {
+      var actualWeight = parseFloat((<HTMLInputElement>document.getElementById('actualWeight')).value);
+    } else {
+      var actualWeight = parseFloat((<HTMLInputElement>document.getElementById('actualWeight')).value);
+    }
+    // this.user.parameters[0].weight
     this.estimatedWeight = parseFloat((<HTMLInputElement>document.getElementById('estimatedWeight')).value);
 
-    if (this.autoMode) {
-      var changePerWeek = (this.estimatedWeight - this.actualWeight) / Math.abs(this.weeksBetween(new Date(), new Date((<HTMLInputElement>document.getElementById('estimatedTime')).value)));
-      console.log(this.weeksBetween(new Date(), new Date((<HTMLInputElement>document.getElementById('estimatedTime')).value)));
+    if (this.autoMode == true) {
+      var changePerWeek = (this.estimatedWeight - actualWeight) / this.weeksBetween(new Date(), new Date((<HTMLInputElement>document.getElementById('estimatedTime')).value));
+      console.log(changePerWeek);
     } else {
       var changePerWeek = parseFloat((<HTMLInputElement>document.getElementById('changePerWeek')).value);
     }
+
     this.dayActivity = parseFloat((<HTMLInputElement>document.getElementById('dayActivity')).value);
     this.dayActivity = parseFloat((<HTMLInputElement>document.getElementById('dayActivity')).value);
     this.trainingActivity = parseFloat((<HTMLInputElement>document.getElementById('trainingActivity')).value);
 
     var caloricDeficit = 7000 * changePerWeek;
-    this.dailyCalories = (this.dayActivity * 0.2 + 1.1 + this.trainingActivity * 0.1)*this.actualWeight * 22;
-    this.estimatedCalories = this.dailyCalories + caloricDeficit/7;
+    this.dailyCalories = (this.dayActivity * 0.2 + 1.1 + this.trainingActivity * 0.1)*actualWeight * 22;
+
+    if (this.autoMode == true) {
+      this.estimatedCalories = this.dailyCalories + caloricDeficit ;
+    } else {
+      if (actualWeight - this.estimatedWeight < 0) {
+        this.estimatedCalories = this.dailyCalories + caloricDeficit / 7;
+      } else if(actualWeight - this.estimatedWeight > 0) {
+        this.estimatedCalories = this.dailyCalories - caloricDeficit / 7;
+      } else {
+        this.estimatedCalories = this.dailyCalories;
+      }
+
+      var daysToTarget = Math.abs(actualWeight - this.estimatedWeight) / changePerWeek * 7; console.log(daysToTarget);
+    }
+
     if (this.estimatedCalories < 0) {
       this.estimatedCalories = 0;
     }
-    this.proteinsResult = this.actualWeight * (this.dayActivity * 0.25 + 1.1 + this.trainingActivity * 0.2 );
-    this.fatsResult = this.actualWeight;
+    this.proteinsResult = actualWeight * (this.dayActivity * 0.25 + 1.1 + this.trainingActivity * 0.2 );
+    this.fatsResult = actualWeight;
     this.carbohydratesResult = (this.estimatedCalories - (this.proteinsResult*4 + this.fatsResult*9))/4;
 
   }
 
   weeksBetween(d1, d2) {
-    return Math.round((d2 - d1) / (7 * 24 * 60 * 60 * 1000));
+    return Math.round(Math.abs(d2 - d1) / (24 * 60 * 60 * 1000));
   }
+
   calculationTypeToggle() {
     var autoModeLabel = document.querySelector('.autoCalculation');
     var manualModeLabel = document.querySelector('.manualCalculation');
@@ -86,13 +111,18 @@ export class ProfileTargetComponent implements OnInit {
     if (autoModeLabel.querySelector('input').checked) {
       autoModeLabel.classList.remove('unselected');
       autoModeLabel.classList.add('selected');
-
+      (<HTMLElement>autoModeLabel).style.color = '#000';
+      (<HTMLElement>manualModeLabel).style.color = '#fff';
       this.autoMode = true;
 
     } else if (manualModeLabel.querySelector('input').checked){
       autoModeLabel.classList.remove('selected');
       autoModeLabel.classList.add('unselected');
+      (<HTMLElement>autoModeLabel).style.color = '#fff';
+      (<HTMLElement>manualModeLabel).style.color = '#000';
       this.autoMode = false;
     }
+    console.log(this.autoMode);
+    this.calculate();
   }
 }
