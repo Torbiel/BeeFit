@@ -73,7 +73,7 @@ namespace BeeFit.API.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetManyByMonthAndYear(int month, int year)
+        public IActionResult GetManyByMonthAndYear([FromQuery] int month, [FromQuery] int year)
         {
             var currentUserId = int.Parse(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
             var meals = _repo.GetManyByMonthAndYear(month, year, currentUserId);

@@ -1,7 +1,6 @@
 ﻿using BeeFit.API.Data.Interfaces;
+using BeeFit.API.Helpers;
 using BeeFit.API.Models;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,14 +10,21 @@ namespace BeeFit.API.Data
     {
         public IngredientsRepository(BeeFitDbContext context) : base(context) { }
 
-        public async Task<IEnumerable<Ingredient>> GetManyByName(string name)
+        public async Task<PagedList<Ingredient>> GetManyByName(string name, PagingParams pagingParams)
         {
-            return await _context.Set<Ingredient>().Where(i => i.Name.Contains(name)).ToListAsync();
+            var ingredients = _context.Set<Ingredient>().Where(i => i.Name.Contains(name));
+            return await PagedList<Ingredient>.CreateAsync(ingredients, pagingParams.PageNumber, pagingParams.PageSize);
         }
-        public IEnumerable<Ingredient> GetManyByUserId(int id)
+        public async Task<PagedList<Ingredient>> GetManyByUserId(int id, PagingParams pagingParams)
         {
-            return _context.Set<Ingredient>().Where(i => i.UserId == id);
+            var ingredients = _context.Set<Ingredient>().Where(i => i.UserId == id);
+            return await PagedList<Ingredient>.CreateAsync(ingredients, pagingParams.PageNumber, pagingParams.PageSize);
         }
 
+        public async Task<PagedList<Ingredient>> GetManyByNameAndUser(string name, int id, PagingParams pagingParams)
+        {
+            var ingredients = _context.Set<Ingredient>().Where(i => i.UserId == id && i.Name.Contains(name));
+            return await PagedList<Ingredient>.CreateAsync(ingredients, pagingParams.PageNumber, pagingParams.PageSize);
+        }
     }
 }

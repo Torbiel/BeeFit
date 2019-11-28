@@ -65,10 +65,25 @@ namespace BeeFit.API.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetManyByUserId()
+        public async Task<IActionResult> GetManyByUserId([FromQuery] PagingParams pagingParams)
         {
             var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-            var dishes = _repo.GetManyByUserId(currentUserId);
+            var dishes = await _repo.GetManyByUserId(currentUserId, pagingParams);
+            var dishesToReturn = _mapper.Map<IEnumerable<DishForGetDto>>(dishes);
+
+            foreach (var dish in dishesToReturn)
+            {
+                dish.CalculateNutrients();
+            }
+
+            return Ok(dishesToReturn);
+        }
+
+        [HttpGet]
+        public async Task <IActionResult> GetManyByNameAndUser([FromQuery] string name, [FromQuery] PagingParams pagingParams)
+        {
+            var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var dishes = await _repo.GetManyByNameAndUser(name, currentUserId, pagingParams);
             var dishesToReturn = _mapper.Map<IEnumerable<DishForGetDto>>(dishes);
 
             foreach (var dish in dishesToReturn)

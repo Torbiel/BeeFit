@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BeeFit.API.Data.Interfaces;
 using BeeFit.API.Dtos.Ingredients;
+using BeeFit.API.Helpers;
 using BeeFit.API.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -49,19 +50,29 @@ namespace BeeFit.API.Controllers
         }
 
         [HttpGet("{name}")]
-        public async Task<IActionResult> GetManyByName(string name)
+        public async Task<IActionResult> GetManyByName(string name, [FromQuery] PagingParams pagingParams)
         {
-            var ingredients = await _repo.GetManyByName(name);
+            var ingredients = await _repo.GetManyByName(name, pagingParams);
             var ingredientsToReturn = _mapper.Map<IEnumerable<IngredientForGetDto>>(ingredients);
 
             return Ok(ingredientsToReturn);
         }
 
         [HttpGet]
-        public IActionResult GetManyByUserId()
+        public async Task<IActionResult> GetManyByUserId([FromQuery] PagingParams pagingParams)
         {
             var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-            var ingredients = _repo.GetManyByUserId(currentUserId);
+            var ingredients = await _repo.GetManyByUserId(currentUserId, pagingParams);
+            var ingredientsToReturn = _mapper.Map<IEnumerable<Ingredient>>(ingredients);
+
+            return Ok(ingredientsToReturn);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetManyByNameAndUser([FromQuery] string name, [FromQuery] PagingParams pagingParams)
+        {
+            var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var ingredients = await _repo.GetManyByNameAndUser(name, currentUserId, pagingParams);
             var ingredientsToReturn = _mapper.Map<IEnumerable<Ingredient>>(ingredients);
 
             return Ok(ingredientsToReturn);

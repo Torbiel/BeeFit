@@ -25,7 +25,7 @@ export const appRoutes: Routes = [
         canActivate: [AuthGuard],
         children: [
             { path: 'calendar', component: CalendarComponent },
-            { path: 'todays-plan', component: TodaysPlanComponent},
+            { path: 'todays-plan', component: TodaysPlanComponent },
             { path: 'profile', component: ProfileNavComponent },
             { path: 'welcome', component: WelcomeComponent },
             { path: 'my-food', component: MyFoodComponent, children: [

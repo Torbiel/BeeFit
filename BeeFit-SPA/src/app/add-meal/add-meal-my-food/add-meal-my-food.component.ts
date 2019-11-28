@@ -9,6 +9,7 @@ import { Ingredient } from 'src/app/_models/Ingredient';
 import { Meal } from 'src/app/_models/Meal';
 import { MealtypeService } from 'src/app/_services/mealtype.service';
 import { MealService } from 'src/app/_services/meal.service';
+import { PaginatedResult } from 'src/app/_models/Pagination';
 
 @Component({
   selector: 'app-add-meal-my-food',
@@ -18,8 +19,8 @@ import { MealService } from 'src/app/_services/meal.service';
 export class AddMealMyFoodComponent implements OnInit {
   @Input() userId: number;
   @Output() addMode = new EventEmitter<boolean>();
-  dishes: Dish[];
-  ingredients: Ingredient[];
+  dishes: PaginatedResult<Dish[]>;
+  ingredients: PaginatedResult<Ingredient[]>;
   meal: Meal;
   mealType: number;
 
@@ -37,7 +38,7 @@ export class AddMealMyFoodComponent implements OnInit {
   }
 
   getDishes() {
-    this.dishesService.getDishesByUserId(this.userId).subscribe((dishes: Dish[]) => {
+    this.dishesService.getDishesByUserId(this.userId).subscribe((dishes: PaginatedResult<Dish[]>) => {
       this.dishes = dishes;
     }, error => {
       this.alertify.error(error);
@@ -45,7 +46,7 @@ export class AddMealMyFoodComponent implements OnInit {
   }
 
   getIngredients() {
-    this.ingredientsService.getIngredientsByUserId(this.userId).subscribe((ingredients: Ingredient[]) => {
+    this.ingredientsService.getIngredientsByUserId(this.userId).subscribe((ingredients: PaginatedResult<Ingredient[]>) => {
       this.ingredients = ingredients;
     }, error => {
       this.alertify.error(error);

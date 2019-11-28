@@ -29,8 +29,10 @@ export class AddMealSearchComponent implements OnInit {
   private dishesSearchName = new Subject<string>();
   private ingredientsSearchName = new Subject<string>();
   private searchName = new Subject<string>();
-  ingredients$: Observable<Ingredient[]>;
-  dishes$: Observable<Dish[]>;
+  ingredients$: Observable<PaginatedResult<Ingredient[]>>;
+  dishes$: Observable<PaginatedResult<Dish[]>>;
+  pageNumber = 1;
+  pageSize = 10;
   searchResults$: Observable<(Dish[] | Ingredient[])>;
 
   constructor(private dishesService: DishesService,
@@ -48,13 +50,13 @@ export class AddMealSearchComponent implements OnInit {
     this.ingredients$ = this.ingredientsSearchName.pipe(
       debounceTime(300),
       distinctUntilChanged(),
-      switchMap((name: string) => this.ingredientsService.getIngredientsByName(name)),
+      switchMap((name: string) => this.ingredientsService.getIngredientsByName(name, this.pageNumber, this.pageSize)),
     );
 
     this.dishes$ = this.dishesSearchName.pipe(
       debounceTime(300),
       distinctUntilChanged(),
-      switchMap((name: string) => this.dishesService.getDishesByName(name)),
+      switchMap((name: string) => this.dishesService.getDishesByName(name, this.pageNumber, this.pageSize)),
     );
   }
 

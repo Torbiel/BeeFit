@@ -41,6 +41,7 @@ import { MyFoodComponent } from './my-food/my-food.component';
 import { EditIngredientComponent } from './edit-ingredient/edit-ingredient.component';
 import { EditDishComponent } from './edit-dish/edit-dish.component';
 import { CalendarComponent } from './calendar/calendar.component';
+import { DishesListResolver } from './_resolvers/dishes-list.resolver';
 
 @NgModule({
    declarations: [
@@ -92,7 +93,8 @@ import { CalendarComponent } from './calendar/calendar.component';
       IngredientsService,
       MealService,
       MealtypeService,
-      AlertifyService
+      AlertifyService,
+      DishesListResolver
    ],
    bootstrap: [
       AppComponent

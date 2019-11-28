@@ -8,7 +8,7 @@
     <div class="row justify-content-center dishes-header">
       Dishes:
     </div>
-    <div class="row list-element mb-2" *ngFor="let dish of dishes$ | async">
+    <div class="row list-element mb-2" *ngFor="let dish of (dishes$ | async).result">
       <div class="col-12">
         <div class="row">
           <div class="col-10 pl-2 pt-2">
@@ -36,7 +36,7 @@
     <div class="row justify-content-center dishes-header">
       Ingredients:
     </div>
-    <div class="row list-element mb-2" *ngFor="let ing of ingredients$ | async">
+    <div class="row list-element mb-2" *ngFor="let ing of (ingredients$ | async).result">
       <div class="col-12">
         <div class="row">
           <div class="col-10 pl-2 pt-2">

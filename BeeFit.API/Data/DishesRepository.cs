@@ -24,9 +24,16 @@ namespace BeeFit.API.Data
             return await PagedList<Dish>.CreateAsync(dishes, pagingParams.PageNumber, pagingParams.PageSize);
         }
 
-        public IEnumerable<Dish> GetManyByUserId(int id)
+        public async Task<PagedList<Dish>> GetManyByUserId(int id, PagingParams pagingParams)
         {
-            return _context.Set<Dish>().Where(d => d.UserId == id);
+            var dishes = _context.Set<Dish>().Where(d => d.UserId == id);
+            return await PagedList<Dish>.CreateAsync(dishes, pagingParams.PageNumber, pagingParams.PageSize);
+        }
+
+        public async Task<PagedList<Dish>> GetManyByNameAndUser(string name, int userId, PagingParams pagingParams)
+        {
+            var dishes = _context.Set<Dish>().Where(d => d.Name.Contains(name) && d.UserId == userId);
+            return await PagedList<Dish>.CreateAsync(dishes, pagingParams.PageNumber, pagingParams.PageSize);
         }
     }
 }

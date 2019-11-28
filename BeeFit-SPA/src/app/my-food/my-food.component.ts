@@ -6,6 +6,7 @@ import { Dish } from '../_models/Dish';
 import { Ingredient } from '../_models/Ingredient';
 import { AlertifyService } from '../_services/alertify.service';
 import { Router } from '@angular/router';
+import { PaginatedResult } from '../_models/Pagination';
 
 @Component({
   selector: 'app-my-food',
@@ -14,8 +15,8 @@ import { Router } from '@angular/router';
 })
 export class MyFoodComponent implements OnInit {
   userId: string;
-  dishes: Dish[];
-  ingredients: Ingredient[];
+  dishes: PaginatedResult<Dish[]>;
+  ingredients: PaginatedResult<Ingredient[]>;
   ingredient: Ingredient;
 
   constructor(private dishesService: DishesService,
@@ -31,8 +32,8 @@ export class MyFoodComponent implements OnInit {
   }
 
   getDishes() {
-    this.dishesService.getDishesByUserId(+this.userId).subscribe(
-      (dishes: Dish[]) => {
+    this.dishesService.getDishesByUserId().subscribe(
+      (dishes: PaginatedResult<Dish[]>) => {
         this.dishes = dishes;
       }, error => {
         this.alertify.error(error);
@@ -41,8 +42,8 @@ export class MyFoodComponent implements OnInit {
   }
 
   getIngredients() {
-    this.ingredientsService.getIngredientsByUserId(+this.userId).subscribe(
-      (ingredients: Ingredient[]) => {
+    this.ingredientsService.getIngredientsByUserId().subscribe(
+      (ingredients: PaginatedResult<Ingredient[]>) => {
         this.ingredients = ingredients;
       }, error => {
         this.alertify.error(error);

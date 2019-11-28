@@ -8,6 +8,7 @@ import { IngredientsService } from '../_services/ingredients.service';
 import { DishesService } from '../_services/dishes.service';
 import { AlertifyService } from '../_services/alertify.service';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { PaginatedResult } from '../_models/Pagination';
 
 @Component({
   selector: 'app-edit-dish',
@@ -15,13 +16,15 @@ import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
   styleUrls: ['./edit-dish.component.css']
 })
 export class EditDishComponent implements OnInit {
-  ingredients$: Observable<Ingredient[]>;
+  ingredients$: Observable<PaginatedResult<Ingredient[]>>;
   private ingredientSearchName = new Subject<string>();
   addedIngredients = new Array<DishesIngredient>();
   dish$: Observable<Dish>;
   dish = new Dish();
   userId: number;
   dishId: number;
+  pageNumber = 1;
+  pageSize = 10;
 
   constructor(
     public router: Router,
@@ -55,9 +58,7 @@ export class EditDishComponent implements OnInit {
     this.ingredients$ = this.ingredientSearchName.pipe(
       debounceTime(300),
       distinctUntilChanged(),
-      switchMap((name: string) =>
-        this.ingredientsService.getIngredientsByName(name)
-      )
+      switchMap((name: string) => this.ingredientsService.getIngredientsByName(name, this.pageNumber, this.pageSize))
     );
   }
 
