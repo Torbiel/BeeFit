@@ -6,8 +6,8 @@ export class Dish {
     name: string;
     user: User;
     ingredients: DishesIngredient[];
-    callories?: number;
-    fats?: number;
-    carbohydrates?: number;
+    callories: number;
+    fats: number;
+    carbohydrates: number;
     proteins: number;
 }

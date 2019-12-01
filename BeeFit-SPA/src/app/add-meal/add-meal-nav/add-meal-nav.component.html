@@ -1,22 +1,31 @@
 <div class="row justify-content-center mt-3">
-  <!-- <div class="col-auto">
-    <button (click)="setAddingMode('search')"><i class="fas fa-search"></i></button>
-  </div>
-  <div class="col-auto">
-    <button (click)="setAddingMode('my food')"><i class="fas fa-book"></i></button>
-  </div> -->
-  <div class="addingMode">
-    <label class="searchMode selected" (click)="setAddingMode('all-food')" for="all-food">All food
-      <input name="addingMode" type="radio" id="all-food" checked>
-    </label>
-    <label class="myFoodMode" (click)="setAddingMode('my food')" for="my-food">My food
-      <input name="addingMode" type="radio" id="my-food">
-    </label>
+  <div class="col-12">
+    <form action="">
+      <div class="searchMode">
+        <label class="allFoodMode selected">All food
+          <input name="searchMode" type="radio" id="all-food" value="all" (input)="setSearchMode('all')" checked>
+        </label>
+        <label class="myFoodMode">My food
+          <input name="searchMode" type="radio" id="my-food" value="mine" (input)="setSearchMode('mine')">
+        </label>
+      </div>
+      <div>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            Filters
+          </mat-expansion-panel-header>
+
+          <label>Min. callories:
+            <input name="minCallories" type="number" id="minCallories" class="form-control">
+          </label>
+        </mat-expansion-panel>
+      </div>
+    </form>
   </div>
 </div>
 
 <div class="row justify-content-center mt-2">
-  <input type="text" placeholder="Search" #searchBox
+  <input type="text" placeholder="Search" #searchBox class="form-control"
     (input)="findDishes(searchBox.value); findIngredients(searchBox.value);">
 </div>
 
@@ -25,7 +34,7 @@
     <div class="row justify-content-center dishes-header">
       Dishes:
     </div>
-    <div class="row list-element mb-2" *ngFor="let dish of (dishes$ | async).result">
+    <div class="row list-element mb-2" *ngFor="let dish of dishes">
       <div class="col-12">
         <div class="row">
           <div class="col-10 pl-2 pt-2">
@@ -47,13 +56,23 @@
         </div>
       </div>
     </div>
+
+    <div class="row pagination-wrapper" *ngIf="dishesPagination">
+      <div class="justify-content-center" *ngIf="dishesPagination.totalPages > 1">
+        <pagination [boundaryLinks]="true" [totalItems]="dishesPagination.totalItems"
+          [itemsPerPage]="dishesPagination.itemsPerPage" (pageChanged)="pageChanged($event, searchBox.value)"
+          [(ngModel)]="dishesPagination.currentPage" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;"
+          lastText="&raquo;">
+        </pagination>
+      </div>
+    </div>
   </div>
 
-  <div class="col-lg-6 ingredients">
+  <!-- <div class="col-lg-6 ingredients">
     <div class="row justify-content-center dishes-header">
       Ingredients:
     </div>
-    <div class="row list-element mb-2" *ngFor="let ing of (ingredients$ | async).result">
+    <div class="row list-element mb-2" ng-repeat="" *ngFor="let ing of (ingredients$ | async).result">
       <div class="col-12">
         <div class="row">
           <div class="col-10 pl-2 pt-2">
@@ -75,5 +94,11 @@
         </div>
       </div>
     </div>
-  </div>
+
+    <div class="pagination d-flex justify-content-center">
+      <pagination [boundaryLinks]="true" [totalItems]="77" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;"
+        lastText="&raquo;">
+      </pagination>
+    </div>
+  </div> -->
 </div>

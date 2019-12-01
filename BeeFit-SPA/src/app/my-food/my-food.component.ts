@@ -18,6 +18,8 @@ export class MyFoodComponent implements OnInit {
   dishes: PaginatedResult<Dish[]>;
   ingredients: PaginatedResult<Ingredient[]>;
   ingredient: Ingredient;
+  pageNumber = 1;
+  pageSize = 10;
 
   constructor(private dishesService: DishesService,
               private ingredientsService: IngredientsService,
@@ -32,7 +34,7 @@ export class MyFoodComponent implements OnInit {
   }
 
   getDishes() {
-    this.dishesService.getDishesByUserId().subscribe(
+    this.dishesService.getDishes(null, parseInt(this.userId, 10), this.pageNumber, this.pageSize).subscribe(
       (dishes: PaginatedResult<Dish[]>) => {
         this.dishes = dishes;
       }, error => {

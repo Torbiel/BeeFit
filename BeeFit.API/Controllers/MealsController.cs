@@ -64,25 +64,15 @@ namespace BeeFit.API.Controllers
             var meals = _repo.GetManyByDate(convertedDate, currentUserId);
             var mealsToReturn = _mapper.Map<IEnumerable<MealForGetDto>>(meals);
 
-            foreach(var meal in mealsToReturn.Where(m => m.Dish != null))
-            {
-                meal.Dish.CalculateNutrients();
-            }
-
             return Ok(mealsToReturn);
         }
 
-        [HttpGet]
-        public IActionResult GetManyByMonthAndYear([FromQuery] int month, [FromQuery] int year)
+        [HttpGet("{month:int}/{year:int}")]
+        public IActionResult GetManyByMonthAndYear(int month, int year)
         {
             var currentUserId = int.Parse(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
             var meals = _repo.GetManyByMonthAndYear(month, year, currentUserId);
             var mealsToReturn = _mapper.Map<IEnumerable<MealForGetDto>>(meals);
-
-            foreach(var meal in mealsToReturn.Where(m => m.Dish != null))
-            {
-                meal.Dish.CalculateNutrients();
-            }
 
             return Ok(mealsToReturn);
         }

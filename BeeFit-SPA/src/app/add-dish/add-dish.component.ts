@@ -80,6 +80,8 @@ export class AddDishComponent implements OnInit {
       this.dish.ingredients.push(item);
     });
 
+    calculateNutrients();
+
     this.dishesService.add(this.dish).subscribe(
       () => {
         this.alertify.success('Dish added.');
@@ -89,5 +91,13 @@ export class AddDishComponent implements OnInit {
         this.alertify.error(error);
       }
     );
+  }
+
+  calculateNutrients() {
+    this.dish.callories = 0;
+    this.dish.proteins = 0;
+    this.dish.fats = 0;
+    this.dish.carbohydrates = 0;
+    
   }
 }

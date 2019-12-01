@@ -1,5 +1,6 @@
 ﻿namespace BeeFit.API.Helpers
 {
+    // For Dishes and Ingredients together
     public class PagingParams
     {
         private const int maxPageSize = 50;
@@ -12,5 +13,8 @@
             set { pageSize = (value > maxPageSize) ?  maxPageSize : value; }
         }
 
+        public int? UserId { get; set; }
+        public float? MinCallories { get; set; }
+        public float? MaxCallories { get; set; }
     }
 }

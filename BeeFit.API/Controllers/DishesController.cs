@@ -33,6 +33,7 @@ namespace BeeFit.API.Controllers
             var currentUserId = int.Parse(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
             var currentUser = await _repo.GetById<User>(currentUserId);
             dishToAdd.User = currentUser;
+            dishToAdd.CalculateNutrients();
 
             _repo.Add(dishToAdd);
 
@@ -54,11 +55,6 @@ namespace BeeFit.API.Controllers
             var dishes = await _repo.GetManyByName(name, pagingParams);
             var dishesToReturn = _mapper.Map<IEnumerable<DishForGetDto>>(dishes);
 
-            foreach(var dish in dishesToReturn)
-            {
-                dish.CalculateNutrients();
-            }
-
             Response.AddPagination(dishes.CurrentPage, dishes.PageSize, dishes.TotalCount, dishes.TotalPages);
 
             return Ok(dishesToReturn);
@@ -71,28 +67,18 @@ namespace BeeFit.API.Controllers
             var dishes = await _repo.GetManyByUserId(currentUserId, pagingParams);
             var dishesToReturn = _mapper.Map<IEnumerable<DishForGetDto>>(dishes);
 
-            foreach (var dish in dishesToReturn)
-            {
-                dish.CalculateNutrients();
-            }
-
             return Ok(dishesToReturn);
         }
 
-        [HttpGet]
-        public async Task <IActionResult> GetManyByNameAndUser([FromQuery] string name, [FromQuery] PagingParams pagingParams)
-        {
-            var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-            var dishes = await _repo.GetManyByNameAndUser(name, currentUserId, pagingParams);
-            var dishesToReturn = _mapper.Map<IEnumerable<DishForGetDto>>(dishes);
+        //[HttpGet("{userId}/{name}")]
+        //public async Task<IActionResult> GetManyByNameAndUser(int userId, string name, [FromQuery] PagingParams pagingParams)
+        //{
+        //    var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+        //    var dishes = await _repo.GetManyByNameAndUser(name, userId, pagingParams);
+        //    var dishesToReturn = _mapper.Map<IEnumerable<DishForGetDto>>(dishes);
 
-            foreach (var dish in dishesToReturn)
-            {
-                dish.CalculateNutrients();
-            }
-
-            return Ok(dishesToReturn);
-        }
+        //    return Ok(dishesToReturn);
+        //}
 
         // TODO?: searching based on callories, fats, proteins, etc. (>= and <=)
 

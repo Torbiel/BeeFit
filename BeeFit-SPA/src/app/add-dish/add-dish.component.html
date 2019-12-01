@@ -13,7 +13,7 @@
         </div>
 
         <!-- Results of search -->
-        <div class="row list-item" *ngFor="let ing of ingredients$ | async">
+        <div class="row list-item" *ngFor="let ing of (ingredients$ | async).result">
           <div class="col-10 pl-2 pt-2">
             <p>{{ ing.name }}</p>
             <table>

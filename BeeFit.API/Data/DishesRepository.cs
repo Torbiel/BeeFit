@@ -21,6 +21,21 @@ namespace BeeFit.API.Data
             //    dishes.Where(d => d.Ingredients.All(i => i.Ingredient.SearchPreferences.FirstOrDefault(s => s.SearchPreferenceId == pref.Id) != null));
             //}
 
+            if(pagingParams.UserId != null)
+            {
+                dishes = dishes.Where(d => d.UserId == pagingParams.UserId);
+            }
+
+            if(pagingParams.MinCallories != null)
+            {
+                dishes = dishes.Where(d => d.Callories >= pagingParams.MinCallories);
+            }
+
+            if(pagingParams.MaxCallories != null)
+            {
+                dishes = dishes.Where(d => d.Callories <= pagingParams.MaxCallories);
+            }
+
             return await PagedList<Dish>.CreateAsync(dishes, pagingParams.PageNumber, pagingParams.PageSize);
         }
 
