@@ -40,12 +40,6 @@ export class AddDishComponent implements OnInit {
 
   ngOnInit() {
     this.userId = +localStorage.getItem('userId');
-
-    this.ingredients$ = this.ingredientSearchName.pipe(
-      debounceTime(300),
-      distinctUntilChanged(),
-      switchMap((name: string) => this.ingredientsService.getIngredientsByName(name, this.pageNumber, this.pageSize))
-    );
   }
 
   findIngredients(name: string) {
@@ -80,7 +74,7 @@ export class AddDishComponent implements OnInit {
       this.dish.ingredients.push(item);
     });
 
-    calculateNutrients();
+    this.calculateNutrients();
 
     this.dishesService.add(this.dish).subscribe(
       () => {
@@ -98,6 +92,12 @@ export class AddDishComponent implements OnInit {
     this.dish.proteins = 0;
     this.dish.fats = 0;
     this.dish.carbohydrates = 0;
-    
+
+    this.dish.ingredients.forEach(element => {
+      this.dish.callories += (element.ingredient.callories / 100) * element.quantity;
+      this.dish.proteins += (element.ingredient.proteins / 100) * element.quantity;
+      this.dish.fats += (element.ingredient.fats / 100) * element.quantity;
+      this.dish.carbohydrates += (element.ingredient.carbohydrates / 100) * element.quantity;
+    });
   }
 }

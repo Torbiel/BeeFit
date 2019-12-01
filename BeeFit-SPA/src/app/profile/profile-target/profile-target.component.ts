@@ -93,14 +93,6 @@ export class ProfileTargetComponent implements OnInit {
     this.target.carbohydrates = Math.round(this.carbohydratesResult);
 
     if (this.user.target == null) {
-      // this.targetService.add(this.target).subscribe(
-      //   () => {
-      //     this.alertify.success('Target added.');
-      //   },
-      //   error => {
-      //     this.alertify.error(error);
-      //   }
-      // );
       this.user.target = this.target;
       this.userService.updateUser(this.user).subscribe(
         () => {

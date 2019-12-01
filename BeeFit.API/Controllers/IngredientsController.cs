@@ -49,34 +49,16 @@ namespace BeeFit.API.Controllers
             return Ok(ingredientToReturn);
         }
 
-        [HttpGet("{name}")]
-        public async Task<IActionResult> GetManyByName(string name, [FromQuery] PagingParams pagingParams)
+        [HttpGet]
+        public async Task<IActionResult> GetManyByName([FromQuery] PagingParams pagingParams)
         {
-            var ingredients = await _repo.GetManyByName(name, pagingParams);
+            var ingredients = await _repo.GetManyByName(pagingParams);
             var ingredientsToReturn = _mapper.Map<IEnumerable<IngredientForGetDto>>(ingredients);
 
-            return Ok(ingredientsToReturn);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> GetManyByUserId([FromQuery] PagingParams pagingParams)
-        {
-            var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-            var ingredients = await _repo.GetManyByUserId(currentUserId, pagingParams);
-            var ingredientsToReturn = _mapper.Map<IEnumerable<Ingredient>>(ingredients);
+            Response.AddPagination(ingredients.CurrentPage, ingredients.PageSize, ingredients.TotalCount, ingredients.TotalPages);
 
             return Ok(ingredientsToReturn);
         }
-
-        //[HttpGet]
-        //public async Task<IActionResult> GetManyByNameAndUser([FromQuery] string name, [FromQuery] PagingParams pagingParams)
-        //{
-        //    var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-        //    var ingredients = await _repo.GetManyByNameAndUser(name, currentUserId, pagingParams);
-        //    var ingredientsToReturn = _mapper.Map<IEnumerable<Ingredient>>(ingredients);
-
-        //    return Ok(ingredientsToReturn);
-        //}
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, IngredientForUpdateDto ingredientDto)

@@ -29,7 +29,6 @@ import { DatePickerComponent } from './date-picker/date-picker.component';
 import { ProfileTargetComponent } from './profile/profile-target/profile-target.component';
 import { ProfileChartsComponent } from './profile/profile-charts/profile-charts.component';
 import { AddMealNavComponent } from './add-meal/add-meal-nav/add-meal-nav.component';
-import { AddMealMyFoodComponent } from './add-meal/add-meal-my-food/add-meal-my-food.component';
 import { UserService } from './_services/user.service';
 import { DishesService } from './_services/dishes.service';
 import { IngredientsService } from './_services/ingredients.service';
@@ -42,7 +41,7 @@ import { MyFoodComponent } from './my-food/my-food.component';
 import { EditIngredientComponent } from './edit-ingredient/edit-ingredient.component';
 import { EditDishComponent } from './edit-dish/edit-dish.component';
 import { CalendarComponent } from './calendar/calendar.component';
-import { DefaultValuePipe } from './_pipes/defaultValue.pipe';
+import { SearchComponent } from './search/search.component';
 
 @NgModule({
    declarations: [
@@ -62,14 +61,13 @@ import { DefaultValuePipe } from './_pipes/defaultValue.pipe';
       WelcomeComponent,
       DatePickerComponent,
       AddMealNavComponent,
-      AddMealMyFoodComponent,
       AddDishComponent,
       AddIngredientComponent,
       MyFoodComponent,
       EditIngredientComponent,
       EditDishComponent,
       CalendarComponent,
-      DefaultValuePipe
+      SearchComponent
    ],
    imports: [
       BrowserModule,
@@ -77,7 +75,7 @@ import { DefaultValuePipe } from './_pipes/defaultValue.pipe';
       FormsModule,
       BsDropdownModule.forRoot(),
       RouterModule.forChild(profileRoutes),
-      // RouterModule.forChild(addMealRoutes),
+      //RouterModule.forChild(addMealRoutes),
       RouterModule.forRoot(appRoutes),
       BrowserAnimationsModule,
       MatProgressBarModule,

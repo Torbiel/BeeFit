@@ -1,35 +1,67 @@
 <div class="row justify-content-center mt-3">
-  <div class="col-12">
-    <form action="">
-      <div class="searchMode">
-        <label class="allFoodMode selected">All food
-          <input name="searchMode" type="radio" id="all-food" value="all" (input)="setSearchMode('all')" checked>
-        </label>
-        <label class="myFoodMode">My food
-          <input name="searchMode" type="radio" id="my-food" value="mine" (input)="setSearchMode('mine')">
-        </label>
-      </div>
-      <div>
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            Filters
-          </mat-expansion-panel-header>
+  <div class="col-8">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        Filters
+      </mat-expansion-panel-header>
 
-          <label>Min. callories:
-            <input name="minCallories" type="number" id="minCallories" class="form-control">
+      <!-- Search mode -->
+      <div class="row">
+        <div class="searchMode">
+          <label class="allFoodMode selected">All food
+            <input name="searchMode" type="radio" [(ngModel)]="filterParams.userId" value="null" checked>
           </label>
-        </mat-expansion-panel>
+          <label class="myFoodMode">My food
+            <input name="searchMode" type="radio" [(ngModel)]="filterParams.userId" id="userIdRadio"
+              value="{{this.user.id}}">
+          </label>
+        </div>
       </div>
-    </form>
+
+      <!-- Callories -->
+      <div class="row">
+        <div class="col-6">
+          <label class="ml-1">Min. callories:
+            <input type="number" class="form-control" [(ngModel)]="filterParams.minCallories">
+          </label>
+        </div>
+        <div class="col-6">
+          <label class="ml-2">Max. callories:
+            <input type="number" class="form-control" [(ngModel)]="filterParams.maxCallories">
+          </label>
+        </div>
+      </div>
+
+      <!-- Buttons -->
+      <div class="row justify-content-center">
+        <div class="col-6">
+          <button class="cancel-button" (click)="resetFilters(searchBox.value)"><i class="far fa-times"></i></button>
+        </div>
+        <div class="col-6">
+          <button class="confirm-button" (click)="applyFilters(searchBox.value)"><i class="far fa-check"></i></button>
+        </div>
+      </div>
+    </mat-expansion-panel>
   </div>
 </div>
 
+<!-- Legend -->
+<div class="row justify-content-center mt-2">
+  <div class="col-10 legend">
+    Nutrients are provided for the quantity displayed. <br>
+    E = Energy, P = Proteins, F = Fats, C = Carbohydrates
+  </div>
+</div>
+
+<!-- Search box -->
 <div class="row justify-content-center mt-2">
   <input type="text" placeholder="Search" #searchBox class="form-control"
-    (input)="findDishes(searchBox.value); findIngredients(searchBox.value);">
+    (input)="resetPagination(); find(searchBox.value)">
 </div>
 
 <div class="row mt-2">
+  
+<!-- Dishes found -->
   <div class="col-lg-6 dishes">
     <div class="row justify-content-center dishes-header">
       Dishes:
@@ -47,20 +79,21 @@
         <div class="row">
           <table>
             <tr>
-              <td>Energy: {{ dish.callories }} kcal</td>
-              <td>Proteins: {{ dish.proteins }} g</td>
-              <td>Fats: {{ dish.fats }} g</td>
-              <td>Carbohydrates: {{ dish.carbohydrates }} g</td>
+              <td>E: {{ dish.callories }} kcal</td>
+              <td>P: {{ dish.proteins }} g</td>
+              <td>F: {{ dish.fats }} g</td>
+              <td>C: {{ dish.carbohydrates }} g</td>
             </tr>
           </table>
         </div>
       </div>
     </div>
 
-    <div class="row pagination-wrapper" *ngIf="dishesPagination">
-      <div class="justify-content-center" *ngIf="dishesPagination.totalPages > 1">
+    <!-- Pagination -->
+    <div class="row pagination-wrapper justify-content-center mt-2" *ngIf="dishesPagination">
+      <div *ngIf="dishesPagination.totalPages > 1">
         <pagination [boundaryLinks]="true" [totalItems]="dishesPagination.totalItems"
-          [itemsPerPage]="dishesPagination.itemsPerPage" (pageChanged)="pageChanged($event, searchBox.value)"
+          [itemsPerPage]="dishesPagination.itemsPerPage" (pageChanged)="dishesPageChanged($event, searchBox.value)"
           [(ngModel)]="dishesPagination.currentPage" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;"
           lastText="&raquo;">
         </pagination>
@@ -68,11 +101,12 @@
     </div>
   </div>
 
-  <!-- <div class="col-lg-6 ingredients">
+  <!-- Ingredients found -->
+  <div class="col-lg-6 ingredients">
     <div class="row justify-content-center dishes-header">
       Ingredients:
     </div>
-    <div class="row list-element mb-2" ng-repeat="" *ngFor="let ing of (ingredients$ | async).result">
+    <div class="row list-element mb-2" *ngFor="let ing of ingredients">
       <div class="col-12">
         <div class="row">
           <div class="col-10 pl-2 pt-2">
@@ -85,20 +119,29 @@
         <div class="row">
           <table>
             <tr>
-              <td>Energy: {{ ing.callories }} kcal</td>
-              <td>Proteins: {{ ing.proteins }} g</td>
-              <td>Fats: {{ ing.fats }} g</td>
-              <td>Carbohydrates: {{ ing.carbohydrates }} g</td>
+              <td>E: {{ ing.callories }} kcal</td>
+              <td>P: {{ ing.proteins }} g</td>
+              <td>F: {{ ing.fats }} g</td>
+              <td>C: {{ ing.carbohydrates }} g</td>
             </tr>
           </table>
         </div>
       </div>
     </div>
 
-    <div class="pagination d-flex justify-content-center">
-      <pagination [boundaryLinks]="true" [totalItems]="77" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;"
-        lastText="&raquo;">
-      </pagination>
+    <div class="row pagination-wrapper justify-content-center mt-2" *ngIf="ingredientsPagination">
+      <div *ngIf="ingredientsPagination.totalPages > 1">
+        <pagination [boundaryLinks]="true" [totalItems]="ingredientsPagination.totalItems"
+          [itemsPerPage]="ingredientsPagination.itemsPerPage"
+          (pageChanged)="ingredientsPageChanged($event, searchBox.value)"
+          [(ngModel)]="ingredientsPagination.currentPage" previousText="&lsaquo;" nextText="&rsaquo;"
+          firstText="&laquo;" lastText="&raquo;">
+        </pagination>
+      </div>
     </div>
-  </div> -->
+  </div>
+
+  <div class="list-item" *ngFor="let x of searchResults">
+    {{ x.name }}
+  </div>
 </div>

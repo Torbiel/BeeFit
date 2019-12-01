@@ -24,63 +24,41 @@ export class DishesService {
     return this.http.get<Dish>(this.baseUrl + '/' + id, httpOptions);
   }
 
-  getDishes(name?: string, userId?, pageNumber?, pageSize?): Observable<PaginatedResult<Dish[]>> {
+  getDishes(paginationParams?, searchParams?): Observable<PaginatedResult<Dish[]>> {
+    const paginatedResult: PaginatedResult<Dish[]> = new PaginatedResult<Dish[]>();
     let params = new HttpParams();
+    params = params.append('name', searchParams.name);
 
-    if (userId != null) {
-      params = params.append('userId', userId);
+    if (searchParams.minCallories != null) {
+      params = params.append('minCallories', searchParams.minCallories);
     }
 
-    if (pageNumber != null) {
-      params = params.append('pageNumber', pageNumber);
+    if (searchParams.maxCallories != null) {
+      params = params.append('maxCallories', searchParams.maxCallories);
     }
 
-    if (pageSize != null) {
-      params = params.append('pageSize', pageSize);
+    if (searchParams.userId != null && searchParams.userId !== 'null') {
+      params = params.append('userId', searchParams.userId);
     }
+
+    if (paginationParams.pageNumber == null) {
+      paginationParams.pageNumber = 1;
+    }
+    params = params.append('pageNumber', paginationParams.pageNumber);
+
+    if (paginationParams.pageSize == null) {
+      paginationParams.pageSize = 10;
+    }
+    params = params.append('pageSize', paginationParams.pageSize);
 
     const authHeader = new HttpHeaders({
       Authorization: 'Bearer ' + localStorage.getItem('token')
     });
 
-    if (name != null) {
-      return this.getDishesByName(name, params, authHeader);
-    } else {
-      return this.getDishesByUserId(params, authHeader);
-    }
-  }
-
-  getDishesByName(name: string, params: HttpParams, authHeader: HttpHeaders): Observable<PaginatedResult<Dish[]>> {
-    const paginatedResult: PaginatedResult<Dish[]> = new PaginatedResult<Dish[]>();
-
-    return this.http.get<Dish[]>(this.baseUrl + '/' + name, {
-      observe: 'response',
-      params,
-      headers: new HttpHeaders({
-      Authorization: 'Bearer ' + localStorage.getItem('token')
-    })})
-      .pipe(
-        map(response => {
-          paginatedResult.result = response.body;
-
-          if (response.headers.get('Pagination') != null) {
-            paginatedResult.pagination = JSON.parse(response.headers.get('Pagination'));
-          }
-
-          return paginatedResult;
-        })
-      );
-  }
-
-  getDishesByUserId(params: HttpParams, authHeader: HttpHeaders): Observable<PaginatedResult<Dish[]>> {
-    const paginatedResult: PaginatedResult<Dish[]> = new PaginatedResult<Dish[]>();
-
     return this.http.get<Dish[]>(this.baseUrl, {
       observe: 'response',
       params,
-      headers: new HttpHeaders({
-      Authorization: 'Bearer ' + localStorage.getItem('token')
-    })})
+      headers: authHeader})
       .pipe(
         map(response => {
           paginatedResult.result = response.body;
@@ -93,6 +71,50 @@ export class DishesService {
         })
       );
   }
+
+  // getDishesByName(name: string, params: HttpParams, authHeader: HttpHeaders): Observable<PaginatedResult<Dish[]>> {
+  //   const paginatedResult: PaginatedResult<Dish[]> = new PaginatedResult<Dish[]>();
+
+  //   return this.http.get<Dish[]>(this.baseUrl + '/' + name, {
+  //     observe: 'response',
+  //     params,
+  //     headers: new HttpHeaders({
+  //     Authorization: 'Bearer ' + localStorage.getItem('token')
+  //   })})
+  //     .pipe(
+  //       map(response => {
+  //         paginatedResult.result = response.body;
+
+  //         if (response.headers.get('Pagination') != null) {
+  //           paginatedResult.pagination = JSON.parse(response.headers.get('Pagination'));
+  //         }
+
+  //         return paginatedResult;
+  //       })
+  //     );
+  // }
+
+  // getDishesByUserId(params: HttpParams, authHeader: HttpHeaders): Observable<PaginatedResult<Dish[]>> {
+  //   const paginatedResult: PaginatedResult<Dish[]> = new PaginatedResult<Dish[]>();
+
+  //   return this.http.get<Dish[]>(this.baseUrl, {
+  //     observe: 'response',
+  //     params,
+  //     headers: new HttpHeaders({
+  //     Authorization: 'Bearer ' + localStorage.getItem('token')
+  //   })})
+  //     .pipe(
+  //       map(response => {
+  //         paginatedResult.result = response.body;
+
+  //         if (response.headers.get('Pagination') != null) {
+  //           paginatedResult.pagination = JSON.parse(response.headers.get('Pagination'));
+  //         }
+
+  //         return paginatedResult;
+  //       })
+  //     );
+  // }
 
   // getDishesByUserAndName(name: string, userId: number, params: HttpParams, authHeader: HttpHeaders): Observable<PaginatedResult<Dish[]>> {
   //   const paginatedResult: PaginatedResult<Dish[]> = new PaginatedResult<Dish[]>();

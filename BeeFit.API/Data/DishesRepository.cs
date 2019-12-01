@@ -12,9 +12,14 @@ namespace BeeFit.API.Data
     {
         public DishesRepository(BeeFitDbContext context) : base(context) { }
 
-        public async Task<PagedList<Dish>> GetManyByName(string name, PagingParams pagingParams)
+        public async Task<PagedList<Dish>> GetManyByName(SearchParams pagingParams)
         {
-            var dishes = _context.Set<Dish>().Where(d => d.Name.Contains(name));
+            if(pagingParams.Name == null)
+            {
+                pagingParams.Name = "";
+            }
+
+            var dishes = _context.Set<Dish>().Where(d => d.Name.Contains(pagingParams.Name));
 
             //foreach (var pref in searchPreferences)
             //{
@@ -36,18 +41,6 @@ namespace BeeFit.API.Data
                 dishes = dishes.Where(d => d.Callories <= pagingParams.MaxCallories);
             }
 
-            return await PagedList<Dish>.CreateAsync(dishes, pagingParams.PageNumber, pagingParams.PageSize);
-        }
-
-        public async Task<PagedList<Dish>> GetManyByUserId(int id, PagingParams pagingParams)
-        {
-            var dishes = _context.Set<Dish>().Where(d => d.UserId == id);
-            return await PagedList<Dish>.CreateAsync(dishes, pagingParams.PageNumber, pagingParams.PageSize);
-        }
-
-        public async Task<PagedList<Dish>> GetManyByNameAndUser(string name, int userId, PagingParams pagingParams)
-        {
-            var dishes = _context.Set<Dish>().Where(d => d.Name.Contains(name) && d.UserId == userId);
             return await PagedList<Dish>.CreateAsync(dishes, pagingParams.PageNumber, pagingParams.PageSize);
         }
     }

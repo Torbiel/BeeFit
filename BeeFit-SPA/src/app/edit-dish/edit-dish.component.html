@@ -1,37 +1,104 @@
 <div class="container mt-3">
   <div class="row justify-content-center">
     <div class="col-lg-5 mr-3">
-      <form>
-        <!-- Input area -->
-        <div class="row">
+      <!-- Input area -->
+      <div class="row">
           <input class="form-control" type="text" placeholder="Name your dish" #dishName required="required"
             (input)="setDishName(dishName.value)" value="{{ this.dish.name }}">
         </div>
-        <div class="row mt-2 form-group search-bar">
-          <input class="form-control" type="text" placeholder="Search for ingredients" #searchBox
-            (input)="findIngredients(searchBox.value)">
-        </div>
+      <div class="row justify-content-center mt-3">
+        <div class="col-12">
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              Filters
+            </mat-expansion-panel-header>
 
-        <!-- Results of search -->
-        <div class="row list-item" *ngFor="let ing of ingredients$ | async">
-          <div class="col-10 pl-2 pt-2">
-            <p>{{ ing.name }}</p>
-            <table>
-              <tr>
-                <td>Energy: {{ ing.callories }} kcal</td>
-                <td>Proteins: {{ ing.proteins }} g</td>
-                <td>Fats: {{ ing.fats }} g</td>
-                <td>Carbohydrates: {{ ing.carbohydrates }} g</td>
-              </tr>
-            </table>
-          </div>
-          <div class="col-2 pr-0">
-            <button class="add-button pull-right" (click)="addToDish(ing)">
-              <i class="fas fa-plus"></i>
-            </button>
-          </div>
+            <!-- Search mode -->
+            <div class="row">
+              <div class="searchMode">
+                <label class="allFoodMode selected">All food
+                  <input name="searchMode" type="radio" [(ngModel)]="filterParams.userId" value="null" checked>
+                </label>
+                <label class="myFoodMode">My food
+                  <input name="searchMode" type="radio" [(ngModel)]="filterParams.userId" id="userIdRadio"
+                    value="{{this.userId}}">
+                </label>
+              </div>
+            </div>
+
+            <!-- Callories -->
+            <div class="row">
+              <div class="col-6">
+                <label class="ml-1">Min. callories:
+                  <input type="number" class="form-control" [(ngModel)]="filterParams.minCallories">
+                </label>
+              </div>
+              <div class="col-6">
+                <label class="ml-2">Max. callories:
+                  <input type="number" class="form-control" [(ngModel)]="filterParams.maxCallories">
+                </label>
+              </div>
+            </div>
+
+            <!-- Buttons -->
+            <div class="row justify-content-center">
+              <div class="col-6">
+                <button class="cancel-button" (click)="resetFilters(searchBox.value)"><i
+                    class="far fa-times"></i></button>
+              </div>
+              <div class="col-6">
+                <button class="confirm-button" (click)="applyFilters(searchBox.value)"><i
+                    class="far fa-check"></i></button>
+              </div>
+            </div>
+          </mat-expansion-panel>
         </div>
-      </form>
+      </div>
+
+      <!-- Legend -->
+      <div class="row justify-content-center mt-2">
+        <div class="col-12 legend">
+          Nutrients are provided for the quantity displayed. <br>
+          E = Energy, P = Proteins, F = Fats, C = Carbohydrates
+        </div>
+      </div>
+
+      <!-- Search box -->
+      <div class="row justify-content-center mt-2">
+        <input type="text" placeholder="Search" #searchBox class="form-control"
+          (input)="resetPagination(); findIngredients(searchBox.value);">
+      </div>
+
+      <!-- Results of search -->
+      <div class="row list-item" *ngFor="let ing of ingredients">
+        <div class="col-10 pl-2 pt-2">
+          <p>{{ ing.name }}</p>
+          <table>
+            <tr>
+              <td>E: {{ ing.callories }} kcal</td>
+              <td>P: {{ ing.proteins }} g</td>
+              <td>F: {{ ing.fats }} g</td>
+              <td>C: {{ ing.carbohydrates }} g</td>
+            </tr>
+          </table>
+        </div>
+        <div class="col-2 pr-0">
+          <button class="add-button pull-right" (click)="addToDish(ing)">
+            <i class="fas fa-plus"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="row pagination-wrapper justify-content-center mt-2" *ngIf="ingredientsPagination">
+        <div *ngIf="ingredientsPagination.totalPages > 1">
+          <pagination [boundaryLinks]="true" [totalItems]="ingredientsPagination.totalItems"
+            [itemsPerPage]="ingredientsPagination.itemsPerPage"
+            (pageChanged)="ingredientsPageChanged($event, searchBox.value)"
+            [(ngModel)]="ingredientsPagination.currentPage" previousText="&lsaquo;" nextText="&rsaquo;"
+            firstText="&laquo;" lastText="&raquo;">
+          </pagination>
+        </div>
+      </div>
     </div>
 
     <!-- Added ingredients list -->
@@ -62,7 +129,7 @@
       </div>
       <div class="row justify-content-center mt-3" *ngIf="addedIngredients.length > 1">
         <div class="col-5">
-          <button type="reset" class="cancel-button"><i class="far fa-times"></i></button>
+          <button type="reset" class="cancel-button" (click)="cancelEdit()"><i class="far fa-times"></i></button>
         </div>
         <div class="col-5">
           <button type="submit" class="confirm-button" (click)="updateDish()"><i class="far fa-check"></i></button>

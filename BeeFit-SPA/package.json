@@ -7,7 +7,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "postinstall": "tsserver-bridge --memory=4096"
   },
   "private": true,
   "dependencies": {
@@ -43,6 +44,7 @@
     "pusher-js": "^5.0.3",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
+    "tsserver-bridge": "^1.0.2",
     "zone.js": "~0.9.1"
   },
   "devDependencies": {

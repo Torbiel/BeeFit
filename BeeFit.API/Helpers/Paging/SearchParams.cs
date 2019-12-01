@@ -13,6 +13,7 @@
             set { pageSize = (value > maxPageSize) ?  maxPageSize : value; }
         }
 
+        public string Name { get; set; }
         public int? UserId { get; set; }
         public float? MinCallories { get; set; }
         public float? MaxCallories { get; set; }

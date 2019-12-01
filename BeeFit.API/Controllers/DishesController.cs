@@ -33,7 +33,6 @@ namespace BeeFit.API.Controllers
             var currentUserId = int.Parse(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
             var currentUser = await _repo.GetById<User>(currentUserId);
             dishToAdd.User = currentUser;
-            dishToAdd.CalculateNutrients();
 
             _repo.Add(dishToAdd);
 
@@ -49,10 +48,10 @@ namespace BeeFit.API.Controllers
             return Ok(dishToReturn);
         }
 
-        [HttpGet("{name}")]
-        public async Task<IActionResult> GetManyByName(string name, [FromQuery] PagingParams pagingParams)
+        [HttpGet]
+        public async Task<IActionResult> GetManyByName([FromQuery] PagingParams pagingParams)
         {
-            var dishes = await _repo.GetManyByName(name, pagingParams);
+            var dishes = await _repo.GetManyByName(pagingParams);
             var dishesToReturn = _mapper.Map<IEnumerable<DishForGetDto>>(dishes);
 
             Response.AddPagination(dishes.CurrentPage, dishes.PageSize, dishes.TotalCount, dishes.TotalPages);
@@ -60,15 +59,17 @@ namespace BeeFit.API.Controllers
             return Ok(dishesToReturn);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetManyByUserId([FromQuery] PagingParams pagingParams)
-        {
-            var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-            var dishes = await _repo.GetManyByUserId(currentUserId, pagingParams);
-            var dishesToReturn = _mapper.Map<IEnumerable<DishForGetDto>>(dishes);
+        //[HttpGet]
+        //public async Task<IActionResult> GetManyByUserId([FromQuery] PagingParams pagingParams)
+        //{
+        //    var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+        //    var dishes = await _repo.GetManyByUserId(currentUserId, pagingParams);
+        //    var dishesToReturn = _mapper.Map<IEnumerable<DishForGetDto>>(dishes);
 
-            return Ok(dishesToReturn);
-        }
+        //    Response.AddPagination(dishes.CurrentPage, dishes.PageSize, dishes.TotalCount, dishes.TotalPages);
+
+        //    return Ok(dishesToReturn);
+        //}
 
         //[HttpGet("{userId}/{name}")]
         //public async Task<IActionResult> GetManyByNameAndUser(int userId, string name, [FromQuery] PagingParams pagingParams)

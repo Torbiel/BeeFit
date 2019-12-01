@@ -10,20 +10,30 @@ namespace BeeFit.API.Data
     {
         public IngredientsRepository(BeeFitDbContext context) : base(context) { }
 
-        public async Task<PagedList<Ingredient>> GetManyByName(string name, PagingParams pagingParams)
+        public async Task<PagedList<Ingredient>> GetManyByName(PagingParams pagingParams)
         {
-            var ingredients = _context.Set<Ingredient>().Where(i => i.Name.Contains(name));
-            return await PagedList<Ingredient>.CreateAsync(ingredients, pagingParams.PageNumber, pagingParams.PageSize);
-        }
-        public async Task<PagedList<Ingredient>> GetManyByUserId(int id, PagingParams pagingParams)
-        {
-            var ingredients = _context.Set<Ingredient>().Where(i => i.UserId == id);
-            return await PagedList<Ingredient>.CreateAsync(ingredients, pagingParams.PageNumber, pagingParams.PageSize);
-        }
+            if (pagingParams.Name == null)
+            {
+                pagingParams.Name = "";
+            }
 
-        public async Task<PagedList<Ingredient>> GetManyByNameAndUser(string name, int id, PagingParams pagingParams)
-        {
-            var ingredients = _context.Set<Ingredient>().Where(i => i.UserId == id && i.Name.Contains(name));
+            var ingredients = _context.Set<Ingredient>().Where(i => i.Name.Contains(pagingParams.Name));
+
+            if (pagingParams.UserId != null)
+            {
+                ingredients = ingredients.Where(d => d.UserId == pagingParams.UserId);
+            }
+
+            if (pagingParams.MinCallories != null)
+            {
+                ingredients = ingredients.Where(d => d.Callories >= pagingParams.MinCallories);
+            }
+
+            if (pagingParams.MaxCallories != null)
+            {
+                ingredients = ingredients.Where(d => d.Callories <= pagingParams.MaxCallories);
+            }
+
             return await PagedList<Ingredient>.CreateAsync(ingredients, pagingParams.PageNumber, pagingParams.PageSize);
         }
     }

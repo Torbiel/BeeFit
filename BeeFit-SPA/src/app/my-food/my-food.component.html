@@ -10,6 +10,8 @@
             routerLinkActive="router-link-active"><i class="fas fa-plus"></i></button>
         </div>
       </div>
+
+      <!-- Dishes -->
       <div class="row list-item" *ngFor="let dish of this.dishes">
         <div class="col-12">
           <div class="row">
@@ -19,24 +21,38 @@
             <div class="col-2 buttons">
               <button class="delete-button pull-right" (click)="deleteDish(dish.id)"><i
                   class="fas fa-times"></i></button>
-              <button class="edit-button pull-right" [routerLink]="['edit-dish', dish.id]" routerLinkActive="router-link-active" ><i class="fas fa-edit"></i></button>
+              <button class="edit-button pull-right" [routerLink]="['edit-dish', dish.id]"
+                routerLinkActive="router-link-active"><i class="fas fa-edit"></i></button>
             </div>
           </div>
           <div class="row">
             <table *ngIf="dish !== null">
               <tr>
-                <td>Energy: {{ dish.callories }}kcal</td>
-                <td>Proteins: {{ dish.proteins }}g</td>
-                <td>Fats: {{ dish.fats }}g</td>
-                <td>Carbohydrates: {{ dish.carbohydrates }}g</td>
+                <td>Energy: {{ dish.callories }} kcal</td>
+                <td>Proteins: {{ dish.proteins }} g</td>
+                <td>Fats: {{ dish.fats }} g</td>
+                <td>Carbohydrates: {{ dish.carbohydrates }} g</td>
               </tr>
             </table>
           </div>
         </div>
       </div>
+
+      <!-- Pagination -->
+      <div class="row pagination-wrapper mt-3 justify-content-center" *ngIf="dishesPagination">
+        <div *ngIf="dishesPagination.totalPages > 1">
+          <pagination [boundaryLinks]="true" [totalItems]="dishesPagination.totalItems"
+            [itemsPerPage]="dishesPagination.itemsPerPage" (pageChanged)="dishesPageChanged($event)"
+            [(ngModel)]="dishesPagination.currentPage" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;"
+            lastText="&raquo;">
+          </pagination>
+        </div>
+      </div>
     </div>
     <div class="col-md-5 ml-2 divider-left">
       <div class="row">
+
+        <!-- Ingredients -->
         <div class="col-10 ingredients-header">
           Ingredients:
         </div>
@@ -48,25 +64,40 @@
       <div class="row list-item" *ngFor="let ingredient of this.ingredients">
         <div class="col-12">
           <div class="row">
-            <div class="col-10 mt-2">
+            <div class="col-5 mt-2">
               {{ ingredient.name }}
+            </div>
+            <div class="col-5 mt-2">
+              1x{{ingredient.unit.toString()}} ({{ingredient.gramsPerUnit}} g)
             </div>
             <div class="col-2 buttons">
               <button class="delete-button pull-right" (click)="deleteIngredient(ingredient.id)"><i
                   class="fas fa-times"></i></button>
-              <button class="edit-button pull-right" [routerLink]="['edit-ingredient', ingredient.id]" routerLinkActive="router-link-active" ><i class="fas fa-edit"></i></button>
+              <button class="edit-button pull-right" [routerLink]="['edit-ingredient', ingredient.id]"
+                routerLinkActive="router-link-active"><i class="fas fa-edit"></i></button>
             </div>
           </div>
           <div class="row">
             <table>
               <tr>
-                <td>Energy: {{ ingredient.callories }}kcal</td>
-                <td>Proteins: {{ ingredient.proteins }}g</td>
-                <td>Fats: {{ ingredient.fats }}g</td>
-                <td>Carbohydrates: {{ ingredient.carbohydrates }}g</td>
+                <td>Energy: {{ ingredient.callories }} kcal</td>
+                <td>Proteins: {{ ingredient.proteins }} g</td>
+                <td>Fats: {{ ingredient.fats }} g</td>
+                <td>Carbohydrates: {{ ingredient.carbohydrates }} g</td>
               </tr>
             </table>
           </div>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      <div class="row pagination-wrapper mt-3 justify-content-center" *ngIf="ingredientsPagination">
+        <div *ngIf="ingredientsPagination.totalPages > 1">
+          <pagination [boundaryLinks]="true" [totalItems]="ingredientsPagination.totalItems"
+            [itemsPerPage]="ingredientsPagination.itemsPerPage" (pageChanged)="ingredientsPageChanged($event)"
+            [(ngModel)]="ingredientsPagination.currentPage" previousText="&lsaquo;" nextText="&rsaquo;"
+            firstText="&laquo;" lastText="&raquo;">
+          </pagination>
         </div>
       </div>
     </div>

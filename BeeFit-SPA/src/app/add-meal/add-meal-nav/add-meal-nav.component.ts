@@ -8,14 +8,13 @@ import { MealService } from 'src/app/_services/meal.service';
 import { Router } from '@angular/router';
 import { MealtypeService } from 'src/app/_services/mealtype.service';
 import { DateService } from 'src/app/_services/date.service';
-import { Subject, Observable } from 'rxjs';
+import { Observable, forkJoin, combineLatest } from 'rxjs';
 import { PaginatedResult, Pagination } from 'src/app/_models/Pagination';
 import { Ingredient } from 'src/app/_models/Ingredient';
 import { Dish } from 'src/app/_models/Dish';
-import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { Meal } from 'src/app/_models/Meal';
 import { MatExpansionModule } from '@angular/material';
-import { DefaultValuePipe } from '../../_pipes/defaultValue.pipe';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-add-meal-nav',
@@ -23,21 +22,27 @@ import { DefaultValuePipe } from '../../_pipes/defaultValue.pipe';
   styleUrls: ['./add-meal-nav.component.css']
 })
 export class AddMealNavComponent implements OnInit {
-  pipes: [DefaultValuePipe];
   mealType: number;
   meal: Meal;
+  user$: Observable<User>;
   user: User;
-  userId: number; // For Http requests purposes
   currentDate: Date;
-  private dishesSearchName = new Subject<string>();
-  private ingredientsSearchName = new Subject<string>();
-  ingredients$: Observable<PaginatedResult<Ingredient[]>>;
+  @Output() addMode = new EventEmitter<boolean>();
+
+  dishesPagination: Pagination;
   dishes$: Observable<PaginatedResult<Dish[]>>;
   dishes: Dish[];
-  pageNumber = 1;
-  pageSize = 10;
-  @Output() addMode = new EventEmitter<boolean>();
-  dishesPagination: Pagination;
+
+  ingredientsPagination: Pagination;
+  ingredients$: Observable<PaginatedResult<Ingredient[]>>;
+  ingredients: Ingredient[];
+
+  pagination: Pagination;
+  searchResults$: Observable<PaginatedResult<Ingredient[] | Dish[]>>;
+  searchResults: any;
+
+  filterParams: any = {};
+  paginationParams: any = {};
 
   constructor(
     private userService: UserService,
@@ -47,9 +52,8 @@ export class AddMealNavComponent implements OnInit {
     private mealService: MealService,
     public router: Router,
     private mealTypeService: MealtypeService,
-    private dateService: DateService
-  ) {
-    this.getUser();
+    private dateService: DateService) {
+      this.getUser();
   }
 
   ngOnInit() {
@@ -58,34 +62,18 @@ export class AddMealNavComponent implements OnInit {
     );
     this.dateService.currentDate.subscribe(date => (this.currentDate = date));
 
-    // this.ingredients$ = this.ingredientsSearchName.pipe(
-    //   debounceTime(300),
-    //   distinctUntilChanged(),
-    //   switchMap((name: string) =>
-    //     this.ingredientsService.getIngredientsByName(
-    //       name,
-    //       this.pageNumber,
-    //       this.pageSize
-    //     )
-    //   )
-    // );
+    this.paginationParams.pageNumber = 1;
+    this.paginationParams.pageSize = 10;
 
-    // this.dishes$ = this.dishesSearchName.pipe(
-    //   debounceTime(300),
-    //   distinctUntilChanged(),
-    //   switchMap((name: string) =>
-    //     this.dishesService.getDishes(
-    //       name,
-    //       this.userId,
-    //       this.dishesPagination ? this.dishesPagination.currentPage : this.pageNumber,
-    //       this.pageSize
-    //     )
-    //   )
-    // );
+    this.filterParams.userId = null;
+    this.filterParams.minCallories = null;
+    this.filterParams.maxCallories = null;
 
-    // this.dishes$.subscribe(x => {
-    //   this.dishesPagination = x.pagination;
-    // });
+    // this.searchResults = new Array<Ingredient | Dish>();
+    this.pagination = new Pagination();
+    this.pagination.totalItems = 0;
+    this.pagination.currentPage = 1;
+    this.pagination.itemsPerPage = 10;
   }
 
   getUser() {
@@ -100,16 +88,35 @@ export class AddMealNavComponent implements OnInit {
     );
   }
 
+  find(name: string) {
+    this.filterParams.name = name;
+    const d = this.dishesService.getDishes(this.paginationParams, this.filterParams).pipe(map(val => val.result));
+    const i = this.ingredientsService.getIngredients(this.paginationParams, this.filterParams).pipe(map(val => val.result));
+
+    forkJoin([d, i])
+    .pipe(map(data => data.reduce((result, arr) => [...result, ...arr], [])))
+    .subscribe(data => {
+      this.searchResults = data;
+      console.log(this.searchResults);
+    });
+
+    // const all = forkJoin(d, i).pipe(map([d, i, 1] => d.concat(in)));
+    // const all = combineLatest(d, i).pipe(map(([di, in]) => di.concat(in)));
+  }
+
   findDishes(name: string) {
+    if (this.dishesPagination) {
+      this.paginationParams.pageNumber = this.dishesPagination.currentPage;
+      this.paginationParams.pageSize = this.dishesPagination.itemsPerPage;
+    }
+
     if (name !== '') {
-      this.dishesService.getDishes(
-        name,
-        this.userId,
-        this.dishesPagination ? this.dishesPagination.currentPage : this.pageNumber,
-        this.dishesPagination ? this.dishesPagination.itemsPerPage : this.pageSize
-      ).subscribe((res: PaginatedResult<Dish[]>) => {
-        this.dishes = res.result;
-        this.dishesPagination = res.pagination;
+      this.filterParams.name = name;
+      this.dishesService.getDishes(this.paginationParams, this.filterParams).subscribe((res: PaginatedResult<Dish[]>) => {
+        // this.dishes = res.result;
+        this.searchResults.concat(res.result);
+        // this.dishesPagination = res.pagination;
+        this.pagination.totalItems += res.result.length;
       }, error => {
         this.alertify.error(error);
       });
@@ -117,12 +124,23 @@ export class AddMealNavComponent implements OnInit {
   }
 
   findIngredients(name: string) {
+    if (this.ingredientsPagination) {
+      this.paginationParams.pageNumber = this.ingredientsPagination.currentPage;
+      this.filterParams.pageSize = this.ingredientsPagination.itemsPerPage;
+    }
+
     if (name !== '') {
-      this.ingredientsService.getIngredientsByName(name, 1, 10);
+      this.filterParams.name = name;
+      this.ingredientsService.getIngredients(this.paginationParams, this.filterParams).subscribe((res: PaginatedResult<Ingredient[]>) => {
+        // this.ingredients = res.result;
+        // this.ingredientsPagination = res.pagination;
+        this.searchResults.concat(res.result);
+        this.pagination.totalItems += res.result.length;
+      }, error => {
+        this.alertify.error(error);
+      });
     }
   }
-
-  joinArrays() {}
 
   addToMeal(dishId: number, ingredientId: number) {
     this.meal = new Meal();
@@ -143,16 +161,48 @@ export class AddMealNavComponent implements OnInit {
     );
   }
 
-  setSearchMode(searchMode: string) {
-    if (searchMode === 'all') {
-      this.userId = null;
-    } else {
-      this.userId = this.user.id;
-    }
+  pageChanged(event: any, name: string) {
+    this.pagination.currentPage = event.page;
+    this.find
   }
 
-  pageChanged(event: any, name: string) {
+  dishesPageChanged(event: any, name: string) {
     this.dishesPagination.currentPage = event.page;
     this.findDishes(name);
+  }
+
+  ingredientsPageChanged(event: any, name: string) {
+    this.ingredientsPagination.currentPage = event.page;
+    this.findIngredients(name);
+  }
+
+  applyFilters(name: string) {
+    this.dishesPagination.currentPage = 1;
+    this.ingredientsPagination.currentPage = 1;
+    this.findDishes(name);
+    this.findIngredients(name);
+  }
+
+  resetFilters(name: string) {
+    this.resetPagination();
+    this.filterParams.userId = null;
+    this.filterParams.minCallories = null;
+    this.filterParams.maxCallories = null;
+    this.findDishes(name);
+    this.findIngredients(name);
+  }
+
+  resetPagination() {
+    if (this.dishesPagination) {
+      this.dishesPagination.currentPage = 1;
+    }
+
+    if (this.ingredientsPagination) {
+      this.ingredientsPagination.currentPage = 1;
+    }
+
+    if(this.pagination) {
+      this.pagination.currentPage = 1;
+    }
   }
 }

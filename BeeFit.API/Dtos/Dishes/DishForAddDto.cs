@@ -7,5 +7,9 @@ namespace BeeFit.API.Dtos.Dishes
     {
         public string Name { get; set; }
         public virtual ICollection<DishesIngredientForAddDto> Ingredients { get; set; }
+        public float Callories { get; set; }
+        public float Fats { get; set; }
+        public float Proteins { get; set; }
+        public float Carbohydrates { get; set; }
     }
 }

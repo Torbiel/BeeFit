@@ -6,7 +6,8 @@ import { Dish } from '../_models/Dish';
 import { Ingredient } from '../_models/Ingredient';
 import { AlertifyService } from '../_services/alertify.service';
 import { Router } from '@angular/router';
-import { PaginatedResult } from '../_models/Pagination';
+import { PaginatedResult, Pagination } from '../_models/Pagination';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-my-food',
@@ -14,9 +15,16 @@ import { PaginatedResult } from '../_models/Pagination';
   styleUrls: ['./my-food.component.css']
 })
 export class MyFoodComponent implements OnInit {
-  userId: string;
-  dishes: PaginatedResult<Dish[]>;
-  ingredients: PaginatedResult<Ingredient[]>;
+  userId: number;
+
+  dishes$: Observable<PaginatedResult<Dish[]>>;
+  dishes: Dish[];
+  dishesPagination: Pagination;
+
+  ingredients$: Observable<PaginatedResult<Ingredient[]>>;
+  ingredients: Ingredient[];
+  ingredientsPagination: Pagination;
+
   ingredient: Ingredient;
   pageNumber = 1;
   pageSize = 10;
@@ -24,19 +32,25 @@ export class MyFoodComponent implements OnInit {
   constructor(private dishesService: DishesService,
               private ingredientsService: IngredientsService,
               private alertify: AlertifyService,
-              public router: Router) { }
+              public router: Router) {
+                this.userId = parseInt(localStorage.getItem('userId'), 10);
+                this.getDishes();
+                this.getIngredients();
+              }
 
   ngOnInit() {
-    this.userId = localStorage.getItem('userId');
-    this.getDishes();
-    this.getIngredients();
     this.ingredientsService.currentIngredient.subscribe(ingredient => this.ingredient = ingredient);
   }
 
   getDishes() {
-    this.dishesService.getDishes(null, parseInt(this.userId, 10), this.pageNumber, this.pageSize).subscribe(
-      (dishes: PaginatedResult<Dish[]>) => {
-        this.dishes = dishes;
+    this.dishesService.getDishes(
+      { pageNumber: this.dishesPagination ? this.dishesPagination.currentPage : this.pageNumber,
+        pageSize: this.dishesPagination ? this.dishesPagination.itemsPerPage : this.pageSize },
+      { userId: this.userId, name: '' }
+      ).subscribe(
+      (res: PaginatedResult<Dish[]>) => {
+        this.dishes = res.result;
+        this.dishesPagination = res.pagination;
       }, error => {
         this.alertify.error(error);
       }
@@ -44,9 +58,17 @@ export class MyFoodComponent implements OnInit {
   }
 
   getIngredients() {
-    this.ingredientsService.getIngredientsByUserId().subscribe(
-      (ingredients: PaginatedResult<Ingredient[]>) => {
-        this.ingredients = ingredients;
+    this.ingredientsService.getIngredients(
+      { pageNumber: this.ingredientsPagination ? this.ingredientsPagination.currentPage : this.pageNumber,
+      pageSize: this.ingredientsPagination ? this.ingredientsPagination.itemsPerPage : this.pageSize },
+      { userId: this.userId, name: '' }
+    ).subscribe(
+      (res: PaginatedResult<Ingredient[]>) => {
+        this.ingredients = res.result;
+        this.ingredients.forEach(element => {
+          element.callories = Math.round(element.callories * (element.gramsPerUnit / 100));
+        });
+        this.ingredientsPagination = res.pagination;
       }, error => {
         this.alertify.error(error);
       }
@@ -78,5 +100,15 @@ export class MyFoodComponent implements OnInit {
   editIngredient(ingredient: Ingredient) {
     this.ingredientsService.changeIngredient(ingredient);
     this.router.navigate(['/update-ingredient']);
+  }
+
+  dishesPageChanged($event: any) {
+    this.dishesPagination.currentPage = $event.page;
+    this.getDishes();
+  }
+
+  ingredientsPageChanged($event: any) {
+    this.ingredientsPagination.currentPage = $event.page;
+    this.getIngredients();
   }
 }
