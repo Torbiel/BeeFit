@@ -10,7 +10,7 @@ namespace BeeFit.API.Data
     {
         public IngredientsRepository(BeeFitDbContext context) : base(context) { }
 
-        public async Task<PagedList<Ingredient>> GetManyByName(PagingParams pagingParams)
+        public async Task<PagedList<Ingredient>> GetManyByName(SearchParams pagingParams)
         {
             if (pagingParams.Name == null)
             {

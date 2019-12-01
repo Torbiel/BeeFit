@@ -1,7 +1,7 @@
 ﻿namespace BeeFit.API.Helpers
 {
     // For Dishes and Ingredients together
-    public class PagingParams
+    public class SearchParams
     {
         private const int maxPageSize = 50;
         public int PageNumber { get; set; } = 1;

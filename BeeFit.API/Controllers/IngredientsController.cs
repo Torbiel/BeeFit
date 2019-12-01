@@ -50,7 +50,7 @@ namespace BeeFit.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetManyByName([FromQuery] PagingParams pagingParams)
+        public async Task<IActionResult> GetManyByName([FromQuery] SearchParams pagingParams)
         {
             var ingredients = await _repo.GetManyByName(pagingParams);
             var ingredientsToReturn = _mapper.Map<IEnumerable<IngredientForGetDto>>(ingredients);
