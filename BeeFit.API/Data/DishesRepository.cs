@@ -12,36 +12,77 @@ namespace BeeFit.API.Data
     {
         public DishesRepository(BeeFitDbContext context) : base(context) { }
 
-        public async Task<PagedList<Dish>> GetManyByName(SearchParams pagingParams)
+        public async Task<PagedList<Dish>> GetMany(FoodSearchParams searchParams)
         {
-            if(pagingParams.Name == null)
+            if(searchParams.Name == null)
             {
-                pagingParams.Name = "";
+                searchParams.Name = "";
             }
 
-            var dishes = _context.Set<Dish>().Where(d => d.Name.Contains(pagingParams.Name));
+            var dishes = _context.Set<Dish>().Where(d => d.Name.Contains(searchParams.Name)).OrderByDescending(d => d.Name).AsQueryable();
 
             //foreach (var pref in searchPreferences)
             //{
             //    dishes.Where(d => d.Ingredients.All(i => i.Ingredient.SearchPreferences.FirstOrDefault(s => s.SearchPreferenceId == pref.Id) != null));
             //}
 
-            if(pagingParams.UserId != null)
+            if(searchParams.UserId != null)
             {
-                dishes = dishes.Where(d => d.UserId == pagingParams.UserId);
+                dishes = dishes.Where(d => d.UserId == searchParams.UserId);
             }
 
-            if(pagingParams.MinCallories != null)
+            if(searchParams.MinCallories != null)
             {
-                dishes = dishes.Where(d => d.Callories >= pagingParams.MinCallories);
+                dishes = dishes.Where(d => d.Callories >= searchParams.MinCallories);
             }
 
-            if(pagingParams.MaxCallories != null)
+            if(searchParams.MaxCallories != null)
             {
-                dishes = dishes.Where(d => d.Callories <= pagingParams.MaxCallories);
+                dishes = dishes.Where(d => d.Callories <= searchParams.MaxCallories);
             }
 
-            return await PagedList<Dish>.CreateAsync(dishes, pagingParams.PageNumber, pagingParams.PageSize);
+            if(searchParams.OrderBy != null)
+            {
+                switch(searchParams.OrderBy)
+                {
+                    case FoodOrderBy.Callories:
+                        {
+                            dishes = dishes.OrderByDescending(d => d.Callories);
+                            break;
+                        }
+
+                    case FoodOrderBy.Fats:
+                        {
+                            dishes = dishes.OrderByDescending(d => d.Fats);
+                            break;
+                        }
+
+                    case FoodOrderBy.Proteins:
+                        {
+                            dishes = dishes.OrderByDescending(d => d.Proteins);
+                            break;
+                        }
+
+                    case FoodOrderBy.Carbohydrates:
+                        {
+                            dishes = dishes.OrderByDescending(d => d.Carbohydrates);
+                            break;
+                        }
+
+                    default:
+                        {
+                            dishes = dishes.OrderByDescending(d => d.Name);
+                            break;
+                        }
+                }
+
+                if(searchParams.Ascending)
+                {
+                    dishes = dishes.Reverse();
+                }
+            }
+
+            return await PagedList<Dish>.CreateAsync(dishes, searchParams.PageNumber, searchParams.PageSize);
         }
     }
 }

@@ -10,14 +10,14 @@ namespace BeeFit.API.Data
     {
         public IngredientsRepository(BeeFitDbContext context) : base(context) { }
 
-        public async Task<PagedList<Ingredient>> GetManyByName(SearchParams pagingParams)
+        public async Task<PagedList<Ingredient>> GetMany(FoodSearchParams pagingParams)
         {
             if (pagingParams.Name == null)
             {
                 pagingParams.Name = "";
             }
 
-            var ingredients = _context.Set<Ingredient>().Where(i => i.Name.Contains(pagingParams.Name));
+            var ingredients = _context.Set<Ingredient>().Where(i => i.Name.Contains(pagingParams.Name)).OrderByDescending(d => d.Name).AsQueryable();
 
             if (pagingParams.UserId != null)
             {

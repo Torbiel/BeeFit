@@ -1,13 +1,13 @@
 <div class="row justify-content-center mt-3">
-  <div class="col-8">
+  <div class="col-12">
     <mat-expansion-panel>
       <mat-expansion-panel-header>
         Filters
       </mat-expansion-panel-header>
 
-      Search mode
-      <div class="row">
-        <div class="searchMode">
+      <!-- Search mode -->
+      <div class="row justify-content-center">
+        <div class="col-12 searchMode">
           <label class="allFoodMode selected">All food
             <input name="searchMode" type="radio" [(ngModel)]="filterParams.userId" value="null" checked>
           </label>
@@ -18,27 +18,97 @@
         </div>
       </div>
 
-      Callories
+      <!-- Callories -->
       <div class="row">
-        <div class="col-6">
+        <div class="col-3">
           <label class="ml-1">Min. callories:
             <input type="number" class="form-control" [(ngModel)]="filterParams.minCallories">
           </label>
         </div>
-        <div class="col-6">
+        <div class="col-3">
           <label class="ml-2">Max. callories:
             <input type="number" class="form-control" [(ngModel)]="filterParams.maxCallories">
           </label>
         </div>
+        <div class="col-3">
+          <label class="ml-1">Min. proteins:
+            <input type="number" class="form-control" [(ngModel)]="filterParams.minProteins">
+          </label>
+        </div>
+        <div class="col-3">
+          <label class="ml-2">Max. proteins:
+            <input type="number" class="form-control" [(ngModel)]="filterParams.maxProteins">
+          </label>
+        </div>
       </div>
 
-      Buttons
+      <!-- Proteins -->
+      <div class="row">
+
+      </div>
+
+      <!-- Order by -->
+      <div class="row justify-content-center">
+        Order by:
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-2">
+          <label class="ml-1">Name
+            <input type="radio" class="" name="orderBy" value="0" [(ngModel)]="filterParams.orderBy"
+              checked>
+          </label>
+        </div>
+        <div class="col-2">
+          <label class="ml-1">Callories
+            <input type="radio" class="" name="orderBy" value="1" [(ngModel)]="filterParams.orderBy"
+              checked>
+          </label>
+        </div>
+        <div class="col-2">
+          <label class="ml-1">Proteins
+            <input type="radio" class="" name="orderBy" value="2" [(ngModel)]="filterParams.orderBy"
+              checked>
+          </label>
+        </div>
+        <div class="col-2">
+          <label class="ml-1">Fats
+            <input type="radio" class="" name="orderBy" value="3" [(ngModel)]="filterParams.orderBy"
+              checked>
+          </label>
+        </div>
+        <div class="col-2">
+          <label class="ml-1">Carbohydrates
+            <input type="radio" class="" name="orderBy" value="4" [(ngModel)]="filterParams.orderBy"
+              checked>
+          </label>
+        </div>
+      </div>
+
+      <!-- Ascending/Descending -->
+      <div class="row justify-content-center">
+        Ascending or descending:
+      </div>
       <div class="row justify-content-center">
         <div class="col-6">
-          <button class="cancel-button" (click)="resetFilters(searchBox.value)"><i class="far fa-times"></i></button>
+          <label>Descending
+            <input type="radio" class="" name="ascending" value="false"
+              [(ngModel)]="filterParams.ascending">
+          </label>
         </div>
         <div class="col-6">
-          <button class="confirm-button" (click)="applyFilters(searchBox.value)"><i class="far fa-check"></i></button>
+          <label>Ascending
+            <input type="radio" class="" name="ascending" value="true" [(ngModel)]="filterParams.ascending">
+          </label>
+        </div>
+      </div>
+
+      <!-- Buttons -->
+      <div class="row justify-content-center">
+        <div class="col-6">
+          <button class="cancel-button" (click)="resetFilters()"><i class="far fa-times"></i></button>
+        </div>
+        <div class="col-6">
+          <button class="confirm-button" (click)="applyFilters()"><i class="far fa-check"></i></button>
         </div>
       </div>
     </mat-expansion-panel>
@@ -46,6 +116,5 @@
 </div>
 
 <div class="row justify-content-center mt-2">
-  <input type="text" placeholder="Search" #searchBox class="form-control"
-    (input)="resetPagination(); search(searchBox.value);">
+  <input type="text" placeholder="Search" class="form-control" [(ngModel)]="filterParams.name" (input)="search();">
 </div>

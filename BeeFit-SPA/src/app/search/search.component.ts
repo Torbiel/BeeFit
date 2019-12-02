@@ -7,27 +7,32 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class SearchComponent implements OnInit {
   @Input() userId: number;
-  @Output() searched = new EventEmitter<string>();
+  @Output() searched = new EventEmitter<any>();
+  @Output() filtersApplied = new EventEmitter<any>();
+  @Output() filtersReset = new EventEmitter<any>();
   filterParams: any = {};
 
   constructor() { }
 
   ngOnInit() {
+    this.filterParams.name = null;
+    this.filterParams.userId = null;
+    this.filterParams.minCallories = null;
+    this.filterParams.maxCallories = null;
   }
 
-  search(name: string) {
-    this.searched.emit(name);
+  search() {
+    this.searched.emit(this.filterParams);
   }
 
-  applyFilters(name: string) {
-
+  applyFilters() {
+    this.filtersApplied.emit(this.filterParams);
   }
 
-  resetFilters(name: string) {
-
-  }
-
-  resetPagination() {
-
+  resetFilters() {
+    this.filterParams.userId = null;
+    this.filterParams.minCallories = null;
+    this.filterParams.maxCallories = null;
+    this.filtersReset.emit(this.filterParams);
   }
 }

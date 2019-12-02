@@ -1,0 +1,28 @@
+/deep/ li.page-item > .page-link, /deep/ li.page-item.disabled > .page-link
+{
+    background-color: rgb(29, 29, 29);
+    color: #F3C622;
+    border: none;
+}
+
+/deep/ li.page-item > .page-link:hover, /deep/ li.page-item.active > .page-link
+{
+    background-color: #F3C622;
+    color: rgb(29, 29, 29);
+}
+
+mat-expansion-panel
+{
+    background-color: rgb(63, 63, 63);
+    color: rgb(230, 230, 230);
+}
+
+/deep/ .mat-expansion-indicator::after
+{
+    color: rgb(230, 230, 230);
+}
+
+.far
+{
+    font-family: fontawesome;
+}

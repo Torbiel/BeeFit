@@ -49,9 +49,9 @@ namespace BeeFit.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetManyByName([FromQuery] SearchParams pagingParams)
+        public async Task<IActionResult> GetMany([FromQuery] FoodSearchParams searchParams)
         {
-            var dishes = await _repo.GetManyByName(pagingParams);
+            var dishes = await _repo.GetMany(searchParams);
             var dishesToReturn = _mapper.Map<IEnumerable<DishForGetDto>>(dishes);
 
             Response.AddPagination(dishes.CurrentPage, dishes.PageSize, dishes.TotalCount, dishes.TotalPages);

@@ -6,6 +6,6 @@ namespace BeeFit.API.Data.Interfaces
 {
     public interface IIngredientsRepository : IBeeFitRepository
     {
-        public Task<PagedList<Ingredient>> GetManyByName(SearchParams pagingParams);
+        public Task<PagedList<Ingredient>> GetMany(FoodSearchParams pagingParams);
     }
 }

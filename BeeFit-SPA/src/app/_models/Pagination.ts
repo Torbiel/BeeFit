@@ -8,4 +8,8 @@ export class Pagination {
 export class PaginatedResult<T> {
   result: T;
   pagination: Pagination;
+
+  constructor(data?: any) {
+    this.result = data;
+  }
 }

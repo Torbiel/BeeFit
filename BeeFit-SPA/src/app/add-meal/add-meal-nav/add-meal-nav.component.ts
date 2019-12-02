@@ -8,7 +8,7 @@ import { MealService } from 'src/app/_services/meal.service';
 import { Router } from '@angular/router';
 import { MealtypeService } from 'src/app/_services/mealtype.service';
 import { DateService } from 'src/app/_services/date.service';
-import { Observable, forkJoin, combineLatest } from 'rxjs';
+import { Observable, forkJoin, combineLatest, of } from 'rxjs';
 import { PaginatedResult, Pagination } from 'src/app/_models/Pagination';
 import { Ingredient } from 'src/app/_models/Ingredient';
 import { Dish } from 'src/app/_models/Dish';
@@ -37,9 +37,9 @@ export class AddMealNavComponent implements OnInit {
   ingredients$: Observable<PaginatedResult<Ingredient[]>>;
   ingredients: Ingredient[];
 
-  pagination: Pagination;
-  searchResults$: Observable<PaginatedResult<Ingredient[] | Dish[]>>;
-  searchResults: any;
+  // pagination: Pagination;
+  // searchResults$: PaginatedResult<(Ingredient | Dish)[]>;
+  // searchResults: (Ingredient | Dish)[];
 
   filterParams: any = {};
   paginationParams: any = {};
@@ -69,11 +69,10 @@ export class AddMealNavComponent implements OnInit {
     this.filterParams.minCallories = null;
     this.filterParams.maxCallories = null;
 
-    // this.searchResults = new Array<Ingredient | Dish>();
-    this.pagination = new Pagination();
-    this.pagination.totalItems = 0;
-    this.pagination.currentPage = 1;
-    this.pagination.itemsPerPage = 10;
+    // this.pagination = new Pagination();
+    // this.pagination.totalItems = 0;
+    // this.pagination.currentPage = 1;
+    // this.pagination.itemsPerPage = 10;
   }
 
   getUser() {
@@ -88,21 +87,24 @@ export class AddMealNavComponent implements OnInit {
     );
   }
 
-  find(name: string) {
-    this.filterParams.name = name;
-    const d = this.dishesService.getDishes(this.paginationParams, this.filterParams).pipe(map(val => val.result));
-    const i = this.ingredientsService.getIngredients(this.paginationParams, this.filterParams).pipe(map(val => val.result));
+  // find(name: string) {
+  //   this.filterParams.name = name;
+  //   const d = this.dishesService.getDishes(this.paginationParams, this.filterParams).pipe(map(val => val.result));
+  //   const i = this.ingredientsService.getIngredients(this.paginationParams, this.filterParams).pipe(map(val => val.result));
 
-    forkJoin([d, i])
-    .pipe(map(data => data.reduce((result, arr) => [...result, ...arr], [])))
-    .subscribe(data => {
-      this.searchResults = data;
-      console.log(this.searchResults);
-    });
-
-    // const all = forkJoin(d, i).pipe(map([d, i, 1] => d.concat(in)));
-    // const all = combineLatest(d, i).pipe(map(([di, in]) => di.concat(in)));
-  }
+  //   forkJoin([d, i])
+  //   .pipe(map(data => data.reduce((result, arr) => [...result, ...arr], [])))
+  //   .subscribe(data => {
+  //     this.searchResults = data;
+  //     this.searchResults$ = new PaginatedResult<Dish[] | Ingredient[]>(data);
+  //     this.searchResults$.pagination = new Pagination();
+  //     this.searchResults$.pagination.totalItems = this.searchResults.length;
+  //     this.searchResults$.pagination.currentPage = 1;
+  //     this.searchResults$.pagination.itemsPerPage = 10;
+  //     this.searchResults$.pagination.totalPages = Math.ceil(this.searchResults.length / this.searchResults$.pagination.itemsPerPage);
+  //     this.searchResults$.result = this.searchResults;
+  //   });
+  // }
 
   findDishes(name: string) {
     if (this.dishesPagination) {
@@ -113,10 +115,8 @@ export class AddMealNavComponent implements OnInit {
     if (name !== '') {
       this.filterParams.name = name;
       this.dishesService.getDishes(this.paginationParams, this.filterParams).subscribe((res: PaginatedResult<Dish[]>) => {
-        // this.dishes = res.result;
-        this.searchResults.concat(res.result);
-        // this.dishesPagination = res.pagination;
-        this.pagination.totalItems += res.result.length;
+        this.dishes = res.result;
+        this.dishesPagination = res.pagination;
       }, error => {
         this.alertify.error(error);
       });
@@ -132,10 +132,8 @@ export class AddMealNavComponent implements OnInit {
     if (name !== '') {
       this.filterParams.name = name;
       this.ingredientsService.getIngredients(this.paginationParams, this.filterParams).subscribe((res: PaginatedResult<Ingredient[]>) => {
-        // this.ingredients = res.result;
-        // this.ingredientsPagination = res.pagination;
-        this.searchResults.concat(res.result);
-        this.pagination.totalItems += res.result.length;
+        this.ingredients = res.result;
+        this.ingredientsPagination = res.pagination;
       }, error => {
         this.alertify.error(error);
       });
@@ -161,36 +159,35 @@ export class AddMealNavComponent implements OnInit {
     );
   }
 
-  pageChanged(event: any, name: string) {
-    this.pagination.currentPage = event.page;
-    this.find
-  }
+  // pageChanged(event: any) {
+  //   this.searchResults$.pagination.currentPage = event.page;
+  // }
 
-  dishesPageChanged(event: any, name: string) {
+  dishesPageChanged(event: any) {
     this.dishesPagination.currentPage = event.page;
-    this.findDishes(name);
+    this.findDishes(this.filterParams.name);
   }
 
-  ingredientsPageChanged(event: any, name: string) {
+  ingredientsPageChanged(event: any) {
     this.ingredientsPagination.currentPage = event.page;
-    this.findIngredients(name);
+    this.findIngredients(this.filterParams.name);
   }
 
-  applyFilters(name: string) {
-    this.dishesPagination.currentPage = 1;
-    this.ingredientsPagination.currentPage = 1;
-    this.findDishes(name);
-    this.findIngredients(name);
-  }
+  // applyFilters(name: string) {
+  //   this.dishesPagination.currentPage = 1;
+  //   this.ingredientsPagination.currentPage = 1;
+  //   this.findDishes(name);
+  //   this.findIngredients(name);
+  // }
 
-  resetFilters(name: string) {
-    this.resetPagination();
-    this.filterParams.userId = null;
-    this.filterParams.minCallories = null;
-    this.filterParams.maxCallories = null;
-    this.findDishes(name);
-    this.findIngredients(name);
-  }
+  // resetFilters(name: string) {
+  //   this.resetPagination();
+  //   this.filterParams.userId = null;
+  //   this.filterParams.minCallories = null;
+  //   this.filterParams.maxCallories = null;
+  //   this.findDishes(name);
+  //   this.findIngredients(name);
+  // }
 
   resetPagination() {
     if (this.dishesPagination) {
@@ -201,8 +198,30 @@ export class AddMealNavComponent implements OnInit {
       this.ingredientsPagination.currentPage = 1;
     }
 
-    if(this.pagination) {
-      this.pagination.currentPage = 1;
-    }
+    // if(this.searchResults$.pagination) {
+    //   this.searchResults$.pagination.currentPage = 1;
+    // }
+  }
+
+  onSearched(event: any) {
+    this.filterParams = event;
+    this.resetPagination();
+    this.findDishes(this.filterParams.name);
+    this.findIngredients(this.filterParams.name);
+  }
+
+  onFiltersApplied(event: any) {
+    this.filterParams = event;
+    this.dishesPagination.currentPage = 1;
+    this.ingredientsPagination.currentPage = 1;
+    this.findDishes(this.filterParams.name);
+    this.findIngredients(this.filterParams.name);
+  }
+
+  onFiltersReset(event: any) {
+    this.filterParams = event;
+    this.resetPagination();
+    this.findDishes(this.filterParams.name);
+    this.findIngredients(this.filterParams.name);
   }
 }
