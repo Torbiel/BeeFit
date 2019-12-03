@@ -6,7 +6,7 @@ import { BsDropdownModule } from 'ngx-bootstrap';
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatExpansionModule } from '@angular/material';
+import { MatExpansionModule, MatTooltipModule } from '@angular/material';
 import { FullCalendarModule } from '@fullcalendar/angular';
 
 import { AppComponent } from './app.component';
@@ -80,6 +80,7 @@ import { CalendarComponent } from './calendar/calendar.component';
       BrowserAnimationsModule,
       MatProgressBarModule,
       MatExpansionModule,
+      MatTooltipModule,
       FormsModule,
       ReactiveFormsModule,
       FullCalendarModule
