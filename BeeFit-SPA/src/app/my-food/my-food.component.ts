@@ -45,8 +45,8 @@ export class MyFoodComponent implements OnInit {
   getDishes() {
     this.dishesService.getDishes(
       { pageNumber: this.dishesPagination ? this.dishesPagination.currentPage : this.pageNumber,
-        pageSize: this.dishesPagination ? this.dishesPagination.itemsPerPage : this.pageSize },
-      { userId: this.userId, name: '' }
+        pageSize: this.dishesPagination ? this.dishesPagination.itemsPerPage : this.pageSize,
+        userId: this.userId, name: '' }
       ).subscribe(
       (res: PaginatedResult<Dish[]>) => {
         this.dishes = res.result;

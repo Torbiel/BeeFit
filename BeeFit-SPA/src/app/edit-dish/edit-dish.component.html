@@ -3,57 +3,12 @@
     <div class="col-lg-5 mr-3">
       <!-- Input area -->
       <div class="row">
-          <input class="form-control" type="text" placeholder="Name your dish" #dishName required="required"
-            (input)="setDishName(dishName.value)" value="{{ this.dish.name }}">
-        </div>
-      <div class="row justify-content-center mt-3">
-        <div class="col-12">
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              Filters
-            </mat-expansion-panel-header>
-
-            <!-- Search mode -->
-            <div class="row">
-              <div class="searchMode">
-                <label class="allFoodMode selected">All food
-                  <input name="searchMode" type="radio" [(ngModel)]="filterParams.userId" value="null" checked>
-                </label>
-                <label class="myFoodMode">My food
-                  <input name="searchMode" type="radio" [(ngModel)]="filterParams.userId" id="userIdRadio"
-                    value="{{this.userId}}">
-                </label>
-              </div>
-            </div>
-
-            <!-- Callories -->
-            <div class="row">
-              <div class="col-6">
-                <label class="ml-1">Min. callories:
-                  <input type="number" class="form-control" [(ngModel)]="filterParams.minCallories">
-                </label>
-              </div>
-              <div class="col-6">
-                <label class="ml-2">Max. callories:
-                  <input type="number" class="form-control" [(ngModel)]="filterParams.maxCallories">
-                </label>
-              </div>
-            </div>
-
-            <!-- Buttons -->
-            <div class="row justify-content-center">
-              <div class="col-6">
-                <button class="cancel-button" (click)="resetFilters(searchBox.value)"><i
-                    class="far fa-times"></i></button>
-              </div>
-              <div class="col-6">
-                <button class="confirm-button" (click)="applyFilters(searchBox.value)"><i
-                    class="far fa-check"></i></button>
-              </div>
-            </div>
-          </mat-expansion-panel>
-        </div>
+        <input class="form-control" type="text" placeholder="Name your dish" #dishName required="required"
+          (input)="setDishName(dishName.value)" value="{{ this.dish.name }}">
       </div>
+      <app-search [userId]="this.userId" (searched)="onSearched($event)" (filtersApplied)="onFiltersApplied($event)"
+        (filtersReset)="onFiltersReset($event)">
+      </app-search>
 
       <!-- Legend -->
       <div class="row justify-content-center mt-2">
@@ -61,12 +16,6 @@
           Nutrients are provided for the quantity displayed. <br>
           E = Energy, P = Proteins, F = Fats, C = Carbohydrates
         </div>
-      </div>
-
-      <!-- Search box -->
-      <div class="row justify-content-center mt-2">
-        <input type="text" placeholder="Search" #searchBox class="form-control"
-          (input)="resetPagination(); findIngredients(searchBox.value);">
       </div>
 
       <!-- Results of search -->
@@ -92,8 +41,7 @@
       <div class="row pagination-wrapper justify-content-center mt-2" *ngIf="ingredientsPagination">
         <div *ngIf="ingredientsPagination.totalPages > 1">
           <pagination [boundaryLinks]="true" [totalItems]="ingredientsPagination.totalItems"
-            [itemsPerPage]="ingredientsPagination.itemsPerPage"
-            (pageChanged)="ingredientsPageChanged($event, searchBox.value)"
+            [itemsPerPage]="ingredientsPagination.itemsPerPage" (pageChanged)="ingredientsPageChanged($event)"
             [(ngModel)]="ingredientsPagination.currentPage" previousText="&lsaquo;" nextText="&rsaquo;"
             firstText="&laquo;" lastText="&raquo;">
           </pagination>
@@ -106,22 +54,31 @@
       <div class="row added-ingredients-header">
         Added ingredients:
       </div>
-      <div class="row list-item" *ngFor="let ing of addedIngredients">
-        <div class="col-10">
-          <p class="lead">{{ ing.ingredient.name }}</p>
-          <table>
-            <tr>
-              <td>Energy: {{ ing.ingredient.callories }} kcal</td>
-              <td>Proteins: {{ ing.ingredient.proteins }} g</td>
-              <td>Fats: {{ ing.ingredient.fats }} g</td>
-              <td>Carbohydrates: {{ ing.ingredient.carbohydrates }} g</td>
-            </tr>
-          </table>
-        </div>
-        <div class="col-2 pr-0">
-          <button class="delete-button pull-right" (click)="deleteFromDish(ing)">
-            <i class="fas fa-times"></i>
-          </button>
+      <div class="row list-element mb-2" *ngFor="let ing of addedIngredients">
+        <div class="col-12">
+          <div class="row">
+            <div class="col-5 pl-2 pt-2">
+              {{ ing.ingredient.name }}
+            </div>
+            <div class="col-5 pt-2">
+              {{ ing.quantity }} g
+            </div>
+            <div class="col-2 pr-0 button-div">
+              <button class="delete-button pull-right" (click)="deleteFromDish(ing)">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+          </div>
+          <div class="row">
+            <table>
+              <tr>
+                <td>E: {{ ing.ingredient.callories }} kcal</td>
+                <td>P: {{ ing.ingredient.proteins }} g</td>
+                <td>F: {{ ing.ingredient.fats }} g</td>
+                <td>C: {{ ing.ingredient.carbohydrates }} g</td>
+              </tr>
+            </table>
+          </div>
         </div>
       </div>
       <div class="row no-ingredients" *ngIf="addedIngredients.length === 0">

@@ -15,6 +15,7 @@ import { Dish } from 'src/app/_models/Dish';
 import { Meal } from 'src/app/_models/Meal';
 import { MatExpansionModule } from '@angular/material';
 import { map } from 'rxjs/operators';
+import { FoodSearchParams } from 'src/app/_models/FoodSearchParams';
 
 @Component({
   selector: 'app-add-meal-nav',
@@ -41,7 +42,7 @@ export class AddMealNavComponent implements OnInit {
   // searchResults$: PaginatedResult<(Ingredient | Dish)[]>;
   // searchResults: (Ingredient | Dish)[];
 
-  filterParams: any = {};
+  filterParams: FoodSearchParams;
   paginationParams: any = {};
 
   constructor(
@@ -64,10 +65,6 @@ export class AddMealNavComponent implements OnInit {
 
     this.paginationParams.pageNumber = 1;
     this.paginationParams.pageSize = 10;
-
-    this.filterParams.userId = null;
-    this.filterParams.minCallories = null;
-    this.filterParams.maxCallories = null;
 
     // this.pagination = new Pagination();
     // this.pagination.totalItems = 0;
@@ -106,15 +103,14 @@ export class AddMealNavComponent implements OnInit {
   //   });
   // }
 
-  findDishes(name: string) {
+  findDishes() {
     if (this.dishesPagination) {
       this.paginationParams.pageNumber = this.dishesPagination.currentPage;
       this.paginationParams.pageSize = this.dishesPagination.itemsPerPage;
     }
 
-    if (name !== '') {
-      this.filterParams.name = name;
-      this.dishesService.getDishes(this.paginationParams, this.filterParams).subscribe((res: PaginatedResult<Dish[]>) => {
+    if (this.filterParams.name  !== '') {
+      this.dishesService.getDishes({ ...this.paginationParams, ...this.filterParams }).subscribe((res: PaginatedResult<Dish[]>) => {
         this.dishes = res.result;
         this.dishesPagination = res.pagination;
       }, error => {
@@ -123,14 +119,13 @@ export class AddMealNavComponent implements OnInit {
     }
   }
 
-  findIngredients(name: string) {
+  findIngredients() {
     if (this.ingredientsPagination) {
       this.paginationParams.pageNumber = this.ingredientsPagination.currentPage;
-      this.filterParams.pageSize = this.ingredientsPagination.itemsPerPage;
+      this.paginationParams.pageSize = this.ingredientsPagination.itemsPerPage;
     }
 
-    if (name !== '') {
-      this.filterParams.name = name;
+    if (this.filterParams.name !== '') {
       this.ingredientsService.getIngredients(this.paginationParams, this.filterParams).subscribe((res: PaginatedResult<Ingredient[]>) => {
         this.ingredients = res.result;
         this.ingredientsPagination = res.pagination;
@@ -165,29 +160,13 @@ export class AddMealNavComponent implements OnInit {
 
   dishesPageChanged(event: any) {
     this.dishesPagination.currentPage = event.page;
-    this.findDishes(this.filterParams.name);
+    this.findDishes();
   }
 
   ingredientsPageChanged(event: any) {
     this.ingredientsPagination.currentPage = event.page;
-    this.findIngredients(this.filterParams.name);
+    this.findIngredients();
   }
-
-  // applyFilters(name: string) {
-  //   this.dishesPagination.currentPage = 1;
-  //   this.ingredientsPagination.currentPage = 1;
-  //   this.findDishes(name);
-  //   this.findIngredients(name);
-  // }
-
-  // resetFilters(name: string) {
-  //   this.resetPagination();
-  //   this.filterParams.userId = null;
-  //   this.filterParams.minCallories = null;
-  //   this.filterParams.maxCallories = null;
-  //   this.findDishes(name);
-  //   this.findIngredients(name);
-  // }
 
   resetPagination() {
     if (this.dishesPagination) {
@@ -206,22 +185,22 @@ export class AddMealNavComponent implements OnInit {
   onSearched(event: any) {
     this.filterParams = event;
     this.resetPagination();
-    this.findDishes(this.filterParams.name);
-    this.findIngredients(this.filterParams.name);
+    this.findDishes();
+    this.findIngredients();
   }
 
   onFiltersApplied(event: any) {
     this.filterParams = event;
     this.dishesPagination.currentPage = 1;
     this.ingredientsPagination.currentPage = 1;
-    this.findDishes(this.filterParams.name);
-    this.findIngredients(this.filterParams.name);
+    this.findDishes();
+    this.findIngredients();
   }
 
   onFiltersReset(event: any) {
     this.filterParams = event;
     this.resetPagination();
-    this.findDishes(this.filterParams.name);
-    this.findIngredients(this.filterParams.name);
+    this.findDishes();
+    this.findIngredients();
   }
 }
