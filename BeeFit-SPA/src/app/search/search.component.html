@@ -1,0 +1,120 @@
+<div class="row justify-content-center mt-3">
+  <div class="col-12">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        Filters
+      </mat-expansion-panel-header>
+
+      <!-- Search mode -->
+      <div (click)="selectRadio('radioGroupSearchMode')" id="radioGroupSearchMode" class="row justify-content-center radioGroup">
+        <div class="">
+          <label class="allFoodMode selected">All food
+            <input name="searchMode" type="radio" [(ngModel)]="filterParams.userId" value="null" checked>
+          </label>
+        </div>
+        <div class="">
+          <label class="">My food
+            <input name="searchMode" type="radio" [(ngModel)]="filterParams.userId" id="userIdRadio"
+              value="{{this.userId}}">
+          </label>
+        </div>
+        <div class="radioGroupSearchMode frameSelected"></div>
+      </div>
+
+      <!-- Callories -->
+      <div class="row">
+        <div class="col-3">
+          <label class="ml-1">Min. callories:
+            <input type="number" class="form-control" [(ngModel)]="filterParams.minCallories">
+          </label>
+        </div>
+        <div class="col-3">
+          <label class="ml-2">Max. callories:
+            <input type="number" class="form-control" [(ngModel)]="filterParams.maxCallories">
+          </label>
+        </div>
+        <div class="col-3">
+          <label class="ml-1">Min. proteins:
+            <input type="number" class="form-control" [(ngModel)]="filterParams.minProteins">
+          </label>
+        </div>
+        <div class="col-3">
+          <label class="ml-2">Max. proteins:
+            <input type="number" class="form-control" [(ngModel)]="filterParams.maxProteins">
+          </label>
+        </div>
+      </div>
+
+      <!-- Proteins -->
+      <div class="row">
+
+      </div>
+
+      <!-- Order by -->
+      <div class="row justify-content-center">
+        Order by:
+      </div>
+      <div (click)="selectRadio('radioGroupOrder')" class="row justify-content-center radioGroup" id="radioGroupOrder">
+        <div class="">
+          <label class="">Name
+            <input type="radio" class=""  name="orderBy" value="0" [(ngModel)]="filterParams.orderBy" checked>
+          </label>
+        </div>
+        <div class="">
+          <label class="">Callories
+            <input type="radio" class="" name="orderBy" value="1" [(ngModel)]="filterParams.orderBy">
+          </label>
+        </div>
+        <div class="">
+          <label class="">Proteins
+            <input type="radio" class="" name="orderBy" value="2" [(ngModel)]="filterParams.orderBy">
+          </label>
+        </div>
+        <div class="">
+          <label class="">Fats
+            <input type="radio" class="" name="orderBy" value="3" [(ngModel)]="filterParams.orderBy">
+          </label>
+        </div>
+        <div class="">
+          <label class="">Carbohydrates
+            <input type="radio" class="" name="orderBy" value="4" [(ngModel)]="filterParams.orderBy">
+          </label>
+        </div>
+        <div class="radioGroupOrder frameSelected"></div>
+      </div>
+
+      <!-- Ascending/Descending -->
+      <div class="row justify-content-center">
+        Ascending or descending:
+      </div>
+      <div (click)="selectRadio('radioGroupAscending')" class="row justify-content-center radioGroup" id="radioGroupAscending">
+        <div class="">
+          <label>Descending
+            <input type="radio" class="" name="ascending" value="false"
+              [(ngModel)]="filterParams.ascending">
+          </label>
+        </div>
+        <div class="">
+          <label>Ascending
+            <input type="radio" class="" name="ascending" value="true" [(ngModel)]="filterParams.ascending">
+          </label>
+        </div>
+        <div class="radioGroupAscending frameSelected"></div>
+      </div>
+
+      <!-- Buttons -->
+      <div class="row justify-content-center">
+        <div class="col-6">
+          <button class="cancel-button" (click)="resetFilters()"><i class="far fa-times"></i></button>
+        </div>
+        <div class="col-6">
+          <button class="confirm-button" (click)="applyFilters()"><i class="far fa-check"></i></button>
+        </div>
+      </div>
+    </mat-expansion-panel>
+  </div>
+</div>
+
+<div class="row justify-content-center mt-2">
+  <input type="text" placeholder="Search" class="form-control" [(ngModel)]="filterParams.name" (input)="search();">
+</div>

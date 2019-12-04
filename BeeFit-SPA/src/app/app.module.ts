@@ -8,6 +8,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatExpansionModule, MatTooltipModule } from '@angular/material';
 import { FullCalendarModule } from '@fullcalendar/angular';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
@@ -27,8 +29,6 @@ import { DatePickerComponent } from './date-picker/date-picker.component';
 import { ProfileTargetComponent } from './profile/profile-target/profile-target.component';
 import { ProfileChartsComponent } from './profile/profile-charts/profile-charts.component';
 import { AddMealNavComponent } from './add-meal/add-meal-nav/add-meal-nav.component';
-import { AddMealSearchComponent } from './add-meal/add-meal-search/add-meal-search.component';
-import { AddMealMyFoodComponent } from './add-meal/add-meal-my-food/add-meal-my-food.component';
 import { UserService } from './_services/user.service';
 import { DishesService } from './_services/dishes.service';
 import { IngredientsService } from './_services/ingredients.service';
@@ -41,6 +41,7 @@ import { MyFoodComponent } from './my-food/my-food.component';
 import { EditIngredientComponent } from './edit-ingredient/edit-ingredient.component';
 import { EditDishComponent } from './edit-dish/edit-dish.component';
 import { CalendarComponent } from './calendar/calendar.component';
+import { SearchComponent } from './search/search.component';
 
 @NgModule({
    declarations: [
@@ -60,14 +61,13 @@ import { CalendarComponent } from './calendar/calendar.component';
       WelcomeComponent,
       DatePickerComponent,
       AddMealNavComponent,
-      AddMealSearchComponent,
-      AddMealMyFoodComponent,
       AddDishComponent,
       AddIngredientComponent,
       MyFoodComponent,
       EditIngredientComponent,
       EditDishComponent,
-      CalendarComponent
+      CalendarComponent,
+      SearchComponent
    ],
    imports: [
       BrowserModule,
@@ -75,7 +75,7 @@ import { CalendarComponent } from './calendar/calendar.component';
       FormsModule,
       BsDropdownModule.forRoot(),
       RouterModule.forChild(profileRoutes),
-      // RouterModule.forChild(addMealRoutes),
+      //RouterModule.forChild(addMealRoutes),
       RouterModule.forRoot(appRoutes),
       BrowserAnimationsModule,
       MatProgressBarModule,
@@ -83,7 +83,9 @@ import { CalendarComponent } from './calendar/calendar.component';
       MatTooltipModule,
       FormsModule,
       ReactiveFormsModule,
-      FullCalendarModule
+      FullCalendarModule,
+      PaginationModule.forRoot(),
+      Ng2SearchPipeModule
    ],
    providers: [
       AuthService,

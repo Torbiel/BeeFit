@@ -12,7 +12,7 @@ namespace BeeFit.API.Data
             _context = context;
         }
 
-        public async void Add<T>(T entity) where T : class
+        public virtual async void Add<T>(T entity) where T : class
         {
             await _context.AddAsync(entity);
         }

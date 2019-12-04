@@ -48,36 +48,38 @@ namespace BeeFit.API.Controllers
             return Ok(dishToReturn);
         }
 
-        [HttpGet("{name}")]
-        public async Task<IActionResult> GetManyByName(string name, [FromQuery] PagingParams pagingParams)
+        [HttpGet]
+        public async Task<IActionResult> GetMany([FromQuery] FoodSearchParams searchParams)
         {
-            var dishes = await _repo.GetManyByName(name, pagingParams);
+            var dishes = await _repo.GetMany(searchParams);
             var dishesToReturn = _mapper.Map<IEnumerable<DishForGetDto>>(dishes);
-
-            foreach(var dish in dishesToReturn)
-            {
-                dish.CalculateNutrients();
-            }
 
             Response.AddPagination(dishes.CurrentPage, dishes.PageSize, dishes.TotalCount, dishes.TotalPages);
 
             return Ok(dishesToReturn);
         }
 
-        [HttpGet]
-        public IActionResult GetManyByUserId()
-        {
-            var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-            var dishes = _repo.GetManyByUserId(currentUserId);
-            var dishesToReturn = _mapper.Map<IEnumerable<DishForGetDto>>(dishes);
+        //[HttpGet]
+        //public async Task<IActionResult> GetManyByUserId([FromQuery] PagingParams pagingParams)
+        //{
+        //    var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+        //    var dishes = await _repo.GetManyByUserId(currentUserId, pagingParams);
+        //    var dishesToReturn = _mapper.Map<IEnumerable<DishForGetDto>>(dishes);
 
-            foreach (var dish in dishesToReturn)
-            {
-                dish.CalculateNutrients();
-            }
+        //    Response.AddPagination(dishes.CurrentPage, dishes.PageSize, dishes.TotalCount, dishes.TotalPages);
 
-            return Ok(dishesToReturn);
-        }
+        //    return Ok(dishesToReturn);
+        //}
+
+        //[HttpGet("{userId}/{name}")]
+        //public async Task<IActionResult> GetManyByNameAndUser(int userId, string name, [FromQuery] PagingParams pagingParams)
+        //{
+        //    var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+        //    var dishes = await _repo.GetManyByNameAndUser(name, userId, pagingParams);
+        //    var dishesToReturn = _mapper.Map<IEnumerable<DishForGetDto>>(dishes);
+
+        //    return Ok(dishesToReturn);
+        //}
 
         // TODO?: searching based on callories, fats, proteins, etc. (>= and <=)
 

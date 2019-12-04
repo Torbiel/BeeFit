@@ -14,6 +14,10 @@ namespace BeeFit.API.Models
         [ForeignKey("UserId")]
         public virtual User User { get; set; }
         public int UserId { get; set; }
+        public float Callories { get; set; }
+        public float Fats { get; set; }
+        public float Proteins { get; set; }
+        public float Carbohydrates { get; set; }
         public virtual ICollection<DishesIngredient> Ingredients { get; set; }
     }
 }

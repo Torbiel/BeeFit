@@ -1,21 +1,126 @@
-<div class="row justify-content-center mt-3">
-  <!-- <div class="col-auto">
-    <button (click)="setAddingMode('search')"><i class="fas fa-search"></i></button>
-  </div>
-  <div class="col-auto">
-    <button (click)="setAddingMode('my food')"><i class="fas fa-book"></i></button>
-  </div> -->
-  <div class="addingMode">
-    <label class="searchMode selected" (click)="setAddingMode('search')" for="search">Search
-      <input name="addingMode" type="radio" id="search" checked>
-    </label>
-    <label class="myFoodMode" (click)="setAddingMode('my food')" for="my-food">My food
-      <input name="addingMode" type="radio" id="my-food">
-    </label>
+<app-search [userId]="this.user.id" (searched)="onSearched($event)" (filtersApplied)="onFiltersApplied($event)"
+  (filtersReset)="onFiltersReset($event)">
+</app-search>
+
+<!-- Legend -->
+<div class="row justify-content-center mt-2">
+  <div class="col-10 legend">
+    Nutrients are provided for the quantity displayed. <br>
+    E = Energy, P = Proteins, F = Fats, C = Carbohydrates
   </div>
 </div>
 
-<app-add-meal-search [userId]="this.user.id" *ngIf="this.addingMode === 'search'" (addMode)="receiveAddMode($event)">
-</app-add-meal-search>
-<app-add-meal-my-food [userId]="this.user.id" *ngIf="this.addingMode === 'my food'" (addMode)="receiveAddMode($event)">
-</app-add-meal-my-food>
+<div class="row mt-2">
+
+  <!-- Dishes found -->
+  <div class="col-lg-6 dishes">
+    <div class="row justify-content-center dishes-header">
+      Dishes:
+    </div>
+    <div class="row list-element mb-2" *ngFor="let dish of dishes">
+      <div class="col-12">
+        <div class="row">
+          <div class="col-10 pl-2 pt-2">
+            {{ dish.name }}
+          </div>
+          <div class="col-2 pr-0 button-div">
+            <button class="add-button pull-right" (click)="addToMeal(dish.id, 0)"><i class="fas fa-plus"></i></button>
+          </div>
+        </div>
+        <div class="row">
+          <table>
+            <tr>
+              <td>E: {{ dish.callories }} kcal</td>
+              <td>P: {{ dish.proteins }} g</td>
+              <td>F: {{ dish.fats }} g</td>
+              <td>C: {{ dish.carbohydrates }} g</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="row pagination-wrapper justify-content-center mt-2" *ngIf="dishesPagination">
+      <div *ngIf="dishesPagination.totalPages > 1">
+        <pagination [boundaryLinks]="true" [totalItems]="dishesPagination.totalItems"
+          [itemsPerPage]="dishesPagination.itemsPerPage" (pageChanged)="dishesPageChanged($event)"
+          [(ngModel)]="dishesPagination.currentPage" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;"
+          lastText="&raquo;">
+        </pagination>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ingredients found -->
+  <div class="col-lg-6 ingredients">
+    <div class="row justify-content-center dishes-header">
+      Ingredients:
+    </div>
+    <div class="row list-element mb-2" *ngFor="let ing of ingredients">
+      <div class="col-12">
+        <div class="row">
+          <div class="col-10 pl-2 pt-2">
+            {{ ing.name }}
+          </div>
+          <div class="col-2 pr-0 button-div">
+            <button class="add-button pull-right" (click)="addToMeal(ing.id, 0)"><i class="fas fa-plus"></i></button>
+          </div>
+        </div>
+        <div class="row">
+          <table>
+            <tr>
+              <td>E: {{ ing.callories }} kcal</td>
+              <td>P: {{ ing.proteins }} g</td>
+              <td>F: {{ ing.fats }} g</td>
+              <td>C: {{ ing.carbohydrates }} g</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="row pagination-wrapper justify-content-center mt-2" *ngIf="ingredientsPagination">
+      <div *ngIf="ingredientsPagination.totalPages > 1">
+        <pagination [boundaryLinks]="true" [totalItems]="ingredientsPagination.totalItems"
+          [itemsPerPage]="ingredientsPagination.itemsPerPage" (pageChanged)="ingredientsPageChanged($event)"
+          [(ngModel)]="ingredientsPagination.currentPage" previousText="&lsaquo;" nextText="&rsaquo;"
+          firstText="&laquo;" lastText="&raquo;">
+        </pagination>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div class="row list-element mb-2" *ngFor="let x of searchResults">
+      <div class="col-12">
+        <div class="row">
+          <div class="col-10 pl-2 pt-2">
+            {{ x.name }}
+          </div>
+          <div class="col-2 pr-0 button-div">
+            <button class="add-button pull-right" (click)="addToMeal(x.id, 0)"><i class="fas fa-plus"></i></button>
+          </div>
+        </div>
+        <div class="row">
+          <table>
+            <tr>
+              <td>E: {{ x.callories }} kcal</td>
+              <td>P: {{ x.proteins }} g</td>
+              <td>F: {{ x.fats }} g</td>
+              <td>C: {{ x.carbohydrates }} g</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="row pagination-wrapper justify-content-center mt-2" *ngIf="searchResults$">
+      <div *ngIf="searchResults$.pagination.totalPages > 1">
+        <pagination [boundaryLinks]="true" [totalItems]="searchResults$.pagination.totalItems"
+          [itemsPerPage]="searchResults$.pagination.itemsPerPage" (pageChanged)="pageChanged($event)"
+          [(ngModel)]="searchResults$.pagination.currentPage" previousText="&lsaquo;" nextText="&rsaquo;"
+          firstText="&laquo;" lastText="&raquo;">
+        </pagination>
+      </div>
+    </div> -->
+</div>

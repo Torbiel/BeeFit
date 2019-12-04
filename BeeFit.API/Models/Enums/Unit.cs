@@ -2,7 +2,12 @@
 {
     public enum Unit
     {
+        Piece,
         Portion,
-        Packet
+        Packet,
+        Teaspoon,
+        Tablespoon,
+        Slice,
+        Glass
     }
 }

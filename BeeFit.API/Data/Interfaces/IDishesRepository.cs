@@ -7,7 +7,6 @@ namespace BeeFit.API.Data.Interfaces
 {
     public interface IDishesRepository : IBeeFitRepository
     {
-        public Task<PagedList<Dish>> GetManyByName(string name, PagingParams pagingParams);
-        public IEnumerable<Dish> GetManyByUserId(int id);
+        public Task<PagedList<Dish>> GetMany(FoodSearchParams pagingParams);
     }
 }

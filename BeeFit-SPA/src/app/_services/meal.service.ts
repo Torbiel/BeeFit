@@ -23,8 +23,11 @@ export class MealService {
   }
 
   getManyByDate(date: Date): Observable<Meal[]> {
-    console.log(date.toISOString());
     return this.http.get<Meal[]>(this.baseUrl + '/' + date.toISOString(), httpOptions);
+  }
+
+  getManyByMonthAndYear(month: number, year: number): Observable<Meal[]> {
+    return this.http.get<Meal[]>(this.baseUrl + '/' + month + '/' + year, httpOptions);
   }
 
   delete(id: number) {
