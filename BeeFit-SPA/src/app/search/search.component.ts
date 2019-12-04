@@ -51,7 +51,7 @@ export class SearchComponent implements OnInit {
     for (let element of radioGroupElements) {
       element.querySelector('input').style.display='none';
       if (element.querySelector('input').checked) {
-        element.querySelector('label').style.color = '#000';
+        element.querySelector('label').style.color = 'rgb(39, 39, 39)';
         var newLeftPosition = element.offsetLeft +
          parseInt(window.getComputedStyle(element).paddingLeft, 10) +
          parseInt(window.getComputedStyle(element.querySelector('label')).marginLeft, 10);
