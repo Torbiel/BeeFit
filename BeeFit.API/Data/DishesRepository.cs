@@ -26,7 +26,7 @@ namespace BeeFit.API.Data
             //    dishes.Where(d => d.Ingredients.All(i => i.Ingredient.SearchPreferences.FirstOrDefault(s => s.SearchPreferenceId == pref.Id) != null));
             //}
 
-            if(searchParams.UserId != null)
+            if(searchParams.UserId != null && searchParams.UserId != 0)
             {
                 dishes = dishes.Where(d => d.UserId == searchParams.UserId);
             }
@@ -47,38 +47,33 @@ namespace BeeFit.API.Data
                 {
                     case FoodOrderBy.Callories:
                         {
-                            dishes = dishes.OrderByDescending(d => d.Callories);
+                            dishes = searchParams.Ascending ? dishes.OrderBy(d => d.Callories) : dishes.OrderByDescending(d => d.Callories);
                             break;
                         }
 
                     case FoodOrderBy.Fats:
                         {
-                            dishes = dishes.OrderByDescending(d => d.Fats);
+                            dishes = searchParams.Ascending ? dishes.OrderBy(d => d.Fats) : dishes.OrderByDescending(d => d.Fats);
                             break;
                         }
 
                     case FoodOrderBy.Proteins:
                         {
-                            dishes = dishes.OrderByDescending(d => d.Proteins);
+                            dishes = searchParams.Ascending ? dishes.OrderBy(d => d.Proteins) : dishes.OrderByDescending(d => d.Proteins);
                             break;
                         }
 
                     case FoodOrderBy.Carbohydrates:
                         {
-                            dishes = dishes.OrderByDescending(d => d.Carbohydrates);
+                            dishes = searchParams.Ascending ? dishes.OrderBy(d => d.Carbohydrates) : dishes.OrderByDescending(d => d.Carbohydrates);
                             break;
                         }
 
                     default:
                         {
-                            dishes = dishes.OrderByDescending(d => d.Name);
+                            dishes = searchParams.Ascending ? dishes.OrderBy(d => d.Name) : dishes.OrderByDescending(d => d.Name);
                             break;
                         }
-                }
-
-                if(searchParams.Ascending)
-                {
-                    dishes = dishes.Reverse();
                 }
             }
 

@@ -2,53 +2,6 @@
   (filtersReset)="onFiltersReset($event)">
 </app-search>
 
-<!-- <div class="row justify-content-center mt-3">
-  <div class="col-8">
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        Filters
-      </mat-expansion-panel-header>
-
-      Search mode
-      <div class="row">
-        <div class="searchMode">
-          <label class="allFoodMode selected">All food
-            <input name="searchMode" type="radio" [(ngModel)]="filterParams.userId" value="null" checked>
-          </label>
-          <label class="myFoodMode">My food
-            <input name="searchMode" type="radio" [(ngModel)]="filterParams.userId" id="userIdRadio"
-              value="{{this.user.id}}">
-          </label>
-        </div>
-      </div>
-
-      Callories
-      <div class="row">
-        <div class="col-6">
-          <label class="ml-1">Min. callories:
-            <input type="number" class="form-control" [(ngModel)]="filterParams.minCallories">
-          </label>
-        </div>
-        <div class="col-6">
-          <label class="ml-2">Max. callories:
-            <input type="number" class="form-control" [(ngModel)]="filterParams.maxCallories">
-          </label>
-        </div>
-      </div>
-
-      Buttons
-      <div class="row justify-content-center">
-        <div class="col-6">
-          <button class="cancel-button" (click)="resetFilters(searchBox.value)"><i class="far fa-times"></i></button>
-        </div>
-        <div class="col-6">
-          <button class="confirm-button" (click)="applyFilters(searchBox.value)"><i class="far fa-check"></i></button>
-        </div>
-      </div>
-    </mat-expansion-panel>
-  </div>
-</div> -->
-
 <!-- Legend -->
 <div class="row justify-content-center mt-2">
   <div class="col-10 legend">
@@ -56,12 +9,6 @@
     E = Energy, P = Proteins, F = Fats, C = Carbohydrates
   </div>
 </div>
-
-<!-- Search box -->
-<!-- <div class="row justify-content-center mt-2">
-  <input type="text" placeholder="Search" #searchBox class="form-control"
-    (input)="resetPagination(); find(searchBox.value)">
-</div> -->
 
 <div class="row mt-2">
 

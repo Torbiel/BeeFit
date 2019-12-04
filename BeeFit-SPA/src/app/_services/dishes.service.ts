@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Dish } from '../_models/Dish';
 import { PaginatedResult } from '../_models/Pagination';
 import { map } from 'rxjs/operators';
+import { FoodSearchParams } from '../_models/FoodSearchParams';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -24,32 +25,36 @@ export class DishesService {
     return this.http.get<Dish>(this.baseUrl + '/' + id, httpOptions);
   }
 
-  getDishes(paginationParams?, searchParams?): Observable<PaginatedResult<Dish[]>> {
+  getDishes(params?): Observable<PaginatedResult<Dish[]>> {
     const paginatedResult: PaginatedResult<Dish[]> = new PaginatedResult<Dish[]>();
-    let params = new HttpParams();
-    params = params.append('name', searchParams.name);
+    let httpParams = new HttpParams();
+    httpParams = this.setHttpParams(params, httpParams);
 
-    if (searchParams.minCallories != null) {
-      params = params.append('minCallories', searchParams.minCallories);
-    }
+    // if (searchParams.minCallories != null) {
+    //   httpParams = httpParams.append('minCallories', searchParams.minCallories);
+    // }
 
-    if (searchParams.maxCallories != null) {
-      params = params.append('maxCallories', searchParams.maxCallories);
-    }
+    // if (searchParams.maxCallories != null) {
+    //   httpParams = httpParams.append('maxCallories', searchParams.maxCallories);
+    // }
 
-    if (searchParams.userId != null && searchParams.userId !== 'null') {
-      params = params.append('userId', searchParams.userId);
-    }
+    // if (searchParams. != null) {
+    //   params = params.append('', searchParams.);
+    // }
 
-    if (paginationParams.pageNumber == null) {
-      paginationParams.pageNumber = 1;
-    }
-    params = params.append('pageNumber', paginationParams.pageNumber);
+    // if (searchParams.userId != null && searchParams.userId !== 'null') {
+    //   httpParams = httpParams.append('userId', searchParams.userId);
+    // }
 
-    if (paginationParams.pageSize == null) {
-      paginationParams.pageSize = 10;
-    }
-    params = params.append('pageSize', paginationParams.pageSize);
+    // if (paginationParams.pageNumber == null) {
+    //   paginationParams.pageNumber = 1;
+    // }
+    // httpParams = httpParams.append('pageNumber', paginationParams.pageNumber);
+
+    // if (paginationParams.pageSize == null) {
+    //   paginationParams.pageSize = 10;
+    // }
+    // httpParams = httpParams.append('pageSize', paginationParams.pageSize);
 
     const authHeader = new HttpHeaders({
       Authorization: 'Bearer ' + localStorage.getItem('token')
@@ -57,7 +62,7 @@ export class DishesService {
 
     return this.http.get<Dish[]>(this.baseUrl, {
       observe: 'response',
-      params,
+      params: httpParams,
       headers: authHeader})
       .pipe(
         map(response => {
@@ -72,69 +77,15 @@ export class DishesService {
       );
   }
 
-  // getDishesByName(name: string, params: HttpParams, authHeader: HttpHeaders): Observable<PaginatedResult<Dish[]>> {
-  //   const paginatedResult: PaginatedResult<Dish[]> = new PaginatedResult<Dish[]>();
+  setHttpParams(obj: FoodSearchParams, params: HttpParams): HttpParams {
+    Object.entries(obj).forEach(([key, value]) => {
+      if (value != null) {
+        params = params.append(key, value);
+      }
+    });
 
-  //   return this.http.get<Dish[]>(this.baseUrl + '/' + name, {
-  //     observe: 'response',
-  //     params,
-  //     headers: new HttpHeaders({
-  //     Authorization: 'Bearer ' + localStorage.getItem('token')
-  //   })})
-  //     .pipe(
-  //       map(response => {
-  //         paginatedResult.result = response.body;
-
-  //         if (response.headers.get('Pagination') != null) {
-  //           paginatedResult.pagination = JSON.parse(response.headers.get('Pagination'));
-  //         }
-
-  //         return paginatedResult;
-  //       })
-  //     );
-  // }
-
-  // getDishesByUserId(params: HttpParams, authHeader: HttpHeaders): Observable<PaginatedResult<Dish[]>> {
-  //   const paginatedResult: PaginatedResult<Dish[]> = new PaginatedResult<Dish[]>();
-
-  //   return this.http.get<Dish[]>(this.baseUrl, {
-  //     observe: 'response',
-  //     params,
-  //     headers: new HttpHeaders({
-  //     Authorization: 'Bearer ' + localStorage.getItem('token')
-  //   })})
-  //     .pipe(
-  //       map(response => {
-  //         paginatedResult.result = response.body;
-
-  //         if (response.headers.get('Pagination') != null) {
-  //           paginatedResult.pagination = JSON.parse(response.headers.get('Pagination'));
-  //         }
-
-  //         return paginatedResult;
-  //       })
-  //     );
-  // }
-
-  // getDishesByUserAndName(name: string, userId: number, params: HttpParams, authHeader: HttpHeaders): Observable<PaginatedResult<Dish[]>> {
-  //   const paginatedResult: PaginatedResult<Dish[]> = new PaginatedResult<Dish[]>();
-
-  //   return this.http.get<Dish[]>(this.baseUrl + '/' + userId + '/' + name, {
-  //     observe: 'response',
-  //     params,
-  //     headers: authHeader
-  //   }).pipe(
-  //       map(response => {
-  //         paginatedResult.result = response.body;
-
-  //         if (response.headers.get('Pagination') != null) {
-  //           paginatedResult.pagination = JSON.parse(response.headers.get('Pagination'));
-  //         }
-
-  //         return paginatedResult;
-  //       })
-  //     );
-  // }
+    return params;
+  }
 
   add(dish: Dish): Observable<Dish> {
     return this.http.post<Dish>(this.baseUrl, dish, httpOptions);

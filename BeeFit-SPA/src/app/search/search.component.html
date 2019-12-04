@@ -1,4 +1,4 @@
-<div class="row justify-content-center mt-3">
+<div class="row justify-content-center mt-2">
   <div class="col-12">
     <mat-expansion-panel>
       <mat-expansion-panel-header>
@@ -9,7 +9,7 @@
       <div class="row justify-content-center">
         <div class="col-12 searchMode">
           <label class="allFoodMode selected">All food
-            <input name="searchMode" type="radio" [(ngModel)]="filterParams.userId" value="null" checked>
+            <input name="searchMode" type="radio" [(ngModel)]="filterParams.userId" value="0" checked>
           </label>
           <label class="myFoodMode">My food
             <input name="searchMode" type="radio" [(ngModel)]="filterParams.userId" id="userIdRadio"
@@ -54,32 +54,27 @@
       <div class="row justify-content-center">
         <div class="col-2">
           <label class="ml-1">Name
-            <input type="radio" class="" name="orderBy" value="0" [(ngModel)]="filterParams.orderBy"
-              checked>
+            <input type="radio" class="" name="orderBy" value="0" [(ngModel)]="filterParams.orderBy" checked>
           </label>
         </div>
         <div class="col-2">
           <label class="ml-1">Callories
-            <input type="radio" class="" name="orderBy" value="1" [(ngModel)]="filterParams.orderBy"
-              checked>
+            <input type="radio" class="" name="orderBy" value="1" [(ngModel)]="filterParams.orderBy">
           </label>
         </div>
         <div class="col-2">
           <label class="ml-1">Proteins
-            <input type="radio" class="" name="orderBy" value="2" [(ngModel)]="filterParams.orderBy"
-              checked>
+            <input type="radio" class="" name="orderBy" value="2" [(ngModel)]="filterParams.orderBy">
           </label>
         </div>
         <div class="col-2">
           <label class="ml-1">Fats
-            <input type="radio" class="" name="orderBy" value="3" [(ngModel)]="filterParams.orderBy"
-              checked>
+            <input type="radio" class="" name="orderBy" value="3" [(ngModel)]="filterParams.orderBy">
           </label>
         </div>
         <div class="col-2">
           <label class="ml-1">Carbohydrates
-            <input type="radio" class="" name="orderBy" value="4" [(ngModel)]="filterParams.orderBy"
-              checked>
+            <input type="radio" class="" name="orderBy" value="4" [(ngModel)]="filterParams.orderBy">
           </label>
         </div>
       </div>
@@ -91,8 +86,7 @@
       <div class="row justify-content-center">
         <div class="col-6">
           <label>Descending
-            <input type="radio" class="" name="ascending" value="false"
-              [(ngModel)]="filterParams.ascending">
+            <input type="radio" class="" name="ascending" value="false" [(ngModel)]="filterParams.ascending">
           </label>
         </div>
         <div class="col-6">

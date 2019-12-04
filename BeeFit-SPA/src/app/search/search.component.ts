@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { FoodSearchParams } from '../_models/FoodSearchParams';
 
 @Component({
   selector: 'app-search',
@@ -10,15 +11,13 @@ export class SearchComponent implements OnInit {
   @Output() searched = new EventEmitter<any>();
   @Output() filtersApplied = new EventEmitter<any>();
   @Output() filtersReset = new EventEmitter<any>();
-  filterParams: any = {};
+  filterParams: FoodSearchParams;
 
-  constructor() { }
+  constructor() {
+    this.filterParams = new FoodSearchParams();
+  }
 
   ngOnInit() {
-    this.filterParams.name = null;
-    this.filterParams.userId = null;
-    this.filterParams.minCallories = null;
-    this.filterParams.maxCallories = null;
   }
 
   search() {
@@ -30,9 +29,16 @@ export class SearchComponent implements OnInit {
   }
 
   resetFilters() {
-    this.filterParams.userId = null;
-    this.filterParams.minCallories = null;
-    this.filterParams.maxCallories = null;
+    this.nullifyParams(this.filterParams);
+    console.log(this.filterParams);
     this.filtersReset.emit(this.filterParams);
+  }
+
+  nullifyParams(obj: FoodSearchParams) {
+    Object.keys(obj).forEach(index => {
+      if (!index.match('name')) {
+        obj[index] = null;
+      }
+    });
   }
 }

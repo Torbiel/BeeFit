@@ -61,20 +61,15 @@ export class EditDishComponent implements OnInit {
 
     this.paginationParams.pageNumber = 1;
     this.paginationParams.pageSize = 10;
-
-    this.filterParams.userId = null;
-    this.filterParams.minCallories = null;
-    this.filterParams.maxCallories = null;
   }
 
-  findIngredients(name: string) {
+  findIngredients() {
     if (this.ingredientsPagination) {
       this.paginationParams.pageNumber = this.ingredientsPagination.currentPage;
       this.filterParams.pageSize = this.ingredientsPagination.itemsPerPage;
     }
 
-    if (name !== '') {
-      this.filterParams.name = name;
+    if (this.filterParams.name !== '') {
       this.ingredientsService.getIngredients(this.paginationParams, this.filterParams).subscribe((res: PaginatedResult<Ingredient[]>) => {
         this.ingredients = res.result;
         this.ingredientsPagination = res.pagination;
@@ -139,33 +134,40 @@ export class EditDishComponent implements OnInit {
     });
   }
 
-  ingredientsPageChanged(event: any, name: string) {
+  ingredientsPageChanged(event: any) {
     this.ingredientsPagination.currentPage = event.page;
-    this.findIngredients(name);
+    this.findIngredients();
   }
 
-  applyFilters(name: string) {
-    this.ingredientsPagination.currentPage = 1;
-    this.findIngredients(name);
-  }
-
-  resetFilters(name: string) {
-    this.resetPagination();
-
-    this.filterParams.userId = null;
-    this.filterParams.minCallories = null;
-    this.filterParams.maxCallories = null;
-
-    this.findIngredients(name);
+  cancelEdit() {
+    this.router.navigate(['/my-food']);
   }
 
   resetPagination() {
     if (this.ingredientsPagination) {
       this.ingredientsPagination.currentPage = 1;
     }
+
+    // if(this.searchResults$.pagination) {
+    //   this.searchResults$.pagination.currentPage = 1;
+    // }
   }
 
-  cancelEdit() {
-    this.router.navigate(['/my-food']);
+  onSearched(event: any) {
+    this.filterParams = event;
+    this.resetPagination();
+    this.findIngredients();
+  }
+
+  onFiltersApplied(event: any) {
+    this.filterParams = event;
+    this.ingredientsPagination.currentPage = 1;
+    this.findIngredients();
+  }
+
+  onFiltersReset(event: any) {
+    this.filterParams = event;
+    this.resetPagination();
+    this.findIngredients();
   }
 }
