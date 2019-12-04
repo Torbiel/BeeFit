@@ -12,6 +12,8 @@ import { AlertifyService } from 'src/app/_services/alertify.service';
 export class ProfileParametersComponent implements OnInit {
   @Input() public user: User;
   parametersDates: Date[];
+  dateFrom: Date;
+  dateTo: Date;
   addingMode = false;
   editMode = false;
   today = new Date();
@@ -21,21 +23,31 @@ export class ProfileParametersComponent implements OnInit {
     bicepsCircumference: null,
     thighCircumference: null
   } as UsersParameter;
+  parametersAfterFilter: UsersParameter[];
 
   constructor(private userService: UserService, private alertify: AlertifyService) {}
 
   ngOnInit() {
     this.getUser();
+    this.filterParameters();
+    this.newParameter.weight = null;
+    this.newParameter.abdominalCircumference = null;
+    this.newParameter.bicepsCircumference = null;
+    this.newParameter.thighCircumference = null;
   }
 
   prepareDatesToFilter() {
     this.parametersDates = [...new Set(this.user.parameters.map(parameter => parameter.date))];
+
+    this.dateFrom = this.parametersDates[0];
+    this.dateTo = this.parametersDates[this.parametersDates.length-1];
   }
 
   getUser() {
     const id = localStorage.getItem('userId');
     this.userService.getUser(id).subscribe((user: User) => {
       this.user = user;
+      this.parametersAfterFilter = user.parameters;
       this.prepareDatesToFilter();
     }, error => {
       this.alertify.error(error);
@@ -50,7 +62,7 @@ export class ProfileParametersComponent implements OnInit {
     this.editMode = !this.editMode;
 
     const row = document.getElementById('parameter[' + index + ']');
-    const fields = row.querySelectorAll('td-input');
+    const fields = row.getElementsByClassName('td-input'); console.log(row);
     for (let i = 0; i < fields.length; i++) {
       fields[i].classList.toggle('read-only');
     }
@@ -65,6 +77,7 @@ export class ProfileParametersComponent implements OnInit {
       this.user.parameters.push(this.newParameter);
       this.userService.updateUser(this.user).subscribe(next => {
         this.alertify.success('Parameters added.');
+        this.ngOnInit();
       }, error => {
         this.alertify.error(error);
       });
@@ -82,6 +95,7 @@ export class ProfileParametersComponent implements OnInit {
         this.userService.updateUser(this.user).subscribe(next => {
           this.alertify.success('Parameters saved.');
           this.toggleEdit(index);
+          this.ngOnInit();
         }, error => {
           this.alertify.error(error);
         });
@@ -92,6 +106,7 @@ export class ProfileParametersComponent implements OnInit {
       this.user.parameters.splice(id, 1);
       this.userService.updateUser(this.user).subscribe(next => {
         this.alertify.success('Parameters removed');
+        this.ngOnInit();
       }, error => {
         this.alertify.error(error);
       });
@@ -101,11 +116,38 @@ export class ProfileParametersComponent implements OnInit {
   saveChanges() {
     this.userService.updateUser(this.user).subscribe(next => {
       this.alertify.success('Profile updated');
+      this.ngOnInit();
     }, error => {
       this.alertify.error(error);
     });
 
     this.toggleAdd();
+  }
+
+  setDateFrom(date: Date) {
+    console.log(date);
+    this.dateFrom = date;
+    this.filterParameters();
+  }
+
+  setDateTo(date: Date) {
+    console.log(date);
+    this.dateTo = date;
+    this.filterParameters();
+  }
+
+  filterParameters() {
+    this.parametersAfterFilter = this.user.parameters.filter(a => a.date >= this.dateFrom && a.date <= this.dateTo);
+    this.parametersAfterFilter = this.parametersAfterFilter.sort(
+      function(a, b){
+        var keyA = a.date,
+            keyB = b.date;
+        // Compare the 2 dates
+        if(keyA < keyB) return -1;
+        if(keyA > keyB) return 1;
+        return 0;
+      }
+      );
   }
 
 }

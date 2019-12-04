@@ -25,6 +25,11 @@ namespace BeeFit.API.Data
             return meals;
         }
 
+        public IEnumerable<Meal> GetManyByMonth(string date, int userId)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public IEnumerable<Meal> GetManyByMonthAndYear(int month, int year, int userId)
         {
             var meals = new List<Meal>();

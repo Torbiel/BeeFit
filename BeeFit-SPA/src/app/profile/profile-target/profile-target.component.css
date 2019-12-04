@@ -149,7 +149,7 @@ span
 {
     white-space: nowrap;
 }
-/* 
+/*
 input[type=range]::-webkit-slider-thumb
 {
     -webkit-appearance: none;
@@ -163,8 +163,27 @@ input[type=range]::-moz-range-thumb
     background: red;
 }
 
-input[type=range]::-ms-thumb 
+input[type=range]::-ms-thumb
 {
     color: red;
     background: red;
 } */
+
+.fa-question-circle:hover
+{
+    color: #fff;
+    cursor: pointer;
+    -webkit-filter: invert(100%);
+    filter: invert(100%);
+}
+::ng-deep .my-tooltip
+{
+    font-size: 1em;
+    white-space: pre-line;
+    line-height: 150%;
+}
+
+.reminder
+{
+    color: green;
+}

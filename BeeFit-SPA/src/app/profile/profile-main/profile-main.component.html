@@ -16,6 +16,11 @@
       <div class="col-2">Password: </div>
       <div class="col-2">xxxxxxxx</div>
     </div>
+    <div class="row">
+      <div class="col-2">Height: </div>
+      <div *ngIf="user.height" class="col-2">{{user.height}}</div>
+      <div *ngIf="!user.height" class="col-2">—</div>
+    </div>
   </div>
 </div>
 
@@ -47,6 +52,25 @@
         <label for="newPassword" class="col-3">New password: </label>
         <input type="password" [(ngModel)]="user.newPassword" name="newPassword" id="newPassword" class="col-4">
       </div>
+      <div class="row">
+        <label for="height" class="col-3">Height: </label>
+        <input type="number" [(ngModel)]="user.height" name="height" id="height" class="col-4" step="1" min="1" max="250">
+      </div>
+      <div *ngIf="user.gender && user.gender!=0" class="row">
+        <label class="col-3">Gender: </label>
+        <ul>
+          <li>
+            <label for="genderMale" class="col-3">Male</label>
+            <input type="radio" [(ngModel)]="user.gender" name="gender" id="genderMale" value=0 class="col-4">
+          </li>
+          <li>
+            <label for="genderFemale" class="col-3">Female</label>
+            <input type="radio" [(ngModel)]="user.gender" name="gender" id="genderFemale" value=1 class="col-4">
+          </li>
+        </ul>
+
+      </div>
+
     </div>
   </form>
 </div>

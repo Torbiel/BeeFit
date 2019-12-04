@@ -5,6 +5,8 @@ import { AlertifyService } from 'src/app/_services/alertify.service';
 import { User } from 'src/app/_models/User';
 import { Target } from 'src/app/_models/Target';
 import { empty } from 'rxjs';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { now } from 'moment';
 
 @Component({
   selector: 'app-profile-target',
@@ -17,17 +19,17 @@ export class ProfileTargetComponent implements OnInit {
   editMode = false;
   autoMode = true;
   actualWeight: number;
-  dailyCallories = 0;
+  dailyCallories: number = 0;
   dayActivity = 0;
   trainingActivity = 0;
   changePerWeek = 0;
-  estimatedCalories: number;
-  proteinsResult: number;
-  fatsResult: number;
-  carbohydratesResult: number;
+  proteinsResult: number = 0;
+  fatsResult: number = 0;
+  carbohydratesResult: number = 0;
   weeksFromNow = 0;
   targetWeight = this.actualWeight;
   today = new Date();
+  totalPercent: number = 0;
   estimatedEnd = new Date();
   dateNextWeek = new Date(this.today.setDate(this.today.getDate() + 7));
   constructor(
@@ -38,6 +40,7 @@ export class ProfileTargetComponent implements OnInit {
 
   ngOnInit() {
     this.getUser();
+    this.calculate();
   }
 
   getUser() {
@@ -138,22 +141,6 @@ export class ProfileTargetComponent implements OnInit {
     this.changePerWeek = parseFloat(
       (document.getElementById('changePerWeek') as HTMLInputElement).value
     );
-    // if (this.autoMode === true) {
-    //   const changePerWeek =
-    //     (this.targetWeight - this.actualWeight) /
-    //     this.weeksBetween(
-    //       new Date(),
-    //       new Date(
-    //         (document.getElementById('estimatedTime') as HTMLInputElement).value
-    //       )
-    //     );
-    //   this.changePerWeek = Math.round(changePerWeek * 7);
-    // } else {
-    //   const changePerWeek = parseFloat(
-    //     (document.getElementById('changePerWeek') as HTMLInputElement).value
-    //   );
-    //   this.changePerWeek = changePerWeek;
-    // }
 
     this.dayActivity = parseFloat(
       (document.getElementById('dayActivity') as HTMLInputElement).value
@@ -165,46 +152,73 @@ export class ProfileTargetComponent implements OnInit {
       (document.getElementById('trainingActivity') as HTMLInputElement).value
     );
 
-    // const caloricDeficit = 7000 * this.changePerWeek;
-    this.dailyCallories =
-      (this.dayActivity * 0.2 + 1.1 + this.trainingActivity * 0.1) *
-      this.actualWeight *
-      22;
-
-    // if (this.autoMode === true) {
-    //   this.estimatedCalories = this.dailyCallories + caloricDeficit;
-    // } else {
-    //   if (this.actualWeight - this.targetWeight < 0) {
-    //     this.estimatedCalories = this.dailyCallories + caloricDeficit / 7;
-    //   } else if (this.actualWeight - this.targetWeight > 0) {
-    //     this.estimatedCalories = this.dailyCallories - caloricDeficit / 7;
-    //   } else {
-    //     this.estimatedCalories = this.dailyCallories;
-    //   }
-    // }
+    var weightDifference = this.actualWeight - this.targetWeight;
+    var caloricDeficit = 7000 * this.changePerWeek;
+    if (weightDifference > 0) {
+      caloricDeficit = (0 - caloricDeficit) / 7;
+    } else if (weightDifference == 0) {
+      caloricDeficit = 0;
+    } else {
+      caloricDeficit = caloricDeficit / 7;
+    }
 
     const daysToTarget =
       (Math.abs(this.actualWeight - this.targetWeight) / this.changePerWeek) *
       7;
+
+    if (this.autoMode === true) {
+      if (this.user.height && this.user.gender && this.user.dateOfBirth) {
+        if (this.user.gender == 1) {
+          this.dailyCallories = 66 + 13.7 * this.actualWeight + 5 * this.user.height - 6.76 * (this.today.getDate() - this.user.dateOfBirth.getDate())
+        } else {
+          this.dailyCallories = 655 + 9.6 * this.actualWeight + 1.8 * this.user.height - 4.7 * (this.today.getDate() - this.user.dateOfBirth.getDate())
+        }
+      } else {
+        this.dailyCallories =
+          (this.dayActivity * 0.2 + 1.1 + this.trainingActivity * 0.1) *
+          this.actualWeight * 22 + caloricDeficit;
+      }
+
+
+      this.proteinsResult =
+        this.actualWeight *
+        (this.dayActivity * 0.25 +
+          1.1 +
+          this.trainingActivity * this.trainingActivity * 0.005 +
+          (this.trainingActivity + this.dayActivity) / 10);
+
+      this.fatsResult = this.actualWeight;
+
+      this.carbohydratesResult =
+        (this.dailyCallories - (this.proteinsResult * 4 + this.fatsResult * 9)) /
+        4;
+    } else {
+      this.dailyCallories = parseFloat(
+        (document.getElementById('dailyCallories') as HTMLInputElement).value
+      );
+      var proteinsPercent = parseFloat(
+        (document.getElementById('proteins') as HTMLInputElement).value
+      );
+      this.proteinsResult = proteinsPercent * this.dailyCallories / 400;
+      var fatsPercent = parseFloat(
+        (document.getElementById('fats') as HTMLInputElement).value
+      );
+      this.fatsResult = fatsPercent * this.dailyCallories / 900;
+      var carbohydratesPercent = parseFloat(
+        (document.getElementById('carbohydrates') as HTMLInputElement).value
+      );
+      this.carbohydratesResult = carbohydratesPercent * this.dailyCallories / 400;
+
+      this.totalPercent = proteinsPercent + fatsPercent + carbohydratesPercent;
+      if (this.totalPercent == NaN) {
+        this.totalPercent = 0;
+      }
+    }
+
     this.estimatedEnd = new Date();
     this.estimatedEnd.setDate(this.estimatedEnd.getDate() + daysToTarget);
 
-    if (this.estimatedCalories < 0) {
-      this.estimatedCalories = 0;
-    }
 
-    this.proteinsResult =
-      this.actualWeight *
-      (this.dayActivity * 0.25 +
-        1.1 +
-        this.trainingActivity * this.trainingActivity * 0.005 +
-        (this.trainingActivity + this.dayActivity) / 10);
-
-    this.fatsResult = this.actualWeight;
-
-    this.carbohydratesResult =
-      (this.dailyCallories - (this.proteinsResult * 4 + this.fatsResult * 9)) /
-      4;
   }
 
   weeksBetween(d1: Date, d2: Date) {
