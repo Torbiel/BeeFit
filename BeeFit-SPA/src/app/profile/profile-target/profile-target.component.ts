@@ -52,12 +52,12 @@ export class ProfileTargetComponent implements OnInit {
           a.date < b.date ? 1 : -1
         );
 
-        if (this.user.parameters[0] === undefined) {
-          this.actualWeight = this.user.target.weightFrom;
-        } else {
+        if (this.user.parameters[0] !== undefined && this.user.parameters[0].weight) {
           this.actualWeight = this.user.parameters[0].weight;
+        } else {
+          this.actualWeight = this.user.target.weightFrom;
         }
-        this.targetWeight = this.user.parameters[0].weight;
+        this.targetWeight = this.actualWeight;
       },
       error => {
         this.alertify.error(error);
@@ -92,18 +92,10 @@ export class ProfileTargetComponent implements OnInit {
     );
     this.target.callories = this.dailyCallories;
     this.target.proteins = Math.round(this.proteinsResult);
-    this.target.fats = 222;
+    this.target.fats = Math.round(this.fatsResult);
     this.target.carbohydrates = Math.round(this.carbohydratesResult);
 
     if (this.user.target == null) {
-      // this.targetService.add(this.target).subscribe(
-      //   () => {
-      //     this.alertify.success('Target added.');
-      //   },
-      //   error => {
-      //     this.alertify.error(error);
-      //   }
-      // );
       this.user.target = this.target;
       this.userService.updateUser(this.user).subscribe(
         () => {
