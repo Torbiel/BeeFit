@@ -9,12 +9,12 @@
       <div class="row">
         View from:
         <div class="dropdown ml-2 mr-2" dropdown>
-          <a class="dropdown-toggle" (click)="false" dropdownToggle>
-            {{ user.parameters[user.parameters.length - 1].date | date: 'dd.MM.yyyy'}}
+          <a class="dropdown-toggle" dropdownToggle>
+            {{ dateFrom | date: 'dd.MM.yyyy'}}
           </a>
 
           <div class="dropdown-menu" *dropdownMenu>
-            <li class="dropdown-item" *ngFor="let parameter of parametersDates">
+            <li (click)="setDateFrom(parameter)" class="dropdown-item" *ngFor="let parameter of parametersDates">
               {{ parameter | date: 'dd.MM.yyyy' }}
             </li>
           </div>
@@ -23,11 +23,11 @@
         to:
         <div class="dropdown ml-2" dropdown>
           <a class="dropdown-toggle" (click)="false" dropdownToggle>
-            {{ user.parameters[user.parameters.length - 2].date | date: 'dd.MM.yyyy'}}
+            {{ dateTo | date: 'dd.MM.yyyy'}}
           </a>
 
           <div class="dropdown-menu" *dropdownMenu>
-            <li class="dropdown-item"  *ngFor="let parameter of parametersDates">
+            <li (click)="setDateTo(parameter)" class="dropdown-item"  *ngFor="let parameter of parametersDates">
               {{parameter | date: 'dd.MM.yyyy'}}
             </li>
           </div>
@@ -61,14 +61,14 @@
               <td>
                 <input type="text" value="{{newParameter.thighCircumference}}" [(ngModel)]="newParameter.thighCircumference" name="username" id="username" class="td-input">
               </td>
-
               <td>
-                <button class="save-button" (click)="addParameter()" type="submit"><i class="far fa-check-square"></i></button>
+                <button (click)="toggleAdd()" type="submit"><i class="fas fa-close"></i></button>
+                <button (click)="addParameter()" type="submit"><i class="fa fa-check"></i></button>
               </td>
             </tr>
 
 
-            <tr *ngFor="let parameter of user.parameters; index as i" id="parameter[{{i}}]" >
+            <tr *ngFor="let parameter of parametersAfterFilter; index as i" id="parameter[{{i}}]" >
               <td>
                 <input type="datetime-local"  value="{{parameter.date}}" [(ngModel)]="user.parameters[i].date" name="name1" id="name1" class="td-input read-only">
               </td>
@@ -85,17 +85,13 @@
                 <input type="text" value="{{parameter.thighCircumference}}" [(ngModel)]="user.parameters[i].thighCircumference" name="name2" id="name2" class="td-input read-only">
               </td>
               <td>
-                <button *ngIf="!editMode" (click)="deleteParameter(i)">
-                  Remove
+                <button class="fas fa-trash-alt" *ngIf="!editMode" (click)="deleteParameter(i)">
                 </button>
-                <button *ngIf="!editMode" (click)="toggleEdit(i)">
-                  Edit
+                <button class="fas fa-edit" *ngIf="!editMode" (click)="toggleEdit(i)">
                 </button>
-                <button *ngIf="editMode" (click)="toggleEdit(i)">
-                  Cancel
+                <button class="fas fa-close" *ngIf="editMode" (click)="toggleEdit(i)">
                 </button>
-                <button *ngIf="editMode" (click)="editParameter(i)">
-                  Save
+                <button class="fas fa-check" *ngIf="editMode" (click)="editParameter(i)">
                 </button>
 
             </td>

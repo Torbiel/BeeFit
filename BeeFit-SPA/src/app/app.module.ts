@@ -6,7 +6,7 @@ import { BsDropdownModule } from 'ngx-bootstrap';
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatExpansionModule } from '@angular/material';
+import { MatExpansionModule, MatTooltipModule } from '@angular/material';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
@@ -80,6 +80,7 @@ import { SearchComponent } from './search/search.component';
       BrowserAnimationsModule,
       MatProgressBarModule,
       MatExpansionModule,
+      MatTooltipModule,
       FormsModule,
       ReactiveFormsModule,
       FullCalendarModule,

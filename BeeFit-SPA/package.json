@@ -39,6 +39,7 @@
     "jwt-decode": "^2.2.0",
     "moment": "^2.24.0",
     "ng2-search-filter": "^0.5.1",
+    "ng2-tooltip-directive": "^2.8.17",
     "ngx-bootstrap": "^5.1.2",
     "nvm": "0.0.4",
     "pusher-js": "^5.0.3",

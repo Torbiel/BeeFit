@@ -42,6 +42,8 @@ table td
     border: 1px solid rgb(219, 219, 219);
     width: 100px;
     text-align: center;
+    height: 100%;
+    padding: 1px;
 }
 
 thead td
@@ -87,28 +89,34 @@ td:active
 
 td button
 {
-    background-color: #F3C622;
+    background-color: #000;
+    color: #F3C622;
     border: 0;
-    color: black;
-    width: 100%;
+    width: 50%;
+    height: 100%;
 }
 
 td button:hover
 {
-    background-color: #000;
-    color: #F3C622;
+    color: black;
+    background-color: #F3C622;
 }
 
 td button:nth-child(1),
 td button:nth-child(3)
 {
-    border-bottom: 1px solid #272727;
+    border-right: 1px solid #c5c5c5;
 }
 
 .add-parameters
 {
     background-color: #F3C622 !important;
 }
+.add-parameters td
+{
+    padding:2px;
+}
+
 .add-parameters td:hover
 {
     background-color: #E1A511 !important;
