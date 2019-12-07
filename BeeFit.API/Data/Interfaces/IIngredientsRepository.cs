@@ -1,12 +1,11 @@
-﻿using BeeFit.API.Models;
-using System.Collections.Generic;
+﻿using BeeFit.API.Helpers;
+using BeeFit.API.Models;
 using System.Threading.Tasks;
 
 namespace BeeFit.API.Data.Interfaces
 {
     public interface IIngredientsRepository : IBeeFitRepository
     {
-        public Task<IEnumerable<Ingredient>> GetManyByName(string name);
-        public IEnumerable<Ingredient> GetManyByUserId(int id);
+        public Task<PagedList<Ingredient>> GetMany(FoodSearchParams pagingParams);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BeeFit.API.Data.Interfaces;
 using BeeFit.API.Dtos.Ingredients;
+using BeeFit.API.Helpers;
 using BeeFit.API.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -48,21 +49,13 @@ namespace BeeFit.API.Controllers
             return Ok(ingredientToReturn);
         }
 
-        [HttpGet("{name}")]
-        public async Task<IActionResult> GetManyByName(string name)
+        [HttpGet]
+        public async Task<IActionResult> GetMany([FromQuery] FoodSearchParams pagingParams)
         {
-            var ingredients = await _repo.GetManyByName(name);
+            var ingredients = await _repo.GetMany(pagingParams);
             var ingredientsToReturn = _mapper.Map<IEnumerable<IngredientForGetDto>>(ingredients);
 
-            return Ok(ingredientsToReturn);
-        }
-
-        [HttpGet]
-        public IActionResult GetManyByUserId()
-        {
-            var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-            var ingredients = _repo.GetManyByUserId(currentUserId);
-            var ingredientsToReturn = _mapper.Map<IEnumerable<Ingredient>>(ingredients);
+            Response.AddPagination(ingredients.CurrentPage, ingredients.PageSize, ingredients.TotalCount, ingredients.TotalPages);
 
             return Ok(ingredientsToReturn);
         }

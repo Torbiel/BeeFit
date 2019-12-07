@@ -12,18 +12,18 @@ button:hover
     color:#F3C622;
 }
 
-.addingMode
+.searchMode
 {
     display: flex;
     width: 80%;
 }
 
-.addingMode input
+.searchMode input
 {
     display: none;
 }
 
-.addingMode label
+.searchMode label
 {
     background-color: rgba(0, 0, 0, 0);
     position: relative;
@@ -34,21 +34,21 @@ button:hover
     cursor: pointer;
 }
 
-.addingMode label:hover
+.searchMode label:hover
 {
      background-color: rgba(0, 0, 0, .1);
 }
 
-.addingMode label:first-of-type
+.searchMode label:first-of-type
 {
     border-right: none;
 }
-.addingMode label:last-of-type
+.searchMode label:last-of-type
 {
     border-left: none;
 }
 
-.searchMode:after
+.allFoodMode:after
 {
     content: '';
     display: block;
@@ -57,17 +57,113 @@ button:hover
     bottom: 100%;
     z-index: -1;
     height: 100%;
-    background: #fdcf4c;transition: .5s ease-in-out;
+    background: #fdcf4c;
+    transition: .5s ease-in-out;
 }
 
-.searchMode.selected:after
+.allFoodMode.selected:after
 {    
     transition: .35s ease-in-out;
     left: 0;
 }
-.searchMode.unselected:after
+.allFoodMode.unselected:after
 {
     
     transition: .35s ease-in-out;
     left: 100%;
+}
+
+.add-button
+{
+    width: 2.3vw;
+    height: 2.3vw;
+    font-size: 1.3em;
+}
+
+.button-div
+{
+    padding-top: 1px;
+}
+
+.list-element
+{
+    border: 2px solid rgb(187, 152, 24);
+
+}
+
+.list-element:hover
+{
+    background-color: rgb(58, 58, 58);
+}
+
+td:not(:last-child)
+{
+    border-right: 1px solid gray;
+}
+
+td
+{
+    padding-right: 5px;
+    padding-left: 5px;
+}
+
+table
+{
+    width: 100%;
+}
+
+.dishes-header, .ingredients-header
+{
+    font-size: 1.3em;
+}
+
+form
+{
+    width: 100%;
+}
+
+.pagination-wrapper
+{
+    width: 80%;
+}
+
+/deep/ li.page-item > .page-link, /deep/ li.page-item.disabled > .page-link
+{
+    background-color: rgb(29, 29, 29);
+    color: #F3C622;
+    border: none;
+}
+
+/deep/ li.page-item > .page-link:hover, /deep/ li.page-item.active > .page-link
+{
+    background-color: #F3C622;
+    color: rgb(29, 29, 29);
+}
+
+mat-expansion-panel
+{
+    background-color: rgb(63, 63, 63);
+    color: rgb(230, 230, 230);
+}
+
+/deep/ .mat-expansion-indicator::after
+{
+    color: rgb(230, 230, 230);
+}
+
+.far
+{
+    font-family: fontawesome;
+}
+
+.cancel-button, .confirm-button
+{
+    font-size: 1.3em;
+}
+
+.legend
+{
+    background-color: rgb(63, 63, 63);
+    color: rgb(180, 180, 180);
+    text-align: center;
 }

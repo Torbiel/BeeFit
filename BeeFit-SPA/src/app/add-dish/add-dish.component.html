@@ -1,19 +1,20 @@
 <div class="container mt-3">
   <div class="row justify-content-center">
     <div class="col-lg-5 mr-3">
-      <form>
-        <!-- Input area -->
-        <div class="row">
-          <input class="form-control" type="text" placeholder="Name your dish" #dishName required="required"
-            (input)="setDishName(dishName.value)">
-        </div>
-        <div class="row mt-2 form-group search-bar">
-          <input class="form-control" type="text" placeholder="Search for ingredients" #searchBox
-            (input)="findIngredients(searchBox.value)">
-        </div>
+      <!-- Input area -->
+      <div class="row">
+        <input type="text" class="form-control" placeholder="Name your dish" [(ngModel)]="dish.name">
+      </div>
+      <div class="invalid-feedback" *ngIf="">
+        This field is required.
+      </div>
+      <app-search [userId]="this.userId" (searched)="onSearched($event)" (filtersApplied)="onFiltersApplied($event)"
+        (filtersReset)="onFiltersReset($event)">
+      </app-search>
 
-        <!-- Results of search -->
-        <div class="row list-item" *ngFor="let ing of ingredients$ | async">
+      <!-- Results of search -->
+      <div class="mt-2">
+        <div class="row list-item mb-2" *ngFor="let ing of ingredients">
           <div class="col-10 pl-2 pt-2">
             <p>{{ ing.name }}</p>
             <table>
@@ -31,7 +32,7 @@
             </button>
           </div>
         </div>
-      </form>
+      </div>
     </div>
 
     <!-- Added ingredients list -->
@@ -57,9 +58,13 @@
           </button>
         </div>
       </div>
+
+      <!-- List of added ingredients empty -->
       <div class="row no-ingredients" *ngIf="addedIngredients.length === 0">
         Empty
       </div>
+
+      <!-- Buttons -->
       <div class="row justify-content-center mt-3" *ngIf="addedIngredients.length > 1">
         <div class="col-5">
           <button type="reset" class="cancel-button"><i class="far fa-times"></i></button>

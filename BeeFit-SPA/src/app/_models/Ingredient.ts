@@ -7,7 +7,7 @@ export class Ingredient {
     name: string;
     brand: string;
     user?: User;
-    unit: number;
+    unit: unit;
     gramsPerUnit: number;
     dishes?: Dish[];
     searchPreferences?: SearchPreference[];
@@ -53,4 +53,14 @@ export class Ingredient {
     constructor(data: JSON) {
         Object.assign(this, data);
     }
+}
+
+export enum unit {
+    Piece = 'piece',
+    Portion = 'portion',
+    Packet = 'packet',
+    Teaspoon = 'teaspoon',
+    Tablespoon = 'tablespoon',
+    Slice = 'slice',
+    Glass = 'glass'
 }

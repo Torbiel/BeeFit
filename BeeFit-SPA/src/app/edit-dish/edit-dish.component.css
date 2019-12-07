@@ -53,3 +53,50 @@ table
 {
     font-size: 1.3em;
 }
+
+.legend
+{
+    background-color: rgb(63, 63, 63);
+    color: rgb(180, 180, 180);
+    text-align: center;
+}
+
+/deep/ li.page-item > .page-link:hover, /deep/ li.page-item.active > .page-link
+{
+    background-color: #F3C622;
+    color: rgb(29, 29, 29);
+}
+
+mat-expansion-panel
+{
+    background-color: rgb(63, 63, 63);
+    color: rgb(230, 230, 230);
+}
+
+/deep/ .mat-expansion-indicator::after
+{
+    color: rgb(230, 230, 230);
+}
+
+.add-button
+{
+    width: 2.3vw;
+    height: 2.3vw;
+    font-size: 1.3em;
+}
+
+.button-div
+{
+    padding-top: 1px;
+}
+
+.list-element
+{
+    border: 2px solid rgb(187, 152, 24);
+
+}
+
+.list-element:hover
+{
+    background-color: rgb(58, 58, 58);
+}

@@ -24,7 +24,7 @@ namespace BeeFit.API.Models
         public float Callories { get; set; }
         public float Fats { get; set; }
         public float Carbohydrates { get; set; }
-        public float Sugars { get; set; }
+        public float? Sugars { get; set; }
         public float Proteins { get; set; }
         public float? AnimalProteins { get; set; }
         public float? PlantProteins { get; set; }

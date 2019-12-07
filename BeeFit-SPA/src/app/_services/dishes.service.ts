@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Dish } from '../_models/Dish';
 import { PaginatedResult } from '../_models/Pagination';
 import { map } from 'rxjs/operators';
+import { FoodSearchParams } from '../_models/FoodSearchParams';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -24,35 +25,66 @@ export class DishesService {
     return this.http.get<Dish>(this.baseUrl + '/' + id, httpOptions);
   }
 
-  getDishesByName(name: string, pageNumber?, pageSize?): Observable<Dish[]> {
-    // const paginatedResult = new PaginatedResult<Dish[]>();
-    return this.http.get<Dish[]>(this.baseUrl + '/' + name, httpOptions);
-    // let params = new HttpParams();
+  getDishes(params?): Observable<PaginatedResult<Dish[]>> {
+    const paginatedResult: PaginatedResult<Dish[]> = new PaginatedResult<Dish[]>();
+    let httpParams = new HttpParams();
+    httpParams = this.setHttpParams(params, httpParams);
 
-    // if (pageNumber != null) {
-    //   params = params.append('pageNumber', pageNumber);
+    // if (searchParams.minCallories != null) {
+    //   httpParams = httpParams.append('minCallories', searchParams.minCallories);
     // }
 
-    // if (pageSize != null) {
-    //   params = params.append('pageSize', pageSize);
+    // if (searchParams.maxCallories != null) {
+    //   httpParams = httpParams.append('maxCallories', searchParams.maxCallories);
     // }
 
-    // return this.http.get<Dish[]>(this.baseUrl + '/' + name, { observe: 'response', params })
-    //   .pipe(
-    //     map(response => {
-    //       paginatedResult.result = response.body;
+    // if (searchParams. != null) {
+    //   params = params.append('', searchParams.);
+    // }
 
-    //       if (response.headers.get('Pagination') != null) {
-    //         paginatedResult.pagination = JSON.parse(response.headers.get('Pagination'));
-    //       }
+    // if (searchParams.userId != null && searchParams.userId !== 'null') {
+    //   httpParams = httpParams.append('userId', searchParams.userId);
+    // }
 
-    //       return paginatedResult;
-    //     })
-    //   );
+    // if (paginationParams.pageNumber == null) {
+    //   paginationParams.pageNumber = 1;
+    // }
+    // httpParams = httpParams.append('pageNumber', paginationParams.pageNumber);
+
+    // if (paginationParams.pageSize == null) {
+    //   paginationParams.pageSize = 10;
+    // }
+    // httpParams = httpParams.append('pageSize', paginationParams.pageSize);
+
+    const authHeader = new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem('token')
+    });
+
+    return this.http.get<Dish[]>(this.baseUrl, {
+      observe: 'response',
+      params: httpParams,
+      headers: authHeader})
+      .pipe(
+        map(response => {
+          paginatedResult.result = response.body;
+
+          if (response.headers.get('Pagination') != null) {
+            paginatedResult.pagination = JSON.parse(response.headers.get('Pagination'));
+          }
+
+          return paginatedResult;
+        })
+      );
   }
 
-  getDishesByUserId(id: number): Observable<Dish[]> {
-    return this.http.get<Dish[]>(this.baseUrl, httpOptions);
+  setHttpParams(obj: FoodSearchParams, params: HttpParams): HttpParams {
+    Object.entries(obj).forEach(([key, value]) => {
+      if (value != null) {
+        params = params.append(key, value);
+      }
+    });
+
+    return params;
   }
 
   add(dish: Dish): Observable<Dish> {
