@@ -1,12 +1,12 @@
-<div class="row" *ngIf="!editMode">
+<div class="row profileContent" *ngIf="!editMode">
   <div class="col-md-auto">
     <button class="edit-button" (click)="toggleEdit()"><i class="fas fa-edit"></i></button>
   </div>
 
-  <div class="col">
+  <div *ngIf="user" class="col">
     <div class="row">
       <div class="col-2">Username: </div>
-      <div class="col-2">{{user.username}}</div>
+      <div class="col-2">{{user?.username}}</div>
     </div>
     <div class="row">
       <div class="col-2">E-mail: </div>
@@ -18,7 +18,12 @@
     </div>
     <div class="row">
       <div class="col-2">Height: </div>
-      <div *ngIf="user.height" class="col-2">{{user.height}}</div>
+      <div *ngIf="user.height" class="col-2 nowrap">{{user?.height}} cm</div>
+      <div *ngIf="!user.height" class="col-2">—</div>
+    </div>
+    <div class="row">
+      <div class="col-2">Date of birth: </div>
+      <div *ngIf="user.height" class="col-2 nowrap">{{user?.dateOfBirth | date}}</div>
       <div *ngIf="!user.height" class="col-2">—</div>
     </div>
   </div>
@@ -55,20 +60,19 @@
       <div class="row">
         <label for="height" class="col-3">Height: </label>
         <input type="number" [(ngModel)]="user.height" name="height" id="height" class="col-4" step="1" min="1" max="250">
+        <span class="col-4">cm</span>
       </div>
-      <div *ngIf="user.gender && user.gender!=0" class="row">
+      <div *ngIf="genderBeforeSet===0" class="row">
         <label class="col-3">Gender: </label>
-        <ul>
-          <li>
-            <label for="genderMale" class="col-3">Male</label>
-            <input type="radio" [(ngModel)]="user.gender" name="gender" id="genderMale" value=0 class="col-4">
-          </li>
-          <li>
-            <label for="genderFemale" class="col-3">Female</label>
-            <input type="radio" [(ngModel)]="user.gender" name="gender" id="genderFemale" value=1 class="col-4">
-          </li>
-        </ul>
-
+          <select [(ngModel)]="user.gender" name="gender" class="col-4">
+            <option value=0>—</option>
+            <option value=1>Male</option>
+            <option value=2>Female</option>
+          </select>
+      </div>
+      <div *ngIf="dateOfBirthBeforeSet==0 || dateOfBirthBeforeSet=='0001-01-01T00:00:00'" class="row">
+        <label class="col-3">Date of birth: </label>
+          <input type="date" [(ngModel)]="user.dateOfBirth" name="dateOfBirth" id="dateOfBirth" class="col-4">
       </div>
 
     </div>

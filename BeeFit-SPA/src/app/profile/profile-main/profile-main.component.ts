@@ -12,6 +12,8 @@ import { AlertifyService } from '../../_services/alertify.service';
 export class ProfileMainComponent implements OnInit {
   @Input() public user: User;
   editMode = false;
+  genderBeforeSet: number = 0;
+  dateOfBirthBeforeSet: Date;
   constructor(private userService: UserService, private alertify: AlertifyService) { }
 
   ngOnInit() {
@@ -23,6 +25,8 @@ export class ProfileMainComponent implements OnInit {
     const id = localStorage.getItem('userId');
     this.userService.getUser(id).subscribe((user: User) => {
       this.user = user;console.log(this.user);
+      this.genderBeforeSet = user.gender;
+      this.dateOfBirthBeforeSet = user.dateOfBirth;
     }, error => {
       this.alertify.error(error);
     });
@@ -33,7 +37,10 @@ export class ProfileMainComponent implements OnInit {
   }
 
   saveChanges() {
+    console.log(this.user);
     this.userService.updateUser(this.user).subscribe(next => {
+      this.genderBeforeSet = this.user.gender;
+
       this.alertify.success('Profile updated');
     }, error => {
       this.alertify.error(error);
