@@ -8,31 +8,11 @@
     <div class="col" *ngIf="user">
       <div class="row">
         View from:
-        <div class="dropdown ml-2 mr-2" dropdown>
-          <a class="dropdown-toggle" dropdownToggle>
-            {{ dateFrom | date: 'dd.MM.yyyy'}}
-          </a>
-
-          <div class="dropdown-menu" *dropdownMenu>
-            <li (click)="setDateFrom(parameter)" class="dropdown-item" *ngFor="let parameter of parametersDates">
-              {{ parameter | date: 'dd.MM.yyyy' }}
-            </li>
-          </div>
-        </div>
+        <input type="date" [value]="dateFrom" (input)="setDateFrom(dateFrom)" class="dropdown ml-2 filter" name="dateFrom" [(ngModel)]="dateFrom" />
 
         to:
-        <div class="dropdown ml-2" dropdown>
-          <a class="dropdown-toggle" (click)="false" dropdownToggle>
-            {{ dateTo | date: 'dd.MM.yyyy'}}
-          </a>
+        <input type="date" [value]="dateTo" (input)="setDateTo(dateTo)" class="dropdown ml-2 filter" name="dateTo" [(ngModel)]="dateTo" />
 
-          <div class="dropdown-menu" *dropdownMenu>
-            <li (click)="setDateTo(parameter)" class="dropdown-item"  *ngFor="let parameter of parametersDates">
-              {{parameter | date: 'dd.MM.yyyy'}}
-            </li>
-          </div>
-        </div>
-      </div>
 
       <div class="row mt-2">
 
@@ -68,7 +48,7 @@
             </tr>
 
 
-            <tr *ngFor="let parameter of parametersAfterFilter; index as i" id="parameter[{{i}}]" >
+            <tr *ngFor="let parameter of user.parameters; index as i" id="parameter[{{i}}]" >
               <td>
                 <input type="datetime-local"  value="{{parameter.date}}" [(ngModel)]="user.parameters[i].date" name="name1" id="name1" class="td-input read-only">
               </td>

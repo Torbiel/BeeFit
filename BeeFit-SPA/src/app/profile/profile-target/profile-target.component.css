@@ -121,7 +121,8 @@ li
 {
     display: flex;
     justify-content: space-between;
-    margin: 5px;
+    padding: 5px;
+    width: 100%;
     transition: all .2s ease-out;
     overflow: hidden;
 }
@@ -151,8 +152,7 @@ li input[type=range]
 
 li output
 {
-
-    max-width: 100%;
+    width: 100%;
 }
 
 .result
@@ -173,20 +173,20 @@ span
 input[type=range]::-webkit-slider-thumb
 {
     -webkit-appearance: none;
-    color: red;
-    background-color: red;
+    color: #992409;
+    background-color: #992409;
 }
 
 input[type=range]::-moz-range-thumb
 {
-    color: red;
-    background: red;
+    color: #992409;
+    background: #992409;
 }
 
 input[type=range]::-ms-thumb
 {
-    color: red;
-    background: red;
+    color: #992409;
+    background: #992409;
 }
 
 .fa-question-circle:hover
@@ -203,10 +203,16 @@ input[type=range]::-ms-thumb
     line-height: 150%;
 }
 
-.reminder
+.success
 {
     color: green;
 }
+
+.danger
+{
+    color: #992409;
+}
+
 
 .hide, .hide *, .hide * *
 {

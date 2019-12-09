@@ -7,10 +7,10 @@
     <div class="row">
       <div class="col-md">
         <div class="row bold">
-          Estimated time:
+          Estimated end:
         </div>
         <div class="row">
-          <p class="lead" [ngClass]="{'reminder': (this.user.target.estimatedEnd | date)==(this.today | date)}">{{this.user.target.estimatedEnd | date}}</p>
+          <p class="lead" [ngClass]="{'success': (this.user.target.estimatedEnd | date)==(this.today | date)}">{{this.user.target.estimatedEnd | date}}</p>
         </div>
       </div>
     </div>
@@ -119,10 +119,9 @@
               <label for="changePerWeek">Change per week:
                 <output name="changePerWeekValue" for="changePerWeek">0.5 kg</output>
               </label>
-
-              <input name="changePerWeek" id="changePerWeek" type="range" (input)="calculate()" step="0.1" min="0"
+              <input name="changePerWeek" id="changePerWeek" type="range" (input)="calculate()" step="0.1" min="0.1"
                 max="1" value="0.5">
-            </li>
+            </li>            
             <li>
               <label for="dayActivity">Activity during the day:
               <span class="fas fa-question-circle" [matTooltipClass]="'my-tooltip'"  matTooltip="
@@ -162,18 +161,18 @@
             </li>
             <li>
               <label for="proteins">Proteins (%)</label>
-              <input name="proteins" id="proteins" type="number" value="{{proteins}}" min="0" max="100"  (input)="calculate()">
+              <input [ngClass]="{'alert-danger': !proteinsPercent , 'alert-success': proteinsPercent !== 0}" name="proteins" id="proteins" type="number" value="{{proteins}}" min="0" max="100"  (input)="calculate()">
             </li>
             <li>
               <label for="fats">Fats (%)</label>
-              <input name="fats" id="fats" type="number" min="0" max="100" value="{{fats}}" (input)="calculate()">
+              <input [ngClass]="{'alert-danger': !fatsPercent , 'alert-success': fatsPercent !== 0}" name="fats" id="fats" type="number" min="0" max="100" value="{{fats}}" (input)="calculate()">
             </li>
             <li>
               <label for="carbohydrates">Carbohydrates (%)</label>
-              <input name="carbohydrates" id="carbohydrates" type="number" min="0" max="100" value="{{carbohydrates}}" (input)="calculate()">
+              <input [ngClass]="{'alert-danger': !carbohydratesPercent , 'alert-success': carbohydratesPercent !== 0}" name="carbohydrates" id="carbohydrates" type="number" min="0" max="100" value="{{carbohydrates}}" (input)="calculate()">
             </li>
             <li>
-             <div>Total: {{totalPercent}}%</div>
+             <div [ngClass]="{'danger': totalPercent != 100 || fatsPercent == 0 || proteinsPercent == 0 || carbohydratesPercent == 0, 'success': totalPercent == 100}">Total: {{totalPercent}}%</div>
             </li>
           </div>
         </ul>

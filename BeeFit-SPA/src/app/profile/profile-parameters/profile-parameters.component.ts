@@ -12,8 +12,8 @@ import { AlertifyService } from 'src/app/_services/alertify.service';
 export class ProfileParametersComponent implements OnInit {
   @Input() public user: User;
   parametersDates: Date[];
-  dateFrom: Date;
-  dateTo: Date;
+  dateFrom: String;
+  dateTo: String;
   addingMode = false;
   editMode = false;
   today = new Date();
@@ -34,20 +34,21 @@ export class ProfileParametersComponent implements OnInit {
     this.newParameter.abdominalCircumference = null;
     this.newParameter.bicepsCircumference = null;
     this.newParameter.thighCircumference = null;
+    this.prepareDatesToFilter();
   }
 
   prepareDatesToFilter() {
     this.parametersDates = [...new Set(this.user.parameters.map(parameter => parameter.date))];
+    this.sortParameters(this.user.parameters);
+    this.dateFrom = this.parametersDates[2].toString().substr(0, 10);
+    this.dateTo = this.parametersDates[this.parametersDates.length - 1].toString().substr(0, 10);
 
-    this.dateFrom = this.parametersDates[0];
-    this.dateTo = this.parametersDates[this.parametersDates.length-1];
   }
-
-  getUser() {
+   getUser() {
     const id = localStorage.getItem('userId');
     this.userService.getUser(id).subscribe((user: User) => {
       this.user = user;
-      this.parametersAfterFilter = user.parameters;
+      this.user.parameters = user.parameters;
       this.prepareDatesToFilter();
     }, error => {
       this.alertify.error(error);
@@ -125,29 +126,40 @@ export class ProfileParametersComponent implements OnInit {
   }
 
   setDateFrom(date: Date) {
-    console.log(date);
-    this.dateFrom = date;
+    this.dateFrom = date.toString().substr(0,10);
+     if ( this.dateTo < this.dateFrom) {
+      
+      (document.getElementsByName("dateTo")[0] as HTMLInputElement).value  = this.dateFrom.toString();
+    }
     this.filterParameters();
   }
 
   setDateTo(date: Date) {
-    console.log(date);
-    this.dateTo = date;
+    this.dateTo = date.toString().substr(0, 10);
+    if ( this.dateTo < this.dateFrom) {
+      
+      (document.getElementsByName("dateFrom")[0] as HTMLInputElement).value  = this.dateTo.toString();
+    }
     this.filterParameters();
   }
 
   filterParameters() {
-    this.parametersAfterFilter = this.user.parameters.filter(a => a.date >= this.dateFrom && a.date <= this.dateTo);
-    this.parametersAfterFilter = this.parametersAfterFilter.sort(
-      function(a, b){
-        var keyA = a.date,
-            keyB = b.date;
+    this.user.parameters = this.user.parameters.filter(a => a.date.toString().substr(0, 10) >= this.dateFrom && a.date.toString().substr(0, 10) <= this.dateTo);
+
+    this.sortParameters(this.user.parameters);
+  }
+
+  sortParameters(values) {
+    values = values.sort(
+      function (a, b) {
+        var keyA = a.date.toString().substr(0, 10),
+          keyB = b.date.toString().substr(0, 10);
         // Compare the 2 dates
-        if(keyA < keyB) return -1;
-        if(keyA > keyB) return 1;
+        if (keyA > keyB) return -1;
+        if (keyA < keyB) return 1;
         return 0;
       }
-      );
+    );
   }
 
 }

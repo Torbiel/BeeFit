@@ -43,6 +43,9 @@ export class ProfileTargetComponent implements OnInit {
     '3 — Hard exercise or sports 6 - 7 days / week.',
     '4 — Very hard exercise or sports 6 - 7 days / week.'
   ];
+  proteinsPercent: any;
+  carbohydratesPercent: any;
+  fatsPercent: any;
 
   constructor(
     private userService: UserService,
@@ -163,6 +166,7 @@ export class ProfileTargetComponent implements OnInit {
       caloricDeficit = (0 - caloricDeficit) / 7;
     } else if (weightDifference == 0) {
       caloricDeficit = 0;
+      this.changePerWeek = 0;
     } else {
       caloricDeficit = caloricDeficit / 7;
     }
@@ -222,36 +226,39 @@ export class ProfileTargetComponent implements OnInit {
       this.dailyCallories = parseFloat(
         (document.getElementById('dailyCallories') as HTMLInputElement).value
       );
-      var proteinsPercent = parseFloat(
+      this.proteinsPercent = parseFloat(
         (document.getElementById('proteins') as HTMLInputElement).value
       );
-      this.proteinsResult = proteinsPercent * this.dailyCallories / 400;
-      var fatsPercent = parseFloat(
+      this.proteinsResult = this.proteinsPercent * this.dailyCallories / 400;
+      this.fatsPercent = parseFloat(
         (document.getElementById('fats') as HTMLInputElement).value
       );
-      this.fatsResult = fatsPercent * this.dailyCallories / 900;
-      var carbohydratesPercent = parseFloat(
+      this.fatsResult = this.fatsPercent * this.dailyCallories / 900;
+      this.carbohydratesPercent = parseFloat(
         (document.getElementById('carbohydrates') as HTMLInputElement).value
       );
-      this.carbohydratesResult = carbohydratesPercent * this.dailyCallories / 400;
+      this.carbohydratesResult = this.carbohydratesPercent * this.dailyCallories / 400;
 
-      if (Number.isNaN(proteinsPercent)) {
-        proteinsPercent = 0;
+      if (Number.isNaN(this.proteinsPercent)) {
+        this.proteinsPercent = 0;
       }
-      if (Number.isNaN(fatsPercent)) {
-        fatsPercent = 0;
+      if (Number.isNaN(this.fatsPercent)) {
+        this.fatsPercent = 0;
       }
-      if (Number.isNaN(carbohydratesPercent)) {
-        carbohydratesPercent = 0;
+      if (Number.isNaN(this.carbohydratesPercent)) {
+        this.carbohydratesPercent = 0;
       }
-      this.totalPercent = proteinsPercent + fatsPercent + carbohydratesPercent;
+      this.totalPercent = this.proteinsPercent + this.fatsPercent + this.carbohydratesPercent;
     }
     this.dailyCallories = Math.round(this.dailyCallories);
 
     (<HTMLInputElement>document.querySelector('#dayActivityValue')).value = (this.dayActivityText[parseInt((<HTMLInputElement>document.querySelector('#dayActivity')).value) - 1]).toString();
     (<HTMLInputElement>document.querySelector('#trainingActivityValue')).value = (this.trainingActivityText[parseInt((<HTMLInputElement>document.querySelector('#trainingActivity')).value) - 1]).toString();
     this.estimatedEnd = new Date();
-    this.estimatedEnd.setDate(this.estimatedEnd.getDate() + daysToTarget);
+    if (weightDifference) {
+       this.estimatedEnd.setDate(this.estimatedEnd.getDate() + daysToTarget);
+    } 
+   
 
 
   }
