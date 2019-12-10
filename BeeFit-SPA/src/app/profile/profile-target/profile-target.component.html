@@ -84,7 +84,8 @@
   <div class="row" *ngIf="editMode">
     <div class="col-md-auto">
       <div class="row">
-        <button class="save-button" type="submit"><i class="far fa-check-square"></i></button>
+        <button class="save-button" *ngIf="(!autoMode && totalPercent == 100 && fatsPercent != 0 && proteinsPercent != 0 && carbohydratesPercent != 0) || autoMode" type="submit"><i class="far fa-check-square"></i></button>
+        <button disabled class="save-button" *ngIf="!autoMode && totalPercent != 100" type="submit"><i class="far fa-check-square"></i></button>
       </div>
       <div class="row">
         <button class="cancel-button" (click)="toggleEdit()" type="reset"><i class="far fa-window-close"></i></button>

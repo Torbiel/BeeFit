@@ -30,16 +30,16 @@
             <tr class="add-parameters" *ngIf="addingMode">
               <td><input type="date" value="{{today | date: 'yyyy-MM-dd'}}" [(ngModel)]="newParameter.date" name="username" id="username" class="td-input"></td>
               <td>
-                <input type="text" value="{{newParameter.weight}}" [(ngModel)]="newParameter.weight" name="username" id="username" class="td-input">
+                <input (input)="validate()" type="number" value="{{newParameter.weight}}" [(ngModel)]="newParameter.weight" name="username" id="username" class="td-input">
               </td>
               <td>
-                <input type="text" value="{{newParameter.abdominalCircumference}}" [(ngModel)]="newParameter.abdominalCircumference" name="username" id="username" class="td-input">
+                <input (input)="validate()" type="number" value="{{newParameter.abdominalCircumference}}" [(ngModel)]="newParameter.abdominalCircumference" name="username" id="username" class="td-input">
               </td>
               <td>
-                <input type="text" value="{{newParameter.bicepsCircumference}}" [(ngModel)]="newParameter.bicepsCircumference" name="username" id="username" class="td-input">
+                <input (input)="validate()" type="number" value="{{newParameter.bicepsCircumference}}" [(ngModel)]="newParameter.bicepsCircumference" name="username" id="username" class="td-input">
               </td>
               <td>
-                <input type="text" value="{{newParameter.thighCircumference}}" [(ngModel)]="newParameter.thighCircumference" name="username" id="username" class="td-input">
+                <input (input)="validate()" type="number" value="{{newParameter.thighCircumference}}" [(ngModel)]="newParameter.thighCircumference" name="username" id="username" class="td-input">
               </td>
               <td>
                 <button (click)="toggleAdd()" type="submit"><i class="fas fa-close"></i></button>
@@ -48,30 +48,30 @@
             </tr>
 
 
-            <tr *ngFor="let parameter of user.parameters; index as i" id="parameter[{{i}}]" >
+            <tr *ngFor="let parameter of parametersAfterFilter; index as i" id="parameter[{{i}}]" >
               <td>
-                <input type="datetime-local"  value="{{parameter.date}}" [(ngModel)]="user.parameters[i].date" name="name1" id="name1" class="td-input read-only">
+                <input type="datetime-local"  value="{{parameter.date}}" [(ngModel)]="parameter.date" name="name1" id="name1" class="td-input read-only">
               </td>
               <td>
-                <input type="text" value="{{parameter.weight}}" [(ngModel)]="user.parameters[i].weight" name="name1" id="name1" class="td-input read-only">
+                <input (input)="validate()" type="number" min="0" value="{{parameter.weight}}" [(ngModel)]="parameter.weight" name="name1" id="name1" class="td-input read-only">
               </td>
               <td>
-                <input type="text" value="{{parameter.abdominalCircumference}}" [(ngModel)]="user.parameters[i].abdominalCircumference" name="name1" id="name1" class="td-input read-only">
+                <input (input)="validate()" type="number" min="0" value="{{parameter.abdominalCircumference}}" [(ngModel)]="parameter.abdominalCircumference" name="name1" id="name1" class="td-input read-only">
               </td>
               <td>
-                <input type="text" value="{{parameter.bicepsCircumference}}" [(ngModel)]="user.parameters[i].bicepsCircumference" name="name2" id="name2" class="td-input read-only">
+                <input (input)="validate()" type="number" min="0" value="{{parameter.bicepsCircumference}}" [(ngModel)]="parameter.bicepsCircumference" name="name2" id="name2" class="td-input read-only">
               </td>
               <td>
-                <input type="text" value="{{parameter.thighCircumference}}" [(ngModel)]="user.parameters[i].thighCircumference" name="name2" id="name2" class="td-input read-only">
+                <input (input)="validate()" type="number" min="0" value="{{parameter.thighCircumference}}" [(ngModel)]="parameter.thighCircumference" name="name2" id="name2" class="td-input read-only">
               </td>
               <td>
-                <button class="fas fa-trash-alt" *ngIf="!editMode" (click)="deleteParameter(i)">
+                <button class="fas fa-trash-alt" *ngIf="!canEdit(i)" (click)="deleteParameter(i)">
                 </button>
-                <button class="fas fa-edit" *ngIf="!editMode" (click)="toggleEdit(i)">
+                <button class="fas fa-edit" *ngIf="!canEdit(i)" (click)="toggleEdit(i)">
                 </button>
-                <button class="fas fa-close" *ngIf="editMode" (click)="toggleEdit(i)">
+                <button class="fas fa-close" *ngIf="canEdit(i)" (click)="toggleEdit(i)">
                 </button>
-                <button class="fas fa-check" *ngIf="editMode" (click)="editParameter(i)">
+                <button class="fas fa-check" *ngIf="canEdit(i)" (click)="editParameter(i)">
                 </button>
 
             </td>

@@ -24,7 +24,7 @@ export class ProfileMainComponent implements OnInit {
   getUser() {
     const id = localStorage.getItem('userId');
     this.userService.getUser(id).subscribe((user: User) => {
-      this.user = user;console.log(this.user);
+      this.user = user;
       this.genderBeforeSet = user.gender;
       this.dateOfBirthBeforeSet = user.dateOfBirth;
     }, error => {
@@ -37,7 +37,7 @@ export class ProfileMainComponent implements OnInit {
   }
 
   saveChanges() {
-    console.log(this.user);
+
     this.userService.updateUser(this.user).subscribe(next => {
       this.genderBeforeSet = this.user.gender;
 

@@ -41,13 +41,13 @@ export class SearchComponent implements OnInit {
 
   selectRadio(radioGroupName?: string) {
 
-    var radioGroup = document.querySelector('#' + radioGroupName);
+    let radioGroup = document.querySelector('#' + radioGroupName);
 
-    var radioGroupElements = Array.from(radioGroup.querySelectorAll('div'));
+    let radioGroupElements = Array.from(radioGroup.querySelectorAll('div'));
 
     radioGroupElements[0].querySelector('input').setAttribute("checked", "checked");
 
-    var frame = <HTMLElement>document.querySelector('.' + radioGroupName);
+    let frame = <HTMLElement>document.querySelector('.' + radioGroupName);
     frame.style.width = radioGroupElements[0].offsetWidth + 'px';
 
     for (let element of radioGroupElements) {
@@ -55,10 +55,10 @@ export class SearchComponent implements OnInit {
       if (element.querySelector('input').checked) {
 
         element.querySelector('label').style.color = 'rgb(39, 39, 39)';
-        var newLeftPosition = element.offsetLeft +
+        let newLeftPosition = element.offsetLeft +
           parseFloat(window.getComputedStyle(element).paddingLeft) +
           parseFloat(window.getComputedStyle(element).marginLeft);
-        var newWidth = element.querySelector('label').offsetWidth;
+        let newWidth = element.querySelector('label').offsetWidth;
         frame.style.left = newLeftPosition + 'px';
         frame.style.width = newWidth + 'px';
       } else {

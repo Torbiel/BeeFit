@@ -82,6 +82,7 @@ export class ProfileTargetComponent implements OnInit {
 
   toggleEdit() {
     this.editMode = !this.editMode;
+    this.autoMode = true;
   }
 
   saveChanges() {
@@ -136,15 +137,20 @@ export class ProfileTargetComponent implements OnInit {
     this.toggleEdit();
   }
 
-  calculate() {
-    this.actualWeight = parseFloat(
+  calculate() {    
+    this.actualWeight = Math.abs(parseFloat(
       (document.getElementById('actualWeight') as HTMLInputElement).value
-    );
-
+    ));
+   document.querySelectorAll('input[type="number"]').forEach((input) => {
+      if (typeof((input as HTMLInputElement).value[0]) == 'undefined') {
+      (input  as HTMLInputElement).value = '';
+    }
+   });
+   
     // this.user.parameters[0].weight
-    this.targetWeight = parseFloat(
+    this.targetWeight = Math.abs(parseFloat(
       (document.getElementById('targetWeight') as HTMLInputElement).value
-    );
+    ));
 
     this.changePerWeek = parseFloat(
       (document.getElementById('changePerWeek') as HTMLInputElement).value
@@ -160,8 +166,8 @@ export class ProfileTargetComponent implements OnInit {
       (document.getElementById('trainingActivity') as HTMLInputElement).value
     );
 
-    var weightDifference = this.actualWeight - this.targetWeight;
-    var caloricDeficit = 7000 * this.changePerWeek;
+    let weightDifference = this.actualWeight - this.targetWeight;
+    let caloricDeficit = 7000 * this.changePerWeek;
     if (weightDifference > 0) {
       caloricDeficit = (0 - caloricDeficit) / 7;
     } else if (weightDifference == 0) {
