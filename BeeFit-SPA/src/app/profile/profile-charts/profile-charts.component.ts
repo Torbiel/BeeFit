@@ -15,6 +15,7 @@ export class ProfileChartsComponent implements OnInit {
   @Input() public UsersParameter: UsersParameter;
   title = 'Parameters';
   lessThanOrGreaterThan = 'lessThan';
+  unit = 'day';
   filterLimit = 100;
   parametersChart;
   weight;
@@ -43,7 +44,7 @@ export class ProfileChartsComponent implements OnInit {
       alldates.forEach((date) => {
         const jsdate = new Date(date);
         this.parametersDates.push(jsdate.toLocaleTimeString('en', { year: 'numeric', month: 'short', day: 'numeric' }));
-      });console.log(this.parametersDates);
+      });
 
       Chart.defaults.global.defaultFontColor = 'white';
 
@@ -97,7 +98,7 @@ export class ProfileChartsComponent implements OnInit {
               type: 'time',
               distribution: 'linear',
               time: {
-                unit: 'day',
+                unit: 'month',
                 displayFormats: {
                   day: 'DD/MMM/YYYY',
                   week: 'DD/MM',
@@ -173,15 +174,17 @@ export class ProfileChartsComponent implements OnInit {
     });
     this.parametersChart.update();
   }
-
-  applyDateFilter(){
-    // this.parametersChart.data.labels = this.parametersDates.slice(new Date(this.from).toLocaleTimeString('en', { year: 'numeric', month: 'short', day: 'numeric' }), new Date(this.toMonth).toLocaleTimeString('en', { year: 'numeric', month: 'short', day: 'numeric' }));
-    this.parametersChart.data.labels = this.getDatesRange(new Date(this.from), new Date(this.toMonth));
-    console.log(this.parametersDates);
-    console.log(new Date(this.from).toLocaleTimeString('en', { year: 'numeric', month: 'short', day: 'numeric' }));
-    this.parametersChart.update();
-  }
-
+  
+    applyDateFilter(){
+      this.parametersChart.data.labels = this.getDatesRange(new Date(this.from), new Date(this.toMonth));
+      this.parametersChart.update();
+    }
+  
+    applyUnitFilter(unit){
+      this.parametersChart.options.scales.xAxes[0].time.unit = unit;
+      this.parametersChart.update();
+    }
+  
   getDatesRange(startDate, endDate) {
     var dates = [],
         currentDate = startDate,

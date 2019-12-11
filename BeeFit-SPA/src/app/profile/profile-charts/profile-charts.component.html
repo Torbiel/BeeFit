@@ -2,22 +2,27 @@
   <div>
     <canvas id="parameters"></canvas>
     <select [(ngModel)]="lessThanOrGreaterThan" style="width: 150px;height: 30px;">
-      <option value='lessThan'>Less Than</option>
-      <option value='greaterThan'>Greater Than</option>
+      <option value='lessThan'>Less than</option>
+      <option value='greaterThan'>Greater than</option>
     </select>&nbsp;&nbsp;
-    <input [(ngModel)]="filterLimit" placeholder="Filter Limit" style="width: 150px;height: 30px;"><br><br>
-    <button class="button" (click)="applyFilter(filterLimit)">Apply Filter</button>
-  
-    <div style="margin-left: auto">
-      <input type="date" [(ngModel)]="from" style="width: 150px;height: 30px;"/>
-      
-      &nbsp;&nbsp;
-
-    <input type="date" [(ngModel)]="toMonth" style="width: 150px;height: 30px;"/>
-      
-  </div>
-
-  <button class="button" (click)="applyDateFilter()">Apply Date Filter</button>
+    <input [(ngModel)]="filterLimit" placeholder="Filter Limit" style="width: 150px;height: 30px;">&nbsp;&nbsp;  
+    <button class="button" (click)="applyFilter(filterLimit)">Apply filter</button>
     
-      
+    <div style="margin-left: auto">
+        <input type="date" [(ngModel)]="from" style="width: 150px;height: 30px;"/>&nbsp;&nbsp;      
+        <input type="date" [(ngModel)]="toMonth" style="width: 150px;height: 30px;"/>&nbsp;&nbsp;   
+        <button class="button" (click)="applyDateFilter()">Apply date filter</button>   
+    </div>      
+     
+    <div style="margin-left: auto">
+        <select [(ngModel)]="unit" style="width: 150px;height: 30px;">
+          <option value='day'>Day</option>
+          <option value='week'>Week</option>
+          <option value='month'>Month</option>
+          <option value='quarter'>Quarter</option>
+          <option value='year'>Year</option>
+        </select>&nbsp;&nbsp;
+        <button class="button" (click)="applyUnitFilter(unit)">Apply unit</button>    
+      </div>
+  </div>
 </div>
