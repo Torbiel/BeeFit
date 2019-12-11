@@ -42,6 +42,7 @@ import { EditIngredientComponent } from './edit-ingredient/edit-ingredient.compo
 import { EditDishComponent } from './edit-dish/edit-dish.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { SearchComponent } from './search/search.component';
+import { InfoComponent } from './Info/Info.component';
 
 @NgModule({
    declarations: [
@@ -67,7 +68,8 @@ import { SearchComponent } from './search/search.component';
       EditIngredientComponent,
       EditDishComponent,
       CalendarComponent,
-      SearchComponent
+      SearchComponent,
+      InfoComponent
    ],
    imports: [
       BrowserModule,

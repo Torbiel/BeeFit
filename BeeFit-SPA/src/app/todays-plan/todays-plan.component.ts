@@ -42,11 +42,12 @@ export class TodaysPlanComponent implements OnInit {
     public router: Router,
     private mealTypeService: MealtypeService,
     private dateService: DateService
-  ) {}
+  ) {
+    this.currentDate = new Date();
+    this.getUser();
+  }
 
   ngOnInit() {
-    this.getUser();
-    this.currentDate = new Date();
     this.mealTypeService.currentMealType.subscribe(
       mealtype => (this.mealType = mealtype)
     );

@@ -26,55 +26,29 @@ export class DishesService {
   }
 
   getDishes(params?): Observable<PaginatedResult<Dish[]>> {
-    const paginatedResult: PaginatedResult<Dish[]> = new PaginatedResult<Dish[]>();
+    const paginatedResult = new PaginatedResult<Dish[]>();
     let httpParams = new HttpParams();
+
     httpParams = this.setHttpParams(params, httpParams);
-
-    // if (searchParams.minCallories != null) {
-    //   httpParams = httpParams.append('minCallories', searchParams.minCallories);
-    // }
-
-    // if (searchParams.maxCallories != null) {
-    //   httpParams = httpParams.append('maxCallories', searchParams.maxCallories);
-    // }
-
-    // if (searchParams. != null) {
-    //   params = params.append('', searchParams.);
-    // }
-
-    // if (searchParams.userId != null && searchParams.userId !== 'null') {
-    //   httpParams = httpParams.append('userId', searchParams.userId);
-    // }
-
-    // if (paginationParams.pageNumber == null) {
-    //   paginationParams.pageNumber = 1;
-    // }
-    // httpParams = httpParams.append('pageNumber', paginationParams.pageNumber);
-
-    // if (paginationParams.pageSize == null) {
-    //   paginationParams.pageSize = 10;
-    // }
-    // httpParams = httpParams.append('pageSize', paginationParams.pageSize);
-
-    const authHeader = new HttpHeaders({
-      Authorization: 'Bearer ' + localStorage.getItem('token')
-    });
 
     return this.http.get<Dish[]>(this.baseUrl, {
       observe: 'response',
       params: httpParams,
-      headers: authHeader})
-      .pipe(
-        map(response => {
-          paginatedResult.result = response.body;
+      headers: new HttpHeaders({
+        Authorization: 'Bearer ' + localStorage.getItem('token')
+      })
+    })
+    .pipe(
+      map(response => {
+        paginatedResult.result = response.body;
 
-          if (response.headers.get('Pagination') != null) {
-            paginatedResult.pagination = JSON.parse(response.headers.get('Pagination'));
-          }
+        if (response.headers.get('Pagination') != null) {
+          paginatedResult.pagination = JSON.parse(response.headers.get('Pagination'));
+        }
 
-          return paginatedResult;
-        })
-      );
+        return paginatedResult;
+      })
+    );
   }
 
   setHttpParams(obj: FoodSearchParams, params: HttpParams): HttpParams {

@@ -10,4 +10,5 @@ export class Dish {
     fats: number;
     carbohydrates: number;
     proteins: number;
+    weight?: number;
 }
