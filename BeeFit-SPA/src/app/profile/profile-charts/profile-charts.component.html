@@ -1,11 +1,23 @@
-<div class="calculationType">
-  <label class="autoCalculation selected" (click)="chartsTypeToggle()" for="auto">Line
-    <input name="calculationType" type="radio" id="auto" checked>
-  </label>
-  <label for="manual" (click)="chartsTypeToggle()" class="manualCalculation">Bar
-    <input name="calculationType" type="radio" id="manual">
-  </label>
-</div>
-<div *ngIf="chart">
-  <canvas id="canvas">{{ chart }}</canvas>
+<div class="chart-diplayh">
+  <div>
+    <canvas id="parameters"></canvas>
+    <select [(ngModel)]="lessThanOrGreaterThan" style="width: 150px;height: 30px;">
+      <option value='lessThan'>Less Than</option>
+      <option value='greaterThan'>Greater Than</option>
+    </select>&nbsp;&nbsp;
+    <input [(ngModel)]="filterLimit" placeholder="Filter Limit" style="width: 150px;height: 30px;"><br><br>
+    <button class="button" (click)="applyFilter(filterLimit)">Apply Filter</button>
+  
+    <div style="margin-left: auto">
+      <input type="date" [(ngModel)]="from" style="width: 150px;height: 30px;"/>
+      
+      &nbsp;&nbsp;
+
+    <input type="date" [(ngModel)]="toMonth" style="width: 150px;height: 30px;"/>
+      
+  </div>
+
+  <button class="button" (click)="applyDateFilter()">Apply Date Filter</button>
+    
+      
 </div>

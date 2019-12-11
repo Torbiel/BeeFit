@@ -13,87 +13,69 @@ import { UsersParameter } from 'src/app/_models/UsersParameter';
 export class ProfileChartsComponent implements OnInit {
   @Input() public user: User;
   @Input() public UsersParameter: UsersParameter;
-  chartsType = 'line';
+  title = 'Parameters';
+  lessThanOrGreaterThan = 'lessThan';
+  filterLimit = 100;
+  parametersChart;
+  weight;
+  bicepsCircumference;
+  thighCircumference;
+  abdominalCircumference;
+  from = '0';
 
-  parameters = [];
-  chart = [];
+  toMonth = '7';
+  parametersDates;
 
   constructor(private userService: UserService, private alertify: AlertifyService) {
 
   }
+  
   ngOnInit() {
-    this.generateCharts('line');
-  }
-
-  chartsTypeToggle() {
-    const autoModeLabel = document.querySelector('.autoCalculation');
-    const manualModeLabel = document.querySelector('.manualCalculation');
-
-    if (autoModeLabel.querySelector('input').checked) {
-      autoModeLabel.classList.remove('unselected');
-      autoModeLabel.classList.add('selected');
-      (autoModeLabel as HTMLElement).style.color = '#000';
-      (manualModeLabel as HTMLElement).style.color = '#fff';
-      this.chartsType = 'line';
-      this.generateCharts(this.chartsType);
-
-    } else if (manualModeLabel.querySelector('input').checked) {
-      autoModeLabel.classList.remove('selected');
-      autoModeLabel.classList.add('unselected');
-      (autoModeLabel as HTMLElement).style.color = '#fff';
-      (manualModeLabel as HTMLElement).style.color = '#000';
-      this.chartsType = 'bar';
-      this.generateCharts(this.chartsType);
-    }
-  }
-
-  generateCharts(chartsType: string) {
-    this.chartsType = chartsType;
-    const id = localStorage.getItem('userId');
-    this.userService.getUser(id).subscribe((user: User) => {
-      const weight = user.parameters.map(res => res.weight);
-      const bicepsCircumference = user.parameters.map(res => res.bicepsCircumference);
-      const thighCircumference = user.parameters.map(res => res.thighCircumference);
-      const abdominalCircumference = user.parameters.map(res => res.abdominalCircumference);
+      const id = localStorage.getItem('userId');
+      this.userService.getUser(id).subscribe((user: User) => {
+      this.weight = user.parameters.map(res => res.weight);
+      this.bicepsCircumference = user.parameters.map(res => res.bicepsCircumference);
+      this.thighCircumference = user.parameters.map(res => res.thighCircumference);
+      this.abdominalCircumference = user.parameters.map(res => res.abdominalCircumference);
       const alldates = user.parameters.map(res => res.date);
       alldates.sort();
-      const weatherDates = [];
+      this.parametersDates = [];
       alldates.forEach((date) => {
         const jsdate = new Date(date);
-        weatherDates.push(jsdate.toLocaleTimeString('en', { year: 'numeric', month: 'short', day: 'numeric' }));
-      });
+        this.parametersDates.push(jsdate.toLocaleTimeString('en', { year: 'numeric', month: 'short', day: 'numeric' }));
+      });console.log(this.parametersDates);
 
       Chart.defaults.global.defaultFontColor = 'white';
 
-      this.chart = new Chart('canvas', {
-        type: chartsType,
+      this.parametersChart = new Chart('parameters', {
+        type: 'line',       
         data: {
-          labels: weatherDates,
+          labels: this.parametersDates,
           datasets: [
             {
               label: 'Weight',
-              data: weight,
+              data: this.weight,
               borderColor: '#F3C622',
               backgroundColor: '#F3C622',
               fill: false
             },
             {
               label: 'Thigh circumference',
-              data: thighCircumference,
+              data: this.thighCircumference,
               borderColor: '#3cba9f',
               backgroundColor: '#3cba9f',
               fill: false
             },
             {
               label: 'Biceps circumference',
-              data: bicepsCircumference,
+              data: this.bicepsCircumference,
               borderColor: '#992409',
               backgroundColor: '#992409',
               fill: false
             },
             {
               label: 'Abdominal circumference',
-              data: abdominalCircumference,
+              data: this.abdominalCircumference,
               borderColor: '#8791A3',
               backgroundColor: '#8791A3',
               fill: false
@@ -101,6 +83,12 @@ export class ProfileChartsComponent implements OnInit {
           ]
         },
         options: {
+          responsive: true,
+          title: {
+            display: true,
+            text: 'Parameters',
+            fontSize: 26
+          },      
           legend: {
             display: true
           },
@@ -147,4 +135,66 @@ export class ProfileChartsComponent implements OnInit {
       this.alertify.error(error);
     });
   }
+
+  removeData(chart) {
+    chart.data.labels.pop();
+    chart.data.datasets.forEach((dataset) => {
+      dataset.data.pop();
+    });
+    chart.update();
+  }
+
+  updateChartData(chart, data, dataSetIndex) {
+    chart.data.datasets[dataSetIndex].data = data;
+    chart.update();
+  }
+
+  applyFilter(value){
+
+    this.parametersChart.data.datasets[0].data = this.weight;
+    this.parametersChart.data.datasets[1].data = this.bicepsCircumference;
+    this.parametersChart.data.datasets[2].data = this.thighCircumference;
+    this.parametersChart.data.datasets[3].data = this.abdominalCircumference;
+    
+    this.parametersChart.data.datasets.forEach((data,i) => {
+      if(this.lessThanOrGreaterThan === 'greaterThan'){
+        this.parametersChart.data.datasets[i].data = data.data.map(v => {
+          if(v >= value) return v
+          else return 0;
+        });
+       // console.log(">>>>>>>>", this.parametersChart.data.datasets[i].data);
+      }else{
+        this.parametersChart.data.datasets[i].data = data.data.map(v => {
+          if(v <= value) return v;
+          else return 0;
+        });
+        //console.log("?????????", this.parametersChart.data.datasets[i].data);
+      }
+    });
+    this.parametersChart.update();
+  }
+
+  applyDateFilter(){
+    // this.parametersChart.data.labels = this.parametersDates.slice(new Date(this.from).toLocaleTimeString('en', { year: 'numeric', month: 'short', day: 'numeric' }), new Date(this.toMonth).toLocaleTimeString('en', { year: 'numeric', month: 'short', day: 'numeric' }));
+    this.parametersChart.data.labels = this.getDatesRange(new Date(this.from), new Date(this.toMonth));
+    console.log(this.parametersDates);
+    console.log(new Date(this.from).toLocaleTimeString('en', { year: 'numeric', month: 'short', day: 'numeric' }));
+    this.parametersChart.update();
+  }
+
+  getDatesRange(startDate, endDate) {
+    var dates = [],
+        currentDate = startDate,
+        addDays = function(days) {
+          var date = new Date(this.valueOf());
+          date.setDate(date.getDate() + days);
+          return date;
+        };
+    while (currentDate <= endDate) {
+      dates.push(currentDate);
+      currentDate = addDays.call(currentDate, 1);
+    }
+    return dates;
+  };
+
 }
