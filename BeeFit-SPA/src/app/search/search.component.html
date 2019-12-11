@@ -33,6 +33,8 @@
             <input type="number" class="form-control" [(ngModel)]="filterParams.maxCallories" min="0" oninput="validity.valid||(value='');">
           </label>
         </div>
+
+        <!-- Proteins -->
         <div class="col-3">
           <label class="ml-1 ">Min. proteins:
             <input type="number" class="form-control" [(ngModel)]="filterParams.minProteins" min="0" oninput="validity.valid||(value='');">
@@ -45,9 +47,30 @@
         </div>
       </div>
 
-      <!-- Proteins -->
       <div class="row">
+        <!-- Fats -->
+        <div class="col-3">
+          <label class="ml-1 ">Min. fats:
+            <input type="number" class="form-control" [(ngModel)]="filterParams.minFats"  min="0" oninput="validity.valid||(value='');">
+          </label>
+        </div>
+        <div class="col-3">
+          <label class="ml-2 ">Max. fats:
+            <input type="number" class="form-control" [(ngModel)]="filterParams.maxFats" min="0" oninput="validity.valid||(value='');">
+          </label>
+        </div>
 
+        <!-- Carbs -->
+        <div class="col-3">
+          <label class="ml-1 ">Min. carbohydrates:
+            <input type="number" class="form-control" [(ngModel)]="filterParams.minCarbohydrates" min="0" oninput="validity.valid||(value='');">
+          </label>
+        </div>
+        <div class="col-3">
+          <label class="ml-2 ">Max. crabohydrates:
+            <input type="number" class="form-control" [(ngModel)]="filterParams.maxCarbohydrates" min="0" oninput="validity.valid||(value='');">
+          </label>
+        </div>
       </div>
 
       <!-- Order by -->

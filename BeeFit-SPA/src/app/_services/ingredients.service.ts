@@ -40,20 +40,12 @@ export class IngredientsService {
     const paginatedResult = new PaginatedResult<Ingredient[]>();
     let httpParams = new HttpParams();
 
-    if (params.userId === 0) {
-      params.userId = null;
-    }
-
-    if (params.ascending == null) {
-      params.ascending = false;
-    }
-
     httpParams = this.setHttpParams(params, httpParams);
 
     return this.http
       .get<Ingredient[]>(this.baseUrl, {
         observe: 'response',
-        params,
+        params: httpParams,
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + localStorage.getItem('token')
         })

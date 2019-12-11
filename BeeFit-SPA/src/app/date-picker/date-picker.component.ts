@@ -29,7 +29,7 @@ export class DatePickerComponent implements OnInit {
 
   prepareWeek() {
     const weekDaySelected = this.selectedDate.getDay();
-    for (let i = 1, j = -4; i <= 9; i++,j++) {
+    for (let i = 1, j = -4; i <= 9; i++, j++) {
 
       const weekDay = weekDaySelected - i;
       this.visibleDates[i - 1] = { date: new Date(), index: i - 1 };

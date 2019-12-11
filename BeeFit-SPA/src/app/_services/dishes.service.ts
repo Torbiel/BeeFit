@@ -26,16 +26,8 @@ export class DishesService {
   }
 
   getDishes(params?): Observable<PaginatedResult<Dish[]>> {
-    const paginatedResult: PaginatedResult<Dish[]> = new PaginatedResult<Dish[]>();
+    const paginatedResult = new PaginatedResult<Dish[]>();
     let httpParams = new HttpParams();
-
-    if (params.userId === 0) {
-      params.userId = null;
-    }
-
-    if (params.ascending == null) {
-      params.ascending = false;
-    }
 
     httpParams = this.setHttpParams(params, httpParams);
 
