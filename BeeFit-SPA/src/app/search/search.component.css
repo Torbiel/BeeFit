@@ -30,14 +30,13 @@ mat-expansion-panel
 .frameSelected
 {
     display: inline-block;
-    width: 100%;
+    width: auto;
     height: 100%;
     position: absolute;
     bottom: 100%;
     background: #F3C622;
     transition: .5s ease-in-out;
     z-index: 2;
-    left: 0;
     top: 0%;
 }
 
@@ -62,11 +61,14 @@ mat-expansion-panel
     text-align: center;
     vertical-align: center;
     white-space: nowrap;
+    border: 1px solid rgba(255, 255, 255, 0);
 }
 
-.radioGroup div label:hover
+.radioGroup div label:hover,
+.radioGroup div:hover label
 {
     cursor: pointer;
+    color: #f00 !important;
     background-color: rgba(90, 90, 90, 0.527);
 }
 

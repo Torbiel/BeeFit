@@ -130,3 +130,18 @@ input {
 {
     border: 1px solid #E1A511;
 }
+
+.filter
+{
+    background-color: rgba(255, 255, 255, 0);
+    color: #fff;
+
+}
+.filter:hover{
+    outline: none;
+}
+
+.filter::-webkit-calendar-picker-indicator {
+    background: none;
+    color: #fff;
+}

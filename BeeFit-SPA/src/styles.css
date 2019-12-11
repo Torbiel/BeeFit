@@ -39,3 +39,14 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.nowrap
+{
+    white-space: nowrap;;
+}
+
+.profileContent
+{
+    min-height: 100%;
+    padding-bottom: 5px;
+}

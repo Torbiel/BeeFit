@@ -12,11 +12,12 @@ import { AlertifyService } from 'src/app/_services/alertify.service';
 export class ProfileParametersComponent implements OnInit {
   @Input() public user: User;
   parametersDates: Date[];
-  dateFrom: Date;
-  dateTo: Date;
+  dateFrom: String;
+  dateTo: String;
   addingMode = false;
   editMode = false;
   today = new Date();
+  rowsToEdit: number[] = [];
   newParameter = {
     weight: null,
     abdominalCircumference: null,
@@ -27,28 +28,35 @@ export class ProfileParametersComponent implements OnInit {
 
   constructor(private userService: UserService, private alertify: AlertifyService) {}
 
-  ngOnInit() {
+  ngOnInit(dateFrom?, dateTo?) {
     this.getUser();
-    this.filterParameters();
+    if (dateFrom && dateTo) {
+      this.dateFrom = dateFrom;
+      this.dateTo = dateTo;
+    }
     this.newParameter.weight = null;
     this.newParameter.abdominalCircumference = null;
     this.newParameter.bicepsCircumference = null;
     this.newParameter.thighCircumference = null;
+   
+  
+    
   }
 
   prepareDatesToFilter() {
+    this.sortParameters(this.user.parameters);
     this.parametersDates = [...new Set(this.user.parameters.map(parameter => parameter.date))];
+    this.dateTo = this.parametersDates[0].toString().substr(0, 10);
+    this.dateFrom = this.parametersDates[this.parametersDates.length - 1].toString().substr(0, 10);
 
-    this.dateFrom = this.parametersDates[0];
-    this.dateTo = this.parametersDates[this.parametersDates.length-1];
   }
-
-  getUser() {
+   getUser() {
     const id = localStorage.getItem('userId');
     this.userService.getUser(id).subscribe((user: User) => {
       this.user = user;
-      this.parametersAfterFilter = user.parameters;
+      this.user.parameters = user.parameters;
       this.prepareDatesToFilter();
+      this.filterParameters();
     }, error => {
       this.alertify.error(error);
     });
@@ -60,9 +68,13 @@ export class ProfileParametersComponent implements OnInit {
 
   toggleEdit(index: number) {
     this.editMode = !this.editMode;
-
+    if (this.rowsToEdit.includes(index)) {
+      this.rowsToEdit.splice(this.rowsToEdit.indexOf(index), 1);
+    } else {
+       this.rowsToEdit.push(index);
+    }
     const row = document.getElementById('parameter[' + index + ']');
-    const fields = row.getElementsByClassName('td-input'); console.log(row);
+    const fields = row.getElementsByClassName('td-input');
     for (let i = 0; i < fields.length; i++) {
       fields[i].classList.toggle('read-only');
     }
@@ -73,11 +85,10 @@ export class ProfileParametersComponent implements OnInit {
         !this.newParameter.thighCircumference) {
       this.alertify.error('You didn\'t fill any of the parameters.');
     } else {
-      console.log(this.newParameter);
       this.user.parameters.push(this.newParameter);
       this.userService.updateUser(this.user).subscribe(next => {
         this.alertify.success('Parameters added.');
-        this.ngOnInit();
+        this.getUser();
       }, error => {
         this.alertify.error(error);
       });
@@ -95,7 +106,6 @@ export class ProfileParametersComponent implements OnInit {
         this.userService.updateUser(this.user).subscribe(next => {
           this.alertify.success('Parameters saved.');
           this.toggleEdit(index);
-          this.ngOnInit();
         }, error => {
           this.alertify.error(error);
         });
@@ -125,29 +135,55 @@ export class ProfileParametersComponent implements OnInit {
   }
 
   setDateFrom(date: Date) {
-    console.log(date);
-    this.dateFrom = date;
+    this.dateFrom = date.toString().substr(0,10);
+     if ( this.dateTo < this.dateFrom) {
+      this.dateTo = this.dateFrom;
+      (document.getElementsByName("dateTo")[0] as HTMLInputElement).value  = this.dateFrom.toString();
+    }
     this.filterParameters();
   }
 
   setDateTo(date: Date) {
-    console.log(date);
-    this.dateTo = date;
+    this.dateTo = date.toString().substr(0, 10);
+    if ( this.dateTo < this.dateFrom) {
+      this.dateFrom = this.dateTo;
+      (document.getElementsByName("dateFrom")[0] as HTMLInputElement).value  = this.dateTo.toString();
+    }
     this.filterParameters();
   }
 
   filterParameters() {
-    this.parametersAfterFilter = this.user.parameters.filter(a => a.date >= this.dateFrom && a.date <= this.dateTo);
-    this.parametersAfterFilter = this.parametersAfterFilter.sort(
-      function(a, b){
-        var keyA = a.date,
-            keyB = b.date;
-        // Compare the 2 dates
-        if(keyA < keyB) return -1;
-        if(keyA > keyB) return 1;
-        return 0;
-      }
-      );
+    this.parametersAfterFilter = this.user.parameters.filter(a => a.date.toString().substr(0, 10) >= this.dateFrom && a.date.toString().substr(0, 10) <= this.dateTo);
+
+  //  this.sortParameters(this.user.parameters);
   }
 
+  sortParameters(values) {
+    values = values.sort(
+      function (a, b) {
+        let keyA = a.date.toString().substr(0, 10),
+          keyB = b.date.toString().substr(0, 10);
+        // Compare the 2 dates
+        if (keyA > keyB) return -1;
+        if (keyA < keyB) return 1;
+        return 0;
+      }
+    );
+  }
+
+  validate() {
+     document.querySelectorAll('input[type="number"]').forEach((input) => {
+      if (typeof((input as HTMLInputElement).value[0]) == 'undefined') {
+      (input  as HTMLInputElement).value = '';
+    }
+   });
+  }
+
+  canEdit(i: number) {
+    if (this.rowsToEdit.includes(i)) {
+      return true;
+    } else {
+      false;
+    }
+  }
 }

@@ -68,3 +68,8 @@ label:hover
 {
     cursor: pointer;
 }
+
+.col
+{
+    padding: 5px 0;
+}

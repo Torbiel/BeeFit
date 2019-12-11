@@ -18,7 +18,13 @@ export class SearchComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.selectRadio();
+    this.filterParams.name = null;
+    this.filterParams.userId = null;
+    this.filterParams.minCallories = null;
+    this.filterParams.maxCallories = null;
+    this.selectRadio('radioGroupSearchMode');
+    this.selectRadio('radioGroupOrder');
+    this.selectRadio('radioGroupAscending');
   }
 
   search() {
@@ -42,31 +48,29 @@ export class SearchComponent implements OnInit {
   }
 
   selectRadio(radioGroupName?: string) {
+    let radioGroup = document.querySelector('#' + radioGroupName);
 
-    const radioGroup = document.querySelector('#' + radioGroupName);
-
-    if (radioGroup) {
-      const radioGroupElements = Array.from(radioGroup.querySelectorAll('div'));
-
-      radioGroupElements[0].querySelector('input').setAttribute('checked', 'checked');
+    let radioGroupElements = Array.from(radioGroup.querySelectorAll('div'));
 
       const frame =  document.querySelector('.' + radioGroupName) as HTMLElement;
       frame.style.width = radioGroupElements[0].offsetWidth + 'px';
 
-      for (const element of radioGroupElements) {
-        element.querySelector('input').style.display = 'none';
+    let frame = <HTMLElement>document.querySelector('.' + radioGroupName);
+    frame.style.width = radioGroupElements[0].offsetWidth + 'px';
 
-        if (element.querySelector('input').checked) {
-          element.querySelector('label').style.color = 'rgb(63, 63, 63);';
-          const newLeftPosition = element.offsetLeft +
-           parseInt(window.getComputedStyle(element).paddingLeft, 10) +
-           parseInt(window.getComputedStyle(element.querySelector('label')).marginLeft, 10);
-          const newWidth = element.querySelector('label').getBoundingClientRect().width;
-          frame.style.left = newLeftPosition + 'px';
-          frame.style.width = newWidth + 'px';
-        } else {
-          element.querySelector('label').style.color = '#fff';
-        }
+    for (let element of radioGroupElements) {
+      element.querySelector('input').style.display='none';
+      if (element.querySelector('input').checked) {
+
+        element.querySelector('label').style.color = 'rgb(39, 39, 39)';
+        let newLeftPosition = element.offsetLeft +
+          parseFloat(window.getComputedStyle(element).paddingLeft) +
+          parseFloat(window.getComputedStyle(element).marginLeft);
+        let newWidth = element.querySelector('label').offsetWidth;
+        frame.style.left = newLeftPosition + 'px';
+        frame.style.width = newWidth + 'px';
+      } else {
+        element.querySelector('label').style.color = '#fff';
       }
     }
   }
