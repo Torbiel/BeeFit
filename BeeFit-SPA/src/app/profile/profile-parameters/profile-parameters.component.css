@@ -82,9 +82,10 @@ td:active
 .read-only
 {
     pointer-events: none;
-    border: transparent solid 1px;
+    border-color: transparent;
     background: transparent;
     color: black;
+    user-select: none;
 }
 
 td button
