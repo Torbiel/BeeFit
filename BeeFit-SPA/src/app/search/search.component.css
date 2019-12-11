@@ -69,4 +69,25 @@ mat-expansion-panel
 {
     cursor: pointer;
     color: #f00 !important;
+    background-color: rgba(90, 90, 90, 0.527);
+}
+
+.cancel-button, .confirm-button
+{
+    background-color: inherit;
+    width: 3vw;
+    height: 3vw;
+    font-size: 2em;
+    align-self: center;
+}
+
+.cancel-button:hover, .confirm-button:hover
+{
+    background-color: #F3C622;
+    color:rgb(63, 63, 63);
+}
+
+.radioLabel
+{
+    color: rgb(63, 63, 63);
 }

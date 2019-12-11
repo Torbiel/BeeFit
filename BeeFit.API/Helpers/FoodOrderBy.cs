@@ -2,7 +2,7 @@
 {
     public enum FoodOrderBy
     {
-        Name,
+        Name = 0,
         Callories,
         Fats,
         Proteins,

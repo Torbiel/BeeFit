@@ -1,4 +1,8 @@
 <div class="container-fluid" *ngIf="this.router.url === '/my-food'">
+  <div class="info mt-3">
+    <app-Info [text]="infoTextNutrients"></app-Info>
+  </div>
+
   <div class="row justify-content-center mt-2 mx-2">
     <div class="col-md-5 mr-2">
       <div class="row">
@@ -12,11 +16,15 @@
       </div>
 
       <!-- Dishes -->
-      <div class="row list-item" *ngFor="let dish of this.dishes">
+      <div class="row list-item mb-2" *ngFor="let dish of this.dishes">
         <div class="col-12">
           <div class="row">
-            <div class="col-10 mt-2">
+            <div class="col-5 mt-2">
               {{ dish.name }}
+            </div>
+            <div class="col-5 mt-2">
+              <!-- 1x{{ingredient.unit}}  -->
+              {{ dish.weight }} g
             </div>
             <div class="col-2 buttons">
               <button class="delete-button pull-right" (click)="deleteDish(dish.id)"><i
@@ -61,14 +69,15 @@
             routerLinkActive="router-link-active"><i class="fas fa-plus"></i></button>
         </div>
       </div>
-      <div class="row list-item" *ngFor="let ingredient of this.ingredients">
+      <div class="row list-item mb-2" *ngFor="let ingredient of this.ingredients">
         <div class="col-12">
           <div class="row">
             <div class="col-5 mt-2">
               {{ ingredient.name }}
             </div>
             <div class="col-5 mt-2">
-              1x{{ingredient.unit.toString()}} ({{ingredient.gramsPerUnit}} g)
+              <!-- 1x{{ingredient.unit}}  -->
+              {{ingredient.gramsPerUnit}} g
             </div>
             <div class="col-2 buttons">
               <button class="delete-button pull-right" (click)="deleteIngredient(ingredient.id)"><i

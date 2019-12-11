@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { FoodSearchParams } from '../_models/FoodSearchParams';
 
 @Component({
   selector: 'app-search',
@@ -10,9 +11,11 @@ export class SearchComponent implements OnInit {
   @Output() searched = new EventEmitter<any>();
   @Output() filtersApplied = new EventEmitter<any>();
   @Output() filtersReset = new EventEmitter<any>();
-  filterParams: any = {};
+  filterParams: FoodSearchParams;
 
-  constructor() { }
+  constructor() {
+    this.filterParams = new FoodSearchParams();
+  }
 
   ngOnInit() {
     this.filterParams.name = null;
@@ -33,19 +36,24 @@ export class SearchComponent implements OnInit {
   }
 
   resetFilters() {
-    this.filterParams.userId = null;
-    this.filterParams.minCallories = null;
-    this.filterParams.maxCallories = null;
+    this.filterParams = Object.keys(this.filterParams).reduce((newParams, key) => {
+      if (key === 'name') {
+        newParams[key] = this.filterParams[key];
+      }
+
+      return newParams;
+    }, new FoodSearchParams());
+
     this.filtersReset.emit(this.filterParams);
   }
 
   selectRadio(radioGroupName?: string) {
-
     let radioGroup = document.querySelector('#' + radioGroupName);
 
     let radioGroupElements = Array.from(radioGroup.querySelectorAll('div'));
 
-    radioGroupElements[0].querySelector('input').setAttribute("checked", "checked");
+      const frame =  document.querySelector('.' + radioGroupName) as HTMLElement;
+      frame.style.width = radioGroupElements[0].offsetWidth + 'px';
 
     let frame = <HTMLElement>document.querySelector('.' + radioGroupName);
     frame.style.width = radioGroupElements[0].offsetWidth + 'px';
@@ -65,6 +73,5 @@ export class SearchComponent implements OnInit {
         element.querySelector('label').style.color = '#fff';
       }
     }
-
   }
 }

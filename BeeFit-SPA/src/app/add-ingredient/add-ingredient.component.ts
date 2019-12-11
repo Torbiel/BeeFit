@@ -15,6 +15,7 @@ export class AddIngredientComponent implements OnInit {
   ingredient: Ingredient;
   ingredientForm: FormGroup;
   requiredFieldMessage = 'This field is required.';
+  infoTextQuantity = 'Please provide nutrients per 100 g or 100 ml of ingredient.';
 
   constructor(private ingredientsService: IngredientsService,
               private alertify: AlertifyService,

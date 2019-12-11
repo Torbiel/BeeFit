@@ -10,31 +10,19 @@ namespace BeeFit.API.Data
     {
         public IngredientsRepository(BeeFitDbContext context) : base(context) { }
 
-        public async Task<PagedList<Ingredient>> GetMany(FoodSearchParams pagingParams)
+        public async Task<PagedList<Ingredient>> GetMany(FoodSearchParams searchParams)
         {
-            if (pagingParams.Name == null)
+            if (searchParams.Name == null)
             {
-                pagingParams.Name = "";
+                searchParams.Name = "";
             }
 
-            var ingredients = _context.Set<Ingredient>().Where(i => i.Name.Contains(pagingParams.Name)).OrderByDescending(d => d.Name).AsQueryable();
+            var ingredients = _context.Set<Ingredient>().Where(i => i.Name.Contains(searchParams.Name)).OrderByDescending(d => d.Name).AsQueryable();
 
-            if (pagingParams.UserId != null)
-            {
-                ingredients = ingredients.Where(d => d.UserId == pagingParams.UserId);
-            }
+            ingredients = Extensions.FilterIngredients(ingredients, searchParams);
+            ingredients = Extensions.SortIngredients(ingredients, searchParams);
 
-            if (pagingParams.MinCallories != null)
-            {
-                ingredients = ingredients.Where(d => d.Callories >= pagingParams.MinCallories);
-            }
-
-            if (pagingParams.MaxCallories != null)
-            {
-                ingredients = ingredients.Where(d => d.Callories <= pagingParams.MaxCallories);
-            }
-
-            return await PagedList<Ingredient>.CreateAsync(ingredients, pagingParams.PageNumber, pagingParams.PageSize);
+            return await PagedList<Ingredient>.CreateAsync(ingredients, searchParams.PageNumber, searchParams.PageSize);
         }
     }
 }

@@ -49,9 +49,16 @@ table
     color: rgb(75, 75, 75);
 }
 
-.added-ingredients-header
+.added-ingredients-header, .nutrients-header
 {
     font-size: 1.3em;
+}
+
+.header
+{
+    /* padding-left: 6px; */
+    border-bottom: 2px solid  rgb(75, 75, 75);
+    /* border-left: 2px solid  rgb(75, 75, 75); */
 }
 
 .legend
@@ -99,4 +106,27 @@ mat-expansion-panel
 .list-element:hover
 {
     background-color: rgb(58, 58, 58);
+}
+
+.nameInput
+{
+    margin-bottom: -8px;
+}
+
+/deep/ .dialog > div
+{
+    border: 1px solid #F3C622;
+    background-color: rgb(75, 75, 75) !important;
+}
+
+/deep/ .dialog div nav button
+{
+    background-color: inherit !important;
+    color: #F3C622 !important;
+}
+
+/deep/ .dialog div nav button:hover
+{
+    background-color: #F3C622 !important;
+    color: rgb(75, 75, 75) !important;
 }

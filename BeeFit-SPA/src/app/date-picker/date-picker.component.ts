@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
 import { DateService } from '../_services/date.service';
 
@@ -15,10 +15,11 @@ export class DatePickerComponent implements OnInit {
   visibleDates: Array<{ date: Date, index: number }> = [];
   subscribedParam = 'initial value';
 
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute,
+              private router: Router,
+              private dateService: DateService) {
 
-    this.now = new Date();
-    this.selectedDate = this.now;
+    this.dateService.currentDate.subscribe(date => { this.now = date; this.selectedDate = date; });
     this.selectedDateEmitter.emit(this.selectedDate);
     this.prepareWeek();
   }
@@ -28,7 +29,7 @@ export class DatePickerComponent implements OnInit {
 
   prepareWeek() {
     const weekDaySelected = this.selectedDate.getDay();
-    for (let i = 1,j=-4; i <= 9; i++,j++) {
+    for (let i = 1, j = -4; i <= 9; i++,j++) {
 
       const weekDay = weekDaySelected - i;
       this.visibleDates[i - 1] = { date: new Date(), index: i - 1 };
@@ -47,7 +48,7 @@ export class DatePickerComponent implements OnInit {
     if (direction === 'forward') {
       listPosition = listPosition - dateItemWidth;
     } else {
-      // listPosition = listPosition + dateItemWidth;
+      listPosition = listPosition + dateItemWidth;
     }
 
     (datesList as HTMLElement).style.left = (listPosition) + 'px';
@@ -70,5 +71,6 @@ export class DatePickerComponent implements OnInit {
   emitDate(date: Date) {
     this.selectedDate = date;
     this.selectedDateEmitter.emit(date);
+    this.router.navigate(['/days-plan', this.selectedDate.toLocaleDateString()]);
   }
 }

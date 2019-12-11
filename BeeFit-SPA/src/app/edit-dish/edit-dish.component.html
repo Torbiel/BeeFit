@@ -1,78 +1,71 @@
 <div class="container mt-3">
   <div class="row justify-content-center">
     <div class="col-lg-5 mr-3">
+
+      <app-Info [text]="infoTextDish"></app-Info>
+
       <!-- Input area -->
-      <div class="row">
-        <input class="form-control" type="text" placeholder="Name your dish" #dishName required="required"
-          (input)="setDishName(dishName.value)" value="{{ this.dish.name }}">
+      <div class="row nameInput">
+        <input type="text" name="dishName" class="form-control" placeholder="Name your dish" [(ngModel)]="dish.name">
       </div>
+
       <app-search [userId]="this.userId" (searched)="onSearched($event)" (filtersApplied)="onFiltersApplied($event)"
         (filtersReset)="onFiltersReset($event)">
       </app-search>
 
-      <!-- Legend -->
-      <div class="row justify-content-center mt-2">
-        <div class="col-12 legend">
-          Nutrients are provided for the quantity displayed. <br>
-          E = Energy, P = Proteins, F = Fats, C = Carbohydrates
-        </div>
-      </div>
+      <app-Info [text]="this.infoTextSearch"></app-Info>
 
       <!-- Results of search -->
-      <div class="row list-item" *ngFor="let ing of ingredients">
-        <div class="col-10 pl-2 pt-2">
-          <p>{{ ing.name }}</p>
-          <table>
-            <tr>
-              <td>E: {{ ing.callories }} kcal</td>
-              <td>P: {{ ing.proteins }} g</td>
-              <td>F: {{ ing.fats }} g</td>
-              <td>C: {{ ing.carbohydrates }} g</td>
-            </tr>
-          </table>
-        </div>
-        <div class="col-2 pr-0">
-          <button class="add-button pull-right" (click)="addToDish(ing)">
-            <i class="fas fa-plus"></i>
-          </button>
-        </div>
-      </div>
-
-      <div class="row pagination-wrapper justify-content-center mt-2" *ngIf="ingredientsPagination">
-        <div *ngIf="ingredientsPagination.totalPages > 1">
-          <pagination [boundaryLinks]="true" [totalItems]="ingredientsPagination.totalItems"
-            [itemsPerPage]="ingredientsPagination.itemsPerPage" (pageChanged)="ingredientsPageChanged($event)"
-            [(ngModel)]="ingredientsPagination.currentPage" previousText="&lsaquo;" nextText="&rsaquo;"
-            firstText="&laquo;" lastText="&raquo;">
-          </pagination>
+      <div class="row list-element mb-2" *ngFor="let ing of ingredients">
+        <div class="col-12">
+          <div class="row">
+            <div class="col-10 pl-2 pt-2">
+              {{ ing.name }}
+            </div>
+            <div class="col-2 pr-0 button-div">
+              <button class="add-button pull-right" (click)="addToDish(ing)"><i class="fas fa-plus"></i></button>
+            </div>
+          </div>
+          <div class="row">
+            <table>
+              <tr>
+                <td>E: {{ ing.callories }} kcal</td>
+                <td>P: {{ ing.proteins }} g</td>
+                <td>F: {{ ing.fats }} g</td>
+                <td>C: {{ ing.carbohydrates }} g</td>
+              </tr>
+            </table>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- Added ingredients list -->
     <div class="col-lg-5 ml-3">
-      <div class="row added-ingredients-header">
+      <div class="row added-ingredients-header header">
         Added ingredients:
       </div>
+
+      <app-Info [text]="this.infoTextAdded" *ngIf="this.addedIngredients.length > 0"></app-Info>
+
       <div class="row list-element mb-2" *ngFor="let ing of addedIngredients">
         <div class="col-12">
           <div class="row">
             <div class="col-5 pl-2 pt-2">
               {{ ing.ingredient.name }}
             </div>
-            <div class="col-5 pt-2">
+            <div class="col-5 pl-2 pt-2">
               {{ ing.quantity }} g
             </div>
             <div class="col-2 pr-0 button-div">
-              <button class="delete-button pull-right" (click)="deleteFromDish(ing)">
-                <i class="fas fa-times"></i>
-              </button>
+              <button class="delete-button pull-right" (click)="deleteFromDish(ing)"><i
+                  class="fas fa-times"></i></button>
             </div>
           </div>
           <div class="row">
             <table>
               <tr>
-                <td>E: {{ ing.ingredient.callories }} kcal</td>
+                <td>E: {{ this.round(ing.ingredient.callories, ing.quantity) }} kcal</td>
                 <td>P: {{ ing.ingredient.proteins }} g</td>
                 <td>F: {{ ing.ingredient.fats }} g</td>
                 <td>C: {{ ing.ingredient.carbohydrates }} g</td>
@@ -81,12 +74,56 @@
           </div>
         </div>
       </div>
+
+      <!-- List of added ingredients empty -->
       <div class="row no-ingredients" *ngIf="addedIngredients.length === 0">
         Empty
       </div>
+
+      <div class="row nutrients-header header">
+        Nutrients sum:
+      </div>
+
+      <div class="row mt-2">
+        <div class="col">
+          Callories:
+        </div>
+        <div class="col">
+          {{ this.dish.callories }}
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          Proteins:
+        </div>
+        <div class="col">
+          {{ this.dish.proteins }}
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          Fats:
+        </div>
+        <div class="col">
+          {{ this.dish.fats }}
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          Carbohydrates:
+        </div>
+        <div class="col">
+          {{ this.dish.carbohydrates }}
+        </div>
+      </div>
+
+      <!-- Buttons -->
       <div class="row justify-content-center mt-3" *ngIf="addedIngredients.length > 1">
         <div class="col-5">
-          <button type="reset" class="cancel-button" (click)="cancelEdit()"><i class="far fa-times"></i></button>
+          <button type="reset" class="cancel-button"><i class="far fa-times"></i></button>
         </div>
         <div class="col-5">
           <button type="submit" class="confirm-button" (click)="updateDish()"><i class="far fa-check"></i></button>

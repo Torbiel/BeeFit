@@ -160,10 +160,3 @@ mat-expansion-panel
 {
     font-size: 1.3em;
 }
-
-.legend
-{
-    background-color: rgb(63, 63, 63);
-    color: rgb(180, 180, 180);
-    text-align: center;
-}

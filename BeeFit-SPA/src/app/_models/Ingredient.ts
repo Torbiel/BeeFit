@@ -56,7 +56,7 @@ export class Ingredient {
 }
 
 export enum unit {
-    Piece = 'piece',
+    'piece' = 0,
     Portion = 'portion',
     Packet = 'packet',
     Teaspoon = 'teaspoon',

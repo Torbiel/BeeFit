@@ -13,10 +13,17 @@
         to:
         <input type="date" [value]="dateTo" (input)="setDateTo(dateTo)" class="dropdown ml-2 filter" name="dateTo" [(ngModel)]="dateTo" />
 
+          <div class="dropdown-menu" *dropdownMenu>
+            <li (click)="setDateTo(parameter)" class="dropdown-item" *ngFor="let parameter of parametersDates">
+              {{parameter | date: 'dd.MM.yyyy'}}
+            </li>
+          </div>
+        </div>
+      </div>
 
       <div class="row mt-2">
 
-        <table >
+        <table>
           <thead>
             <td>Date</td>
             <td>Weight (kg)</td>
@@ -48,7 +55,7 @@
             </tr>
 
 
-            <tr *ngFor="let parameter of parametersAfterFilter; index as i" id="parameter[{{i}}]" >
+            <tr *ngFor="let parameter of parametersAfterFilter; index as i" id="parameter[{{i}}]">
               <td>
                 <input type="datetime-local"  value="{{parameter.date}}" [(ngModel)]="parameter.date" name="name1" id="name1" class="td-input read-only">
               </td>
@@ -74,7 +81,7 @@
                 <button class="fas fa-check" *ngIf="canEdit(i)" (click)="editParameter(i)">
                 </button>
 
-            </td>
+              </td>
             </tr>
 
           </tbody>

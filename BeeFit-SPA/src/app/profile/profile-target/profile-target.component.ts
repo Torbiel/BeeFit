@@ -19,17 +19,17 @@ export class ProfileTargetComponent implements OnInit {
   editMode = false;
   autoMode = true;
   actualWeight: number;
-  dailyCallories: number = 0;
+  dailyCallories = 0;
   dayActivity = 0;
   trainingActivity = 0;
   changePerWeek = 0;
-  proteinsResult: number = 0;
-  fatsResult: number = 0;
-  carbohydratesResult: number = 0;
+  proteinsResult = 0;
+  fatsResult = 0;
+  carbohydratesResult = 0;
   weeksFromNow = 0;
   targetWeight = this.actualWeight;
   today = new Date();
-  totalPercent: number = 0;
+  totalPercent = 0;
   estimatedEnd = new Date();
   dayActivityText: String[] = [
     '1 — Sedentary Lifestyle.',
@@ -110,7 +110,6 @@ export class ProfileTargetComponent implements OnInit {
     this.target.proteins = Math.round(this.proteinsResult);
     this.target.fats = Math.round(this.fatsResult);
     this.target.carbohydrates = Math.round(this.carbohydratesResult);
-
 
       if (this.user.target == null) {
         this.user.target = this.target;
@@ -222,11 +221,11 @@ export class ProfileTargetComponent implements OnInit {
               (this.trainingActivity + this.dayActivity) / 10);
         }
 
-
       this.fatsResult = this.dailyCallories * 0.25 / 9;
 
       this.carbohydratesResult =
-        (this.dailyCallories - (this.proteinsResult * 4 + this.fatsResult * 9)) /
+        (this.dailyCallories -
+          (this.proteinsResult * 4 + this.fatsResult * 9)) /
         4;
     } else {
       this.dailyCallories = parseFloat(
@@ -264,9 +263,6 @@ export class ProfileTargetComponent implements OnInit {
     if (weightDifference) {
        this.estimatedEnd.setDate(this.estimatedEnd.getDate() + daysToTarget);
     } 
-   
-
-
   }
 
   weeksBetween(d1: Date, d2: Date) {

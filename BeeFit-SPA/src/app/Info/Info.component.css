@@ -1,0 +1,12 @@
+.legend
+{
+    background-color: rgb(63, 63, 63);
+    color: rgb(180, 180, 180);
+    text-align: center;
+}
+
+.legend i
+{
+    padding-top: 0.3em;
+    color: #F3C622;
+}

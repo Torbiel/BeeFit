@@ -30,6 +30,10 @@ export class EditDishComponent implements OnInit {
   filterParams: any = {};
   paginationParams: any = {};
 
+  infoTextSearch = 'Nutrients are provided per 100g/100ml.';
+  infoTextAdded = 'Nutrients are provided for quantity entered.';
+  infoTextDish = 'Please add ingredients necessary for 1 portion.';
+
   constructor(
     public router: Router,
     private ingredientsService: IngredientsService,
@@ -70,11 +74,12 @@ export class EditDishComponent implements OnInit {
     }
 
     if (this.filterParams.name !== '') {
-      this.ingredientsService.getIngredients(this.paginationParams, this.filterParams).subscribe((res: PaginatedResult<Ingredient[]>) => {
-        this.ingredients = res.result;
-        this.ingredientsPagination = res.pagination;
-      }, error => {
-        this.alertify.error(error);
+      this.ingredientsService.getIngredients({...this.paginationParams, ...this.filterParams})
+        .subscribe((res: PaginatedResult<Ingredient[]>) => {
+          this.ingredients = res.result;
+          this.ingredientsPagination = res.pagination;
+        }, error => {
+          this.alertify.error(error);
       });
     }
   }
@@ -87,6 +92,10 @@ export class EditDishComponent implements OnInit {
     this.alertify.prompt(
       'Provide quantity of the ingredient:',
       (value: any, event: any) => {
+        if (value <= 0 || isNaN(value)) {
+          return this.alertify.error('Quantity must bea number greater than 0.');
+        }
+
         const dishesIngredient = new DishesIngredient();
         dishesIngredient.ingredient = ing;
         dishesIngredient.ingredientId = ing.id;
@@ -102,6 +111,10 @@ export class EditDishComponent implements OnInit {
   }
 
   updateDish() {
+    if (this.dish.name === '' || this.dish.name == null) {
+      return this.alertify.error('Name your dish.');
+    }
+
     this.dish.ingredients = new Array<DishesIngredient>();
     this.addedIngredients.forEach(item => {
       this.dish.ingredients.push(item);
@@ -127,11 +140,15 @@ export class EditDishComponent implements OnInit {
     this.dish.carbohydrates = 0;
 
     this.dish.ingredients.forEach(element => {
-      this.dish.callories += (element.ingredient.callories / 100) * element.quantity;
-      this.dish.proteins += (element.ingredient.proteins / 100) * element.quantity;
-      this.dish.fats += (element.ingredient.fats / 100) * element.quantity;
-      this.dish.carbohydrates += (element.ingredient.carbohydrates / 100) * element.quantity;
+      this.dish.callories += this.round(element.ingredient.callories, element.quantity);
+      this.dish.proteins += this.round(element.ingredient.proteins, element.quantity);
+      this.dish.fats += this.round(element.ingredient.fats, element.quantity);
+      this.dish.carbohydrates += this.round(element.ingredient.carbohydrates, element.quantity);
     });
+  }
+
+  round(nutrient: number, quantity: number): number {
+    return Math.round(((nutrient / 100) * quantity) * 100) / 100;
   }
 
   ingredientsPageChanged(event: any) {
@@ -147,10 +164,6 @@ export class EditDishComponent implements OnInit {
     if (this.ingredientsPagination) {
       this.ingredientsPagination.currentPage = 1;
     }
-
-    // if(this.searchResults$.pagination) {
-    //   this.searchResults$.pagination.currentPage = 1;
-    // }
   }
 
   onSearched(event: any) {
