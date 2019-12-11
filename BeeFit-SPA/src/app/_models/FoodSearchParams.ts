@@ -16,7 +16,7 @@ export class FoodSearchParams {
 }
 
 export enum FoodOrderBy {
-    Name = 0,
+    Name,
     Callories,
     Fats,
     Proteins,

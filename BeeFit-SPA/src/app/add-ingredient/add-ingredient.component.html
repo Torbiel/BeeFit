@@ -1,6 +1,9 @@
 <div class="container mt-3 mb-3">
   <div class="row justify-content-center">
     <div class="col-sm-7">
+      <div class="mb-2">
+        <app-Info [text]="this.infoTextQuantity"></app-Info>
+      </div>
       <form *ngIf="ingredientForm" [formGroup]="ingredientForm" (ngSubmit)="addIngredient()">
         <div class="row">
           <div class="col-3 mt-1">
@@ -39,7 +42,8 @@
             g/unit or ml/unit:
           </div>
           <div class="col-9">
-            <input type="number" class="form-control" formControlName="gramsPerUnit"
+            <input type="number" class="form-control" formControlName="gramsPerUnit" min="0"
+              oninput="validity.valid||(value='');"
               [ngClass]="{ 'is-invalid': ingredientForm.get('gramsPerUnit').errors && ingredientForm.get('gramsPerUnit').touched }">
             <div class="invalid-feedback">
               {{ this.requiredFieldMessage }}
@@ -52,7 +56,8 @@
             Callories (kcal):
           </div>
           <div class="col-9">
-            <input type="number" class="form-control" formControlName="callories"
+            <input type="number" class="form-control" formControlName="callories" min="0"
+              oninput="validity.valid||(value='');"
               [ngClass]="{ 'is-invalid': ingredientForm.get('callories').errors && ingredientForm.get('callories').touched }">
             <div class="invalid-feedback">
               {{ this.requiredFieldMessage }}
@@ -65,7 +70,8 @@
             Fats (g):
           </div>
           <div class="col-9">
-            <input type="number" class="form-control" formControlName="fats" #f
+            <input type="number" class="form-control" formControlName="fats" #f min="0"
+              oninput="validity.valid||(value='');"
               [ngClass]="{ 'is-invalid': ingredientForm.get('fats').errors && ingredientForm.get('fats').touched }">
             <div class="invalid-feedback">
               <div *ngIf="ingredientForm.get('fats').hasError('required')">
@@ -83,7 +89,8 @@
             Carbohydrates (g):
           </div>
           <div class="col-9">
-            <input type="number" class="form-control" formControlName="carbohydrates"
+            <input type="number" class="form-control" formControlName="carbohydrates" min="0"
+              oninput="validity.valid||(value='');"
               [ngClass]="{ 'is-invalid': ingredientForm.get('fats').errors && ingredientForm.get('fats').touched }">
             <div class="invalid-feedback">
               {{ this.requiredFieldMessage }}
@@ -97,7 +104,8 @@
             Sugars (g):
           </div>
           <div class="col-9">
-            <input type="number" class="form-control" formControlName="sugars">
+            <input type="number" class="form-control" formControlName="sugars" min="0"
+              oninput="validity.valid||(value='');">
           </div>
         </div>
 
@@ -106,7 +114,8 @@
             Proteins (g):
           </div>
           <div class="col-9">
-            <input type="number" class="form-control" formControlName="proteins">
+            <input type="number" class="form-control" formControlName="proteins" min="0"
+              oninput="validity.valid||(value='');">
           </div>
         </div>
 
@@ -125,7 +134,8 @@
                 Saturated (g):
               </div>
               <div class="col-9">
-                <input type="number" class="form-control" formControlName="saturatedFats">
+                <input type="number" class="form-control" formControlName="saturatedFats" min="0"
+                  oninput="validity.valid||(value='');">
               </div>
             </div>
 
@@ -134,7 +144,8 @@
                 Monounsaturated (g):
               </div>
               <div class="col-9">
-                <input type="number" class="form-control" formControlName="monounsaturatedFats">
+                <input type="number" class="form-control" formControlName="monounsaturatedFats" min="0"
+                  oninput="validity.valid||(value='');">
               </div>
             </div>
 
@@ -143,7 +154,8 @@
                 Polyunsaturated (g):
               </div>
               <div class="col-9">
-                <input type="number" class="form-control" formControlName="polyunsaturatedFats">
+                <input type="number" class="form-control" formControlName="polyunsaturatedFats" min="0"
+                  oninput="validity.valid||(value='');">
               </div>
             </div>
 
@@ -152,7 +164,8 @@
                 Omega 3 (g):
               </div>
               <div class="col-9">
-                <input type="number" class="form-control" formControlName="omega3">
+                <input type="number" class="form-control" formControlName="omega3" min="0"
+                  oninput="validity.valid||(value='');">
               </div>
             </div>
 
@@ -161,7 +174,8 @@
                 Omega 6 (g):
               </div>
               <div class="col-9">
-                <input type="number" class="form-control" formControlName="omega6">
+                <input type="number" class="form-control" formControlName="omega6" min="0"
+                  oninput="validity.valid||(value='');">
               </div>
             </div>
 
@@ -174,7 +188,8 @@
                 Animal proteins (g):
               </div>
               <div class="col-9">
-                <input type="number" class="form-control" formControlName="animalProteins">
+                <input type="number" class="form-control" formControlName="animalProteins" min="0"
+                  oninput="validity.valid||(value='');">
               </div>
             </div>
 
@@ -183,7 +198,8 @@
                 Plant proteins (g):
               </div>
               <div class="col-9">
-                <input type="number" class="form-control" formControlName="plantProteins">
+                <input type="number" class="form-control" formControlName="plantProteins" min="0"
+                  oninput="validity.valid||(value='');">
               </div>
             </div>
 
@@ -196,7 +212,8 @@
                 Vitamin A (&micro;g):
               </div>
               <div class="col-9">
-                <input type="number" class="form-control" formControlName="vitaminA">
+                <input type="number" class="form-control" formControlName="vitaminA" min="0"
+                  oninput="validity.valid||(value='');">
               </div>
             </div>
 
@@ -205,7 +222,8 @@
                 Vitamin B1 (g):
               </div>
               <div class="col-9">
-                <input type="number" class="form-control" placeholder="Thiamine" formControlName="vitaminB1">
+                <input type="number" class="form-control" placeholder="Thiamine" formControlName="vitaminB1" min="0"
+                  oninput="validity.valid||(value='');">
               </div>
             </div>
 
@@ -214,7 +232,8 @@
                 Vitamin B2 (mg):
               </div>
               <div class="col-9">
-                <input type="number" class="form-control" placehodler="Riboflavin" formControlName="vitaminB2">
+                <input type="number" class="form-control" placehodler="Riboflavin" formControlName="vitaminB2" min="0"
+                  oninput="validity.valid||(value='');">
               </div>
             </div>
 
@@ -223,7 +242,8 @@
                 Vitamin B5 (mg):
               </div>
               <div class="col-9">
-                <input type="number" class="form-control" palceholder="Pantothenic acid" formControlName="vitaminB5">
+                <input type="number" class="form-control" palceholder="Pantothenic acid" formControlName="vitaminB5"
+                  min="0" oninput="validity.valid||(value='');">
               </div>
             </div>
 
@@ -232,7 +252,8 @@
                 Vitamin B6 (mg):
               </div>
               <div class="col-9">
-                <input type="number" class="form-control" formControlName="vitaminB6">
+                <input type="number" class="form-control" formControlName="vitaminB6" min="0"
+                  oninput="validity.valid||(value='');">
               </div>
             </div>
 
@@ -241,7 +262,8 @@
                 Vitamin B7 (&micro;g):
               </div>
               <div class="col-9">
-                <input type="number" class="form-control" placeholder="Biotin" formControlName="vitaminB7">
+                <input type="number" class="form-control" placeholder="Biotin" formControlName="vitaminB7" min="0"
+                  oninput="validity.valid||(value='');">
               </div>
             </div>
 
@@ -250,7 +272,8 @@
                 Vitamin B9 (&micro;g):
               </div>
               <div class="col-9">
-                <input type="number" class="form-control" placeholder="Folic acid" formControlName="vitaminB9">
+                <input type="number" class="form-control" placeholder="Folic acid" formControlName="vitaminB9" min="0"
+                  oninput="validity.valid||(value='');">
               </div>
             </div>
 
@@ -259,7 +282,8 @@
                 Vitamin B12 (&micro;g):
               </div>
               <div class="col-9">
-                <input type="number" class="form-control" placeholder="Cobalamin" formControlName="vitaminB12">
+                <input type="number" class="form-control" placeholder="Cobalamin" formControlName="vitaminB12" min="0"
+                  oninput="validity.valid||(value='');">
               </div>
             </div>
 
@@ -268,7 +292,8 @@
                 Vitamin C (mg):
               </div>
               <div class="col-9">
-                <input type="number" class="form-control" placeholder="Ascorbic acid" formControlName="vitaminC">
+                <input type="number" class="form-control" placeholder="Ascorbic acid" formControlName="vitaminC" min="0"
+                  oninput="validity.valid||(value='');">
               </div>
             </div>
 
@@ -277,7 +302,8 @@
                 Vitamin D (&micro;g):
               </div>
               <div class="col-9">
-                <input type="number" class="form-control" formControlName="vitaminD">
+                <input type="number" class="form-control" formControlName="vitaminD" min="0"
+                  oninput="validity.valid||(value='');">
               </div>
             </div>
 
@@ -286,7 +312,8 @@
                 Vitamin E (mg):
               </div>
               <div class="col-9">
-                <input type="number" class="form-control" placeholder="Niacin" formControlName="vitaminE">
+                <input type="number" class="form-control" placeholder="Niacin" formControlName="vitaminE" min="0"
+                  oninput="validity.valid||(value='');">
               </div>
             </div>
 
@@ -295,7 +322,8 @@
                 Vitamin PP (mg):
               </div>
               <div class="col-9">
-                <input type="number" class="form-control" formControlName="vitaminPP">
+                <input type="number" class="form-control" formControlName="vitaminPP" min="0"
+                  oninput="validity.valid||(value='');">
               </div>
             </div>
 
@@ -304,7 +332,8 @@
                 Vitamin K (&micro;g):
               </div>
               <div class="col-9">
-                <input type="number" class="form-control" formControlName="vitaminK">
+                <input type="number" class="form-control" formControlName="vitaminK" min="0"
+                  oninput="validity.valid||(value='');">
               </div>
             </div>
 
@@ -317,7 +346,8 @@
                 Zinc (mg):
               </div>
               <div class="col-9">
-                <input type="number" class="form-control" formControlName="zinc">
+                <input type="number" class="form-control" formControlName="zinc" min="0"
+                  oninput="validity.valid||(value='');">
               </div>
             </div>
 
@@ -326,7 +356,8 @@
                 Phosphorus (mg):
               </div>
               <div class="col-9">
-                <input type="number" class="form-control" formControlName="phosphorus">
+                <input type="number" class="form-control" formControlName="phosphorus" min="0"
+                  oninput="validity.valid||(value='');">
               </div>
             </div>
 
@@ -335,7 +366,8 @@
                 Iodine (&micro;g):
               </div>
               <div class="col-9">
-                <input type="number" class="form-control" formControlName="iodine">
+                <input type="number" class="form-control" formControlName="iodine" min="0"
+                  oninput="validity.valid||(value='');">
               </div>
             </div>
 
@@ -344,7 +376,8 @@
                 Magnesium (mg):
               </div>
               <div class="col-9">
-                <input type="number" class="form-control" formControlName="magnesium">
+                <input type="number" class="form-control" formControlName="magnesium" min="0"
+                  oninput="validity.valid||(value='');">
               </div>
             </div>
 
@@ -353,7 +386,8 @@
                 Copper (mg):
               </div>
               <div class="col-9">
-                <input type="number" class="form-control" formControlName="copper">
+                <input type="number" class="form-control" formControlName="copper" min="0"
+                  oninput="validity.valid||(value='');">
               </div>
             </div>
 
@@ -362,7 +396,8 @@
                 Potassium (mg):
               </div>
               <div class="col-9">
-                <input type="number" class="form-control" formControlName="potassium">
+                <input type="number" class="form-control" formControlName="potassium" min="0"
+                  oninput="validity.valid||(value='');">
               </div>
             </div>
 
@@ -371,7 +406,8 @@
                 Selenium (&micro;g):
               </div>
               <div class="col-9">
-                <input type="number" class="form-control" formControlName="selenium">
+                <input type="number" class="form-control" formControlName="selenium" min="0"
+                  oninput="validity.valid||(value='');">
               </div>
             </div>
 
@@ -380,7 +416,8 @@
                 Sodium (mg):
               </div>
               <div class="col-9">
-                <input type="number" class="form-control" formControlName="sodium">
+                <input type="number" class="form-control" formControlName="sodium" min="0"
+                  oninput="validity.valid||(value='');">
               </div>
             </div>
 
@@ -389,7 +426,8 @@
                 Calcium (mg):
               </div>
               <div class="col-9">
-                <input type="number" class="form-control" formControlName="calcium">
+                <input type="number" class="form-control" formControlName="calcium" min="0"
+                  oninput="validity.valid||(value='');">
               </div>
             </div>
 
@@ -398,7 +436,8 @@
                 Iron (mg):
               </div>
               <div class="col-9">
-                <input type="number" class="form-control" formControlName="iron">
+                <input type="number" class="form-control" formControlName="iron" min="0"
+                  oninput="validity.valid||(value='');">
               </div>
             </div>
 
@@ -411,7 +450,8 @@
                 Salt (g):
               </div>
               <div class="col-9">
-                <input type="number" class="form-control" formControlName="salt">
+                <input type="number" class="form-control" formControlName="salt" min="0"
+                  oninput="validity.valid||(value='');">
               </div>
             </div>
 
@@ -420,7 +460,8 @@
                 Cholesterol (mg):
               </div>
               <div class="col-9">
-                <input type="number" class="form-control" formControlName="cholesterol">
+                <input type="number" class="form-control" formControlName="cholesterol" min="0"
+                  oninput="validity.valid||(value='');">
               </div>
             </div>
 
@@ -429,7 +470,8 @@
                 Fiber (g):
               </div>
               <div class="col-9">
-                <input type="number" class="form-control" formControlName="fiber">
+                <input type="number" class="form-control" formControlName="fiber" min="0"
+                  oninput="validity.valid||(value='');">
               </div>
             </div>
           </mat-expansion-panel>

@@ -19,17 +19,17 @@ export class ProfileTargetComponent implements OnInit {
   editMode = false;
   autoMode = true;
   actualWeight: number;
-  dailyCallories: number = 0;
+  dailyCallories = 0;
   dayActivity = 0;
   trainingActivity = 0;
   changePerWeek = 0;
-  proteinsResult: number = 0;
-  fatsResult: number = 0;
-  carbohydratesResult: number = 0;
+  proteinsResult = 0;
+  fatsResult = 0;
+  carbohydratesResult = 0;
   weeksFromNow = 0;
   targetWeight = this.actualWeight;
   today = new Date();
-  totalPercent: number = 0;
+  totalPercent = 0;
   estimatedEnd = new Date();
   dateNextWeek = new Date(this.today.setDate(this.today.getDate() + 7));
   constructor(
@@ -100,7 +100,8 @@ export class ProfileTargetComponent implements OnInit {
       this.userService.updateUser(this.user).subscribe(
         () => {
           this.alertify.success('Target added.');
-        }, error => {
+        },
+        error => {
           this.alertify.error(error);
         }
       );
@@ -109,7 +110,8 @@ export class ProfileTargetComponent implements OnInit {
       this.targetService.update(this.user.target.id, this.target).subscribe(
         () => {
           this.alertify.success('Target updated.');
-        }, error => {
+        },
+        error => {
           this.alertify.error(error);
         }
       );
@@ -144,8 +146,8 @@ export class ProfileTargetComponent implements OnInit {
       (document.getElementById('trainingActivity') as HTMLInputElement).value
     );
 
-    var weightDifference = this.actualWeight - this.targetWeight;
-    var caloricDeficit = 7000 * this.changePerWeek;
+    let weightDifference = this.actualWeight - this.targetWeight;
+    let caloricDeficit = 7000 * this.changePerWeek;
     if (weightDifference > 0) {
       caloricDeficit = (0 - caloricDeficit) / 7;
     } else if (weightDifference == 0) {
@@ -161,16 +163,25 @@ export class ProfileTargetComponent implements OnInit {
     if (this.autoMode === true) {
       if (this.user.height && this.user.gender && this.user.dateOfBirth) {
         if (this.user.gender == 1) {
-          this.dailyCallories = 66 + 13.7 * this.actualWeight + 5 * this.user.height - 6.76 * (this.today.getDate() - this.user.dateOfBirth.getDate())
+          this.dailyCallories =
+            66 +
+            13.7 * this.actualWeight +
+            5 * this.user.height -
+            6.76 * (this.today.getDate() - this.user.dateOfBirth.getDate());
         } else {
-          this.dailyCallories = 655 + 9.6 * this.actualWeight + 1.8 * this.user.height - 4.7 * (this.today.getDate() - this.user.dateOfBirth.getDate())
+          this.dailyCallories =
+            655 +
+            9.6 * this.actualWeight +
+            1.8 * this.user.height -
+            4.7 * (this.today.getDate() - this.user.dateOfBirth.getDate());
         }
       } else {
         this.dailyCallories =
           (this.dayActivity * 0.2 + 1.1 + this.trainingActivity * 0.1) *
-          this.actualWeight * 22 + caloricDeficit;
+            this.actualWeight *
+            22 +
+          caloricDeficit;
       }
-
 
       this.proteinsResult =
         this.actualWeight *
@@ -182,24 +193,26 @@ export class ProfileTargetComponent implements OnInit {
       this.fatsResult = this.actualWeight;
 
       this.carbohydratesResult =
-        (this.dailyCallories - (this.proteinsResult * 4 + this.fatsResult * 9)) /
+        (this.dailyCallories -
+          (this.proteinsResult * 4 + this.fatsResult * 9)) /
         4;
     } else {
       this.dailyCallories = parseFloat(
         (document.getElementById('dailyCallories') as HTMLInputElement).value
       );
-      var proteinsPercent = parseFloat(
+      let proteinsPercent = parseFloat(
         (document.getElementById('proteins') as HTMLInputElement).value
       );
-      this.proteinsResult = proteinsPercent * this.dailyCallories / 400;
-      var fatsPercent = parseFloat(
+      this.proteinsResult = (proteinsPercent * this.dailyCallories) / 400;
+      let fatsPercent = parseFloat(
         (document.getElementById('fats') as HTMLInputElement).value
       );
-      this.fatsResult = fatsPercent * this.dailyCallories / 900;
-      var carbohydratesPercent = parseFloat(
+      this.fatsResult = (fatsPercent * this.dailyCallories) / 900;
+      let carbohydratesPercent = parseFloat(
         (document.getElementById('carbohydrates') as HTMLInputElement).value
       );
-      this.carbohydratesResult = carbohydratesPercent * this.dailyCallories / 400;
+      this.carbohydratesResult =
+        (carbohydratesPercent * this.dailyCallories) / 400;
 
       this.totalPercent = proteinsPercent + fatsPercent + carbohydratesPercent;
       if (this.totalPercent == NaN) {
@@ -209,8 +222,6 @@ export class ProfileTargetComponent implements OnInit {
 
     this.estimatedEnd = new Date();
     this.estimatedEnd.setDate(this.estimatedEnd.getDate() + daysToTarget);
-
-
   }
 
   weeksBetween(d1: Date, d2: Date) {

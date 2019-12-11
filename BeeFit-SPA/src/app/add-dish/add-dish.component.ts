@@ -1,21 +1,12 @@
 import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { IngredientsService } from '../_services/ingredients.service';
-import { Subject, Observable } from 'rxjs';
-import {
-  debounceTime,
-  distinctUntilChanged,
-  switchMap,
-  tap
-} from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { Ingredient } from '../_models/Ingredient';
 import { Dish } from '../_models/Dish';
 import { DishesService } from '../_services/dishes.service';
 import { DishesIngredient } from '../_models/DishesIngredient';
 import { AlertifyService } from '../_services/alertify.service';
-import { MealtypeService } from '../_services/mealtype.service';
-import { DateService } from '../_services/date.service';
-import { Meal } from '../_models/Meal';
 import { PaginatedResult, Pagination } from '../_models/Pagination';
 
 @Component({
@@ -35,6 +26,10 @@ export class AddDishComponent implements OnInit {
   filterParams: any = {};
   paginationParams: any = {};
 
+  infoTextSearch = 'Nutrients are provided per 100g/100ml.';
+  infoTextAdded = 'Nutrients are provided for quantity entered.';
+  infoTextDish = 'Please add ingredients necessary for 1 portion.';
+
   constructor(
     public router: Router,
     private ingredientsService: IngredientsService,
@@ -46,10 +41,6 @@ export class AddDishComponent implements OnInit {
   ngOnInit() {
     this.paginationParams.pageNumber = 1;
     this.paginationParams.pageSize = 10;
-
-    this.filterParams.userId = null;
-    this.filterParams.minCallories = null;
-    this.filterParams.maxCallories = null;
   }
 
   findIngredients() {
@@ -59,12 +50,13 @@ export class AddDishComponent implements OnInit {
     }
 
     if (this.filterParams.name !== '') {
-      this.ingredientsService.getIngredients(this.paginationParams, this.filterParams).subscribe((res: PaginatedResult<Ingredient[]>) => {
-        this.ingredients = res.result;
-        this.ingredientsPagination = res.pagination;
-      }, error => {
-        this.alertify.error(error);
-      });
+      this.ingredientsService.getIngredients({...this.paginationParams, ...this.filterParams})
+        .subscribe((res: PaginatedResult<Ingredient[]>) => {
+          this.ingredients = res.result;
+          this.ingredientsPagination = res.pagination;
+        }, error => {
+          this.alertify.error(error);
+        });
     }
   }
 
@@ -72,27 +64,44 @@ export class AddDishComponent implements OnInit {
     this.alertify.prompt(
       'Provide quantity of the ingredient in g or ml:',
       (value: any, event: any) => {
+        if (value <= 0 || isNaN(value)) {
+          return this.alertify.error('Quantity must bea number greater than 0.');
+        }
+
         const dishesIngredient = new DishesIngredient();
         dishesIngredient.ingredient = ing;
         dishesIngredient.ingredientId = ing.id;
         dishesIngredient.quantity = value;
         this.addedIngredients.push(dishesIngredient);
+        this.calculateNutrients();
       }
     );
   }
 
+  // $('#alertify-text').replaceWith('<input type="password" id="alertify-text" class="alertify-text"/>');
+
   deleteFromDish(ing: DishesIngredient) {
     const index = this.addedIngredients.indexOf(ing);
     this.addedIngredients.splice(index, 1);
+    this.calculateNutrients();
   }
 
   addDish() {
+    if (this.dish.name === '' || this.dish.name == null) {
+      return this.alertify.error('Name your dish.');
+    }
+
     this.dish.ingredients = new Array<DishesIngredient>();
     this.addedIngredients.forEach(item => {
       this.dish.ingredients.push(item);
     });
 
     this.calculateNutrients();
+
+    this.addedIngredients.forEach(item => {
+      item.ingredientId = item.ingredient.id;
+      item.ingredient = null;
+    });
 
     this.dishesService.add(this.dish).subscribe(
       () => {
@@ -111,12 +120,16 @@ export class AddDishComponent implements OnInit {
     this.dish.fats = 0;
     this.dish.carbohydrates = 0;
 
-    this.dish.ingredients.forEach(element => {
-      this.dish.callories += (element.ingredient.callories / 100) * element.quantity;
-      this.dish.proteins += (element.ingredient.proteins / 100) * element.quantity;
-      this.dish.fats += (element.ingredient.fats / 100) * element.quantity;
-      this.dish.carbohydrates += (element.ingredient.carbohydrates / 100) * element.quantity;
+    this.addedIngredients.forEach(element => {
+      this.dish.callories += this.round(element.ingredient.callories, element.quantity);
+      this.dish.proteins += this.round(element.ingredient.proteins, element.quantity);
+      this.dish.fats += this.round(element.ingredient.fats, element.quantity);
+      this.dish.carbohydrates += this.round(element.ingredient.carbohydrates, element.quantity);
     });
+  } 
+
+  round(nutrient: number, quantity: number): number {
+    return Math.round(((nutrient / 100) * quantity) * 100) / 100;
   }
 
   resetPagination() {

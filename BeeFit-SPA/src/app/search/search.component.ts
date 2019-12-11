@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { FoodSearchParams } from '../_models/FoodSearchParams';
 
 @Component({
   selector: 'app-search',
@@ -10,15 +11,13 @@ export class SearchComponent implements OnInit {
   @Output() searched = new EventEmitter<any>();
   @Output() filtersApplied = new EventEmitter<any>();
   @Output() filtersReset = new EventEmitter<any>();
-  filterParams: any = {};
+  filterParams: FoodSearchParams;
 
-  constructor() { }
+  constructor() {
+    this.filterParams = new FoodSearchParams();
+  }
 
   ngOnInit() {
-    this.filterParams.name = null;
-    this.filterParams.userId = null;
-    this.filterParams.minCallories = null;
-    this.filterParams.maxCallories = null;
     this.selectRadio();
   }
 
@@ -31,37 +30,44 @@ export class SearchComponent implements OnInit {
   }
 
   resetFilters() {
-    this.filterParams.userId = null;
-    this.filterParams.minCallories = null;
-    this.filterParams.maxCallories = null;
+    this.filterParams = Object.keys(this.filterParams).reduce((newParams, key) => {
+      if (key === 'name') {
+        newParams[key] = this.filterParams[key];
+      }
+
+      return newParams;
+    }, new FoodSearchParams());
+
     this.filtersReset.emit(this.filterParams);
   }
 
   selectRadio(radioGroupName?: string) {
 
-    var radioGroup = document.querySelector('#' + radioGroupName); console.log(radioGroup);
+    const radioGroup = document.querySelector('#' + radioGroupName);
 
-    var radioGroupElements = Array.from(radioGroup.querySelectorAll('div'));
+    if (radioGroup) {
+      const radioGroupElements = Array.from(radioGroup.querySelectorAll('div'));
 
-    radioGroupElements[0].querySelector('input').setAttribute("checked", "checked");
+      radioGroupElements[0].querySelector('input').setAttribute('checked', 'checked');
 
-    var frame = <HTMLElement>document.querySelector('.' + radioGroupName);
-    frame.style.width = radioGroupElements[0].offsetWidth+'px';
+      const frame =  document.querySelector('.' + radioGroupName) as HTMLElement;
+      frame.style.width = radioGroupElements[0].offsetWidth + 'px';
 
-    for (let element of radioGroupElements) {
-      element.querySelector('input').style.display='none';
-      if (element.querySelector('input').checked) {
-        element.querySelector('label').style.color = 'rgb(39, 39, 39)';
-        var newLeftPosition = element.offsetLeft +
-         parseInt(window.getComputedStyle(element).paddingLeft, 10) +
-         parseInt(window.getComputedStyle(element.querySelector('label')).marginLeft, 10);
-        var newWidth = element.querySelector('label').getBoundingClientRect().width;
-        frame.style.left = newLeftPosition + 'px';
-        frame.style.width = newWidth + 'px';
-      } else {
-        element.querySelector('label').style.color = '#fff';
+      for (const element of radioGroupElements) {
+        element.querySelector('input').style.display = 'none';
+
+        if (element.querySelector('input').checked) {
+          element.querySelector('label').style.color = 'rgb(63, 63, 63);';
+          const newLeftPosition = element.offsetLeft +
+           parseInt(window.getComputedStyle(element).paddingLeft, 10) +
+           parseInt(window.getComputedStyle(element.querySelector('label')).marginLeft, 10);
+          const newWidth = element.querySelector('label').getBoundingClientRect().width;
+          frame.style.left = newLeftPosition + 'px';
+          frame.style.width = newWidth + 'px';
+        } else {
+          element.querySelector('label').style.color = '#fff';
+        }
       }
     }
-
   }
 }

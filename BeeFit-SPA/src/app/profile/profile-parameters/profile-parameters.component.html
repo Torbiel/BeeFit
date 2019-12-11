@@ -27,7 +27,7 @@
           </a>
 
           <div class="dropdown-menu" *dropdownMenu>
-            <li (click)="setDateTo(parameter)" class="dropdown-item"  *ngFor="let parameter of parametersDates">
+            <li (click)="setDateTo(parameter)" class="dropdown-item" *ngFor="let parameter of parametersDates">
               {{parameter | date: 'dd.MM.yyyy'}}
             </li>
           </div>
@@ -36,7 +36,7 @@
 
       <div class="row mt-2">
 
-        <table >
+        <table>
           <thead>
             <td>Date</td>
             <td>Weight (kg)</td>
@@ -48,18 +48,26 @@
           <tbody>
 
             <tr class="add-parameters" *ngIf="addingMode">
-              <td><input type="date" value="{{newParameter.date}}" [(ngModel)]="newParameter.date" name="username" id="username" class="td-input"></td>
+              <td><input type="date" value="{{newParameter.date}}" [(ngModel)]="newParameter.date" name="username"
+                  id="username" class="td-input"></td>
               <td>
-                <input type="text" value="{{newParameter.weight}}" [(ngModel)]="newParameter.weight" name="username" id="username" class="td-input">
+                <input type="number" value="{{newParameter.weight}}" min="0" oninput="validity.valid||(value='');"
+                  [(ngModel)]="newParameter.weight" name="username" id="username" class="td-input">
               </td>
               <td>
-                <input type="text" value="{{newParameter.abdominalCircumference}}" [(ngModel)]="newParameter.abdominalCircumference" name="username" id="username" class="td-input">
+                <input type="number" value="{{newParameter.abdominalCircumference}}" min="0"
+                  oninput="validity.valid||(value='');" [(ngModel)]="newParameter.abdominalCircumference"
+                  name="username" id="username" class="td-input">
               </td>
               <td>
-                <input type="text" value="{{newParameter.bicepsCircumference}}" [(ngModel)]="newParameter.bicepsCircumference" name="username" id="username" class="td-input">
+                <input type="number" value="{{newParameter.bicepsCircumference}}" min="0"
+                  oninput="validity.valid||(value='');" [(ngModel)]="newParameter.bicepsCircumference" name="username"
+                  id="username" class="td-input">
               </td>
               <td>
-                <input type="text" value="{{newParameter.thighCircumference}}" [(ngModel)]="newParameter.thighCircumference" name="username" id="username" class="td-input">
+                <input type="number" value="{{newParameter.thighCircumference}}" min="0"
+                  oninput="validity.valid||(value='');" [(ngModel)]="newParameter.thighCircumference" name="username"
+                  id="username" class="td-input">
               </td>
               <td>
                 <button (click)="toggleAdd()" type="submit"><i class="fas fa-close"></i></button>
@@ -68,21 +76,29 @@
             </tr>
 
 
-            <tr *ngFor="let parameter of parametersAfterFilter; index as i" id="parameter[{{i}}]" >
+            <tr *ngFor="let parameter of parametersAfterFilter; index as i" id="parameter[{{i}}]">
               <td>
-                <input type="datetime-local"  value="{{parameter.date}}" [(ngModel)]="user.parameters[i].date" name="name1" id="name1" class="td-input read-only">
+                <input type="datetime-local" value="{{parameter.date}}" [(ngModel)]="user.parameters[i].date"
+                  name="name1" id="name1" class="td-input read-only" min="0" oninput="validity.valid||(value='');">
               </td>
               <td>
-                <input type="text" value="{{parameter.weight}}" [(ngModel)]="user.parameters[i].weight" name="name1" id="name1" class="td-input read-only">
+                <input type="number" value="{{parameter.weight}}" [(ngModel)]="user.parameters[i].weight" name="name1"
+                  id="name1" class="td-input read-only" min="0" oninput="validity.valid||(value='');">
               </td>
               <td>
-                <input type="text" value="{{parameter.abdominalCircumference}}" [(ngModel)]="user.parameters[i].abdominalCircumference" name="name1" id="name1" class="td-input read-only">
+                <input type="number" value="{{parameter.abdominalCircumference}}"
+                  [(ngModel)]="user.parameters[i].abdominalCircumference" name="name1" id="name1"
+                  class="td-input read-only" min="0" oninput="validity.valid||(value='');">
               </td>
               <td>
-                <input type="text" value="{{parameter.bicepsCircumference}}" [(ngModel)]="user.parameters[i].bicepsCircumference" name="name2" id="name2" class="td-input read-only">
+                <input type="number" value="{{parameter.bicepsCircumference}}"
+                  [(ngModel)]="user.parameters[i].bicepsCircumference" name="name2" id="name2"
+                  class="td-input read-only" min="0" oninput="validity.valid||(value='');">
               </td>
               <td>
-                <input type="text" value="{{parameter.thighCircumference}}" [(ngModel)]="user.parameters[i].thighCircumference" name="name2" id="name2" class="td-input read-only">
+                <input type="number" value="{{parameter.thighCircumference}}"
+                  [(ngModel)]="user.parameters[i].thighCircumference" name="name2" id="name2"
+                  class="td-input read-only">
               </td>
               <td>
                 <button class="fas fa-trash-alt" *ngIf="!editMode" (click)="deleteParameter(i)">
@@ -94,7 +110,7 @@
                 <button class="fas fa-check" *ngIf="editMode" (click)="editParameter(i)">
                 </button>
 
-            </td>
+              </td>
             </tr>
 
           </tbody>

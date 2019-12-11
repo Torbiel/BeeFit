@@ -111,12 +111,12 @@
             <li>
               <label for="actualWeight">Actual weight:</label>
               <input name="actualWeight" id="actualWeight" value="{{actualWeight}}" step="0.05" min="0.05" type="number"
-                (input)="calculate()">
+                (input)="calculate()" min="0" oninput="validity.valid||(value='');">
             </li>
             <li>
               <label for="targetWeight">Target weight:</label>
               <input name="targetWeight" id="targetWeight" value="{{targetWeight}}" step="0.05" min="0.05" type="number"
-                (input)="calculate()">
+                (input)="calculate()" min="0" oninput="validity.valid||(value='');">
             </li>
             <li>
               <label for="changePerWeek">Change per week:</label>
@@ -158,20 +158,20 @@
           </div>
           <div *ngIf="!autoMode">
             <li>
-              <label for="dailyCallories">Daily needs (kcal)</label>
-              <input name="dailyCallories" id="dailyCallories" type="number"  value="{{dailyCallories}}" min="0" max="99999"  (input)="calculate()">
+              <label for="dailyCallories">Daily need (kcal)</label>
+              <input name="dailyCallories" id="dailyCallories" type="number"  value="{{dailyCallories}}"  (input)="calculate()" min="0" max="99999" oninput="validity.valid||(value='');">
             </li>
             <li>
               <label for="proteins">Proteins (%)</label>
-              <input name="proteins" id="proteins" type="number" value="{{proteins}}" min="0" max="100"  (input)="calculate()">
+              <input name="proteins" id="proteins" type="number" value="{{proteins}}"  (input)="calculate()" min="0" max="100" oninput="validity.valid||(value='');">
             </li>
             <li>
               <label for="fats">Fats (%)</label>
-              <input name="fats" id="fats" type="number" min="0" max="100" value="{{fats}}" (input)="calculate()">
+              <input name="fats" id="fats" type="number"  value="{{fats}}" (input)="calculate()" min="0" max="100" oninput="validity.valid||(value='');">
             </li>
             <li>
               <label for="carbohydrates">Carbohydrates (%)</label>
-              <input name="carbohydrates" id="carbohydrates" type="number" min="0" max="100" value="{{carbohydrates}}" (input)="calculate()">
+              <input name="carbohydrates" id="carbohydrates" type="number"  value="{{carbohydrates}}" (input)="calculate()" min="0" max="100" oninput="validity.valid||(value='');">
             </li>
             <li>
              <div>Total: {{totalPercent}}%</div>
@@ -186,7 +186,7 @@
               <div>{{estimatedEnd| date: 'dd.MM.yyyy'}}</div>
             </li>
             <li>
-              <div>Daily needs (kcal)</div>
+              <div>Daily need (kcal)</div>
               <div>{{dailyCallories| number:'1.0-0'}}</div>
             </li>
             <!-- <li>
