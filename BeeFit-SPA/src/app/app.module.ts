@@ -43,6 +43,8 @@ import { EditDishComponent } from './edit-dish/edit-dish.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { SearchComponent } from './search/search.component';
 import { InfoComponent } from './Info/Info.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
    declarations: [
@@ -87,7 +89,8 @@ import { InfoComponent } from './Info/Info.component';
       ReactiveFormsModule,
       FullCalendarModule,
       PaginationModule.forRoot(),
-      Ng2SearchPipeModule
+      Ng2SearchPipeModule,
+      ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
    ],
    providers: [
       AuthService,
