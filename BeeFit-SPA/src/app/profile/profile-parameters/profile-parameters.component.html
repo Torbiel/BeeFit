@@ -8,10 +8,12 @@
     <div class="col" *ngIf="user">
       <div class="row">
         View from:
-        <input type="date" [value]="dateFrom" (input)="setDateFrom(dateFrom)" class="dropdown ml-2 filter" name="dateFrom" [(ngModel)]="dateFrom" />
+       <!-- <input type="date" [value]="dateFrom" (input)="setDateFrom(dateFrom)" class="dropdown ml-2 filter" name="dateFrom" [(ngModel)]="dateFrom" />-->
+        <input type="date" [value]="dateFrom"  class="dropdown ml-2 filter" name="dateFrom" [(ngModel)]="dateFrom" />
 
         to:
-        <input type="date" [value]="dateTo" (input)="setDateTo(dateTo)" class="dropdown ml-2 filter" name="dateTo" [(ngModel)]="dateTo" />
+        <input type="date" [value]="dateTo" class="dropdown ml-2 filter" name="dateTo" [(ngModel)]="dateTo" />
+        <!-- <input type="date" [value]="dateTo" (input)="setDateTo(dateTo)" class="dropdown ml-2 filter" name="dateTo" [(ngModel)]="dateTo" /> -->
 
           <div class="dropdown-menu" *dropdownMenu>
             <li (click)="setDateTo(parameter)" class="dropdown-item" *ngFor="let parameter of parametersDates">
