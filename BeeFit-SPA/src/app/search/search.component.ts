@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FoodSearchParams, FoodOrderBy } from '../_models/FoodSearchParams';
+import { AlertifyService } from '../_services/alertify.service';
 
 @Component({
   selector: 'app-search',
@@ -13,7 +14,7 @@ export class SearchComponent implements OnInit {
   @Output() filtersReset = new EventEmitter<any>();
   filterParams: FoodSearchParams;
 
-  constructor() {
+  constructor(private alertify: AlertifyService) {
     this.filterParams = new FoodSearchParams();
     this.filterParams.userId = 0;
     this.filterParams.ascending = true;
@@ -27,11 +28,26 @@ export class SearchComponent implements OnInit {
   }
 
   search() {
-    this.searched.emit(this.filterParams);
+    if (this.filterParams.name.replace(/\s/g, '').length > 0 && this.checkForNegatives()) {
+      this.searched.emit(this.filterParams);
+    }
+  }
+
+  checkForNegatives(): boolean {
+    Object.values(this.filterParams).forEach(value => {
+      if (value < 0) {
+        this.alertify.error('Search parameters can\'t be negative.');
+        throw 0;
+      }
+    });
+
+    return true;
   }
 
   applyFilters() {
-    this.filtersApplied.emit(this.filterParams);
+    if (this.filterParams.name.replace(/\s/g, '').length > 0 && this.checkForNegatives()) {
+      this.filtersApplied.emit(this.filterParams);
+    }
   }
 
   resetFilters() {
@@ -43,6 +59,10 @@ export class SearchComponent implements OnInit {
       return newParams;
     }, new FoodSearchParams());
 
+    this.selectRadio('radioGroupOrder');
+    this.selectRadio('radioGroupAscending');
+    this.filterParams.ascending = true;
+    this.filterParams.orderBy = 0;
     this.filtersReset.emit(this.filterParams);
   }
 

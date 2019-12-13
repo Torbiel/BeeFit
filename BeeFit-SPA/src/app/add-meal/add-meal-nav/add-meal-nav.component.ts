@@ -166,9 +166,12 @@ export class AddMealNavComponent implements OnInit {
 
   onFiltersReset(event: any) {
     this.filterParams = event;
-    this.resetPagination();
-    this.findDishes();
-    this.findIngredients();
+
+    if (this.filterParams.name.replace(/\s/g, '').length > 0) {
+      this.resetPagination();
+      this.findDishes();
+      this.findIngredients();
+    }
   }
 }
 

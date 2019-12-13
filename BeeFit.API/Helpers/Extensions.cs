@@ -49,32 +49,32 @@ namespace BeeFit.API.Helpers
 
             if (searchParams.MinFats != null)
             {
-                dishes = dishes.Where(d => d.Callories >= searchParams.MinFats);
+                dishes = dishes.Where(d => d.Fats >= searchParams.MinFats);
             }
 
             if (searchParams.MaxFats != null)
             {
-                dishes = dishes.Where(d => d.Callories <= searchParams.MaxFats);
+                dishes = dishes.Where(d => d.Fats <= searchParams.MaxFats);
             }
 
             if (searchParams.MinProteins != null)
             {
-                dishes = dishes.Where(d => d.Callories >= searchParams.MinProteins);
+                dishes = dishes.Where(d => d.Proteins >= searchParams.MinProteins);
             }
 
             if (searchParams.MaxProteins != null)
             {
-                dishes = dishes.Where(d => d.Callories <= searchParams.MaxProteins);
+                dishes = dishes.Where(d => d.Proteins <= searchParams.MaxProteins);
             }
 
             if (searchParams.MinCarbohydrates != null)
             {
-                dishes = dishes.Where(d => d.Callories >= searchParams.MinCarbohydrates);
+                dishes = dishes.Where(d => d.Carbohydrates >= searchParams.MinCarbohydrates);
             }
 
             if (searchParams.MaxCarbohydrates != null)
             {
-                dishes = dishes.Where(d => d.Callories <= searchParams.MaxCarbohydrates);
+                dishes = dishes.Where(d => d.Carbohydrates <= searchParams.MaxCarbohydrates);
             }
 
             return dishes;
@@ -99,32 +99,32 @@ namespace BeeFit.API.Helpers
 
             if (searchParams.MinFats != null)
             {
-                ingredients = ingredients.Where(d => d.Callories >= searchParams.MinFats);
+                ingredients = ingredients.Where(d => d.Fats >= searchParams.MinFats);
             }
 
             if (searchParams.MaxFats != null)
             {
-                ingredients = ingredients.Where(d => d.Callories <= searchParams.MaxFats);
+                ingredients = ingredients.Where(d => d.Fats <= searchParams.MaxFats);
             }
 
             if (searchParams.MinProteins != null)
             {
-                ingredients = ingredients.Where(d => d.Callories >= searchParams.MinProteins);
+                ingredients = ingredients.Where(d => d.Proteins >= searchParams.MinProteins);
             }
 
             if (searchParams.MaxProteins != null)
             {
-                ingredients = ingredients.Where(d => d.Callories <= searchParams.MaxProteins);
+                ingredients = ingredients.Where(d => d.Proteins <= searchParams.MaxProteins);
             }
 
             if (searchParams.MinCarbohydrates != null)
             {
-                ingredients = ingredients.Where(d => d.Callories >= searchParams.MinCarbohydrates);
+                ingredients = ingredients.Where(d => d.Carbohydrates >= searchParams.MinCarbohydrates);
             }
 
             if (searchParams.MaxCarbohydrates != null)
             {
-                ingredients = ingredients.Where(d => d.Callories <= searchParams.MaxCarbohydrates);
+                ingredients = ingredients.Where(d => d.Carbohydrates <= searchParams.MaxCarbohydrates);
             }
 
             return ingredients;

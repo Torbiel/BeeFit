@@ -6,7 +6,8 @@
       </mat-expansion-panel-header>
 
       <!-- Search mode -->
-      <div (click)="selectRadio('radioGroupSearchMode')" id="radioGroupSearchMode" class="row justify-content-center radioGroup">
+      <div (click)="selectRadio('radioGroupSearchMode')" id="radioGroupSearchMode"
+        class="row justify-content-center radioGroup">
         <div class="">
           <label class="radioLabel allFoodMode selected">All food
             <input name="searchMode" type="radio" [(ngModel)]="filterParams.userId" value="0" checked>
@@ -25,24 +26,28 @@
       <div class="row">
         <div class="col-3">
           <label class="ml-1 ">Min. callories:
-            <input type="number" class="form-control" [(ngModel)]="filterParams.minCallories"  min="0" oninput="validity.valid||(value='');">
+            <input type="number" class="form-control" [(ngModel)]="filterParams.minCallories" min="0"
+              pattern="[0-9]+([\.,][0-9]+)?" step="0.01">
           </label>
         </div>
         <div class="col-3">
           <label class="ml-2 ">Max. callories:
-            <input type="number" class="form-control" [(ngModel)]="filterParams.maxCallories" min="0" oninput="validity.valid||(value='');">
+            <input type="number" class="form-control" [(ngModel)]="filterParams.maxCallories" min="0"
+              pattern="[0-9]+([\.,][0-9]+)?" step="0.01">
           </label>
         </div>
 
         <!-- Proteins -->
         <div class="col-3">
           <label class="ml-1 ">Min. proteins:
-            <input type="number" class="form-control" [(ngModel)]="filterParams.minProteins" min="0" oninput="validity.valid||(value='');">
+            <input type="number" class="form-control" [(ngModel)]="filterParams.minProteins" min="0"
+              pattern="[0-9]+([\.,][0-9]+)?" step="0.01">
           </label>
         </div>
         <div class="col-3">
           <label class="ml-2 ">Max. proteins:
-            <input type="number" class="form-control" [(ngModel)]="filterParams.maxProteins" min="0" oninput="validity.valid||(value='');">
+            <input type="number" class="form-control" [(ngModel)]="filterParams.maxProteins" min="0"
+              pattern="[0-9]+([\.,][0-9]+)?" step="0.01">
           </label>
         </div>
       </div>
@@ -51,24 +56,28 @@
         <!-- Fats -->
         <div class="col-3">
           <label class="ml-1 ">Min. fats:
-            <input type="number" class="form-control" [(ngModel)]="filterParams.minFats"  min="0" oninput="validity.valid||(value='');">
+            <input type="number" class="form-control" [(ngModel)]="filterParams.minFats" min="0"
+              pattern="[0-9]+([\.,][0-9]+)?" step="0.01">
           </label>
         </div>
         <div class="col-3">
           <label class="ml-2 ">Max. fats:
-            <input type="number" class="form-control" [(ngModel)]="filterParams.maxFats" min="0" oninput="validity.valid||(value='');">
+            <input type="number" class="form-control" [(ngModel)]="filterParams.maxFats" min="0"
+              pattern="[0-9]+([\.,][0-9]+)?" step="0.01">
           </label>
         </div>
 
         <!-- Carbs -->
         <div class="col-3">
           <label class="ml-1 ">Min. carbohydrates:
-            <input type="number" class="form-control" [(ngModel)]="filterParams.minCarbohydrates" min="0" oninput="validity.valid||(value='');">
+            <input type="number" class="form-control" [(ngModel)]="filterParams.minCarbohydrates" min="0"
+              pattern="[0-9]+([\.,][0-9]+)?" step="0.01">
           </label>
         </div>
         <div class="col-3">
-          <label class="ml-2 ">Max. crabohydrates:
-            <input type="number" class="form-control" [(ngModel)]="filterParams.maxCarbohydrates" min="0" oninput="validity.valid||(value='');">
+          <label class="ml-2 ">Max. carbohydrates:
+            <input type="number" class="form-control" [(ngModel)]="filterParams.maxCarbohydrates" min="0"
+              pattern="[0-9]+([\.,][0-9]+)?" step="0.01">
           </label>
         </div>
       </div>
@@ -80,7 +89,8 @@
       <div (click)="selectRadio('radioGroupOrder')" class="row justify-content-center radioGroup" id="radioGroupOrder">
         <div class="">
           <label class="radioLabel">Name
-            <input type="radio" class=""  name="orderBy" value="0" [(ngModel)]="filterParams.orderBy" checked>
+            <input type="radio" class="" name="orderBy" value="0" id="orderByName" [(ngModel)]="filterParams.orderBy"
+              checked>
           </label>
         </div>
         <div class="">
@@ -110,10 +120,11 @@
       <div class="row justify-content-center mt-1 mb-1">
         Ascending or descending:
       </div>
-      <div (click)="selectRadio('radioGroupAscending')" class="row justify-content-center radioGroup" id="radioGroupAscending">
+      <div (click)="selectRadio('radioGroupAscending')" class="row justify-content-center radioGroup"
+        id="radioGroupAscending">
         <div class="">
           <label class="radioLabel">Descending
-            <input type="radio" class="" name="ascending" value="false"
+            <input type="radio" class="" name="ascending" value="false" id="ascending"
               [(ngModel)]="filterParams.ascending">
           </label>
         </div>

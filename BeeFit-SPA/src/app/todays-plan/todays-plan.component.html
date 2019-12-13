@@ -76,8 +76,18 @@
             <div class="col-11">
               <div class="row">
                 <div class="col-10">
-                  <p *ngIf="meal.dish !== null">{{ meal.dish.name }}</p>
-                  <p *ngIf="meal.ingredient !== null">{{ meal.ingredient.name }}</p>
+                  <span *ngIf="meal.dish !== null">
+                    {{ meal.dish.name }}
+                  </span>
+                  <span *ngIf="meal.dish !== null">
+                    {{ meal.dish.weight }} g
+                  </span>
+                  <span *ngIf="meal.ingredient !== null">
+                    {{ meal.ingredient.name }}
+                  </span>
+                  <span *ngIf="meal.ingredient !== null"> 
+                    {{ meal.ingredient.gramsPerUnit }} g
+                  </span>
                 </div>
                 <div class="col-2 meal-buttons">
                   <button class="delete-button pull-right" (click)="deleteMeal(meal)"><i
