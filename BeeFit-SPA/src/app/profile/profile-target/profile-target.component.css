@@ -312,3 +312,20 @@ input[type=range]:focus::-ms-fill-upper,
 input[type=range]:hover::-ms-fill-upper {
   background: #b62b0b;
 }
+
+@media(max-width: 576px)
+{
+    .edit-button
+{
+    height: 60px;
+    width: 50px;
+    font-size: 2em;
+    
+}
+.save-button, .cancel-button, .add-button
+{
+    height: 40px;
+    width: 30px;
+    font-size: 1em;
+}
+}

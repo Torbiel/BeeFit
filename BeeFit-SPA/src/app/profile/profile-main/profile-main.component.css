@@ -73,3 +73,26 @@ label:hover
 {
     padding: 5px 0;
 }
+
+@media (max-width: 600px)
+{
+    .edit-button
+    {
+        width: 70px;
+        height: 70px;
+        border: none;
+        background-color: #F3C622;
+        color: #343a40;
+        transition: .1s ease-in-out;
+    }
+    .save-button, .cancel-button
+    {
+        width: 42px;
+        height: 44px;
+        border: none;
+        background-color: #F3C622;
+        color: #343a40;
+        transition: .1s ease-in-out;
+    }
+    
+}
