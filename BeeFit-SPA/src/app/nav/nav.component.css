@@ -54,3 +54,13 @@
     margin-right: 0;
     right: 0;
 }
+
+@media (max-width: 576px) {
+    .navbar-nav { 
+        flex-direction: row;
+        font-size: 15px;
+    }
+    .nav-item {
+        padding-left: 20px;
+    }
+}
