@@ -40,15 +40,17 @@ table
 table td
 {
     border: 1px solid rgb(219, 219, 219);
-    width: 100px;
+    max-width: 20%;
     text-align: center;
     height: 100%;
     padding: 1px;
+    white-space: pre-wrap;
 }
 
 thead td
 {
-    white-space: nowrap;
+    max-width: 20%;
+    white-space: pre-wrap;
 }
 
 tr:nth-child(even)
@@ -145,4 +147,21 @@ input {
 .filter::-webkit-calendar-picker-indicator {
     background: none;
     color: #fff;
+}
+
+@media(max-width: 576px)
+{
+    table td
+    {
+        font-size: 13px;
+        max-width: 20%;
+    }
+    
+.add-button
+{
+    height: 60px;
+    width: 50px;
+    font-size: 2em;
+    
+}
 }

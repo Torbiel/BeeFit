@@ -1,8 +1,8 @@
 {
   "name": "BeeFit-SPA",
-  "short_name": "BeeFit-SPA",
-  "theme_color": "#1976d2",
-  "background_color": "#fafafa",
+  "short_name": "BeeFit",
+  "theme_color": "#F3C622",
+  "background_color": "#F3C622",
   "display": "standalone",
   "scope": "/",
   "start_url": "/",

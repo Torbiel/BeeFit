@@ -48,3 +48,12 @@ hr
     border-image-source: radial-gradient(rgb(243, 198, 34), rgb(39, 39, 39) 80%,  rgb(39, 39, 39)  10%);
     border-image-slice: 1;
 }
+
+@media (max-width: 576px)
+{
+    button
+    {
+        font-size: 1em;
+    }
+    
+}
