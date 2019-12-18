@@ -6,10 +6,10 @@
 	</div>
 	<div class="carousel-container js-carousel-container">
 		<div class="carousel-list js-carousel-list">
-			<button class="plan-date date-item js-carousel-item" *ngFor="let item of visibleDates"
-				[ngClass]="{'selectedDate': (item.date | date) == (selectedDate | date)}"
+			<button id={{i}} class="plan-date date-item js-carousel-item" *ngFor="let item of visibleDates; let i = index"
+				[ngClass]="{'selectedDate': (item.date |  date: 'dd.MM.yyyy') == (selectedDate |  date: 'dd.MM.yyyy')}"
 				(click)="this.emitDate(item.date)">
-				{{ item.date | date: 'dd.MM' }}
+				{{ item.date | date: 'dd.MM.yyyy' }}
 		</button>
 		</div>
 	</div>
