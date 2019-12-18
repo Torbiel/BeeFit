@@ -21,8 +21,8 @@
           Weight:
         </div>
         <div class="row">
-          <p class="lead">{{this.user.target.weightFrom}} <i class="fas fa-long-arrow-alt-right"></i>
-            {{this.user.target.weightTo}}</p>
+          <p class="lead">{{this.user.target.weightFrom}} kg <i class="fas fa-long-arrow-alt-right"></i>
+            {{this.user.target.weightTo}} kg</p>
         </div>
       </div>
     </div>
@@ -162,18 +162,18 @@
             </li>
             <li>
               <label for="proteins">Proteins (%)</label>
-              <input [ngClass]="{'alert-danger': !proteinsPercent , 'alert-success': proteinsPercent !== 0}" name="proteins" id="proteins" type="number"  min="0" max="100"  (input)="calculate()">
-              <!-- <input [ngClass]="{'alert-danger': !proteinsPercent , 'alert-success': proteinsPercent !== 0}" name="proteins" id="proteins" type="number" value="{{proteins}}" min="0" max="100"  (input)="calculate()"> -->
+              <!-- <input [ngClass]="{'alert-danger': !proteinsPercent , 'alert-success': proteinsPercent !== 0}" name="proteins" id="proteins" type="number"  min="0" max="100"  (input)="calculate()"> -->
+              <input [ngClass]="{'alert-danger': !proteinsPercent , 'alert-success': proteinsPercent !== 0}" name="proteins" id="proteins" type="number" value="{{proteins}}" min="0" max="100"  (input)="calculate()">
             </li>
             <li>
               <label for="fats">Fats (%)</label>
-              <input [ngClass]="{'alert-danger': !fatsPercent , 'alert-success': fatsPercent !== 0}" name="fats" id="fats" type="number" min="0" max="100"  (input)="calculate()">
-              <!-- <input [ngClass]="{'alert-danger': !fatsPercent , 'alert-success': fatsPercent !== 0}" name="fats" id="fats" type="number" min="0" max="100" value="{{fats}}" (input)="calculate()"> -->
+              <!-- <input [ngClass]="{'alert-danger': !fatsPercent , 'alert-success': fatsPercent !== 0}" name="fats" id="fats" type="number" min="0" max="100"  (input)="calculate()"> -->
+              <input [ngClass]="{'alert-danger': !fatsPercent , 'alert-success': fatsPercent !== 0}" name="fats" id="fats" type="number" min="0" max="100" value="{{fats}}" (input)="calculate()">
             </li>
             <li>
               <label for="carbohydrates">Carbohydrates (%)</label>
-              <input [ngClass]="{'alert-danger': !carbohydratesPercent , 'alert-success': carbohydratesPercent !== 0}" name="carbohydrates" id="carbohydrates" type="number" min="0" max="100"  (input)="calculate()">
-              <!-- <input [ngClass]="{'alert-danger': !carbohydratesPercent , 'alert-success': carbohydratesPercent !== 0}" name="carbohydrates" id="carbohydrates" type="number" min="0" max="100" value="{{carbohydrates}}" (input)="calculate()"> -->
+              <!-- <input [ngClass]="{'alert-danger': !carbohydratesPercent , 'alert-success': carbohydratesPercent !== 0}" name="carbohydrates" id="carbohydrates" type="number" min="0" max="100"  (input)="calculate()"> -->
+              <input [ngClass]="{'alert-danger': !carbohydratesPercent , 'alert-success': carbohydratesPercent !== 0}" name="carbohydrates" id="carbohydrates" type="number" min="0" max="100" value="{{carbohydrates}}" (input)="calculate()">
             </li>
             <li>
              <div [ngClass]="{'danger': totalPercent != 100 || fatsPercent == 0 || proteinsPercent == 0 || carbohydratesPercent == 0, 'success': totalPercent == 100}">Total: {{totalPercent}}%</div>
