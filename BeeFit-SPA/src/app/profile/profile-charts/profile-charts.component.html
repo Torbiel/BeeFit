@@ -9,8 +9,8 @@
     <button class="button" (click)="applyFilter(filterLimit)">Apply filter</button>
 
     <div style="margin-left: auto">
-        <input type="date" [(ngModel)]="from" style="width: 150px;height: 30px;"/>&nbsp;&nbsp;
-        <input type="date" [(ngModel)]="toMonth" style="width: 150px;height: 30px;"/>&nbsp;&nbsp;
+        <input type="date" (input)="setDateFrom(from)" name="dateFrom" [(ngModel)]="from" style="width: 150px;height: 30px;"/>&nbsp;&nbsp;
+        <input type="date" (input)="setDateTo(toMonth)" name="dateTo" [(ngModel)]="toMonth" style="width: 150px;height: 30px;"/>&nbsp;&nbsp;
         <button class="button" (click)="applyDateFilter()">Apply date filter</button>
     </div>
 

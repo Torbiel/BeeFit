@@ -200,4 +200,19 @@ export class ProfileChartsComponent implements OnInit {
     return dates;
   };
 
+    setDateFrom(date: Date) {
+    this.dateFrom = date.toString().substr(0, 10); 
+    if (this.dateTo < this.dateFrom && this.dateTo.length != 0) {      
+      this.dateTo = this.dateFrom;
+     (document.getElementsByName("dateTo")[0] as HTMLInputElement).value  = this.dateFrom.toString();
+    }
+  }
+
+  setDateTo(date: Date) {
+    this.dateTo = date.toString().substr(0, 10); 
+    if (this.dateTo < this.dateFrom && this.dateFrom.length == 0 || this.dateTo < this.dateFrom && this.dateTo.length != 0) {      
+      this.dateFrom = this.dateTo; 
+      (document.getElementsByName("dateFrom")[0] as HTMLInputElement).value  = this.dateTo.toString();
+    }    
+  }
 }
