@@ -20,9 +20,10 @@ export class ProfileParametersComponent implements OnInit {
   rowsToEdit: number[] = [];
   newParameter = {
     weight: null,
+    date: new Date(),
     abdominalCircumference: null,
     bicepsCircumference: null,
-    thighCircumference: null
+    thighCircumference: null,
   } as UsersParameter;
   parametersAfterFilter: UsersParameter[];
 
@@ -38,25 +39,41 @@ export class ProfileParametersComponent implements OnInit {
     this.newParameter.abdominalCircumference = null;
     this.newParameter.bicepsCircumference = null;
     this.newParameter.thighCircumference = null;
-   
-  
+  }
+
+  prepareDatesToFilter(sort?) {
+    if (sort) {
+      this.sortParameters(this.user.parameters, sort);
+    } else {
+      this.sortParameters(this.user.parameters);
+    }
     
-  }
-
-  prepareDatesToFilter() {
-    this.sortParameters(this.user.parameters);
     this.parametersDates = [...new Set(this.user.parameters.map(parameter => parameter.date))];
-    this.dateTo = this.parametersDates[0].toString().substr(0, 10);
-    this.dateFrom = this.parametersDates[this.parametersDates.length - 1].toString().substr(0, 10);
-
+    if (this.parametersDates.length) {
+      this.dateTo = this.parametersDates[0].toString().substr(0, 10); 
+      this.dateFrom = this.parametersDates[this.parametersDates.length - 1].toString().substr(0, 10);
+    } else {      
+      this.dateTo = this.today.getFullYear() + '-' + (this.today.getMonth() + 1) + '-' + this.today.getDate();
+      this.dateFrom = this.today.getFullYear() + '-' + (this.today.getMonth() + 1) + '-' + this.today.getDate(); 
+    } 
   }
-   getUser() {
+
+   getUser(sort?) {
+  
     const id = localStorage.getItem('userId');
     this.userService.getUser(id).subscribe((user: User) => {
       this.user = user;
       this.user.parameters = user.parameters;
-      this.prepareDatesToFilter();
-      this.filterParameters();
+      if (!sort) {
+        sort = 0;
+      }
+      this.prepareDatesToFilter(sort);
+      if (!sort) {
+        this.filterParameters();
+      } else {
+        this.filterParameters('0001-01-01', '9999-12-31');
+      }
+      
     }, error => {
       this.alertify.error(error);
     });
@@ -68,13 +85,20 @@ export class ProfileParametersComponent implements OnInit {
 
   toggleEdit(index: number) {
     this.editMode = !this.editMode;
-    if (this.rowsToEdit.includes(index)) {
-      this.rowsToEdit.splice(this.rowsToEdit.indexOf(index), 1);
-    } else {
-       this.rowsToEdit.push(index);
-    }
     const row = document.getElementById('parameter[' + index + ']');
     const fields = row.getElementsByClassName('td-input');
+    if (this.rowsToEdit.includes(index)) {
+      this.rowsToEdit.splice(this.rowsToEdit.indexOf(index), 1);
+      for (let i = 0; i < fields.length; i++) {
+        fields[i].setAttribute('tabindex', '-1');
+      }
+    } else {
+       this.rowsToEdit.push(index);
+      for (let i = 0; i < fields.length; i++) {
+        fields[i].removeAttribute('tabindex');
+      }
+    }
+
     for (let i = 0; i < fields.length; i++) {
       fields[i].classList.toggle('read-only');
     }
@@ -98,29 +122,28 @@ export class ProfileParametersComponent implements OnInit {
   }
 
   editParameter(index: number) {
-
     if (this.toggleEdit) {
       if (0) {
         this.alertify.error('You didn\'t fill any of the parameters.');
       } else {
         this.userService.updateUser(this.user).subscribe(next => {
           this.alertify.success('Parameters saved.');
-          this.toggleEdit(index);
+          this.toggleEdit(index); this.ngOnInit();
         }, error => {
           this.alertify.error(error);
         });
       }
     }
   }
-    deleteParameter(id: number) {
-      this.user.parameters.splice(id, 1);
-      this.userService.updateUser(this.user).subscribe(next => {
-        this.alertify.success('Parameters removed');
-        this.ngOnInit();
-      }, error => {
-        this.alertify.error(error);
-      });
 
+  deleteParameter(id: number) {
+    this.user.parameters.splice(id, 1);
+    this.userService.updateUser(this.user).subscribe(next => {
+      this.alertify.success('Parameters removed');
+      this.ngOnInit();
+    }, error => {
+      this.alertify.error(error);
+    });
   }
 
   saveChanges() {
@@ -135,34 +158,68 @@ export class ProfileParametersComponent implements OnInit {
   }
 
   setDateFrom(date: Date) {
-    this.dateFrom = date.toString().substr(0,10);
-     if ( this.dateTo < this.dateFrom) {
+    this.dateFrom = date.toString().substr(0, 10); 
+    if (this.dateTo < this.dateFrom && this.dateTo.length != 0) {      
       this.dateTo = this.dateFrom;
-      (document.getElementsByName("dateTo")[0] as HTMLInputElement).value  = this.dateFrom.toString();
+     (document.getElementsByName("dateTo")[0] as HTMLInputElement).value  = this.dateFrom.toString();
     }
-    this.filterParameters();
+
+    if (date.getTime == undefined) {
+      this.filterParameters(date, 0);      
+    } 
   }
 
   setDateTo(date: Date) {
-    this.dateTo = date.toString().substr(0, 10);
-    if ( this.dateTo < this.dateFrom) {
-      this.dateFrom = this.dateTo;
+    this.dateTo = date.toString().substr(0, 10); 
+    if (this.dateTo < this.dateFrom && this.dateFrom.length == 0 || this.dateTo < this.dateFrom && this.dateTo.length != 0) {      
+      this.dateFrom = this.dateTo; 
       (document.getElementsByName("dateFrom")[0] as HTMLInputElement).value  = this.dateTo.toString();
-    }
-    this.filterParameters();
+    } 
+    
+    if (date.getTime == undefined) {
+      this.filterParameters(0, date);
+    }   
   }
 
-  filterParameters() {
-    this.parametersAfterFilter = this.user.parameters.filter(a => a.date.toString().substr(0, 10) >= this.dateFrom && a.date.toString().substr(0, 10) <= this.dateTo);
-
+  filterParameters(from?, to?) {
+    let  dateFrom: String, dateTo: String;
+    if (to) {
+      dateTo = to;
+    } else {
+      dateTo = this.dateTo;
+    }
+    if (from) {
+      dateFrom = from;
+    } else {
+      dateFrom = this.dateFrom;
+    } 
+    if (!dateFrom) {
+      dateFrom = '0001-01-01';
+    }
+    if (!dateTo) {
+      dateTo = '9999-12-31';
+    }
+    
+    this.parametersAfterFilter = this.user.parameters.filter(a => a.date.toString().substr(0, 10) >= dateFrom && a.date.toString().substr(0, 10) <= dateTo);
+    this.rowsToEdit = [];
   //  this.sortParameters(this.user.parameters);
   }
 
-  sortParameters(values) {
+  sortParameters(values, parameter?) {
+    if (!values) {
+      values = this.user.parameters;
+    }
     values = values.sort(
       function (a, b) {
-        let keyA = a.date.toString().substr(0, 10),
+        let keyA, keyB;
+        if (parameter) {
+          keyA = a[parameter];
+          keyB = b[parameter];
+        } else {
+          keyA = a.date.toString().substr(0, 10);
           keyB = b.date.toString().substr(0, 10);
+        }
+       
         // Compare the 2 dates
         if (keyA > keyB) return -1;
         if (keyA < keyB) return 1;
@@ -172,7 +229,7 @@ export class ProfileParametersComponent implements OnInit {
   }
 
   validate() {
-     document.querySelectorAll('input[type="number"]').forEach((input) => {
+    document.querySelectorAll('input[type="number"]').forEach((input) => {
       if (typeof((input as HTMLInputElement).value[0]) == 'undefined') {
       (input  as HTMLInputElement).value = '';
     }

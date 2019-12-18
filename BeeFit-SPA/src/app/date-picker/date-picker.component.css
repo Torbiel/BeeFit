@@ -18,13 +18,15 @@
 
 .carousel-list
 {
-    left: calc(-100%/7);
+    /*left: calc(-100%/7);*/
     box-sizing: border-box;
     width: 100%;
     position: relative;
     white-space: nowrap;
     transition: .5s ease-in-out;
     height: 40px;
+    display: flex;
+    flex-direction: row;
 }
 
 .date-item
