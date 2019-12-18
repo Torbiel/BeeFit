@@ -30,6 +30,7 @@ namespace BeeFit.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(MealForAddDto mealDto)
         {
+            mealDto.Date = mealDto.Date.ToLocalTime();
             var mealToAdd = _mapper.Map<Meal>(mealDto);
 
             var currentUserId = int.Parse(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);

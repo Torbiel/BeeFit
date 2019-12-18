@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 
 namespace BeeFit.API.Controllers
 {
-    [ServiceFilter(typeof(LogUserActivity))]
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]

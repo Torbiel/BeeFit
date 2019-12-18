@@ -85,14 +85,13 @@
                   <span *ngIf="meal.ingredient !== null">
                     {{ meal.ingredient.name }}
                   </span>
-                  <span *ngIf="meal.ingredient !== null"> 
+                  <span *ngIf="meal.ingredient !== null">
                     {{ meal.ingredient.gramsPerUnit }} g
                   </span>
                 </div>
                 <div class="col-2 meal-buttons">
                   <button class="delete-button pull-right" (click)="deleteMeal(meal)"><i
                       class="fas fa-times"></i></button>
-                  <button class="edit-button pull-right"><i class="fas fa-edit"></i></button>
                 </div>
               </div>
 
