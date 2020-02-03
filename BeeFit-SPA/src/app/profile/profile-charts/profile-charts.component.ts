@@ -23,6 +23,8 @@ export class ProfileChartsComponent implements OnInit {
   thighCircumference;
   abdominalCircumference;
   from = '0';
+  dateTo;
+  dateFrom;
 
   toMonth = '7';
   parametersDates;
@@ -30,7 +32,7 @@ export class ProfileChartsComponent implements OnInit {
   constructor(private userService: UserService, private alertify: AlertifyService) {
 
   }
-  
+
   ngOnInit() {
       const id = localStorage.getItem('userId');
       this.userService.getUser(id).subscribe((user: User) => {
@@ -49,7 +51,7 @@ export class ProfileChartsComponent implements OnInit {
       Chart.defaults.global.defaultFontColor = 'white';
 
       this.parametersChart = new Chart('parameters', {
-        type: 'line',       
+        type: 'line',
         data: {
           labels: this.parametersDates,
           datasets: [
@@ -89,7 +91,7 @@ export class ProfileChartsComponent implements OnInit {
             display: true,
             text: 'Parameters',
             fontSize: 26
-          },      
+          },
           legend: {
             display: true
           },
@@ -150,46 +152,52 @@ export class ProfileChartsComponent implements OnInit {
     chart.update();
   }
 
-  applyFilter(value){
+  applyFilter(value) {
 
     this.parametersChart.data.datasets[0].data = this.weight;
     this.parametersChart.data.datasets[1].data = this.bicepsCircumference;
     this.parametersChart.data.datasets[2].data = this.thighCircumference;
     this.parametersChart.data.datasets[3].data = this.abdominalCircumference;
-    
-    this.parametersChart.data.datasets.forEach((data,i) => {
-      if(this.lessThanOrGreaterThan === 'greaterThan'){
+
+    this.parametersChart.data.datasets.forEach((data, i) => {
+      if (this.lessThanOrGreaterThan === 'greaterThan') {
         this.parametersChart.data.datasets[i].data = data.data.map(v => {
-          if(v >= value) return v
-          else return 0;
+          if (v >= value) {
+            return v;
+          } else {
+            return 0;
+          }
         });
        // console.log(">>>>>>>>", this.parametersChart.data.datasets[i].data);
-      }else{
+      } else {
         this.parametersChart.data.datasets[i].data = data.data.map(v => {
-          if(v <= value) return v;
-          else return 0;
+          if (v <= value) {
+            return v;
+          } else {
+            return 0;
+          }
         });
-        //console.log("?????????", this.parametersChart.data.datasets[i].data);
+        // console.log("?????????", this.parametersChart.data.datasets[i].data);
       }
     });
     this.parametersChart.update();
   }
-  
-    applyDateFilter(){
+
+    applyDateFilter() {
       this.parametersChart.data.labels = this.getDatesRange(new Date(this.from), new Date(this.toMonth));
       this.parametersChart.update();
     }
-  
-    applyUnitFilter(unit){
+
+    applyUnitFilter(unit) {
       this.parametersChart.options.scales.xAxes[0].time.unit = unit;
       this.parametersChart.update();
     }
-  
+
   getDatesRange(startDate, endDate) {
-    var dates = [],
+    let dates = [],
         currentDate = startDate,
         addDays = function(days) {
-          var date = new Date(this.valueOf());
+          let date = new Date(this.valueOf());
           date.setDate(date.getDate() + days);
           return date;
         };
@@ -198,21 +206,21 @@ export class ProfileChartsComponent implements OnInit {
       currentDate = addDays.call(currentDate, 1);
     }
     return dates;
-  };
+  }
 
     setDateFrom(date: Date) {
-    this.dateFrom = date.toString().substr(0, 10); 
-    if (this.dateTo < this.dateFrom && this.dateTo.length != 0) {      
+    this.dateFrom = date.toString().substr(0, 10);
+    if (this.dateTo < this.dateFrom && this.dateTo.length !== 0) {
       this.dateTo = this.dateFrom;
-     (document.getElementsByName("dateTo")[0] as HTMLInputElement).value  = this.dateFrom.toString();
+     (document.getElementsByName('dateTo')[0] as HTMLInputElement).value  = this.dateFrom.toString();
     }
   }
 
   setDateTo(date: Date) {
-    this.dateTo = date.toString().substr(0, 10); 
-    if (this.dateTo < this.dateFrom && this.dateFrom.length == 0 || this.dateTo < this.dateFrom && this.dateTo.length != 0) {      
-      this.dateFrom = this.dateTo; 
-      (document.getElementsByName("dateFrom")[0] as HTMLInputElement).value  = this.dateTo.toString();
-    }    
+    this.dateTo = date.toString().substr(0, 10);
+    if (this.dateTo < this.dateFrom && this.dateFrom.length === 0 || this.dateTo < this.dateFrom && this.dateTo.length !== 0) {
+      this.dateFrom = this.dateTo;
+      (document.getElementsByName('dateFrom')[0] as HTMLInputElement).value  = this.dateTo.toString();
+    }
   }
 }

@@ -11,6 +11,7 @@ using BeeFit.API.Dtos.User;
 using BeeFit.API.Dtos.UsersParameters;
 using BeeFit.API.Dtos.UsersSearchPreferences;
 using BeeFit.API.Models;
+using BeeFit.API.Models.Enums;
 using System;
 using System.Linq;
 
@@ -26,8 +27,11 @@ namespace BeeFit.API.Helpers
 
             // Ingredient
             CreateMap<IngredientForAddDto, Ingredient>();
-            CreateMap<Ingredient, IngredientForGetDto>();
+            CreateMap<Ingredient, IngredientForGetDto>().ForMember(x => x.Unit, opt => opt.MapFrom(o => o.Unit.ToString()));
             CreateMap<IngredientForUpdateDto, Ingredient>();
+
+            // Helper mapping for converting Unit to string
+            CreateMap<Unit, string>().ConvertUsing(x => x.ToString());
 
             // Helper mapping for rounding floats
             CreateMap<float, float>().ConvertUsing(x => (float)Math.Round(x, 2));
@@ -48,7 +52,7 @@ namespace BeeFit.API.Helpers
             CreateMap<DishForUpdateDto, DishForAddDto>();
 
             // DishesIngredient
-            CreateMap<DishesIngredientForAddDto, DishesIngredient>();
+            CreateMap<DishesIngredientForAddDto, DishesIngredient>().ForMember(x => x.Ingredient, opt => opt.Ignore());
             CreateMap<DishesIngredient, DishesIngredientForGetDto>();
             CreateMap<DishesIngredientForUpdateDto, DishesIngredient>();
 

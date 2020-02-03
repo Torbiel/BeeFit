@@ -46,9 +46,9 @@
         Added ingredients:
       </div>
 
-      <app-Info [text]="this.infoTextAdded" *ngIf="this.addedIngredients.length > 0"></app-Info>
+      <app-Info [text]="this.infoTextAdded" *ngIf="this.dish.ingredients.length > 0"></app-Info>
 
-      <div class="row list-element mb-2" *ngFor="let ing of addedIngredients">
+      <div class="row list-element mb-1 mt-1" *ngFor="let ing of this.dish.ingredients">
         <div class="col-12">
           <div class="row">
             <div class="col-5 pl-2 pt-2">
@@ -76,10 +76,11 @@
       </div>
 
       <!-- List of added ingredients empty -->
-      <div class="row no-ingredients" *ngIf="addedIngredients.length === 0">
+      <div class="row no-ingredients" *ngIf="this.dish.ingredients.length === 0">
         Empty
       </div>
 
+      <!-- Sum of nutrients -->
       <div class="row nutrients-header header">
         Nutrients sum:
       </div>
@@ -121,12 +122,13 @@
       </div>
 
       <!-- Buttons -->
-      <div class="row justify-content-center mt-3" *ngIf="addedIngredients.length > 1">
+      <div class="row justify-content-center mt-3" *ngIf="this.dish.ingredients.length > 0">
         <div class="col-5">
-          <button type="reset" class="cancel-button"><i class="far fa-times"></i></button>
+          <button type="reset" class="cancel-button" [routerLink]="['/my-food']"
+            routerLinkActive="router-link-active"><i class="far fa-times"></i></button>
         </div>
         <div class="col-5">
-          <button type="submit" class="confirm-button" (click)="updateDish()"><i class="far fa-check"></i></button>
+          <button type="submit" class="confirm-button" (click)="upsertDish()"><i class="far fa-check"></i></button>
         </div>
       </div>
     </div>

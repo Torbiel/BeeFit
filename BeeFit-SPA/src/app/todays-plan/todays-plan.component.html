@@ -82,6 +82,9 @@
                   <span *ngIf="meal.dish !== null">
                     {{ meal.dish.weight }} g
                   </span>
+                  <span *ngIf="meal.dish != null">
+                    {{ meal.dish.date }}
+                  </span>
                   <span *ngIf="meal.ingredient !== null">
                     {{ meal.ingredient.name }}
                   </span>

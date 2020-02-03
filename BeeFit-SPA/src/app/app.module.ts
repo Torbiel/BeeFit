@@ -35,16 +35,17 @@ import { IngredientsService } from './_services/ingredients.service';
 import { MealService } from './_services/meal.service';
 import { MealtypeService } from './_services/mealtype.service';
 import { AlertifyService } from './_services/alertify.service';
-import { AddDishComponent } from './add-dish/add-dish.component';
-import { AddIngredientComponent } from './add-ingredient/add-ingredient.component';
 import { MyFoodComponent } from './my-food/my-food.component';
-import { EditIngredientComponent } from './edit-ingredient/edit-ingredient.component';
-import { EditDishComponent } from './edit-dish/edit-dish.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { SearchComponent } from './search/search.component';
 import { InfoComponent } from './Info/Info.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { IngredientListItemComponent } from './ingredient-list-item/ingredient-list-item.component';
+import { DishListItemComponent } from './dish-list-item/dish-list-item.component';
+import { IngredientFormComponent } from './ingredient-form/ingredient-form.component';
+import { DishFormComponent } from './dish-form/dish-form.component';
+import { TruncatePipe } from './_pipes/truncate.pipe'
 
 @NgModule({
    declarations: [
@@ -64,14 +65,16 @@ import { environment } from '../environments/environment';
       WelcomeComponent,
       DatePickerComponent,
       AddMealNavComponent,
-      AddDishComponent,
-      AddIngredientComponent,
       MyFoodComponent,
-      EditIngredientComponent,
-      EditDishComponent,
       CalendarComponent,
       SearchComponent,
-      InfoComponent
+      InfoComponent,
+      DishListItemComponent,
+      IngredientListItemComponent,
+      DishListItemComponent,
+      IngredientFormComponent,
+      DishFormComponent,
+      TruncatePipe
    ],
    imports: [
       BrowserModule,
@@ -79,7 +82,7 @@ import { environment } from '../environments/environment';
       FormsModule,
       BsDropdownModule.forRoot(),
       RouterModule.forChild(profileRoutes),
-      //RouterModule.forChild(addMealRoutes),
+      // RouterModule.forChild(addMealRoutes),
       RouterModule.forRoot(appRoutes),
       BrowserAnimationsModule,
       MatProgressBarModule,
@@ -89,8 +92,7 @@ import { environment } from '../environments/environment';
       ReactiveFormsModule,
       FullCalendarModule,
       PaginationModule.forRoot(),
-      Ng2SearchPipeModule,
-      ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+      Ng2SearchPipeModule
    ],
    providers: [
       AuthService,

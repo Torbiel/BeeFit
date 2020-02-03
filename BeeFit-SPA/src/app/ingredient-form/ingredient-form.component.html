@@ -4,7 +4,7 @@
       <div class="mb-2">
         <app-Info [text]="this.infoTextQuantity"></app-Info>
       </div>
-      <form *ngIf="ingredientForm" [formGroup]="ingredientForm" (ngSubmit)="addIngredient()">
+      <form *ngIf="ingredientForm" [formGroup]="ingredientForm" (ngSubmit)="upsertIngredient()">
         <div class="row">
           <div class="col-3 mt-1">
             Name:
@@ -32,8 +32,13 @@
             Unit:
           </div>
           <div class="col-8 mt-1">
-            <input type="radio" name="unit" value="1" formControlName="unit"> Packet
-            <input type="radio" name="unit" value="0" formControlName="unit"> Portion
+            <input type="radio" name="unit" value="0" formControlName="unit"> Piece
+            <input type="radio" name="unit" value="1" formControlName="unit"> Portion
+            <input type="radio" name="unit" value="2" formControlName="unit"> Packet
+            <input type="radio" name="unit" value="3" formControlName="unit"> Teaspoon
+            <input type="radio" name="unit" value="4" formControlName="unit"> Tablespoon
+            <input type="radio" name="unit" value="5" formControlName="unit"> Slice
+            <input type="radio" name="unit" value="6" formControlName="unit"> Glass
           </div>
         </div>
 

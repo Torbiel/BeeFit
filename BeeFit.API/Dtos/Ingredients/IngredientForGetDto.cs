@@ -10,7 +10,7 @@ namespace BeeFit.API.Dtos.Ingredients
         public string Name { get; set; }
         public string Brand { get; set; }
         public int UserId { get; set; }
-        public Unit Unit { get; set; }
+        public string Unit { get; set; }
         public float GramsPerUnit { get; set; }
         public virtual ICollection<IngredientsSearchPreferenceForGetDto> SearchPreferences { get; set; }
         public float Callories { get; set; }

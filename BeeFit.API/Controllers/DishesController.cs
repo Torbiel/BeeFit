@@ -30,10 +30,6 @@ namespace BeeFit.API.Controllers
         {
             var dishToAdd = _mapper.Map<Dish>(dishDto);
 
-            var currentUserId = int.Parse(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
-            var currentUser = await _repo.GetById<User>(currentUserId);
-            dishToAdd.User = currentUser;
-
             _repo.Add(dishToAdd);
 
             return Ok();
@@ -59,49 +55,13 @@ namespace BeeFit.API.Controllers
             return Ok(dishesToReturn);
         }
 
-        //[HttpGet]
-        //public async Task<IActionResult> GetManyByUserId([FromQuery] PagingParams pagingParams)
-        //{
-        //    var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-        //    var dishes = await _repo.GetManyByUserId(currentUserId, pagingParams);
-        //    var dishesToReturn = _mapper.Map<IEnumerable<DishForGetDto>>(dishes);
-
-        //    Response.AddPagination(dishes.CurrentPage, dishes.PageSize, dishes.TotalCount, dishes.TotalPages);
-
-        //    return Ok(dishesToReturn);
-        //}
-
-        //[HttpGet("{userId}/{name}")]
-        //public async Task<IActionResult> GetManyByNameAndUser(int userId, string name, [FromQuery] PagingParams pagingParams)
-        //{
-        //    var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-        //    var dishes = await _repo.GetManyByNameAndUser(name, userId, pagingParams);
-        //    var dishesToReturn = _mapper.Map<IEnumerable<DishForGetDto>>(dishes);
-
-        //    return Ok(dishesToReturn);
-        //}
-
-        // TODO?: searching based on callories, fats, proteins, etc. (>= and <=)
-
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, DishForUpdateDto dishDto)
         {
             var dishToUpdate = await _repo.GetById<Dish>(id);
+            _mapper.Map(dishDto, dishToUpdate);
 
-            var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-
-            if (currentUserId != dishToUpdate.User.Id)
-            {
-                var dishToAdd = _mapper.Map<DishForAddDto>(dishDto);
-                await Add(dishToAdd);
-            }
-            else
-            {
-                _mapper.Map(dishDto, dishToUpdate);
-                dishToUpdate.User = await _repo.GetById<User>(currentUserId); // We have to set the user again on update, otherwise it will become null in db
-
-                _repo.Update(dishToUpdate);
-            }
+            _repo.Update(dishToUpdate);
 
             return NoContent();
         }

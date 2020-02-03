@@ -6,6 +6,7 @@ namespace BeeFit.API.Dtos.Dishes
     public class DishForAddDto
     {
         public string Name { get; set; }
+        public int UserId { get; set; }
         public virtual ICollection<DishesIngredientForAddDto> Ingredients { get; set; }
         public float Callories { get; set; }
         public float Fats { get; set; }

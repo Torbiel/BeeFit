@@ -27,13 +27,9 @@ namespace BeeFit.API.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Add(IngredientForAddDto ingredientDto)
+        public IActionResult Add(IngredientForAddDto ingredientDto)
         {
             var ingredientToAdd = _mapper.Map<Ingredient>(ingredientDto);
-
-            var currentUserId = int.Parse(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
-            var currentUser = await _repo.GetById<User>(currentUserId);
-            ingredientToAdd.User = currentUser;
 
             _repo.Add(ingredientToAdd);
 
@@ -50,9 +46,9 @@ namespace BeeFit.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetMany([FromQuery] FoodSearchParams pagingParams)
+        public async Task<IActionResult> GetMany([FromQuery] FoodSearchParams searchParams)
         {
-            var ingredients = await _repo.GetMany(pagingParams);
+            var ingredients = await _repo.GetMany(searchParams);
             var ingredientsToReturn = _mapper.Map<IEnumerable<IngredientForGetDto>>(ingredients);
 
             Response.AddPagination(ingredients.CurrentPage, ingredients.PageSize, ingredients.TotalCount, ingredients.TotalPages);
@@ -61,21 +57,9 @@ namespace BeeFit.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, IngredientForUpdateDto ingredientDto)
+        public IActionResult Update(int id, IngredientForUpdateDto ingredientDto)
         {
-            var ingredientToUpdate = await _repo.GetById<Ingredient>(id);
-
-            var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-
-            if (currentUserId != ingredientToUpdate.User.Id)
-            {
-                return Unauthorized("You can't update someone else's ingredient.");
-            }
-
-            var currentUser = await _repo.GetById<User>(currentUserId);
-
-            _mapper.Map(ingredientDto, ingredientToUpdate);
-            ingredientToUpdate.User = currentUser; // We have to set the user again on update, otherwise it will become null in db
+            var ingredientToUpdate = _mapper.Map<Ingredient>(ingredientDto);
 
             _repo.Update(ingredientToUpdate);
 

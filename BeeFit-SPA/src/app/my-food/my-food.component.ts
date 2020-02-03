@@ -36,30 +36,31 @@ export class MyFoodComponent implements OnInit {
               private alertify: AlertifyService,
               public router: Router) {
                 this.userId = +localStorage.getItem('userId');
-                this.getDishes();
-                this.getIngredients();
               }
 
   ngOnInit() {
+    this.getDishes();
+    this.getIngredients();
+
     this.ingredientsService.currentIngredient.subscribe(ingredient => this.ingredient = ingredient);
   }
 
   getDishes() {
-    this.dishesService.getDishes(
-      { pageNumber: this.dishesPagination ? this.dishesPagination.currentPage : this.pageNumber,
-        pageSize: this.dishesPagination ? this.dishesPagination.itemsPerPage : this.pageSize,
-        userId: this.userId, name: '' }
-      ).subscribe(
-      (res: PaginatedResult<Dish[]>) => {
+    this.dishesService.getDishes({
+      pageNumber: this.dishesPagination ? this.dishesPagination.currentPage : this.pageNumber,
+      pageSize: this.dishesPagination ? this.dishesPagination.itemsPerPage : this.pageSize,
+      userId: this.userId, name: ''
+    }).subscribe((res: PaginatedResult<Dish[]>) => {
         this.dishes = res.result;
+
         this.dishes.forEach(item => {
           item.weight = 0;
           item.ingredients.forEach(element => {
             item.weight += element.quantity;
           });
         });
-        this.dishesPagination = res.pagination;
 
+        this.dishesPagination = res.pagination;
       }, error => {
         this.alertify.error(error);
       }
@@ -87,22 +88,12 @@ export class MyFoodComponent implements OnInit {
     );
   }
 
-  deleteDish(id: number) {
-    this.dishesService.delete(id).subscribe(() => {
-      this.alertify.success('Dish deleted.');
-      this.getDishes();
-    }, error => {
-      this.alertify.error(error);
-    });
+  onDishDeleted() {
+    this.getDishes();
   }
 
-  deleteIngredient(id: number) {
-    this.ingredientsService.delete(id).subscribe(() => {
-      this.alertify.success('Ingredient deleted');
-      this.getIngredients();
-    }, error => {
-      this.alertify.error(error);
-    });
+  onIngredientDeleted() {
+    this.getIngredients();
   }
 
   round(nutrient: number, quantity: number): number {

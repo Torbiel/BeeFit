@@ -1,47 +1,55 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { Ingredient } from '../_models/Ingredient';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { IngredientsService } from '../_services/ingredients.service';
 import { AlertifyService } from '../_services/alertify.service';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-edit-ingredient',
-  templateUrl: './edit-ingredient.component.html',
-  styleUrls: ['./edit-ingredient.component.css']
+  selector: 'app-ingredient-form',
+  templateUrl: './ingredient-form.component.html',
+  styleUrls: ['./ingredient-form.component.css']
 })
-export class EditIngredientComponent implements OnInit {
-  ingredientId: number;
-  ingredient$: Observable<Ingredient>;
+export class IngredientFormComponent implements OnInit {
   ingredient: Ingredient;
   ingredientForm: FormGroup;
   requiredFieldMessage = 'This field is required.';
+  infoTextQuantity = 'Please provide nutrients per 100 g or 100 ml of ingredient.';
+  ingredientId: number;
+  ingredient$: Observable<Ingredient>;
 
   constructor(
-    private formBuilder: FormBuilder,
     private ingredientsService: IngredientsService,
     private alertify: AlertifyService,
     private router: Router,
-    private route: ActivatedRoute) {}
+    private formBuilder: FormBuilder,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
-    this.ingredient$ = this.route.paramMap.pipe(
-      switchMap(params => {
-        this.ingredientId = +params.get('id');
-        return this.ingredientsService.getById(this.ingredientId);
-      }
-    ));
+    // If it's edit
+    if (this.route.snapshot.paramMap.get('id')) {
+      this.ingredient$ = this.route.paramMap.pipe(
+        switchMap(params => {
+          this.ingredientId = +params.get('id');
+          return this.ingredientsService.getById(this.ingredientId);
+        }
+      ));
 
-    this.ingredient$.subscribe(
-      (ing) => {
-        this.ingredient = ing;
-        this.createForm();
-      }, error => {
-        this.alertify.error(error);
-      }
-    );
+      this.ingredient$.subscribe(
+        (ing) => {
+          this.ingredient = ing;
+          this.createForm();
+        }, error => {
+          this.alertify.error(error);
+        }
+      );
+    } else {
+      this.ingredient = new Ingredient(null);
+      this.createForm();
+    }
   }
 
   createForm() {
@@ -91,18 +99,36 @@ export class EditIngredientComponent implements OnInit {
     });
   }
 
-  updateIngredient() {
-    const id = this.ingredient.id;
-    this.ingredient = new Ingredient(this.ingredientForm.value);
+  // fatsQuantityValidator(control: AbstractControl) {
+  //   const fatsSum = control.get monounsaturatedFats + this.ingredient.polyunsaturatedFats + this.ingredient.saturatedFats;
 
-    this.ingredientsService.update(id, this.ingredient).subscribe(
-      () => {
-        this.alertify.success('Ingredient updated');
-        this.router.navigate(['/my-food']);
-      },
-      error => {
-        this.alertify.error(error);
-      }
-    );
+  //   return fatsSum > this.ingredient.fats ? { notEqual: true } : null;
+  // }
+
+  upsertIngredient() {
+    this.ingredient = new Ingredient(this.ingredientForm.value);
+    this.ingredient.userId = +localStorage.getItem('userId');
+    this.ingredient.id = this.ingredientId;
+
+    if (this.ingredient.id === undefined) {
+      this.ingredientsService.add(this.ingredient).subscribe(
+        () => this.ingredientSaved(),
+        error => {
+          this.alertify.error(error);
+        }
+      );
+    } else {
+      this.ingredientsService.update(this.ingredient, this.ingredient.id).subscribe(
+        () => this.ingredientSaved(),
+        error => {
+          this.alertify.error(error);
+        }
+      );
+    }
+  }
+
+  ingredientSaved() {
+    this.alertify.success('Ingredient saved.');
+    this.router.navigate(['/my-food']).then(() => window.location.reload());
   }
 }

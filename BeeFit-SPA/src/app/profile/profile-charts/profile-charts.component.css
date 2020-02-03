@@ -60,3 +60,23 @@
     transition: .35s ease-in-out;
     left: 100%;
 }
+
+button
+{
+    background-color: #F3C622;
+    color: rgb(39, 39, 39);
+    border: none;
+}
+
+button:hover
+{
+    background-color: rgb(39, 39, 39);
+    color:  #F3C622;
+}
+
+input, select
+{
+    border: 1px solid #E1A511;
+    background: rgb(39, 39, 39);
+    color: white;
+}

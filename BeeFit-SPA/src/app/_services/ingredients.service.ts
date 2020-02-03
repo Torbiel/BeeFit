@@ -75,7 +75,7 @@ export class IngredientsService {
     return params;
   }
 
-  update(id: number, ing: Ingredient): Observable<any> {
+  update(ing: Ingredient, id?: number): Observable<any> {
     return this.http.put<Ingredient>(this.baseUrl + '/' + id, ing, httpOptions);
   }
 

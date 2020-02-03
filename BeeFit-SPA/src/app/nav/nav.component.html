@@ -8,12 +8,6 @@
     </a>
 
     <ul class="navbar-nav mr-auto list-inline">
-      <li class="nav-item" *ngIf="!loggedIn()">
-        <a class="nav-link" [routerLink]="['/about']" routerLinkActive="router-link-active"
-          [routerLinkActiveOptions]="{exact: true}">
-          <i class="fas fa-info-circle"></i> About
-        </a>
-      </li>
 
       <li class="nav-item" *ngIf="loggedIn()">
         <a class="nav-link" [routerLink]="['/profile']" routerLinkActive="router-link-active">

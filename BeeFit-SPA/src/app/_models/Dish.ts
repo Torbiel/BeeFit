@@ -4,7 +4,7 @@ import { DishesIngredient } from './DishesIngredient';
 export class Dish {
     id: number;
     name: string;
-    user: User;
+    userId: number;
     ingredients: DishesIngredient[];
     callories: number;
     fats: number;

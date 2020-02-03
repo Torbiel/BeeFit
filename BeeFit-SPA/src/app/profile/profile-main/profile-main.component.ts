@@ -10,15 +10,14 @@ import { AlertifyService } from '../../_services/alertify.service';
   styleUrls: ['./profile-main.component.css'],
 })
 export class ProfileMainComponent implements OnInit {
-  @Input() public user: User;
+  user: User;
   editMode = false;
-  genderBeforeSet: number = 0;
+  genderBeforeSet = 0;
   dateOfBirthBeforeSet: Date;
   constructor(private userService: UserService, private alertify: AlertifyService) { }
 
   ngOnInit() {
     this.getUser();
-
   }
 
   getUser() {
@@ -37,10 +36,8 @@ export class ProfileMainComponent implements OnInit {
   }
 
   saveChanges() {
-
     this.userService.updateUser(this.user).subscribe(next => {
       this.genderBeforeSet = this.user.gender;
-
       this.alertify.success('Profile updated');
     }, error => {
       this.alertify.error(error);

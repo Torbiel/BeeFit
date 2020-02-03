@@ -1,0 +1,40 @@
+.list-item
+{
+    border: 2px solid rgb(187, 152, 24);
+    margin-bottom: 2px;
+}
+
+.list-item:hover
+{
+    background-color: rgb(58, 58, 58);
+}
+
+.delete-button, .edit-button, .add-button
+{
+    font-size: 1.4em;
+    width: 2.7vw;
+    height: 2.7vw;
+    text-align: center;
+}
+
+td:not(:last-child)
+{
+    border-right: 1px solid gray;
+}
+
+td
+{
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+table
+{
+    width: 100%;
+}
+
+.buttons
+{
+    padding-right: 1px;
+    padding-top: 1px;   
+}

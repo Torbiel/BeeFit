@@ -50,8 +50,13 @@ export class ProfileParametersComponent implements OnInit {
     
     this.parametersDates = [...new Set(this.user.parameters.map(parameter => parameter.date))];
     if (this.parametersDates.length) {
-      this.dateTo = this.parametersDates[0].toString().substr(0, 10); 
-      this.dateFrom = this.parametersDates[this.parametersDates.length - 1].toString().substr(0, 10);
+      this.dateTo = this.parametersDates[0].toString().substr(0, 10);
+
+      if (this.parametersDates.length > 10) {
+        this.dateFrom = this.parametersDates[10].toString().substring(0, 10);
+      } else {
+        this.dateFrom = this.parametersDates[this.parametersDates.length - 1].toString().substr(0, 10);
+      }
     } else {      
       this.dateTo = this.today.getFullYear() + '-' + (this.today.getMonth() + 1) + '-' + this.today.getDate();
       this.dateFrom = this.today.getFullYear() + '-' + (this.today.getMonth() + 1) + '-' + this.today.getDate(); 

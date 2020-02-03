@@ -13,14 +13,14 @@
     cursor: pointer;
 }
 
-.add-button, .edit-button, .delete-button, .confirm-button, .cancel-button
+.add-button, .edit-button, .delete-button, .confirm-button, .cancel-button, .details-button
 {
     background-color: rgb(39, 39, 39);
     color: #F3C622;
     border: none;
 }
 
-.add-button:hover, .edit-button:hover, .delete-button:hover, .confirm-button:hover, .cancel-button:hover
+.add-button:hover, .edit-button:hover, .delete-button:hover, .confirm-button:hover, .cancel-button:hover, .details-button:hover
 {
     background-color: #F3C622;
     color: rgb(39, 39, 39);

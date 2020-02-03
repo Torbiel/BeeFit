@@ -46,12 +46,6 @@ namespace BeeFit.API.Controllers
         public async Task<IActionResult> GetById(int id)
         {
             var meal = await _repo.GetById<Meal>(id);
-
-            if (meal == null)
-            {
-                return BadRequest(); // TODO: checks for null in gets
-            }
-
             var mealToReturn = _mapper.Map<MealForGetDto>(meal);
 
             return Ok(mealToReturn);

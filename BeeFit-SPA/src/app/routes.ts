@@ -11,11 +11,9 @@ import { ProfileMainComponent } from './profile/profile-main/profile-main.compon
 import { ProfileParametersComponent } from './profile/profile-parameters/profile-parameters.component';
 import { ProfileTargetComponent } from './profile/profile-target/profile-target.component';
 import { ProfileChartsComponent } from './profile/profile-charts/profile-charts.component';
-import { AddDishComponent } from './add-dish/add-dish.component';
-import { AddIngredientComponent } from './add-ingredient/add-ingredient.component';
 import { MyFoodComponent } from './my-food/my-food.component';
-import { EditIngredientComponent } from './edit-ingredient/edit-ingredient.component';
-import { EditDishComponent } from './edit-dish/edit-dish.component';
+import { IngredientFormComponent } from './ingredient-form/ingredient-form.component';
+import { DishFormComponent } from './dish-form/dish-form.component';
 
 export const appRoutes: Routes = [
     { path: '', component: HomeComponent },
@@ -29,16 +27,15 @@ export const appRoutes: Routes = [
             { path: 'profile', component: ProfileNavComponent },
             { path: 'welcome', component: WelcomeComponent },
             { path: 'my-food', component: MyFoodComponent, children: [
-                { path: 'edit-ingredient/:id', component: EditIngredientComponent },
-                { path: 'edit-dish/:id', component: EditDishComponent }
+                { path: 'edit-dish/:id', component: DishFormComponent },
+                { path: 'edit-ingredient/:id', component: IngredientFormComponent },
+                { path: 'add-dish', component: DishFormComponent },
+                { path: 'add-ingredient', component: IngredientFormComponent }
             ] },
-            { path: '', component: MyFoodComponent },
-            { path: 'add-dish', component: AddDishComponent },
-            { path: 'add-ingredient', component: AddIngredientComponent },
+            { path: '', component: MyFoodComponent }
         ]
     },
     { path: 'help', component: HelpComponent },
-    { path: 'about', component: AboutComponent },
     { path: '**', redirectTo: '', pathMatch: 'full' }, // TODO: 404 page
 ];
 

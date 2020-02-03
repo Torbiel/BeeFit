@@ -3,21 +3,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { AddDishComponent } from './add-dish.component';
+import { DishFormComponent } from './dish-form.component';
 
-describe('AddDishComponent', () => {
-  let component: AddDishComponent;
-  let fixture: ComponentFixture<AddDishComponent>;
+describe('DishFormComponent', () => {
+  let component: DishFormComponent;
+  let fixture: ComponentFixture<DishFormComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AddDishComponent ]
+      declarations: [ DishFormComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AddDishComponent);
+    fixture = TestBed.createComponent(DishFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
